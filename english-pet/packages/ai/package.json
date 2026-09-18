@@ -1,0 +1,22 @@
+{
+  "name": "@english-pet/ai",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "demo:llm": "tsx src/examples/demo-llm.ts",
+    "demo:asr": "tsx src/examples/demo-asr.ts",
+    "demo:tts": "tsx src/examples/demo-tts.ts",
+    "demo:full-event": "tsx src/examples/demo-full-event.ts"
+  },
+  "dependencies": {
+    "zod": "^4.1.11"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  }
+}

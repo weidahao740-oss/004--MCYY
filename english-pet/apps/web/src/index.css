@@ -1,0 +1,15 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "./tailwind-theme.css";
+@import "./typography.css";
+
+@keyframes morrow-breathe {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-4px) scale(1.015); }
+}
+
+.morrow-breathe { animation: morrow-breathe 4.8s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .morrow-breathe { animation: none; }
+}
