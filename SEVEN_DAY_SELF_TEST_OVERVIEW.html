@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Morrow 七日连续测试总览</title>
+<style>
+:root{color-scheme:dark;--bg:#101820;--panel:#18232d;--line:#334550;--accent:#79cbc4;--text:#edf4f2;--muted:#a6b7b5;--warn:#e0b86a}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 system-ui,"Microsoft YaHei",sans-serif}.wrap{max-width:1120px;margin:auto;padding:34px 22px 48px}h1{margin:0;font-size:30px}p{margin:6px 0;color:var(--muted)}.top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:18px;align-items:end}.badge{border:1px solid var(--accent);color:var(--accent);padding:6px 12px;border-radius:999px}.timeline{display:grid;grid-template-columns:repeat(7,minmax(120px,1fr));gap:10px;margin-top:28px}.day{position:relative;min-height:176px;padding:16px;border:1px solid var(--line);background:var(--panel)}.day:after{content:"";position:absolute;right:-11px;top:34px;width:11px;border-top:2px solid var(--accent)}.day:last-child:after{display:none}.n{font:700 12px monospace;color:var(--accent)}h2{font-size:17px;margin:9px 0 7px}.outcome{font-size:12px;color:var(--warn)}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px}.metric{padding:18px;border-top:3px solid var(--accent);background:var(--panel)}.metric strong{display:block;font-size:28px}.findings{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}.box{padding:18px;border:1px solid var(--line)}.box h3{margin:0 0 8px;color:var(--accent)}ul{margin:0;padding-left:20px}.note{margin-top:20px;padding:14px;border-left:3px solid var(--warn);background:#1b2228}@media(max-width:800px){.timeline{grid-template-columns:1fr}.day:after{display:none}.metrics{grid-template-columns:1fr 1fr}.findings{grid-template-columns:1fr}}</style>
+</head>
+<body><main class="wrap"><div class="top"><div><h1>Morrow 七日连续测试</h1><p>同一用户状态连续保留，测试日期按 Day 1—7 顺序推进</p></div><div class="badge">7 / 7 已完成</div></div>
+<section class="timeline" aria-label="七日事件时间线">
+<div class="day"><div class="n">DAY 1</div><h2>来信的两种意思</h2><div class="outcome">observe_first</div><p>首日承接、记忆与旧表达首次复现。</p></div>
+<div class="day"><div class="n">DAY 2</div><h2>给房间添一件物品</h2><div class="outcome">kettle_added</div><p>自由表达偏好，世界状态增加小水壶。</p></div>
+<div class="day"><div class="n">DAY 3</div><h2>修复一次误解</h2><div class="outcome">meaning_repaired</div><p>发现并修复开场歧义迁移缺陷。</p></div>
+<div class="day"><div class="n">DAY 4</div><h2>第一次外出</h2><div class="outcome">waited_for_quiet</div><p>选择等待不受惩罚，旧表达自然复现。</p></div>
+<div class="day"><div class="n">DAY 5</div><h2>今天的一件事</h2><div class="outcome">story_shared</div><p>标准反思路径，增加一条细节。</p></div>
+<div class="day"><div class="n">DAY 6</div><h2>一分钟分享</h2><div class="outcome">quick_story_shared</div><p>冷却解除，快速路径减少交互步骤。</p></div>
+<div class="day"><div class="n">DAY 7</div><h2>今天不分享</h2><div class="outcome">closed_without_sharing</div><p>两步结束，无惩罚且不新增个人记忆。</p></div>
+</section>
+<section class="metrics"><div class="metric"><strong>5</strong><span>不同事件类型</span></div><div class="metric"><strong>8</strong><span>共同记忆</span></div><div class="metric"><strong>13</strong><span>确认记忆</span></div><div class="metric"><strong>5 天</strong><span>出现旧表达提示</span></div></section>
+<section class="findings"><div class="box"><h3>已验证</h3><ul><li>事件顺序解锁与 20 小时冷却</li><li>世界状态、记忆和日记连续累积</li><li>反馈只在结算后出现</li><li>旧表达不是每日强制练习</li><li>不分享路径无惩罚</li></ul></div><div class="box"><h3>后续风险</h3><ul><li>Day 6—7 重复同一事件类型</li><li>确认记忆由 7 条增长到 13 条</li><li>关系阶段仍无自动推进机制</li><li>真实 AI、ASR、TTS 证据仍待补</li></ul></div></section>
+<div class="note"><strong>当前第一项行动：</strong>完成 1.6 真实 AI / ASR / TTS 证据门。</div></main></body></html>

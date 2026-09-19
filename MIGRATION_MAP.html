@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>旧 Web 原型到固定内容方案迁移结构图</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif; background:#f6f3ee; color:#2b2a28; line-height:1.6; padding:28px 18px; }
+  .wrap { max-width:1080px; margin:0 auto; }
+  h1 { font-size:24px; margin-bottom:4px; }
+  .sub { color:#6b675f; font-size:14px; margin-bottom:22px; }
+  h2 { font-size:17px; margin:26px 0 12px; padding-left:10px; border-left:4px solid #c98a3a; }
+
+  .cols { display:flex; flex-wrap:wrap; gap:12px; }
+  .col { flex:1 1 240px; background:#fff; border:1px solid #e3ddd2; border-radius:10px; padding:12px 14px; }
+  .col .tag { display:inline-block; font-size:12px; font-weight:700; padding:2px 10px; border-radius:10px; margin-bottom:8px; }
+  .col.keep .tag { background:#e7f0e6; color:#3f7a3c; }
+  .col.mod .tag { background:#fdf3e0; color:#9a6b1f; }
+  .col.drop .tag { background:#f3e7e7; color:#a34a4a; }
+  .col h3 { font-size:14px; margin-bottom:6px; }
+  .col ul { margin-left:18px; font-size:12.5px; color:#55524c; }
+  .col li { margin-bottom:3px; }
+  .file { color:#8a857c; font-size:11.5px; }
+
+  .flow { display:flex; flex-wrap:wrap; align-items:stretch; gap:0; }
+  .node { flex:1 1 200px; background:#fff; border:1px solid #e3ddd2; border-radius:10px; padding:12px 14px; font-size:13px; }
+  .node b { display:block; font-size:14px; margin-bottom:4px; }
+  .arrow { flex:0 0 34px; display:flex; align-items:center; justify-content:center; color:#c98a3a; font-size:22px; }
+  .node.old { border-color:#d9b8b8; }
+  .node.new { border-color:#9fc49c; background:#f3f8f2; }
+
+  .cards { display:flex; flex-wrap:wrap; gap:12px; }
+  .card { flex:1 1 260px; background:#fff; border:1px solid #e3ddd2; border-radius:10px; padding:12px 14px; font-size:12.5px; color:#55524c; }
+  .card b { color:#2b2a28; font-size:13.5px; }
+  .foot { margin-top:22px; font-size:12.5px; color:#6b675f; background:#efe9df; border-radius:8px; padding:10px 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>旧 Web 原型 → 固定内容方案 迁移结构图</h1>
+  <div class="sub">依据《MIGRATION_PLAN_WEB_TO_FIXED_CONTENT.md》《API_MIGRATION.md》《DATA_MODEL_MIGRATION.md》｜本图为结构示意</div>
+
+  <h2>一、能力三态盘点（保留 / 修改 / 弃用）</h2>
+  <div class="cols">
+    <div class="col keep">
+      <span class="tag">保留</span>
+      <h3>直接复用</h3>
+      <ul>
+        <li>事件状态机 / 幂等 / 暂停恢复 <span class="file">memory-event-engine.ts</span></li>
+        <li>长期记忆六态与确认流 <span class="file">memory-memory-store.ts</span></li>
+        <li>共同记忆册 <span class="file">memory-journal-store.ts</span></li>
+        <li>轻量反馈、自然复现 <span class="file">feedback / resurfacing</span></li>
+        <li>账号注销与级联删除 <span class="file">account-deletion</span></li>
+        <li>异常降级与文字兜底 <span class="file">degradation.ts</span></li>
+      </ul>
+    </div>
+    <div class="col mod">
+      <span class="tag">修改</span>
+      <h3>按新契约改造</h3>
+      <ul>
+        <li>事件内容：启发式 → 规则集 <span class="file">events-v1 → fixed-content-v1</span></li>
+        <li>对话主链路：LLM 生成 → 确定性意图匹配 <span class="file">memory-conversation-store</span></li>
+        <li>UI：双语切换 → 全中文 + 译文按钮 <span class="file">i18n/copy.ts</span></li>
+        <li>TTS：按需合成 → 预制 normal/slow 音频绑定</li>
+        <li>数据表：+5 新表 +7 新列 <span class="file">schema.ts</span></li>
+      </ul>
+    </div>
+    <div class="col drop">
+      <span class="tag">弃用</span>
+      <h3>正式端下线</h3>
+      <ul>
+        <li>MockLLM 流式对话端点 ×4 <span class="file">/v1/conversations/*</span></li>
+        <li>按需 TTS 端点 <span class="file">/v1/audio/speech</span></li>
+        <li>浏览器录音作为正式端实现 <span class="file">web-recorder-adapter</span>（仅测试）</li>
+        <li>正式产品英文 UI 整套切换入口</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>二、主链路替换</h2>
+  <div class="flow">
+    <div class="node old"><b>现状</b>MockLLM / safeComplete 自由生成回复，事件靠 chooseTransition 启发式推断。</div>
+    <div class="arrow">→</div>
+    <div class="node new"><b>新方案</b>读取 fixed-content-v1 规则集 + 确定性意图匹配 + 白名单状态迁移；LLM 适配器保留但默认关闭，不推进状态、不写记忆。</div>
+  </div>
+
+  <h2>三、边界</h2>
+  <div class="cards">
+    <div class="card"><b>Web 仅测试端</b>：React/Vite 工程继续用于内容调试与自动化测试；正式端为微信小程序 + App。</div>
+    <div class="card"><b>录音适配边界</b>：MediaRecorder 是浏览器测试实现；录音/播放/缓存抽象为客户端适配层，正式端各自实现，服务端只做 HTTPS API。</div>
+    <div class="card"><b>LLM 策略</b>：adapterRetained=true、enabledByDefault=false、mayAdvanceState=false、mayWriteMemory=false；无密钥也能跑通。</div>
+    <div class="card"><b>版本与错误</b>：客户端按 schemaVersion/rulesetVersion 校验，不匹配返回中文升级提示，不静默推进。</div>
+  </div>
+
+  <h2>四、数据模型迁移</h2>
+  <div class="flow">
+    <div class="node"><b>现有 23 张表</b>（与 schema.ts / 0000_initial.sql 一致）：19 保留、4 仅加可空列。</div>
+    <div class="arrow">→</div>
+    <div class="node new"><b>拟新增 5 表 + 7 列</b>：fixed_rulesets / learning_contents / audio_bindings / user_chapter_progress / intent_resolution_records。</div>
+    <div class="arrow">→</div>
+    <div class="node"><b>5 步迁移</b>：版本字段 → 内容/译文/音频绑定 → 成长世界状态 → 事件实例与意图留痕 → 开关隐私收尾。</div>
+  </div>
+
+  <div class="foot">
+    硬性规则：所有判定指向真实工程文件；迁移每步可独立验证，无需真实 LLM 密钥；全中文功能 UI，英文学习内容配人工译文；记忆提案仍需用户确认。
+  </div>
+</div>
+</body>
+</html>

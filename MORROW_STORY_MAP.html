@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Morrow 一生成长结构与事件关系图</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+    background: #f6f3ee; color: #2b2a28; line-height: 1.6;
+    padding: 28px 18px;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; }
+  h1 { font-size: 24px; margin-bottom: 4px; }
+  .sub { color: #6b675f; font-size: 14px; margin-bottom: 24px; }
+  h2 { font-size: 17px; margin: 26px 0 12px; padding-left: 10px; border-left: 4px solid #c98a3a; }
+  .note { font-size: 12.5px; color: #8a857c; margin-bottom: 14px; }
+
+  /* 七章弧线 */
+  .arc { display: flex; flex-wrap: wrap; gap: 8px; }
+  .ch {
+    flex: 1 1 130px; min-width: 130px; background: #fff; border: 1px solid #e3ddd2;
+    border-radius: 10px; padding: 10px 11px; position: relative;
+  }
+  .ch .no { font-size: 12px; color: #c98a3a; font-weight: 700; }
+  .ch .stage { font-size: 14.5px; font-weight: 700; margin: 2px 0 4px; }
+  .ch .scene { font-size: 12px; color: #55524c; }
+  .ch .gate { font-size: 11.5px; color: #8a857c; margin-top: 6px; border-top: 1px dashed #e3ddd2; padding-top: 5px; }
+  .ch.now { border: 2px solid #c98a3a; background: #fdf6ea; }
+  .ch.now::after {
+    content: "首批制作"; position: absolute; top: -9px; right: 8px;
+    background: #c98a3a; color: #fff; font-size: 10.5px; padding: 1px 7px; border-radius: 8px;
+  }
+
+  /* 三类事件 */
+  .lanes { display: flex; flex-wrap: wrap; gap: 12px; }
+  .lane { flex: 1 1 220px; background: #fff; border: 1px solid #e3ddd2; border-radius: 10px; padding: 12px 14px; }
+  .lane .tag { display: inline-block; font-size: 12px; font-weight: 700; padding: 2px 9px; border-radius: 10px; margin-bottom: 7px; }
+  .lane.main .tag { background: #e7f0e6; color: #3f7a3c; }
+  .lane.daily .tag { background: #e8eff6; color: #3a6a9a; }
+  .lane.recall .tag { background: #f3e9f0; color: #8a4a7a; }
+  .lane h3 { font-size: 14.5px; margin-bottom: 5px; }
+  .lane p { font-size: 12.5px; color: #55524c; }
+  .lane ul { margin: 6px 0 0 18px; font-size: 12.5px; color: #55524c; }
+
+  /* 边界两栏 */
+  .bound { display: flex; flex-wrap: wrap; gap: 12px; }
+  .col { flex: 1 1 300px; border-radius: 10px; padding: 13px 16px; font-size: 13px; }
+  .col.yes { background: #eef5ec; border: 1px solid #cfe0cb; }
+  .col.no { background: #f7ecec; border: 1px solid #e6cfcf; }
+  .col b { display: block; margin-bottom: 6px; }
+  .col.yes b { color: #3f7a3c; }
+  .col.no b { color: #a34a4a; }
+  .col ul { margin-left: 18px; }
+  .foot { margin-top: 22px; font-size: 12.5px; color: #6b675f; background: #efe9df; border-radius: 8px; padding: 10px 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Morrow 一生成长结构与事件关系图</h1>
+  <div class="sub">依据《MORROW_LIFE_STORY_BIBLE.md》v1.0.0 ｜ 关系：朋友（平等、长期、可共同经历与给建议）｜ 本图为结构示意</div>
+
+  <h2>一、七章成长主线（按序推进，单次选择不跳章）</h2>
+  <div class="arc">
+    <div class="ch now"><div class="no">第一章</div><div class="stage">出生与苏醒</div><div class="scene">问候、自我介绍、感受、简单选择</div><div class="gate">进入：新用户首次进入<br>完成：完成主线＋1 条已确认关系记忆</div></div>
+    <div class="ch now"><div class="no">第二章</div><div class="stage">童年探索</div><div class="scene">房间、物品、颜色、地点、喜好、计划</div><div class="gate">进入：第一章完成<br>完成：主线＋3 日常＋1 回访</div></div>
+    <div class="ch"><div class="no">第三章</div><div class="stage">第一次上学</div><div class="scene">课堂、同学、规则、请求帮助</div><div class="gate">完成：入学主线＋1 条外部世界记忆</div></div>
+    <div class="ch"><div class="no">第四章</div><div class="stage">校园成长</div><div class="scene">友谊、合作、冲突、兴趣、目标</div><div class="gate">完成：友谊与冲突—和解主线</div></div>
+    <div class="ch"><div class="no">第五章</div><div class="stage">毕业与选择</div><div class="scene">回顾经历、比较方向、表达计划</div><div class="gate">完成：回顾＋比较方向（走向固定）</div></div>
+    <div class="ch"><div class="no">第六章</div><div class="stage">初入社会</div><div class="scene">工作、沟通、时间安排、解决问题</div><div class="gate">完成：第一份差事＋沟通误会解决</div></div>
+    <div class="ch"><div class="no">第七章</div><div class="stage">独立生活</div><div class="scene">责任、长期计划、关系、人生回顾</div><div class="gate">完成：独立生活主线＋人生回顾</div></div>
+  </div>
+
+  <h2>二、每章内部三类事件</h2>
+  <div class="lanes">
+    <div class="lane main">
+      <span class="tag">主线 mainline</span>
+      <h3>推动人生阶段，一次性</h3>
+      <p>每章 4—7 个，按序出现，必须完成才计入章节完成条件，写入关键世界状态。</p>
+    </div>
+    <div class="lane daily">
+      <span class="tag">日常 daily</span>
+      <h3>语言练习，轮换可重复</h3>
+      <p>每章 5—8 个组成轮换池；相邻两次不重复，有冷却；不改变章节门。</p>
+    </div>
+    <div class="lane recall">
+      <span class="tag">记忆回访 recall</span>
+      <h3>由已确认记忆触发</h3>
+      <p>当存在用户已确认且未暂停的记忆/复现表达、场景语义匹配时出现；一次最多调用 1 条个人记忆。</p>
+    </div>
+  </div>
+
+  <h2>三、朋友关系边界</h2>
+  <div class="bound">
+    <div class="col yes">
+      <b>朋友可以做</b>
+      <ul>
+        <li>一起经历房间里的小事、一起做小决定</li>
+        <li>分享自己的一天，在 Morrow 犹豫时给建议</li>
+        <li>把重要的话留在共同记忆里</li>
+        <li>暂时离开、暂停、晚回，随时回来</li>
+      </ul>
+    </div>
+    <div class="col no">
+      <b>朋友不做</b>
+      <ul>
+        <li>不替 Morrow 作人生决定（走向由主线固定结果承担）</li>
+        <li>不做家长/老师/心理医生/恋爱对象</li>
+        <li>不因缺席而被责备、惩罚、扣减或惩罚宠物</li>
+        <li>不要求 Morrow 做唯一的人，不诱导依赖</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="foot">
+    硬性规则：单次选择只改变世界状态与支线细节，不改变所在章节；每个事件都有 2—3 条有效分支与一个“稍后再来”出口；无可靠匹配时停留当前状态、显示中文候选；长期记忆一律需用户确认；英文台词配人工中文译文与 normal/slow 预制音频。
+  </div>
+</div>
+</body>
+</html>

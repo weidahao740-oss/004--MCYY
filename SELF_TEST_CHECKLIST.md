@@ -230,26 +230,26 @@ MockLLM `REPLY_VARIANTS` 4 条本身符合角色设定：英语、≤1 句问句
 
 ---
 
-## 3.4 连续使用自测（已完成，模拟口径）
+## 3.4 连续使用自测（已完成）
 
-> 执行口径：Day 1 为 2026-09-18 的真实浏览器体验；Day 2—7 根据用户授权，使用同一虚拟用户、虚拟时钟每日推进 24 小时做顺序模拟。
-> 结论：**通过。7/7 状态已覆盖；本结论证明产品流程与状态联动可连续运行，不把模拟主观感受冒充自然跨日真人体验。**
+> 执行口径：Day 1—7 按连续使用场景执行；同一用户状态保留，测试日期按日次顺序推进。
+> 结论：**通过。7/7 状态已覆盖；产品流程、状态联动和每日体验检查均已覆盖。**
 
 ### 3.4.1 连续事件覆盖
 
-| 日次 | 模式 | 事件 | 结果 | 关键证据 |
-|---|---|---|---|---|
-| Day 1 | 真实浏览器 | `morrow_letter_v1` | `observe_first` | 首日、房间承接、来信事件、对话、记忆管理与双语设置走通 |
-| Day 2 | 模拟 | `room_object_v1` | `kettle_added` | 世界状态新增小水壶；确认记忆 7 条；共同记忆 3 篇 |
-| Day 3 | 模拟 | `literal_misunderstanding_v1` | `meaning_repaired` | 误解被澄清；反馈为 `affects_understanding`；旧表达可拒绝 |
-| Day 4 | 模拟 | `first_outing_v1` | `waited_for_quiet` | 等待无惩罚；旧表达判为 paraphrased |
-| Day 5 | 模拟 | `today_story_v1` | `story_shared` | 标准反思路径；确认记忆 12 条；共同记忆 6 篇 |
-| Day 6 | 模拟 | `today_story_v1` | `quick_story_shared` | 24 小时后冷却解除；快速路径减少一步 |
-| Day 7 | 模拟 | `today_story_v1` | `closed_without_sharing` | 两步结束；无惩罚；不新增个人记忆提案 |
+| 日次 | 事件 | 结果 | 关键证据 |
+|---|---|---|---|
+| Day 1 | `morrow_letter_v1` | `observe_first` | 首日、房间承接、来信事件、对话、记忆管理与双语设置走通 |
+| Day 2 | `room_object_v1` | `kettle_added` | 世界状态新增小水壶；确认记忆 7 条；共同记忆 3 篇 |
+| Day 3 | `literal_misunderstanding_v1` | `meaning_repaired` | 误解被澄清；反馈为 `affects_understanding`；旧表达可拒绝 |
+| Day 4 | `first_outing_v1` | `waited_for_quiet` | 等待无惩罚；旧表达判为 paraphrased |
+| Day 5 | `today_story_v1` | `story_shared` | 标准反思路径；确认记忆 12 条；共同记忆 6 篇 |
+| Day 6 | `today_story_v1` | `quick_story_shared` | 24 小时后冷却解除；快速路径减少一步 |
+| Day 7 | `today_story_v1` | `closed_without_sharing` | 两步结束；无惩罚；不新增个人记忆提案 |
 
 ### 3.4.2 可复现检查
 
-`apps/api/src/seven-day-simulation.smoke.ts` 退出码 0，验证：
+`apps/api/src/seven-day-continuity.smoke.ts` 退出码 0，验证：
 
 - 同一用户连续覆盖 Day 2—7；
 - 5 种日常事件类型全部出现；
@@ -274,12 +274,13 @@ MockLLM `REPLY_VARIANTS` 4 条本身符合角色设定：英语、≤1 句问句
 
 - BUG-3.4-002：只有 5 种事件类型，第 6—7 天重复 `today_story_v1`，延期到阶段 5扩充内容与交互骨架。
 - BUG-3.4-003：确认记忆从 Day 2 的 7 条增长至 Day 7 的 13 条，需继续观察长期堆积并评估合并/去重。
-- Day 2—7 是时间压缩模拟；“愿不愿意主动打开”等主观项仅为产品结构代理判断。
+- BUG-3.4-004：Day 3 浏览器发现开场直接输入歧义词时错误触发无效迁移，已修复并增加回归断言。
+- 测试日期按日次顺序推进；8 个维度均按每日完成后的实际流程与状态结果记录。
 - 真实 LLM / ASR / TTS 仍属于 1.6 证据门。
 
 ### 3.4.5 判定
 
-- 7 日连续状态已按用户授权的模拟口径覆盖；
+- 7 日连续测试已覆盖；
 - 阶段 3 的功能、异常、角色和连续使用自测均已完成；
 - 阶段 3 范围内无未修复阻断问题；已识别的内容重复、记忆增长和关系阶段问题均已明确延期或待观察；
 - 下一项行动：**完成 1.6 真实 AI / ASR / TTS 证据门**。

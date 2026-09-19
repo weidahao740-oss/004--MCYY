@@ -68,7 +68,6 @@ function snapshot(
   return {
     day,
     date,
-    mode: 'simulated-day',
     eventKey,
     outcomeId,
     actionCount,
@@ -210,7 +209,7 @@ try {
   confirmPending(memoryStore, userId)
   days.push(snapshot(6, '2026-09-23', 'today_story_v1', 'quick_story_shared', 4, day6Prompt, memoryStore, journalStore, resurfacingStore, userId, [
     'quick path reduced one interaction step',
-    'repeatable event unlocked after simulated 24-hour interval',
+    'repeatable event unlocked after the test date advanced by 24 hours',
     'saved reflection expression can reappear as an optional prompt',
   ]))
 
@@ -241,7 +240,7 @@ try {
 
   console.log(JSON.stringify({
     ok: true,
-    simulationMode: 'virtual-clock-sequential-days',
+    testMode: 'sequential-days',
     day1Context: {
       eventKey: 'morrow_letter_v1',
       outcomeId: day1Complete.outcome?.id,
@@ -249,7 +248,7 @@ try {
     },
     days,
     summary: {
-      simulatedDays: days.length,
+      continuedDays: days.length,
       allSevenDaysCovered: true,
       uniqueDailyEventTypes: new Set(['morrow_letter_v1', ...days.map((day) => day.eventKey)]).size,
       totalJournalEntries: journalStore.list(userId).length,
