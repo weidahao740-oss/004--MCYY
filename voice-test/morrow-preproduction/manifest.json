@@ -1,0 +1,18 @@
+{
+  "manifestVersion": "3.0.0",
+  "updatedAt": "2026-09-20",
+  "status": "no_active_candidates",
+  "voiceProfileId": "morrow_voice_v1",
+  "referenceAudio": "voice-test/morrow-growth-voice/morrow_voice_standard_v1.wav",
+  "items": [],
+  "nextGenerationPolicy": {
+    "durationMode": "word_count_estimate",
+    "leadingBufferSeconds": 1,
+    "trailingBufferSeconds": 1,
+    "normalWordsPerSecondRange": [2.2, 2.5],
+    "slowDurationMultiplierRange": [1.18, 1.25],
+    "extraComplexSentenceBufferSeconds": 1,
+    "formula": "ceil(estimated_speech_seconds) + leading_buffer_seconds + trailing_buffer_seconds + optional_complex_sentence_buffer_seconds"
+  },
+  "note": "Previous six candidates were deleted after user review found interrupted or incomplete speech. No technical or listening approval remains valid."
+}

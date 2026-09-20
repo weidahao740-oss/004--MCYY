@@ -197,6 +197,9 @@ event_definitions ──1:N── event_instances
 - `event_key`：`first_day_v1`、`morrow_letter_v1` 等；
 - `version`：独立事件版本；
 - `ruleset_id`：如 `events-v1.0.0`；
+- `persona_version`：notNull，当前人格版本（如 `morrow-1.0`）；
+- `prompt_version`：notNull，旧 LLM 系统提示词版本，历史保留列；
+- `output_schema_version`：notNull，旧 LLM 输出 Schema 版本，历史保留列；
 - `config_json`：通过 `eventDefinitionSchema` 校验的完整配置；
 - `config_hash`：规范化 JSON 的 SHA-256，用于部署一致性检查；
 - `status = draft | active | retired`；
@@ -252,7 +255,7 @@ event_definitions ──1:N── event_instances
 
 | 键 | 合法值来源 |
 |---|---|
-| `first_restored_object` | `lamp` / `plant` |
+| `first_restored_object` | `lamp` / `plant` / `small_bell` |
 | `first_day_status` | `completed` |
 | `letter_response` | `reply_now` / `observe_first` |
 | `room_added_object` | `low_chair` / `narrow_shelf` / `small_kettle` |
@@ -261,7 +264,7 @@ event_definitions ──1:N── event_instances
 | `first_outing_status` | `completed_now` / `waiting_condition` / `postponed` |
 | `last_today_story_result` | `story_shared` / `quick_story_shared` / `room_detail_shared` / `closed_without_sharing` |
 
-值使用 `jsonb`，但写入服务必须从 event outcome 配置白名单验证。删除个人记忆不会自动撤销世界状态；删除整个账号时一起删除。
+值使用 `jsonb`，但写入服务必须从 event outcome 配置白名单验证。其中 `room_added_object_location` 不取硬编码默认值，而由 outcome 通过受白名单约束的槽位 `room_placement` 引用用户在 `ro04_place` 实际确认的 `window | door`；未确认不写入，完成时按白名单校验后幂等写一次。删除个人记忆不会自动撤销世界状态；删除整个账号时一起删除。
 
 ### 6.6 `idempotency_records`
 
@@ -573,6 +576,8 @@ packages/database/
 - migration 执行失败时恢复数据库备份或使用已审核的逆向迁移，不自动 `drop` 用户数据。
 
 ## 14. 与现有事件配置的一致性
+
+> 以下为 events-v1.0.0 历史事件，新主链路见固定内容契约（`birth_*` / `b1_` / `b2_`）。
 
 首批事件必须使用以下 ID：
 

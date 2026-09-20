@@ -1,0 +1,36 @@
+{
+  "input": "C:\\004-MCYY\\voice-test\\morrow-growth-voice\\morrow_age_05_seed_audio_t2a_v1.wav",
+  "output": "C:\\004-MCYY\\voice-test\\morrow-growth-voice\\morrow_voice_standard_v1.tmp.wav",
+  "target_active_rms_dbfs": -20.0,
+  "peak_ceiling_dbfs": -3.0,
+  "applied_gain_db": -1.62,
+  "source_format": {
+    "sample_rate_hz": 40000,
+    "channels": 2,
+    "bits_per_sample": 16
+  },
+  "output_format": {
+    "container": "WAV",
+    "codec": "PCM",
+    "sample_rate_hz": 16000,
+    "channels": 1,
+    "bits_per_sample": 16,
+    "frames": 192000,
+    "duration_seconds": 12.0,
+    "riff_length_field": 384036,
+    "expected_riff_length": 384036,
+    "data_length_field": 384000,
+    "expected_data_length": 384000,
+    "length_fields_valid": true
+  },
+  "before": {
+    "peak_dbfs": -4.79,
+    "rms_dbfs": -20.36,
+    "active_rms_dbfs": -18.38
+  },
+  "after": {
+    "peak_dbfs": -6.41,
+    "rms_dbfs": -21.98,
+    "active_rms_dbfs": -19.91
+  }
+}

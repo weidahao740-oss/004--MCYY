@@ -68,7 +68,7 @@ export default function MemoryPage() {
   return (
     <main className="mx-auto max-w-5xl px-5 py-8 sm:px-8 sm:py-12">
       <div className="max-w-3xl">
-        <p className="font-mono text-xs uppercase tracking-[0.18em] text-primary">memory / user controlled</p>
+        <p className="font-mono text-xs uppercase tracking-[0.18em] text-primary">记忆 · 由你掌控</p>
         <h1 className="mt-3 font-serif text-4xl">{zh ? 'Morrow 记住的内容' : 'What Morrow remembers'}</h1>
         <p className="mt-4 leading-7 text-muted-foreground">{zh ? '模型只能提出建议。只有你保存后的记忆才会进入后续对话；暂停、删除和拒绝会立即停止调用。' : 'The model can only suggest. A memory enters future conversations only after you save it; pausing, deleting, or rejecting stops its use immediately.'}</p>
       </div>

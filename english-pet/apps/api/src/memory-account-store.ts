@@ -32,7 +32,9 @@ const users = new Map<string, IUserRecord>()
 const userIdByEmail = new Map<string, string>()
 const userIdByToken = new Map<string, string>()
 
-const defaultSettings: UserSettings = {
+// 注：llmAssistEnabled 为“LLM 默认关闭”开关落点。contracts 侧 UserSettings 暂未声明该字段（由修复面D 负责），
+// 此处用交叉类型本地兼容：默认 false，对话链读取到 false 时走确定性/固定内容，不调 MockLLM 自由生成。
+const defaultSettings: UserSettings & { llmAssistEnabled: boolean } = {
   languageLevel: 'L2',
   preferredReplyLength: 'standard',
   speechRate: 'normal',
@@ -43,6 +45,7 @@ const defaultSettings: UserSettings = {
   voiceOutputEnabled: true,
   interfaceLocale: 'zh-CN',
   timeZone: 'Asia/Shanghai',
+  llmAssistEnabled: false,
 }
 
 function createPet(): PetSummary {

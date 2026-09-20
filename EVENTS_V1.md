@@ -138,11 +138,11 @@ available → active → completed
 
 | 状态 | Morrow / 系统行为 | 用户任务 | 成功与推进 |
 |---|---|---|---|
-| `LT01_OPEN` | `A letter arrived. I understand every word, which is not the same as understanding the letter.` | 开始或稍后处理 | 开始后进入 `LT02_GIST`；稍后则暂停 |
-| `LT02_GIST` | 展示来信；`What do you think the writer wants me to do?` | 用自己的英语说出大意 | 至少识别“保持窗边光”或“门边留下标记”之一，进入确认 |
-| `LT03_CONFIRM` | `Let me make sure I understood. You think the writer wants… Is that right?` | 确认或修正 | 确认后进入选择；修正回到一次澄清 |
-| `LT04_REPLY` | `Should I answer now, or wait until we know what the road sounds like?` | 选择“现在回复”或“先观察道路”，并可说理由 | 写入确定结果 |
-| `LT05_RESULT` | 根据选择写一张短便笺，或把信放在窗边等待 | 查看影响 | 生成记忆提案和日记，完成 |
+| `lt01_open` | `A letter arrived. I understand every word, which is not the same as understanding the letter.` | 开始或稍后处理 | 开始后进入 `lt02_gist`；稍后则暂停 |
+| `lt02_gist` | 展示来信；`What do you think the writer wants me to do?` | 用自己的英语说出大意 | 至少识别“保持窗边光”或“门边留下标记”之一，进入确认 |
+| `lt03_confirm` | `Let me make sure I understood. You think the writer wants… Is that right?` | 确认或修正 | 确认后进入选择；修正回到一次澄清 |
+| `lt04_reply` | `Should I answer now, or wait until we know what the road sounds like?` | 选择“现在回复”或“先观察道路”，并可说理由 | 写入确定结果 |
+| `lt05_result` | 根据选择写一张短便笺，或把信放在窗边等待 | 查看影响 | 生成记忆提案和日记，完成 |
 
 参考句：
 
@@ -163,7 +163,7 @@ Morrow 的可逆反应：
 
 恢复规则：
 
-- 用户选择或解释后回到 `LT03_CONFIRM`；
+- 用户选择或解释后回到 `lt03_confirm`；
 - 不把第一次错误理解写入记忆；
 - 两轮仍不清楚时可选：`Put a sign there.` / `Go away from the door.`；
 - 恢复不会减少光效、关系进度或结果质量。
@@ -208,11 +208,11 @@ Morrow 的可逆反应：
 
 | 状态 | Morrow / 系统行为 | 用户任务 | 成功与推进 |
 |---|---|---|---|
-| `RO01_OPEN` | `The room has light now, but nowhere sensible to sit, store a letter, or make a warm drink.` | 继续 | 展示三个物品 |
-| `RO02_COMPARE` | `Which one would make this room easier to live in?` | 选择物品并尽量说明理由 | 对象明确即进入确认；理由可选但会丰富结果 |
-| `RO03_CONFIRM` | Morrow 复述物品与理由 | 确认或修正 | 确认后写入选择 |
-| `RO04_PLACE` | 用户从两个固定位置选择：`by the window` / `near the door` | 用英语确认位置 | 位置明确则落位 |
-| `RO05_RESULT` | 展示物品和一处克制的房间变化 | 查看影响 | 生成日记并完成 |
+| `ro01_open` | `The room has light now, but nowhere sensible to sit, store a letter, or make a warm drink.` | 继续 | 展示三个物品 |
+| `ro02_compare` | `Which one would make this room easier to live in?` | 选择物品并尽量说明理由 | 对象明确即进入确认；理由可选但会丰富结果 |
+| `ro03_confirm` | Morrow 复述物品与理由 | 确认或修正 | 确认后写入选择 |
+| `ro04_place` | 用户从两个固定位置选择：`by the window` / `near the door` | 用英语确认位置 | 位置明确则落位 |
+| `ro05_result` | 展示物品和一处克制的房间变化 | 查看影响 | 生成日记并完成 |
 
 参考句：
 
@@ -237,7 +237,7 @@ Morrow：
 
 > I heard “self,” but the room already contains both of us. Did you mean “shelf”?
 
-恢复：确认转写或点击物品卡后返回 `RO03_CONFIRM`。错误转写不进入消息事实、记忆或反馈；只有确实影响理解的发音问题才可在结束时提示 `shelf` 的末尾辅音。
+恢复：确认转写或点击物品卡后返回 `ro03_confirm`。错误转写不进入消息事实、记忆或反馈；只有确实影响理解的发音问题才可在结束时提示 `shelf` 的末尾辅音。
 
 ## 4.5 结果
 
@@ -247,7 +247,7 @@ Morrow：
 | `shelf_added` | `room_added_object = narrow_shelf` | 来信被放到架上 | 事件 4 出发前从架上取来信 |
 | `kettle_added` | `room_added_object = small_kettle` | 房间出现低声水响 | 事件 5 开场可提到水开了，但不假装真实照料需求 |
 
-另写入 `room_added_object_location = window | door`。重复提交不得生成第二件物品。
+另写入 `room_added_object_location`，取值为用户在 `ro04_place` 实际确认的 `window | door`（outcome 通过受白名单约束的槽位 `room_placement` 引用，非硬编码默认）。未确认位置不写默认值，完成时按白名单校验后幂等写入一次；重复提交不得生成第二件物品。
 
 ## 4.6 记忆与复现
 
@@ -292,11 +292,11 @@ Morrow 先问：
 
 | 状态 | Morrow / 系统行为 | 用户任务 | 成功与推进 |
 |---|---|---|---|
-| `MM01_OPEN` | 提出“稍后的一项计划”问题 | 选择自由表达、参考句或不谈个人计划 | 有输入进入理解；拒答进入非个人替代句 |
-| `MM02_INPUT` | 接收用户确认后的句子 | 提交 | 服务端分类为 `clear | harmless_ambiguity | unsafe_or_sensitive` |
-| `MM03_INTERPRET` | 清楚时复述；有歧义时给出轻微字面解释 | 判断是否正确 | 正确进入结果；不正确进入澄清 |
-| `MM04_CLARIFY` | `I may be taking that too literally. What did you mean?` | 使用任意澄清表达 | 重新复述，不要求使用目标句型 |
-| `MM05_SHARED_MEANING` | 展示“原句 / 我先理解成 / 你真正的意思”三行卡片 | 确认 | 生成日记并完成 |
+| `mm01_open` | 提出“稍后的一项计划”问题 | 选择自由表达、参考句或不谈个人计划 | 有输入进入理解；拒答进入非个人替代句 |
+| `mm02_input` | 接收用户确认后的句子 | 提交 | 服务端分类为 `clear | harmless_ambiguity | unsafe_or_sensitive` |
+| `mm03_interpret` | 清楚时复述；有歧义时给出轻微字面解释 | 判断是否正确 | 正确进入结果；不正确进入澄清 |
+| `mm04_clarify` | `I may be taking that too literally. What did you mean?` | 使用任意澄清表达 | 重新复述，不要求使用目标句型 |
+| `mm05_shared_meaning` | 展示“原句 / 我先理解成 / 你真正的意思”三行卡片 | 确认 | 生成日记并完成 |
 
 参考句：
 
@@ -321,9 +321,9 @@ Morrow：
 
 | 结果 ID | 条件 | 结果 |
 |---|---|---|
-| `meaning_confirmed_first_try` | Morrow 首次复述正确 | `communication_success = true`；Morrow承认这次没有陷入字面理解 |
-| `meaning_repaired` | 用户通过澄清修复误解 | `communication_repair = true`；展示修复前后差异 |
-| `neutral_example_completed` | 用户走非个人替代句 | 完成能力体验，但不保存用户生活信息 |
+| `meaning_confirmed_first_try` | Morrow 首次复述正确 | `last_communication_result = confirmed_first_try`；Morrow承认这次没有陷入字面理解 |
+| `meaning_repaired` | 用户通过澄清修复误解 | `last_communication_result = repaired`；展示修复前后差异 |
+| `neutral_example_completed` | 用户走非个人替代句 | `last_communication_result = neutral_example`；完成能力体验，但不保存用户生活信息 |
 
 ## 5.6 记忆与复现
 
@@ -364,11 +364,11 @@ MVP 外出范围只到“门外短路—信箱”，不扩展新地图、商店�
 
 | 状态 | Morrow / 系统行为 | 用户任务 | 成功与推进 |
 |---|---|---|---|
-| `OU01_OPEN` | `The mailbox is only a short walk away. That is still farther than I have gone here.` | 继续或暂不外出 | 暂不外出也进入可完成的计划结果 |
-| `OU02_NOTICE` | 给出道路声音与光线 | 用英语描述一个观察 | 意思可理解即进入计划 |
-| `OU03_PLAN` | `Should we go now, wait until it is quieter, or leave it for another day?` | 选择时机，可说明理由 | 进入条件确认 |
-| `OU04_CONDITION` | 邀请形成一个条件计划，但不强制句型 | 确认 `if condition → action` | 计划合法则结算 |
-| `OU05_RESULT` | 根据选择显示出发、等待或延期 | 查看影响 | 生成日记并完成 |
+| `ou01_open` | `The mailbox is only a short walk away. That is still farther than I have gone here.` | 继续或暂不外出 | 暂不外出也进入可完成的计划结果 |
+| `ou02_notice` | 给出道路声音与光线 | 用英语描述一个观察 | 意思可理解即进入计划 |
+| `ou03_plan` | `Should we go now, wait until it is quieter, or leave it for another day?` | 选择时机，可说明理由 | 进入条件确认 |
+| `ou04_condition` | 邀请形成一个条件计划，但不强制句型 | 确认 `if condition → action` | 计划合法则结算 |
+| `ou05_result` | 根据选择显示出发、等待或延期 | 查看影响 | 生成日记并完成 |
 
 参考句：
 
@@ -395,7 +395,7 @@ Morrow：
 
 恢复规则：
 
-- 状态停留在 `OU04_CONDITION`；
+- 状态停留在 `ou04_condition`；
 - 用户用按钮、文字或语音确认；
 - 只有确认后的计划写入世界状态；
 - 若歧义来自低置信 ASR，不作为用户发音错误记录。
@@ -444,11 +444,11 @@ Morrow：
 
 | 状态 | Morrow / 系统行为 | 用户任务 | 成功与推进 |
 |---|---|---|---|
-| `TD01_OPEN` | `Tell me one thing from today—the best part, the hardest part, or simply what happened.` | 选择分享、短路径、轻话题或不谈 | 分享进入叙述；不谈进入尊重边界路径 |
-| `TD02_STORY` | 接收一句或多句真实表达 | 描述事件 | 提取主要意思；一次只追问一个缺失细节 |
-| `TD03_DETAIL` | 根据内容问 `What happened next?`、`Why did it matter?` 或 `How did you feel afterward?` 中一个 | 补充或选择结束 | 用户可随时选择 `That's enough` |
-| `TD04_UNDERSTANDING` | Morrow 用 1—2 句总结 | 确认或修正 | 确认后进入结束反馈 |
-| `TD05_CLOSE` | 显示成功表达/自然表达与记忆提案 | 审核或跳过 | 生成共同记忆并完成 |
+| `td01_open` | `Tell me one thing from today—the best part, the hardest part, or simply what happened.` | 选择分享、短路径、轻话题或不谈 | 分享进入叙述；不谈进入尊重边界路径 |
+| `td02_story` | 接收一句或多句真实表达 | 描述事件 | 提取主要意思；一次只追问一个缺失细节 |
+| `td03_detail` | 根据内容问 `What happened next?`、`Why did it matter?` 或 `How did you feel afterward?` 中一个 | 补充或选择结束 | 用户可随时选择 `That's enough` |
+| `td04_understanding` | Morrow 用 1—2 句总结 | 确认或修正 | 确认后进入结束反馈 |
+| `td05_close` | 显示成功表达/自然表达与记忆提案 | 审核或跳过 | 生成共同记忆并完成 |
 
 参考句：
 
@@ -459,7 +459,7 @@ Morrow：
 
 ### 一分钟短路径
 
-用户选择 `I only have one minute`：只完成 `TD02_STORY → TD04_UNDERSTANDING → TD05_CLOSE`，不追问细节。
+用户选择 `I only have one minute`：只完成 `td02_story → td04_understanding → td05_close`，不追问细节。
 
 ### 不想谈今天
 

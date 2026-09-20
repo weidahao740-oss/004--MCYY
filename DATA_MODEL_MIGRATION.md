@@ -61,7 +61,7 @@
 
 ## 2. 需新增字段与新表清单
 
-### 2.1 规则集登记表 `fixed_rulesits`（【拟新增】表）
+### 2.1 规则集登记表 `fixed_rulesets`（【拟新增】表）
 
 - 为什么需要：契约顶层对象 `FixedContentRuleset` 带 `id/version/schemaVersion/personaVersion/matchingPolicy/fallbacks/translationToggle/llmPolicy`。现有 `event_definitions` 是“逐事件”登记，缺一个规则集级版本头；客户端必须按服务端 `schemaVersion` 校验，不识别即停事件并显示中文升级提示。
 - 挂法：新表，不并入 `event_definitions`。
@@ -108,9 +108,11 @@
   - `line_id varchar(96)`，如 `bfv_prompt_line`；
   - `content_id varchar(96)` + `text_version varchar(32)` + `translation_version varchar(32)`：与 §2.2 三元组对齐，英文版本不一致时客户端拒绝缓存旧音频；
   - `variant speech_rateEnum`：直接复用既有 `speech_rateEnum('slow','normal')`，不新建枚举；
-  - `voice_profile_id varchar(96)`，首版 `morrow_voice_pending_v1`；
+  - `voice_profile_id varchar(96)`，首版 `morrow_voice_v1`；
   - `file_ref varchar(512)`：对象存储路径键（如 `tts/<chapter_id>/<event_id>/<line_id>/1.0.0/normal.wav`），库内只存标识不存二进制；
   - `checksum_sha256 varchar(64)` 可空，`ready` 前必填；
+  - `active_rms_dbfs numeric(5,2)` 与 `peak_dbfs numeric(5,2)` 可空，`ready` 前必须符合统一响度规范；
+  - `loudness_report_ref varchar(512)` 可空，`ready` 前保存确定性后处理报告路径；
   - `status`（【拟新增】枚举 `planned/ready/retired`）；
   - `created_at`。
   - 唯一约束：`(line_id, variant, text_version)`。
@@ -240,3 +242,13 @@
 - 不引入向量库、推荐画像宽表、排行榜；
 - 不把全局内容登记表（规则集/学习内容/音频绑定）设计成按用户存储；
 - 不在本阶段接入真实 ASR/TTS 供应商，音频绑定先以 `planned` 占位。
+
+---
+
+## 6. 待办（文档侧登记，均未完成）
+
+> 以下为后续落地待办，当前**均未完成**，不得标记为 done。与代码修复面 D/E 对应，本节仅登记文档侧待办，不修改工程代码。
+
+1. `journal_entries` 增加 `version` 列（乐观锁）及 `title_zh` / `event_key` / `pronunciation_note` 列；
+2. 固定内容 5 张持久化表（`fixed_rulesets` / `learning_contents` / `audio_bindings` / `user_chapter_progress` / `intent_resolution_records`）尚未建表，待后续 migration 落地；
+3. 新端点 N1 / N2 / N3（`GET /v1/fixed-content/ruleset`、`POST /v1/events/:id/intents`、`GET /v1/audio/bindings/:audioId`，见 `API_MIGRATION.md`）待后端实现。

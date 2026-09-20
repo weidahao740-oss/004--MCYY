@@ -10,6 +10,7 @@
     "typecheck": "tsc -p tsconfig.json",
     "demo:llm": "tsx src/examples/demo-llm.ts",
     "demo:asr": "tsx src/examples/demo-asr.ts",
+    "validate:qwen-asr": "tsx src/examples/validate-qwen-asr.ts",
     "demo:tts": "tsx src/examples/demo-tts.ts",
     "demo:full-event": "tsx src/examples/demo-full-event.ts"
   },

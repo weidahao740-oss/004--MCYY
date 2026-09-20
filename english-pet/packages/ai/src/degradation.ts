@@ -28,7 +28,7 @@ export async function safeComplete(
 ): Promise<SafeLLMOutcome> {
   const fallback =
     options?.fallbackText ??
-    "I'm having trouble thinking clearly for a moment. Try again, or type your message instead."
+    "我这会儿有点想不清楚。请再试一次，或者直接打字告诉我。"
 
   let raw: LLMResult
   try {
@@ -79,13 +79,13 @@ function rawOrNull(_err: unknown): LLMResult | null {
 function visibleFromError(err: unknown): string {
   if (err instanceof AdapterError) {
     if (err.kind === 'llm_timeout') {
-      return "It took me a little too long to answer. Try saying that again."
+      return "回答得有点慢了。请再说一次。"
     }
     if (err.kind === 'config_missing') {
-      return "Voice chat is not configured on the server yet. Text reply still works."
+      return "服务器还没有配置语音对话。文字回复仍然可用。"
     }
   }
-  return "Something interrupted my reply. You can try again, or switch to typing."
+  return "我的回复被打断了。你可以再试一次，或者改用打字。"
 }
 
 export interface SafeASROutcome {
@@ -106,7 +106,7 @@ export async function safeTranscribe(adapter: ASRAdapter, req: ASRRequest): Prom
     return {
       result: null,
       userMessage:
-        "I couldn't hear that clearly. You can type it, or hold the mic a little closer and try again.",
+        "我没听清。你可以打字告诉我，或者把麦克风拿近一点再试一次。",
       degraded: true,
       errorCode: code,
     }

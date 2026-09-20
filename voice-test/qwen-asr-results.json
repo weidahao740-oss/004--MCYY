@@ -1,0 +1,142 @@
+{
+  "summary": {
+    "testedAt": "2026-09-19T07:35:37.616Z",
+    "provider": "dashscope",
+    "model": "qwen3-asr-flash",
+    "sampleCount": 10,
+    "successCount": 10,
+    "exactNormalizedCount": 10,
+    "totalReferenceWords": 107,
+    "totalWordErrors": 0,
+    "overallWer": 0,
+    "latencySec": {
+      "min": 0.327,
+      "median": 0.364,
+      "mean": 0.404,
+      "p95": 0.606,
+      "max": 0.763
+    }
+  },
+  "results": [
+    {
+      "file": "asr_01.wav",
+      "reference": "Hello, Morrow. I can help you understand this room.",
+      "transcript": "Hello, Morrow. I can help you understand this room.",
+      "latencySec": 0.763,
+      "durationSec": 10,
+      "exactNormalized": true,
+      "wordErrors": 0,
+      "referenceWords": 9,
+      "wer": 0,
+      "sha256": "26fdadf7521a14af711dd3ff0ec25cb1cf0476ef3d373ef695cd811599edec54"
+    },
+    {
+      "file": "asr_02.wav",
+      "reference": "I think the letter means we should leave a sign by the door.",
+      "transcript": "I think the letter means we should leave a sign by the door.",
+      "latencySec": 0.374,
+      "durationSec": 10,
+      "exactNormalized": true,
+      "wordErrors": 0,
+      "referenceWords": 13,
+      "wer": 0,
+      "sha256": "b19171578c70dc0a0b56b80a9586d032030626b7f74727cd037f8152228f4cf6"
+    },
+    {
+      "file": "asr_03.wav",
+      "reference": "Let’s bring back the lamp near the window first.",
+      "transcript": "Let's bring back the lamp near the window first.",
+      "latencySec": 0.364,
+      "durationSec": 10,
+      "exactNormalized": true,
+      "wordErrors": 0,
+      "referenceWords": 9,
+      "wer": 0,
+      "sha256": "e8b51647dc565ee5f1c5cb4fa60723027b081108a7a4f2ef384ac53af2048971"
+    },
+    {
+      "file": "asr_04.wav",
+      "reference": "I’d rather choose the small kettle because the room feels cold.",
+      "transcript": "I'd rather choose the small kettle because the room feels cold.",
+      "latencySec": 0.35,
+      "durationSec": 10,
+      "exactNormalized": true,
+      "wordErrors": 0,
+      "referenceWords": 11,
+      "wer": 0,
+      "sha256": "d2c5a86a6e97000d798a15e7dc7594298f31218945d635032a8eaec68fabeeba"
+    },
+    {
+      "file": "asr_05.wav",
+      "reference": "What I meant was that I need some quiet time after work.",
+      "transcript": "What I meant was that I need some quiet time, after work.",
+      "latencySec": 0.415,
+      "durationSec": 10,
+      "exactNormalized": true,
+      "wordErrors": 0,
+      "referenceWords": 12,
+      "wer": 0,
+      "sha256": "a0820bd885a18e5bc466cdd92a61dee1612e729ac7343f778340a3479487b9e2"
+    },
+    {
+      "file": "asr_06.wav",
+      "reference": "We can’t go outside unless the road becomes quiet.",
+      "transcript": "We can't go outside unless the road becomes quiet.",
+      "latencySec": 0.333,
+      "durationSec": 10,
+      "exactNormalized": true,
+      "wordErrors": 0,
+      "referenceWords": 9,
+      "wer": 0,
+      "sha256": "769fbca9a252c472ea96ea571144dad4e55db2394a0c64b296f124f6f58099f5"
+    },
+    {
+      "file": "asr_07.wav",
+      "reference": "If the wind stops, we can walk to the mailbox together.",
+      "transcript": "If the wind stops, we can walk to the mailbox together.",
+      "latencySec": 0.411,
+      "durationSec": 10,
+      "exactNormalized": true,
+      "wordErrors": 0,
+      "referenceWords": 11,
+      "wer": 0,
+      "sha256": "13b08a1a0f20817dfde9d30be9b14be8dce055e83f036ff2ccbfbfee07d8d79f"
+    },
+    {
+      "file": "asr_08.wav",
+      "reference": "The hardest part of my day was a long meeting at work.",
+      "transcript": "The hardest part of my day was a long meeting at work.",
+      "latencySec": 0.364,
+      "durationSec": 10,
+      "exactNormalized": true,
+      "wordErrors": 0,
+      "referenceWords": 12,
+      "wer": 0,
+      "sha256": "fccbaf4d4b712043ee43c4dd2e03c323f272c3ab2e4626a2b7492c00a5172210"
+    },
+    {
+      "file": "asr_09.wav",
+      "reference": "I put the letter on the narrow shelf beside the door.",
+      "transcript": "I put the letter on the narrow shelf beside the door.",
+      "latencySec": 0.338,
+      "durationSec": 10,
+      "exactNormalized": true,
+      "wordErrors": 0,
+      "referenceWords": 11,
+      "wer": 0,
+      "sha256": "df28b35b028030493df0a4b0035a998b4602c99076f8ceb97a3952225b93770b"
+    },
+    {
+      "file": "asr_10.wav",
+      "reference": "Tomorrow morning, I need to leave home at seven thirty.",
+      "transcript": "Tomorrow morning, I need to leave home at seven thirty.",
+      "latencySec": 0.327,
+      "durationSec": 10,
+      "exactNormalized": true,
+      "wordErrors": 0,
+      "referenceWords": 10,
+      "wer": 0,
+      "sha256": "fd2b0d26a59da7af149b02d0ae9ce75a4ac236353d385ca12a723287f0edaa87"
+    }
+  ]
+}

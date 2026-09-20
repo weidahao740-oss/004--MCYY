@@ -102,7 +102,7 @@ record(
   '02-model-timeout',
   timeoutOutcome.degraded === true
     && timeoutOutcome.reply === null
-    && /too long|quiet|trouble/i.test(timeoutOutcome.visibleText),
+    && /回答得有点慢|再说一次/.test(timeoutOutcome.visibleText),
   `degraded=${timeoutOutcome.degraded} visibleText=${timeoutOutcome.visibleText}`,
 )
 

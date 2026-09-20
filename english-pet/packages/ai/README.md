@@ -22,9 +22,12 @@ src/
 | `LLM_API_BASE_URL` | 对话模型 OpenAI 兼容 base_url（如 `https://api.deepseek.com/v1`） |
 | `LLM_API_KEY` | 对话模型密钥 |
 | `LLM_MODEL` | 模型名（如 `deepseek-v4-flash` / `gpt-4o-mini`） |
-| `ASR_API_BASE_URL` | ASR 兼容端点（如 `https://api.openai.com/v1`） |
-| `ASR_API_KEY` | ASR 密钥 |
-| `ASR_MODEL` | ASR 模型名（如 `gpt-4o-mini-transcribe`） |
+| `DASHSCOPE_API_KEY` | 阿里云百炼密钥，仅服务端使用；启用 `QwenASR` |
+| `QWEN_ASR_BASE_URL` | 千问 ASR OpenAI 兼容 base URL，默认 `https://dashscope.aliyuncs.com/compatible-mode/v1` |
+| `QWEN_ASR_MODEL` | 默认 `qwen3-asr-flash` |
+| `ASR_API_BASE_URL` | 其他 ASR 的 OpenAI multipart 兼容端点（不用于千问 ASR） |
+| `ASR_API_KEY` | 其他 ASR 兼容端点密钥 |
+| `ASR_MODEL` | 其他 ASR 模型名 |
 | `TTS_API_BASE_URL` | TTS 兼容端点 |
 | `TTS_API_KEY` | TTS 密钥 |
 | `TTS_MODEL` | TTS 模型名，默认 `tts-1` |
@@ -39,7 +42,8 @@ src/
 
 ```bash
 npx tsx src/examples/demo-llm.ts          # 完整对话 + Schema 校验 + 记忆提案
-npx tsx src/examples/demo-asr.ts          # 可编辑转写 + 置信度 + 低置信度提示
+npx tsx src/examples/demo-asr.ts          # Mock 可编辑转写 + 置信度 + 低置信度提示
+npm run validate:qwen-asr                 # 真实批测 voice-test 下 10 条 WAV；需临时提供 DASHSCOPE_API_KEY
 npx tsx src/examples/demo-tts.ts          # 语速参数 + 静音 WAV 落盘 + 失败降级
 npx tsx src/examples/demo-full-event.ts    # 完整事件调用链（含一次故意 ASR 失败降级）
 ```

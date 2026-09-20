@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Morrow 语言学习系统结构图（章轨 × 难度档 × 掌握闭环）</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { overflow-x: hidden; }
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+    background: #f6f3ee; color: #2b2a28; line-height: 1.6;
+    padding: 24px 14px;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; }
+  h1 { font-size: 22px; margin-bottom: 4px; }
+  .sub { color: #6b675f; font-size: 13px; margin-bottom: 20px; }
+  h2 {
+    font-size: 16px; margin: 22px 0 10px;
+    padding-left: 10px; border-left: 4px solid #c98a3a;
+  }
+  .note { font-size: 12.5px; color: #8a857c; margin-bottom: 12px; }
+
+  /* ====== A. 纵向：七章时间线 ====== */
+  .timeline { position: relative; padding-left: 26px; }
+  .timeline::before {
+    content: ""; position: absolute; left: 9px; top: 6px; bottom: 6px;
+    width: 2px; background: #d8c9b0;
+  }
+  .t-item {
+    position: relative; background: #fff; border: 1px solid #e3ddd2;
+    border-radius: 10px; padding: 9px 12px; margin-bottom: 8px;
+  }
+  .t-item::before {
+    content: ""; position: absolute; left: -22px; top: 14px;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: #c98a3a; border: 2px solid #fff;
+    box-shadow: 0 0 0 2px #d8c9b0;
+  }
+  .t-item.done::before { background: #3f7a3c; }
+  .t-item.now::before { background: #b5563a; }
+  .t-head { display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline; }
+  .t-no { font-size: 12px; font-weight: 700; color: #c98a3a; }
+  .t-name { font-size: 14.5px; font-weight: 700; }
+  .t-stage { font-size: 12px; color: #6b675f; }
+  .t-cap { font-size: 12.5px; color: #4a4742; margin-top: 3px; }
+  .t-cap b { color: #8a4a2a; font-weight: 600; }
+
+  /* ====== B. 横向：难度三档平行轨道 ====== */
+  .dual {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    border: 1.5px dashed #b9a988; border-radius: 12px; padding: 12px;
+    background: #fbf7ef;
+  }
+  .dual-head { flex: 1 1 100%; font-size: 13px; color: #6b675f; }
+  .dual-head b { color: #8a4a2a; }
+  .track {
+    flex: 1 1 200px; background: #fff; border: 1px solid #e3ddd2;
+    border-radius: 10px; padding: 10px 12px;
+  }
+  .track .tag {
+    display: inline-block; font-size: 11.5px; font-weight: 700;
+    padding: 2px 8px; border-radius: 9px; margin-bottom: 5px;
+  }
+  .track.basic .tag { background: #e7f0e6; color: #3f7a3c; }
+  .track.inter .tag { background: #e8eff6; color: #3a6a9a; }
+  .track.adv .tag { background: #f3e8e2; color: #a4552f; }
+  .track h3 { font-size: 13.5px; margin-bottom: 4px; }
+  .track p { font-size: 12px; color: #55524c; }
+  .no-cross {
+    flex: 1 1 100%; margin-top: 4px;
+    background: #fff8ec; border: 1px solid #e6d3a8; border-radius: 8px;
+    padding: 8px 12px; font-size: 12.5px; color: #6b4a1a;
+  }
+
+  /* ====== C. 闭环：六阶掌握循环 ====== */
+  .loop-wrap { background: #fff; border: 1px solid #e3ddd2; border-radius: 12px; padding: 14px; }
+  .loop-wrap svg { width: 100%; height: auto; display: block; }
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 10px 18px; margin-top: 10px;
+    font-size: 12.5px; color: #4a4742;
+  }
+  .legend .k { display: inline-block; width: 11px; height: 11px; border-radius: 3px; vertical-align: middle; margin-right: 4px; }
+
+  .foot {
+    margin-top: 18px; font-size: 12.5px; color: #6b675f;
+    background: #efe9df; border-radius: 8px; padding: 10px 14px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Morrow 语言学习系统结构图</h1>
+  <div class="sub">依据《MORROW_LANGUAGE_CURRICULUM.md》v1.0.0 ｜ 三条线同图：纵向七章成长时间线 · 横向用户难度三档（与章轨平行、不改写）· 单条六阶掌握闭环（含遗忘回退与间隔复现）｜ 全图离线可读，无外部资源</div>
+
+  <!-- ============ A. 纵向七章时间线 ============ -->
+  <h2>一、纵向：Morrow 七章成长时间线（章轨，单调递增）</h2>
+  <div class="note">本轨道决定 Morrow 自己"能说多复杂的英文"。由 Morrow 的人生阶段决定，<b>任何用户难度档都不能把某一章的台词改难或改易</b>。第 1、2 章为已写台词收敛，第 3—7 章为规划目标。</div>
+  <div class="timeline">
+    <div class="t-item done">
+      <div class="t-head"><span class="t-no">第1章</span><span class="t-name">出生与苏醒</span><span class="t-stage">chapter_01_birth</span></div>
+      <div class="t-cap">本章语言上限：<b>极短句（I am… / This is… / I see…）</b>，平均句长 ≤ 8 词、最长 ≤ 16 词；禁过去时连续叙事、禁比较、禁从句链。</div>
+    </div>
+    <div class="t-item done">
+      <div class="t-head"><span class="t-no">第2章</span><span class="t-name">童年探索</span><span class="t-stage">chapter_02_childhood</span></div>
+      <div class="t-cap">本章语言上限：<b>This is where… / I like… / It sounds like… / 首次 small…than</b>，平均 ≤ 9 词、最长 ≤ 18 词；允许 1 个短定语从句与一次空间比较。</div>
+    </div>
+    <div class="t-item now">
+      <div class="t-head"><span class="t-no">第3章</span><span class="t-name">第一次上学</span><span class="t-stage">chapter_03_first_school（规划目标）</span></div>
+      <div class="t-cap">本章语言上限：<b>Could you…? / I don't understand. / When/if 短状语从句</b>，平均 ≤ 11 词、最长 ≤ 22 词；首次礼貌求助，禁虚拟语气。</div>
+    </div>
+    <div class="t-item">
+      <div class="t-head"><span class="t-no">第4章</span><span class="t-name">校园成长</span><span class="t-stage">chapter_04_school_growth（规划目标）</span></div>
+      <div class="t-cap">本章语言上限：<b>because/so 因果 + who/which 短定语从句</b>，平均 ≤ 12 词、最长 ≤ 25 词；友谊、合作、冲突—和解用语，禁双从句嵌套。</div>
+    </div>
+    <div class="t-item">
+      <div class="t-head"><span class="t-no">第5章</span><span class="t-name">毕业与选择</span><span class="t-stage">chapter_05_graduation（规划目标）</span></div>
+      <div class="t-cap">本章语言上限：<b>A 与 B 比较 + If I…, I'll… 第一条件句 + 两步计划</b>，平均 ≤ 13 词、最长 ≤ 28 词；禁第三条件句、禁工作日常词。</div>
+    </div>
+    <div class="t-item">
+      <div class="t-head"><span class="t-no">第6章</span><span class="t-name">初入社会</span><span class="t-stage">chapter_06_first_work（规划目标）</span></div>
+      <div class="t-cap">本章语言上限：<b>I was wondering if… / 工作事件回溯 / 转述</b>，平均 ≤ 14 词、最长 ≤ 30 词；会安排时间、澄清误会，禁人生哲学长段。</div>
+    </div>
+    <div class="t-item">
+      <div class="t-head"><span class="t-no">第7章</span><span class="t-name">独立生活</span><span class="t-stage">chapter_07_independent_life（规划目标）</span></div>
+      <div class="t-cap">本章语言上限：<b>全时态开放 + 一次性 If I had…, I would have… 第三条件句做回顾</b>，平均 ≤ 15 词、最长 ≤ 32 词；仍限平均句长，不堆复合从句。</div>
+    </div>
+  </div>
+
+  <!-- ============ B. 横向难度三档 ============ -->
+  <h2>二、横向：用户难度三档（与章轨平行的独立轨道）</h2>
+  <div class="note">这三档只调整<b>用户这一侧的任务脚手架</b>。<b>同一场景 × 不同难度档 = 不同任务提示与参考句长度，但同一章节、同一剧情、同一句 Morrow 台词。</b></div>
+  <div class="dual">
+    <div class="dual-head">同一章（例如第 3 章"第一次上学"的同一事件"举手求助"）下：</div>
+    <div class="track basic">
+      <span class="tag">basic 基础</span>
+      <h3>完整骨架 + 提示多</h3>
+      <p>用户得到完整可填参考句（含提示词），允许多次提示（prompted 阶段宽松）。Morrow 台词不变。</p>
+    </div>
+    <div class="track inter">
+      <span class="tag">intermediate 中等</span>
+      <h3>半句骨架 + 1 个替换词</h3>
+      <p>用户得到半句骨架与 1 个替换词提示；提示退出后进入 independent。Morrow 台词不变。</p>
+    </div>
+    <div class="track adv">
+      <span class="tag">advanced 进阶</span>
+      <h3>无骨架，只给中文意图</h3>
+      <p>用户只看到中文意图与 1 个示范；被期望一次产出更长的英文回句。Morrow 台词不变。</p>
+    </div>
+    <div class="no-cross">
+      <b>双轨独立红线：</b>无论用户选 basic / intermediate / advanced，Morrow 在本章说的词库、句长、时态、从句上限都由"一、纵向七章时间线"决定。难度档<b>永不改写</b>章轨上限，也不改变剧情走向；它只改用户被要求产出的英文复杂度。
+    </div>
+  </div>
+
+  <!-- ============ C. 闭环：六阶掌握 ============ -->
+  <h2>三、闭环：六阶掌握状态循环（每个词目 / 句型一条）</h2>
+  <div class="note">掌握六阶与"章轨""难度档"正交：同一个句型在第 3 章被 encountered，到第 4 章新场景里 transferring，到第 5 章 mastered；长期未复现则沿灰色虚线<b>遗忘回退</b>，再由间隔复现机制带回<b>新场景</b>重新 encountered。</div>
+  <div class="loop-wrap">
+    <svg viewBox="0 0 1000 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="六阶掌握循环图">
+      <!-- 主循环节点（顺时针正圆） -->
+      <!-- 圆心 (500,260)，半径 180；六节点角度 270,330,30,90,150,210 -->
+      <!-- 节点坐标：
+           encountered (500,80)
+           recognized (656,170)
+           prompted (656,350)
+           independent (500,440)
+           transferring (344,350)
+           mastered (344,170)
+      -->
+      <defs>
+        <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#3f7a3c"/>
+        </marker>
+        <marker id="arrGray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#9a938a"/>
+        </marker>
+      </defs>
+
+      <!-- 主循环实线箭头 -->
+      <!-- encountered -> recognized -->
+      <path d="M 560 95 Q 630 120 656 150" stroke="#3f7a3c" stroke-width="2.5" fill="none" marker-end="url(#arr)"/>
+      <!-- recognized -> prompted -->
+      <path d="M 668 210 L 668 310" stroke="#3f7a3c" stroke-width="2.5" fill="none" marker-end="url(#arr)"/>
+      <!-- prompted -> independent（提示退出路径，加粗强调） -->
+      <path d="M 620 395 Q 570 425 540 435" stroke="#b5563a" stroke-width="3.5" fill="none" marker-end="url(#arr)"/>
+      <!-- independent -> transferring -->
+      <path d="M 460 435 Q 400 420 360 395" stroke="#3f7a3c" stroke-width="2.5" fill="none" marker-end="url(#arr)"/>
+      <!-- transferring -> mastered -->
+      <path d="M 350 310 L 350 210" stroke="#3f7a3c" stroke-width="2.5" fill="none" marker-end="url(#arr)"/>
+      <!-- mastered -> encountered（间隔复现回到新场景，走外侧弧） -->
+      <path d="M 360 130 Q 430 60 470 80" stroke="#3a7a72" stroke-width="2.5" fill="none" stroke-dasharray="6 4" marker-end="url(#arr)"/>
+
+      <!-- 节点：矩形 + 中文标签 + 英文 key -->
+      <!-- encountered -->
+      <g>
+        <rect x="410" y="55" width="180" height="52" rx="10" fill="#eef3ea" stroke="#3f7a3c" stroke-width="1.6"/>
+        <text x="500" y="78" text-anchor="middle" font-size="15" font-weight="700" fill="#2f5a2c">初次接触</text>
+        <text x="500" y="98" text-anchor="middle" font-size="11.5" fill="#55524c">encountered</text>
+      </g>
+      <!-- recognized -->
+      <g>
+        <rect x="586" y="150" width="160" height="52" rx="10" fill="#eef3ea" stroke="#3f7a3c" stroke-width="1.6"/>
+        <text x="666" y="173" text-anchor="middle" font-size="15" font-weight="700" fill="#2f5a2c">能识别</text>
+        <text x="666" y="193" text-anchor="middle" font-size="11.5" fill="#55524c">recognized</text>
+      </g>
+      <!-- prompted -->
+      <g>
+        <rect x="586" y="330" width="160" height="52" rx="10" fill="#fbf3e3" stroke="#c98a3a" stroke-width="1.6"/>
+        <text x="666" y="353" text-anchor="middle" font-size="15" font-weight="700" fill="#8a5a1a">提示下会用</text>
+        <text x="666" y="373" text-anchor="middle" font-size="11.5" fill="#55524c">prompted</text>
+      </g>
+      <!-- independent -->
+      <g>
+        <rect x="410" y="425" width="180" height="52" rx="10" fill="#eaf1f6" stroke="#3a6a9a" stroke-width="1.6"/>
+        <text x="500" y="448" text-anchor="middle" font-size="15" font-weight="700" fill="#2c4f73">独立会用</text>
+        <text x="500" y="468" text-anchor="middle" font-size="11.5" fill="#55524c">independent</text>
+      </g>
+      <!-- transferring -->
+      <g>
+        <rect x="254" y="330" width="160" height="52" rx="10" fill="#eaf1f6" stroke="#3a6a9a" stroke-width="1.6"/>
+        <text x="334" y="353" text-anchor="middle" font-size="15" font-weight="700" fill="#2c4f73">迁移中</text>
+        <text x="334" y="373" text-anchor="middle" font-size="11.5" fill="#55524c">transferring</text>
+      </g>
+      <!-- mastered -->
+      <g>
+        <rect x="254" y="150" width="160" height="52" rx="10" fill="#e9f2ef" stroke="#3a7a72" stroke-width="1.6"/>
+        <text x="334" y="173" text-anchor="middle" font-size="15" font-weight="700" fill="#275852">稳定掌握</text>
+        <text x="334" y="193" text-anchor="middle" font-size="11.5" fill="#55524c">mastered</text>
+      </g>
+
+      <!-- 提示退出路径标注 -->
+      <text x="600" y="420" text-anchor="middle" font-size="12.5" font-weight="700" fill="#b5563a">提示退出路径</text>
+      <text x="600" y="436" text-anchor="middle" font-size="11" fill="#8a4a2a">少提示 → 独立产出</text>
+
+      <!-- 间隔复现标注 -->
+      <text x="420" y="55" text-anchor="middle" font-size="12.5" font-weight="700" fill="#3a7a72">间隔复现回到新场景</text>
+      <text x="420" y="40" text-anchor="middle" font-size="11" fill="#3a6a64">同一句型在后续章/新事件中再次 encountered</text>
+
+      <!-- 遗忘回退虚线：从 recognized/prompted 弯回 encountered -->
+      <path d="M 760 200 Q 880 250 760 320" stroke="#9a938a" stroke-width="2" fill="none" stroke-dasharray="4 4" marker-end="url(#arrGray)"/>
+      <text x="890" y="255" text-anchor="middle" font-size="12.5" font-weight="700" fill="#6b675f">遗忘回退</text>
+      <text x="890" y="272" text-anchor="middle" font-size="11" fill="#8a857c">长期未复现</text>
+      <text x="890" y="287" text-anchor="middle" font-size="11" fill="#8a857c">退回 encountered</text>
+    </svg>
+
+    <div class="legend">
+      <span><span class="k" style="background:#3f7a3c;"></span>正常递进（六阶前进）</span>
+      <span><span class="k" style="background:#b5563a;"></span>提示退出路径（prompted → independent）</span>
+      <span><span class="k" style="background:#3a7a72;"></span>间隔复现回到新场景（mastered → 新场景 encountered）</span>
+      <span><span class="k" style="background:#9a938a;"></span>遗忘回退（长期未复现，退回 encountered）</span>
+    </div>
+  </div>
+
+  <div class="foot">
+    三条线如何协作：① <b>纵向章轨</b>决定 Morrow 七章自己能说多复杂的英文；② <b>横向难度三档</b>只决定用户这一侧的参考句脚手架，不改 Morrow 台词、不改剧情；③ <b>六阶闭环</b>挂在每一个词目/句型上，与前两轨正交，控制"什么时候算会了、忘了怎么回来、怎么到新场景再用"。术语与 `MORROW_LANGUAGE_CURRICULUM.md` 一致：掌握六阶 encountered / recognized / prompted / independent / transferring / mastered；难度档 basic / intermediate / advanced。
+  </div>
+
+</div>
+</body>
+</html>

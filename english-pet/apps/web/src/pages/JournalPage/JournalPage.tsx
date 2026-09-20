@@ -57,7 +57,7 @@ export default function JournalPage() {
   return (
     <main className="mx-auto max-w-5xl px-5 py-8 sm:px-8 sm:py-12">
       <div className="max-w-3xl">
-        <p className="font-mono text-xs uppercase tracking-[0.18em] text-primary">shared journal</p>
+        <p className="font-mono text-xs uppercase tracking-[0.18em] text-primary">共同记忆册</p>
         <h1 className="mt-3 font-serif text-4xl">{zh ? '共同记忆册' : 'Shared journal'}</h1>
         <p className="mt-4 leading-7 text-muted-foreground">{zh ? '每篇记录只使用已经结算的事件事实。删除记录不会删除长期记忆；两者需要分别管理。' : 'Each entry uses only settled event facts. Deleting an entry does not delete long-term memory; they are controlled separately.'}</p>
       </div>

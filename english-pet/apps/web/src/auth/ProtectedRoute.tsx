@@ -10,7 +10,7 @@ export default function ProtectedRoute() {
       <main className="grid min-h-[70vh] place-items-center">
         <div className="flex items-center gap-3 text-sm text-muted-foreground">
           <LoaderCircle className="size-4 animate-spin" />
-          Restoring your room…
+          正在恢复你的房间…
         </div>
       </main>
     )

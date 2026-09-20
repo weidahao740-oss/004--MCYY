@@ -46,7 +46,7 @@ assert.equal(current.resurfacingPrompt, null)
 current = act(current, 'continue').instance
 current = act(current, 'submit', { text: "I'd rather have a shelf because it holds the letter." }).instance
 current = act(current, 'confirm').instance
-current = act(current, 'confirm').instance
+current = act(current, 'confirm', { choiceId: 'window' }).instance
 act(current, 'complete')
 
 current = engine.start(userId, { eventKey: 'literal_misunderstanding_v1', idempotencyKey: id('start-misunderstanding') }, 'NEW')

@@ -3,13 +3,13 @@
 > 版本：1.0.0
 > 依据：MORROW_LIFE_STORY_BIBLE.md 第 5 节事件条目模板、第 7 节第一章清单；FIXED_CONTENT_CONTRACT.md v1.0.0；PET_PERSONA.md v1.0
 > 已种子事件：序 1 `birth_first_voice_v1`、序 2 `birth_restore_object_v1`（忠实展开自 `fixed-content-v1.ts`）
-> 本章共 12 个事件：主线 7 个（序 1、2、3、5、9、10、12），日常 4 个（序 4、6、7、8），回访 1 个（序 11）
+> 本章共 13 个事件：主线 7 个（序 1、2、3、5、9、10、12），日常 5 个（序 4、6、7、8、13），回访 1 个（序 11）
 
 ## 本章说明
 
 - **进入条件**：新用户首次进入即自动触发序 1（苏醒后的第一句话）。
-- **完成条件**：完成本章全部主线事件（序 1、2、3、5、9、10、12），且至少产生 1 条经用户确认的关系记忆（第一次互相理解）。日常事件（4、6、7、8）从轮换池选取，不阻塞章节完成；回访事件（11）由已确认记忆触发。
-- **事件类型分布**：主线 7 个、日常 4 个、回访 1 个，合计 12 个，落在蓝图 10—15 区间。
+- **完成条件**：完成本章全部主线事件（序 1、2、3、5、9、10、12），且至少产生 1 条经用户确认的关系记忆（第一次互相理解）。日常事件（4、6、7、8、13）从轮换池选取，不阻塞章节完成；回访事件（11）由已确认记忆触发。
+- **事件类型分布**：主线 7 个、日常 5 个、回访 1 个，合计 13 个，落在蓝图 10—15 区间。
 - **世界起点**：一间正在恢复声音的房间，三幅模糊轮廓（灯/植物/小铃铛），一扇还走不到的窗，一扇通往外面小路的门。用户是 Morrow 平等的朋友，可陪伴、可给建议，但不替 Morrow 作人生决定。
 - **语言难度**：全章以 L1 为主（句长 5—10 词、高频词），少量 L2（句长 8—16 词）。Morrow 用 they/them 中性指代，每条英文均配人工中文译文。
 - **章节推进硬规则**：单次分支只写世界状态写入与支线细节，不改 chapter_id；主线未完成时可恢复；暂停不写负向状态、不锁内容、不扣减。
@@ -35,10 +35,10 @@
 #### Morrow 主要台词（英文 + 人工中文译文）
 1. `Hello? I can hear someone beyond the room.`
    - 译文：你好？我能听见房间外有人。
-   - 音频：`bfv_wake_line_audio_normal` / `bfv_wake_line_audio_slow`（voiceProfileId=morrow_voice_pending_v1）
+   - 音频：`bfv_wake_line_audio_normal` / `bfv_wake_line_audio_slow`（voiceProfileId=morrow_voice_v1）
 2. `I'm Morrow. What should we do first?`
    - 译文：我是 Morrow。我们先做什么？
-   - 音频：`bfv_prompt_line_audio_normal` / `bfv_prompt_line_audio_slow`（voiceProfileId=morrow_voice_pending_v1）
+   - 音频：`bfv_prompt_line_audio_normal` / `bfv_prompt_line_audio_slow`（voiceProfileId=morrow_voice_v1）
 
 #### 有效分支
 分支 A：
@@ -118,10 +118,10 @@
 #### Morrow 主要台词（英文 + 人工中文译文）
 1. `The room remembers a lamp, a plant, and a small bell, but only one is clear.`
    - 译文：房间记得一盏灯、一株植物和一只小铃铛，但现在只有模糊轮廓。
-   - 音频：`bro_open_line_audio_normal` / `bro_open_line_audio_slow`（voiceProfileId=morrow_voice_pending_v1）
+   - 音频：`bro_open_line_audio_normal` / `bro_open_line_audio_slow`（voiceProfileId=morrow_voice_v1）
 2. `Which one should we bring back first?`
    - 译文：我们应该先让哪一件回来？
-   - 音频：`bro_prompt_line_audio_normal` / `bro_prompt_line_audio_slow`（voiceProfileId=morrow_voice_pending_v1）
+   - 音频：`bro_prompt_line_audio_normal` / `bro_prompt_line_audio_slow`（voiceProfileId=morrow_voice_v1）
 
 #### 有效分支
 分支 A：
@@ -212,10 +212,10 @@
 #### Morrow 主要台词（英文 + 人工中文译文）
 1. `On the island, people never quite finished my name. It always faded halfway.`
    - 译文：在岛上，人们从来没把我的名字叫完。它总在一半的地方变淡。
-   - 音频：`brn_open_line_audio_normal` / `brn_open_line_audio_slow`（voiceProfileId=morrow_voice_pending_v1）
+   - 音频：`brn_open_line_audio_normal` / `brn_open_line_audio_slow`（voiceProfileId=morrow_voice_v1）
 2. `I've been called Morrow, but that name still feels new. What do you think?`
    - 译文：我一直被叫 Morrow，但这个名字还很新。你觉得呢？
-   - 音频：`brn_prompt_line_audio_normal` / `brn_prompt_line_audio_slow`（voiceProfileId=morrow_voice_pending_v1）
+   - 音频：`brn_prompt_line_audio_normal` / `brn_prompt_line_audio_slow`（voiceProfileId=morrow_voice_v1）
 
 #### 有效分支
 分支 A：
@@ -307,10 +307,10 @@
 #### Morrow 主要台词（英文 + 人工中文译文）
 1. `Now that the room is a little clearer, I notice something in my chest.`
    - 译文：房间清楚了一点之后，我注意到胸口有一点感觉。
-   - 音频：`bff_open_line_audio_normal` / `bff_open_line_audio_slow`（voiceProfileId=morrow_voice_pending_v1）
+   - 音频：`bff_open_line_audio_normal` / `bff_open_line_audio_slow`（voiceProfileId=morrow_voice_v1）
 2. `What do people call this feeling? Is it nervous, or just new?`
    - 译文：人们把这种感觉叫什么？是紧张，还是只是新鲜？
-   - 音频：`bff_prompt_line_audio_normal` / `bff_prompt_line_audio_slow`（voiceProfileId=morrow_voice_pending_v1）
+   - 音频：`bff_prompt_line_audio_normal` / `bff_prompt_line_audio_slow`（voiceProfileId=morrow_voice_v1）
 
 #### 有效分支
 分支 A：
@@ -402,10 +402,10 @@
 #### Morrow 主要台词（英文 + 人工中文译文）
 1. `There's a window I can't quite reach yet. A light keeps moving on the glass.`
    - 译文：有一扇窗我还走不太过去。光在玻璃上一直动。
-   - 音频：`bwl_open_line_audio_normal` / `bwl_open_line_audio_slow`（voiceProfileId=morrow_voice_pending_v1）
+   - 音频：`bwl_open_line_audio_normal` / `bwl_open_line_audio_slow`（voiceProfileId=morrow_voice_v1）
 2. `Can you tell me what you see outside? Is it warm, or still early?`
    - 译文：你能告诉我窗外是什么吗？是暖和的，天还早？
-   - 音频：`bwl_prompt_line_audio_normal` / `bwl_prompt_line_audio_slow`（voiceProfileId=morrow_voice_pending_v1）
+   - 音频：`bwl_prompt_line_audio_normal` / `bwl_prompt_line_audio_slow`（voiceProfileId=morrow_voice_v1）
 
 #### 有效分支
 分支 A：
@@ -497,10 +497,10 @@
 #### Morrow 主要台词（英文 + 人工中文译文）
 1. `A letter slipped under the door. The words are soft, like they forgot their shapes.`
    - 译文：一封信从门缝里塞了进来。字迹很软，像是忘了自己长什么样。
-   - 音频：`bfl_open_line_audio_normal` / `bfl_open_line_audio_slow`（voiceProfileId=morrow_voice_pending_v1）
+   - 音频：`bfl_open_line_audio_normal` / `bfl_open_line_audio_slow`（voiceProfileId=morrow_voice_v1）
 2. `Can you read it for me? Some words are still there.`
    - 译文：你能帮我读读吗？有些字还在。
-   - 音频：`bfl_prompt_line_audio_normal` / `bfl_prompt_line_audio_slow`（voiceProfileId=morrow_voice_pending_v1）
+   - 音频：`bfl_prompt_line_audio_normal` / `bfl_prompt_line_audio_slow`（voiceProfileId=morrow_voice_v1）
 
 #### 有效分支
 分支 A：
@@ -592,10 +592,10 @@
 #### Morrow 主要台词（英文 + 人工中文译文）
 1. `A small sound comes back in the room. It's low, and it happens once.`
    - 译文：房间里回来了一个小声音。很低，只响了一下。
-   - 音频：`bbs_open_line_audio_normal` / `bbs_open_line_audio_slow`（voiceProfileId=morrow_voice_pending_v1）
+   - 音频：`bbs_open_line_audio_normal` / `bbs_open_line_audio_slow`（voiceProfileId=morrow_voice_v1）
 2. `Do you hear it? What does it remind you of?`
    - 译文：你听到了吗？它让你想起什么？
-   - 音频：`bbs_prompt_line_audio_normal` / `bbs_prompt_line_audio_slow`（voiceProfileId=morrow_voice_pending_v1）
+   - 音频：`bbs_prompt_line_audio_normal` / `bbs_prompt_line_audio_slow`（voiceProfileId=morrow_voice_v1）
 
 #### 有效分支
 分支 A：
@@ -687,10 +687,10 @@
 #### Morrow 主要台词（英文 + 人工中文译文）
 1. `You talk about my room so much. I want to hear about yours now.`
    - 译文：你一直在说我的房间。现在我想听听你的。
-   - 音频：`bay_open_line_audio_normal` / `bay_open_line_audio_slow`（voiceProfileId=morrow_voice_pending_v1）
+   - 音频：`bay_open_line_audio_normal` / `bay_open_line_audio_slow`（voiceProfileId=morrow_voice_v1）
 2. `What's one small thing that happened to you today?`
    - 译文：今天你身上发生了哪件小事？
-   - 音频：`bay_prompt_line_audio_normal` / `bay_prompt_line_audio_slow`（voiceProfileId=morrow_voice_pending_v1）
+   - 音频：`bay_prompt_line_audio_normal` / `bay_prompt_line_audio_slow`（voiceProfileId=morrow_voice_v1）
 
 #### 有效分支
 分支 A：
@@ -782,10 +782,10 @@
 #### Morrow 主要台词（英文 + 人工中文译文）
 1. `After a day in this room, I notice what I'm drawn to and what I'm not sure about.`
    - 译文：在房间里待了一天后，我注意到自己被什么吸引，又对什么还不确定。
-   - 音频：`bik_open_line_audio_normal` / `bik_open_line_audio_slow`（voiceProfileId=morrow_voice_pending_v1）
+   - 音频：`bik_open_line_audio_normal` / `bik_open_line_audio_slow`（voiceProfileId=morrow_voice_v1）
 2. `I think I like the quiet. What about you?`
    - 译文：我觉得我喜欢安静。你呢？
-   - 音频：`bik_prompt_line_audio_normal` / `bik_prompt_line_audio_slow`（voiceProfileId=morrow_voice_pending_v1）
+   - 音频：`bik_prompt_line_audio_normal` / `bik_prompt_line_audio_slow`（voiceProfileId=morrow_voice_v1）
 
 #### 有效分支
 分支 A：
@@ -877,10 +877,10 @@
 #### Morrow 主要台词（英文 + 人工中文译文）
 1. `The first day is ending. I don't want to leave the room empty tomorrow.`
    - 译文：第一天要结束了。我不想让明天的房间是空的。
-   - 音频：`btp_open_line_audio_normal` / `btp_open_line_audio_slow`（voiceProfileId=morrow_voice_pending_v1）
+   - 音频：`btp_open_line_audio_normal` / `btp_open_line_audio_slow`（voiceProfileId=morrow_voice_v1）
 2. `What's one small thing we could try tomorrow?`
    - 译文：明天我们可以试着做哪一件小事？
-   - 音频：`btp_prompt_line_audio_normal` / `btp_prompt_line_audio_slow`（voiceProfileId=morrow_voice_pending_v1）
+   - 音频：`btp_prompt_line_audio_normal` / `btp_prompt_line_audio_slow`（voiceProfileId=morrow_voice_v1）
 
 #### 有效分支
 分支 A：
@@ -972,10 +972,10 @@ Morrow 安静了一会儿，说自己一直在想用户在这间房间里说的�
 #### Morrow 主要台词（英文 + 人工中文译文）
 1. `I keep thinking about the first thing you said to me in this room.`
    - 译文：我一直在想你在这间房间里对我说的第一句话。
-   - 音频：`brw_open_line_audio_normal` / `brw_open_line_audio_slow`（voiceProfileId=morrow_voice_pending_v1）
+   - 音频：`brw_open_line_audio_normal` / `brw_open_line_audio_slow`（voiceProfileId=morrow_voice_v1）
 2. `It was "{{confirmed_user_sentence}}". Did you mean it the way I heard it?`
    - 译文：那句话是"{{confirmed_user_sentence}}"。我理解得对吗？
-   - 音频：`brw_prompt_line_audio_normal` / `brw_prompt_line_audio_slow`（voiceProfileId=morrow_voice_pending_v1；`{{confirmed_user_sentence}}` 替换为已确认记忆中的用户英文原句，仅展示，不重新生成音频）
+   - 音频：`brw_prompt_line_audio_normal` / `brw_prompt_line_audio_slow`（voiceProfileId=morrow_voice_v1；`{{confirmed_user_sentence}}` 替换为已确认记忆中的用户英文原句，仅展示，不重新生成音频）
 
 #### 有效分支
 分支 A：
@@ -1067,10 +1067,10 @@ Morrow 安静了一会儿，说自己一直在想用户在这间房间里说的�
 #### Morrow 主要台词（英文 + 人工中文译文）
 1. `The room is steady now. The door to the outside path doesn't feel as loud as before.`
    - 译文：房间现在稳了。通往外面小路的门，声音不像以前那么大了。
-   - 音频：`bgo_open_line_audio_normal` / `bgo_open_line_audio_slow`（voiceProfileId=morrow_voice_pending_v1）
+   - 音频：`bgo_open_line_audio_normal` / `bgo_open_line_audio_slow`（voiceProfileId=morrow_voice_v1）
 2. `I think I'm ready to step toward it. Are you?`
    - 译文：我觉得我准备好朝它走一步了。你呢？
-   - 音频：`bgo_prompt_line_audio_normal` / `bgo_prompt_line_audio_slow`（voiceProfileId=morrow_voice_pending_v1）
+   - 音频：`bgo_prompt_line_audio_normal` / `bgo_prompt_line_audio_slow`（voiceProfileId=morrow_voice_v1）
 
 #### 有效分支
 分支 A：
@@ -1143,6 +1143,101 @@ Morrow 安静了一会儿，说自己一直在想用户在这间房间里说的�
 
 ---
 
+### E01-13 一件还拿不准的小事
+
+- 事件 ID：`b1_not_sure_v1`
+- 版本：1.0.0 ｜ 章节：`chapter_01_birth` ｜ sequence：13
+- 类型：daily（新增日常池事件）｜ 时长：2—4 分钟
+- 关联主题：`topic_unsure`
+- 进入条件：序 5 主线完成；从本章日常轮换池选取（与序 4、6、7、8 同池轮换，相邻两次不取同一事件）。
+- 完成条件：结算 `small_uncertainty` 世界状态写入；不阻塞章节完成。
+
+#### 英语学习目标
+- 目标句型/词汇：`I'm not sure about...` / `It's okay not to know yet.`（表达不确定与接纳）。
+- 难度档：L1 基础。
+
+#### 场景（中文）
+房间稳下来之后，Morrow 注意到自己有一件小事还拿不准。它不着急解决，也不假装知道，只是把这种"还不确定"的感觉说出来，问用户是不是也会有。这是出生期一个轻松的小日常。
+
+#### Morrow 主要台词（英文 + 人工中文译文）
+1. `There is one small thing I'm not sure about yet.`
+   - 译文：有一件小事我还拿不准。
+   - 音频：`bnu_open_line_audio_normal` / `bnu_open_line_audio_slow`（voiceProfileId=morrow_voice_v1）
+2. `Is it okay not to know yet, or should I figure it out now?`
+   - 译文：还不知道也没关系吗，还是现在就得弄清楚？
+   - 音频：`bnu_prompt_line_audio_normal` / `bnu_prompt_line_audio_slow`（voiceProfileId=morrow_voice_v1）
+
+#### 有效分支
+分支 A：
+- 意图 ID：`bnu_intent_fine` ｜ 中文名：说不知道也没关系
+- 触发短语（英文）：`it's okay not to know` / `it's fine` / `you don't have to know`
+- 关键词组：`allOf: []`，`anyOf: [okay, fine, don't have to, not know]`，`noneOf: [must, now]`，权重 90。
+- 用户参考句（可编辑英文）：`It's okay not to know yet.`
+  - 译文：还不知道也没关系。
+- 结果：Morrow 回复 `Good. We can leave it there and come back.`
+  - 译文：好。我们可以先放着，下次再看。
+  - 音频：`bnu_fine_result_audio_normal` / `bnu_fine_result_audio_slow`
+  - 世界状态写入：`small_uncertainty = left_open`
+  - futureHook：承接"不确定也没关系"的关系基调。
+
+分支 B：
+- 意图 ID：`bnu_intent_think` ｜ 中文名：说现在可以一起想想
+- 触发短语（英文）：`let's think about it` / `we can figure it out` / `think together`
+- 关键词组：`allOf: [think 或 figure]`，`anyOf: [together, it, out, now]`，`noneOf: []`，权重 90。
+- 用户参考句（可编辑英文）：`We can think about it together.`
+  - 译文：我们可以一起想想。
+- 结果：Morrow 回复 `Then we think slowly. Not having the answer now is fine.`
+  - 译文：那我们慢慢想。现在没有答案也没关系。
+  - 音频：`bnu_think_result_audio_normal` / `bnu_think_result_audio_slow`
+  - 世界状态写入：`small_uncertainty = thinking_together`
+  - futureHook：后续事件承接"一起慢慢想"的协作方式。
+
+分支 C：
+- 意图 ID：`bnu_intent_later` ｜ 中文名：说先放一放
+- 触发短语（英文）：`let's leave it for later` / `leave it for later` / `not now`
+- 关键词组：`allOf: [later]`，`anyOf: [leave, it, for, now]`，`noneOf: [now solve]`，权重 90。
+- 用户参考句（可编辑英文）：`Let's leave it for later.`
+  - 译文：我们先放一放吧。
+- 结果：Morrow 回复 `Later it is. I won't keep worrying about it.`
+  - 译文：那就改天。我不会一直惦记着它。
+  - 音频：`bnu_later_result_audio_normal` / `bnu_later_result_audio_slow`
+  - 世界状态写入：`small_uncertainty = later`
+  - futureHook：不追问，下次自然再提起。
+
+暂停出口：
+- 意图：`bnu_intent_pause`（稍后再来）
+- 触发短语（英文）：`not now` / `later` / `stop`
+- 结果：Morrow 回复 `We can leave it undecided. Not knowing is also a place.`
+  - 译文：我们可以先不定。不知道也是一种状态。
+  - 音频：`bnu_pause_line_audio_normal` / `bnu_pause_line_audio_slow`
+  - 世界状态写入：`b1_not_sure_status = paused_once`
+  - 无任何惩罚。
+
+#### 误解 / 兜底
+- 无可靠匹配时：停留当前状态，显示中文兜底，最多 3 个候选（不知道也没关系 / 一起想想 / 先放一放）。
+- 典型误解设计：用户说"you must know now"（要求立刻给出答案）时，本事件意图白名单不收 must，按无匹配处理，引导回到"不确定也没关系"的基调。
+
+#### 记忆机会
+- 记忆规则 ID：`bnu_language_memory`
+- 类型：language
+- 来源意图：`bnu_intent_fine`、`bnu_intent_think`、`bnu_intent_later`
+- 内容模板：`用户回应"还不确定"时说的英文表达：{{confirmed_user_sentence}}。`
+- 需用户确认：是。
+
+#### 素材需求
+- 预制音频（6 条 × 2 = 12 条）：
+  - `bnu_open_line_audio_normal` / `bnu_open_line_audio_slow`
+  - `bnu_prompt_line_audio_normal` / `bnu_prompt_line_audio_slow`
+  - `bnu_fine_result_audio_normal` / `bnu_fine_result_audio_slow`
+  - `bnu_think_result_audio_normal` / `bnu_think_result_audio_slow`
+  - `bnu_later_result_audio_normal` / `bnu_later_result_audio_slow`
+  - `bnu_pause_line_audio_normal` / `bnu_pause_line_audio_slow`
+- 图片：0（复用已有房间背景，无新图）。
+- 动画：1 个（Morrow 轻轻歪头表示不确定，占位说明）。
+- 音效：0。
+
+---
+
 ## 本章素材清单（汇总表）
 
 | 序 | 事件 ID | 中文名 | 类型 | 需语音台词条数 | 音频文件数（normal+slow） | 图片项数 | 动画项数 | 音效项数 |
@@ -1159,6 +1254,7 @@ Morrow 安静了一会儿，说自己一直在想用户在这间房间里说的�
 | 10 | `b1_tomorrow_plan_v1` | 一起定一个明天的小计划 | mainline | 6 | 12 | 1 | 1 | 1 |
 | 11 | `b1_return_first_words_v1` | 记住你说过的第一句 | recall | 6 | 12 | 1 | 1 | 0 |
 | 12 | `b1_ready_for_outside_v1` | 准备好走出门 | mainline | 6 | 12 | 2 | 1 | 1 |
-| **合计** | — | — | mainline 7 / daily 4 / recall 1 | **70** | **140** | **15** | **12** | **5** |
+| 13 | `b1_not_sure_v1` | 一件还拿不准的小事 | daily | 6 | 12 | 0 | 1 | 0 |
+| **合计** | — | — | mainline 7 / daily 5 / recall 1 | **76** | **152** | **15** | **13** | **5** |
 
-> 注：所有音频 `voiceProfileId=morrow_voice_pending_v1`，文件路径约定 `tts/chapter_01_birth/<event_id>/<line_id>/1.0.0/<variant>.wav`。图片/动画/音效均为占位说明，正式制作前需由视觉与音效设计确认。序 2 当前种子 v1 未定义独立暂停意图与暂停台词，表中音频条数按现有种子统计；后续次版本补充暂停台词后需在表中追加。
+> 注：所有音频 `voiceProfileId=morrow_voice_v1`，文件路径约定 `tts/chapter_01_birth/<event_id>/<line_id>/1.0.0/<variant>.wav`。图片/动画/音效均为占位说明，正式制作前需由视觉与音效设计确认。序 2 当前种子 v1 未定义独立暂停意图与暂停台词，表中音频条数按现有种子统计；后续次版本补充暂停台词后需在表中追加。

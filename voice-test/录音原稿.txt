@@ -1,0 +1,10 @@
+asr_01.wav | Hello, Morrow. I can help you understand this room.
+asr_02.wav | I think the letter means we should leave a sign by the door.
+asr_03.wav | Let’s bring back the lamp near the window first.
+asr_04.wav | I’d rather choose the small kettle because the room feels cold.
+asr_05.wav | What I meant was that I need some quiet time after work.
+asr_06.wav | We can’t go outside unless the road becomes quiet.
+asr_07.wav | If the wind stops, we can walk to the mailbox together.
+asr_08.wav | The hardest part of my day was a long meeting at work.
+asr_09.wav | I put the letter on the narrow shelf beside the door.
+asr_10.wav | Tomorrow morning, I need to leave home at seven thirty.

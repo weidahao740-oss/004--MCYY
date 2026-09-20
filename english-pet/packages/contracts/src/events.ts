@@ -144,10 +144,22 @@ export type EventMisunderstanding = z.infer<
   typeof eventMisunderstandingSchema
 >
 
-export const worldStateWriteSchema = z.object({
-  key: nonEmptyIdSchema,
-  value: worldStateValueSchema,
-})
+export const worldStateWriteSchema = z
+  .object({
+    key: nonEmptyIdSchema,
+    // 要么写死字面 value，要么引用本事件中已确认的槽位（fromSlot），
+    // 且槽位取值必须落在 allowedValues 白名单内——不开放任意键/值。
+    value: worldStateValueSchema.optional(),
+    fromSlot: nonEmptyIdSchema.optional(),
+    allowedValues: z.array(worldStateValueSchema).optional(),
+  })
+  .refine((write) => write.value !== undefined || write.fromSlot !== undefined, {
+    message: 'worldStateWrite must set either a literal value or a fromSlot reference',
+  })
+  .refine(
+    (write) => write.fromSlot === undefined || (Array.isArray(write.allowedValues) && write.allowedValues.length > 0),
+    { message: 'a fromSlot write must declare a non-empty allowedValues whitelist' },
+  )
 export type WorldStateWrite = z.infer<typeof worldStateWriteSchema>
 
 export const eventOutcomeSchema = z.object({

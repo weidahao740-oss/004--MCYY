@@ -707,14 +707,18 @@ export const journalEntries = pgTable(
     eventInstanceId: uuid('event_instance_id')
       .notNull()
       .references(() => eventInstances.id, { onDelete: 'cascade' }),
+    eventKey: text('event_key'),
     title: varchar('title', { length: 200 }).notNull(),
+    titleZh: text('title_zh'),
     whatHappened: text('what_happened').notNull(),
     whatUserSaid: text('what_user_said'),
     naturalExpression: text('natural_expression'),
+    pronunciationNote: text('pronunciation_note'),
     whatMorrowRemembers: text('what_morrow_remembers'),
     worldChange: text('world_change'),
     userEditedContent: jsonb('user_edited_content'),
     visibility: journalVisibilityEnum('visibility').notNull().default('visible'),
+    version: integer('version').notNull().default(1),
     ...timestamps,
     deletedAt: timestamp('deleted_at', { withTimezone: true }),
   },

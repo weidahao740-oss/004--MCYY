@@ -1,0 +1,34 @@
+﻿[
+    {
+        "stage":  "child",
+        "candidate":  "01",
+        "file":  "morrow_child_candidate_seed_audio_01.wav",
+        "bytes":  1920078,
+        "sha256":  "0dcc595feda95db4d642148ebe37f7367979ba268b67161214cba1ec192ca67a",
+        "source_url":  "https://aka.doubaocdn.com/s/2pqKp29emf"
+    },
+    {
+        "stage":  "child",
+        "candidate":  "02",
+        "file":  "morrow_child_candidate_seed_audio_02.wav",
+        "bytes":  1920078,
+        "sha256":  "bc79aaed72652cf5cf93b96b8bc7347bf3547bb137398a1c9efb361519cde22a",
+        "source_url":  "https://aka.doubaocdn.com/s/inyVHUDDyx"
+    },
+    {
+        "stage":  "adult",
+        "candidate":  "01",
+        "file":  "morrow_adult_candidate_seed_audio_01.wav",
+        "bytes":  1920078,
+        "sha256":  "f703ea65e09a30cf09d79e881450e4c7e8827c7715b3b9c19996f4e9569ad3c7",
+        "source_url":  "https://aka.doubaocdn.com/s/h4e3qOapQh"
+    },
+    {
+        "stage":  "adult",
+        "candidate":  "02",
+        "file":  "morrow_adult_candidate_seed_audio_02.wav",
+        "bytes":  1920078,
+        "sha256":  "663118971de10b9cea5f1e8b14f2d2477f6d90f9a2880e0f309f2de82e70f2d5",
+        "source_url":  "https://aka.doubaocdn.com/s/Vcma42xahC"
+    }
+]

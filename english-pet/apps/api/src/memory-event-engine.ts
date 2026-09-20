@@ -26,6 +26,7 @@ interface IRuntimeEvent {
   selectedOutcomeId: string | null
   lastConfirmedUserExpression: string | null
   confirmedExpressions: Array<{ text: string; inputMode: EventActionRequest['inputMode'] }>
+  confirmedSlots: Record<string, WorldStateValue>
   resurfacingPrompt: ResurfacingPrompt | null
   resurfacingRecorded: boolean
   startOrdinal: number
@@ -222,6 +223,7 @@ export class MemoryEventEngine {
       instanceId: randomUUID(), definition, status: 'active',
       currentStateId: definition.states[0].id, clarificationCount: 0,
       selectedOutcomeId: null, lastConfirmedUserExpression: null, confirmedExpressions: [],
+      confirmedSlots: {},
       resurfacingPrompt: null, resurfacingRecorded: false, startOrdinal: user.startedEventCount + 1,
     }
     user.startedEventCount = runtime.startOrdinal
@@ -270,6 +272,14 @@ export class MemoryEventEngine {
 
     const { transition, ambiguous } = chooseTransition(runtime, action)
     if (!transition) throw new Error('transition_not_allowed')
+
+    // 在 ro04_place 状态捕获用户确认的物品落位（window | door），
+    // 供 outcome 的 fromSlot 写入使用；未确认则不写默认值。
+    if (runtime.currentStateId === 'ro04_place') {
+      const placementInput = `${action.choiceId ?? ''} ${action.text ?? ''}`.toLowerCase()
+      if (/\bwindow\b/.test(placementInput)) runtime.confirmedSlots.room_placement = 'window'
+      else if (/\bdoor\b/.test(placementInput)) runtime.confirmedSlots.room_placement = 'door'
+    }
 
     if (action.text && (action.action === 'submit' || action.action === 'clarify' || action.action === 'confirm')) {
       const confirmedText = action.text.trim()
@@ -325,7 +335,17 @@ export class MemoryEventEngine {
         : inferOutcome(runtime.definition, action) ?? runtime.definition.outcomes[0]
       runtime.selectedOutcomeId = outcome.id
       runtime.status = 'completed'
-      for (const write of outcome.worldStateWrites) user.worldState[write.key] = write.value
+      for (const write of outcome.worldStateWrites) {
+        if (write.fromSlot) {
+          const slotValue = runtime.confirmedSlots[write.fromSlot]
+          if (slotValue === undefined) throw new Error(`unconfirmed_slot:${write.fromSlot}`)
+          if (!write.allowedValues?.includes(slotValue)) throw new Error(`unconfirmed_slot:${write.fromSlot}`)
+          user.worldState[write.key] = slotValue
+        } else {
+          if (write.value === undefined) throw new Error(`missing_value:${write.key}`)
+          user.worldState[write.key] = write.value
+        }
+      }
       user.completedEventKeys.add(runtime.definition.id)
       user.completedAtByEventKey.set(runtime.definition.id, Date.now())
       user.completedCountByEventKey.set(runtime.definition.id, (user.completedCountByEventKey.get(runtime.definition.id) ?? 0) + 1)

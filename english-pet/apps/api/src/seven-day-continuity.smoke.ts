@@ -136,7 +136,7 @@ try {
   current = act(eventEngine, userId, current, 'continue').instance
   current = act(eventEngine, userId, current, 'submit', { text: "I'd rather have a small kettle because the room feels cold." }).instance
   current = act(eventEngine, userId, current, 'confirm').instance
-  current = act(eventEngine, userId, current, 'confirm', { choiceId: 'kettle_added' }).instance
+  current = act(eventEngine, userId, current, 'confirm', { choiceId: 'window' }).instance
   const day2Complete = act(eventEngine, userId, current, 'complete')
   assert.equal(day2Complete.outcome?.id, 'kettle_added')
   assert.ok(day2Complete.feedback)

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C:\004-MCYY 项目计划与关联文件只读审计报告（2026-09-19）</title>
+<style>
+  :root{--bg:#0f1419;--card:#1a2230;--ink:#e6edf3;--mut:#8b98a9;--line:#2a3547;
+        --h:#ff5d5d;--m:#ffb454;--l:#ffe08a;--ok:#4ade80;--chip:#22304a;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 -apple-system,"Segoe UI","Microsoft YaHei",sans-serif;}
+  .wrap{max-width:1180px;margin:0 auto;padding:32px 24px 80px;}
+  h1{font-size:26px;margin:0 0 6px;}
+  h2{font-size:20px;margin:38px 0 12px;border-left:4px solid #4a9eff;padding-left:10px;}
+  .sub{color:var(--mut);font-size:13px;margin-bottom:24px;}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0;}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;}
+  .stat .n{font-size:30px;font-weight:700;}
+  .stat .t{color:var(--mut);font-size:12px;}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:8px;}
+  th,td{border:1px solid var(--line);padding:8px 10px;vertical-align:top;text-align:left;}
+  th{background:#202b3d;color:#cfe0ff;}
+  tr:nth-child(even) td{background:#151d2a;}
+  .sev{font-weight:700;white-space:nowrap;}
+  .sev.h{color:var(--h);} .sev.m{color:var(--m);} .sev.l{color:var(--l);}
+  .cat{display:inline-block;padding:1px 8px;border-radius:10px;font-size:11.5px;background:var(--chip);color:#bcd2ff;white-space:nowrap;}
+  .cat.err{background:#3a1f24;color:#ff9a9a;}
+  .cat.hist{background:#3a2f18;color:#ffd28a;}
+  .cat.todo{background:#1c2f25;color:#9ae6b4;}
+  .cat.ok{background:#1f2733;color:#9fb3c8;}
+  code{background:#0c1220;padding:1px 5px;border-radius:4px;font-size:12.5px;color:#9fd0ff;}
+  .loc{color:#9fb3c8;font-size:12.5px;}
+  .ev{color:#cdd9e5;font-size:12.5px;}
+  .note{background:#152030;border:1px solid #2c4a6e;border-radius:8px;padding:12px 16px;font-size:13.5px;margin:10px 0;}
+  .okbox{background:#10241a;border:1px solid #2c6e4a;border-radius:8px;padding:12px 16px;font-size:13.5px;}
+  svg{width:100%;height:auto;background:#0c1220;border:1px solid var(--line);border-radius:10px;}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12.5px;color:var(--mut);margin:6px 0 0;}
+  .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:middle;}
+  @media(max-width:760px){.grid{grid-template-columns:repeat(2,1fr);}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>成人英语 AI 宠物 — 项目计划与关联文件只读审计</h1>
+<div class="sub">审计日期 2026-09-19 ｜ 根目录 <code>C:\004-MCYY</code>（含 english-pet monorepo）｜ 方式：5 路并行只读审计，未修改任何项目文件 ｜ 基准：正式=小程序/App、Web 仅测试；UI 全中文、学习内容英文+人工译文；固定内容+确定性规则、LLM 默认关；用户=朋友、Morrow 随七章成长不跳章；3.5.4 每章≥8 情景/≥4 交互、苹果仅样板；预制语音 Seed Audio 1.0 只播预存；ASR 首选千问。</div>
+
+<h2>一、总览</h2>
+<div class="grid">
+  <div class="stat"><div class="n" style="color:var(--h)">5</div><div class="t">高严重度</div></div>
+  <div class="stat"><div class="n" style="color:var(--m)">19</div><div class="t">中严重度</div></div>
+  <div class="stat"><div class="n" style="color:var(--l)">37</div><div class="t">低严重度</div></div>
+  <div class="stat"><div class="n" style="color:#9fb3c8">61</div><div class="t">去重后问题总数</div></div>
+</div>
+<div class="grid">
+  <div class="stat"><div class="n" style="color:#ff9a9a">18</div><div class="t">确定错误</div></div>
+  <div class="stat"><div class="n" style="color:#ffd28a">10</div><div class="t">历史资产（旧结论未标历史）</div></div>
+  <div class="stat"><div class="n" style="color:#9ae6b4">20</div><div class="t">待 3.5.4 补齐</div></div>
+  <div class="stat"><div class="n" style="color:#9fb3c8">13</div><div class="t">非问题（记录在案）</div></div>
+</div>
+<div class="note"><b>一句话结论：</b>文档与代码的骨架自洽（23 表/27 路由/五事件链/隐私口径/人设四份文档均核对一致），但存在 <b>3 处真正会导致线上行为错误的高优问题</b>（首日 UI 全英文且与契约两套事件体系并存、房间物品落位键被询问却从不写入），以及 <b>2 处"旧架构结论未标历史"</b>（TECH_STACK 仍写 Web/PWA 首发、AI_TECH_EVALUATION 仍按运行时 TTS 推荐）。其余多为 3.5.4 尚未启动的预期缺口，以及若干拼写/大小写/排版类小错。</div>
+
+<h2>二、问题分布与结构关系（示意）</h2>
+<div class="legend">
+  <span><span class="dot" style="background:var(--h)"></span>高</span>
+  <span><span class="dot" style="background:var(--m)"></span>中</span>
+  <span><span class="dot" style="background:var(--l)"></span>低</span>
+  <span>文档层 ↔ 契约层 ↔ 实现层；红点为冲突边</span>
+</div>
+<svg viewBox="0 0 1100 560" xmlns="http://www.w3.org/2000/svg" font-family="Microsoft YaHei, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 z" fill="#3a5a8a"/>
+    </marker>
+  </defs>
+  <!-- layer bands -->
+  <rect x="20" y="20" width="330" height="520" rx="12" fill="#142033" stroke="#24406b"/>
+  <rect x="385" y="20" width="330" height="520" rx="12" fill="#142a22" stroke="#246b4a"/>
+  <rect x="750" y="20" width="330" height="520" rx="12" fill="#2a2033" stroke="#6b4a24"/>
+  <text x="185" y="48" fill="#9fd0ff" font-size="16" text-anchor="middle" font-weight="700">文档层（.md/.html）</text>
+  <text x="550" y="48" fill="#9ae6b4" font-size="16" text-anchor="middle" font-weight="700">契约/领域层（contracts/domain）</text>
+  <text x="915" y="48" fill="#ffd28a" font-size="16" text-anchor="middle" font-weight="700">实现层（database/api/web/ai）</text>
+
+  <!-- doc nodes -->
+  <g font-size="12.5" fill="#e6edf3">
+    <rect x="40" y="70" width="290" height="34" rx="6" fill="#0f1830" stroke="#2a3a5a"/>
+    <text x="50" y="91">执行计划 / TECH_STACK / AI评估</text>
+    <rect x="40" y="112" width="290" height="34" rx="6" fill="#0f1830" stroke="#2a3a5a"/>
+    <text x="50" y="133">DATA_MODEL / 迁移 / EVENTS_V1</text>
+    <rect x="40" y="154" width="290" height="34" rx="6" fill="#0f1830" stroke="#2a3a5a"/>
+    <text x="50" y="175">固定内容契约 / 蓝图 / 首两章</text>
+    <rect x="40" y="196" width="290" height="34" rx="6" fill="#0f1830" stroke="#2a3a5a"/>
+    <text x="50" y="217">首日流程 / 角色 / 隐私 / 自测</text>
+  </g>
+
+  <!-- contract nodes -->
+  <g font-size="12.5" fill="#e6edf3">
+    <rect x="405" y="70" width="290" height="34" rx="6" fill="#0e241c" stroke="#2a5a44"/>
+    <text x="415" y="91">events.ts / event-runtime.ts</text>
+    <rect x="405" y="112" width="290" height="34" rx="6" fill="#0e241c" stroke="#2a5a44"/>
+    <text x="415" y="133">fixed-content.ts / journal.ts 等</text>
+    <rect x="405" y="154" width="290" height="34" rx="6" fill="#0e241c" stroke="#2a5a44"/>
+    <text x="415" y="175">events-v1.ts / fixed-content-v1.ts</text>
+  </g>
+
+  <!-- impl nodes -->
+  <g font-size="12.5" fill="#e6edf3">
+    <rect x="770" y="70" width="290" height="34" rx="6" fill="#241a30" stroke="#5a442a"/>
+    <text x="780" y="91">schema.ts / 0000_initial.sql</text>
+    <rect x="770" y="112" width="290" height="34" rx="6" fill="#241a30" stroke="#5a442a"/>
+    <text x="780" y="133">apps/api/index.ts / http.ts</text>
+    <rect x="770" y="154" width="290" height="34" rx="6" fill="#241a30" stroke="#5a442a"/>
+    <text x="780" y="175">apps/web（页面/i18n）</text>
+    <rect x="770" y="196" width="290" height="34" rx="6" fill="#241a30" stroke="#5a442a"/>
+    <text x="780" y="217">packages/ai（asr/tts/llm）</text>
+  </g>
+
+  <!-- edges with severity dots -->
+  <!-- doc->contract: state id case mismatch (medium) -->
+  <line x1="330" y1="129" x2="405" y2="87" stroke="#3a5a8a" stroke-width="1.5" marker-end="url(#arr)"/>
+  <circle cx="367" cy="108" r="7" fill="#ffb454"/>
+  <!-- doc->contract: world key mismatch (medium) -->
+  <line x1="330" y1="129" x2="405" y2="167" stroke="#3a5a8a" stroke-width="1.5" marker-end="url(#arr)"/>
+  <circle cx="367" cy="148" r="7" fill="#ffb454"/>
+  <!-- doc->impl: room_added_object_location (HIGH) -->
+  <line x1="185" y1="230" x2="770" y2="87" stroke="#ff5d5d" stroke-width="2" marker-end="url(#arr)"/>
+  <circle cx="470" cy="140" r="9" fill="#ff5d5d"/>
+  <!-- contract->impl: platform enum hyphen vs underscore (medium) -->
+  <line x1="695" y1="129" x2="770" y2="87" stroke="#3a5a8a" stroke-width="1.5" marker-end="url(#arr)"/>
+  <circle cx="732" cy="108" r="7" fill="#ffb454"/>
+  <!-- contract->impl: journal version missing (medium) -->
+  <line x1="695" y1="129" x2="770" y2="87" stroke="#3a5a8a" stroke-width="1.5" marker-end="url(#arr)"/>
+  <circle cx="732" cy="129" r="7" fill="#ffb454"/>
+  <!-- doc->impl: UI English (HIGH) -->
+  <line x1="185" y1="230" x2="770" y2="167" stroke="#ff5d5d" stroke-width="2" marker-end="url(#arr)"/>
+  <circle cx="470" cy="198" r="9" fill="#ff5d5d"/>
+  <!-- impl: ASR/TTS/LLM not wired (medium cluster) -->
+  <line x1="915" y1="200" x2="915" y2="260" stroke="#ffb454" stroke-width="1.5"/>
+  <rect x="770" y="262" width="290" height="120" rx="8" fill="#1a1430" stroke="#6b4a24" stroke-dasharray="4 3"/>
+  <text x="785" y="285" fill="#ffd28a" font-size="12.5">待 3.5.4 补齐（实现层）：</text>
+  <text x="785" y="306" fill="#cdd9e5" font-size="12">• ASR 仍 Mock，未装千问/豆包 fallback</text>
+  <text x="785" y="326" fill="#cdd9e5" font-size="12">• TTS 仍实时合成，未改播预存文件</text>
+  <text x="785" y="346" fill="#cdd9e5" font-size="12">• 缺 llm_assist_enabled 默认关开关</text>
+  <text x="785" y="366" fill="#cdd9e5" font-size="12">• N1/N2/N3 新端点、5 张持久化表未建</text>
+
+  <!-- doc: legacy unmarked -->
+  <rect x="40" y="262" width="290" height="120" rx="8" fill="#2a1a1a" stroke="#6b2a2a" stroke-dasharray="4 3"/>
+  <text x="55" y="285" fill="#ff9a9a" font-size="12.5">历史资产未标历史（文档层）：</text>
+  <text x="55" y="306" fill="#cdd9e5" font-size="12">• TECH_STACK 仍写 Web/PWA 首发</text>
+  <text x="55" y="326" fill="#cdd9e5" font-size="12">• AI_TECH_EVALUATION 仍按运行时 TTS</text>
+  <text x="55" y="346" fill="#cdd9e5" font-size="12">• 成本图基于旧运行时模型</text>
+  <text x="55" y="366" fill="#cdd9e5" font-size="12">• CloudBase 写死 vs 主计划待定</text>
+
+  <!-- legend bottom -->
+  <text x="40" y="430" fill="#8b98a9" font-size="12">实线=契约/数据流；红色粗线=高优冲突边；橙色=中优；虚线框=待办/历史区块。本图为结构示意，非完整证据。</text>
+  <text x="40" y="455" fill="#8b98a9" font-size="12">已核对一致（无连线问题）：schema↔SQL 32枚举/23表/外键索引逐项对齐；五事件依赖复现链；隐私两份口径；Morrow 人设四份文档；27 路由与 Web 调用一一对应。</text>
+</svg>
+
+<h2>三、高严重度（5 条）— 建议优先处理</h2>
+<table>
+<thead><tr><th style="width:70">编号</th><th style="width:90">分类</th><th>问题与位置</th><th style="width:240">证据 / 影响 / 建议</th></tr></thead>
+<tbody>
+<tr><td class="sev h">H1</td><td><span class="cat err">确定错误</span></td>
+  <td><b>房间物品落位键 <code>room_added_object_location</code> 被询问却从不写入</b><br><span class="loc">DATA_MODEL.md:259 ｜ EVENTS_V1.md:250 ｜ domain/events-v1.ts:269-332</span></td>
+  <td class="ev">证据：ro04_place 问"窗边还是门边"，但 chair/shelf/kettle 三个 outcome 的 worldStateWrites 都只写 <code>room_added_object</code>，全仓 grep 不到 location 写入。<br>影响：用户选了落位，剧情却接不住。建议：给位置选择补 outcome 或在物品 outcome 追加 location 写入。</td></tr>
+<tr><td class="sev h">H2</td><td><span class="cat err">确定错误</span></td>
+  <td><b>首日流程功能 UI 全英文，违反"功能 UI 全中文"</b><br><span class="loc">FIRST_DAY_FLOW.md:87-445 ｜ FIRST_DAY_FLOW.html:28-35</span></td>
+  <td class="ev">证据：按钮 Listen / Continue / Save / Edit / Skip for now / The lamp… 全英文。影响：最高频首屏与契约 §7.1 硬边界冲突。建议：功能文案改中文，英文仅留作 Morrow 台词与参考句。</td></tr>
+<tr><td class="sev h">H3</td><td><span class="cat err">确定错误</span></td>
+  <td><b>首日"恢复物品"两套事件体系并存，且数量 2 件 vs 3 件</b><br><span class="loc">FIRST_DAY_FLOW.md:313-533 ｜ FIXED_CONTENT_CONTRACT.md:312-320 ｜ CHAPTER_01:102-193</span></td>
+  <td class="ev">证据：旧 <code>first_day_v1</code>/FD00-FD07 只选灯/植物；新契约 <code>birth_restore_object_v1</code> 三选含 small_bell。影响：迁移会选错口径。建议：以 birth_* 三选为准重写首日流程，或把 FIRST_DAY_FLOW 标注为旧 Web 原型。</td></tr>
+<tr><td class="sev h">H4</td><td><span class="cat hist">历史资产</span></td>
+  <td><b>TECH_STACK 顶部仍写"Web/PWA 首发"，与"小程序/App 正式、Web 仅测试"冲突</b><br><span class="loc">TECH_STACK.md:3,7,13,277</span></td>
+  <td class="ev">证据："状态：已定稿…平台策略：Web/PWA 首发"；文末虽追加"Web 仅测试"却注明"只追加不改写"。影响：读者误把 Web 当正式端。建议：在顶部与 §1/§2/§9/§13 加"⚠ 已被 3.5.3 取代"标注或改写正文。</td></tr>
+<tr><td class="sev h">H5</td><td><span class="cat hist">历史资产</span></td>
+  <td><b>AI_TECH_EVALUATION 全文仍按"运行时集成一家 TTS 服务"推荐，未提 Seed Audio 1.0 预制</b><br><span class="loc">AI_TECH_EVALUATION.md:69,49-55,153,226</span></td>
+  <td class="ev">证据：无一处出现 Seed Audio 1.0，仍把 TTS 计为每次 ¥0.40 实时成本。影响：与"只播预存文件"决策相悖却未标历史。建议：§3/§4/§8 顶部加注"已被执行计划 1.6 预制方案取代，本节为历史资料"。</td></tr>
+</tbody></table>
+
+<h2>四、中严重度（19 条）</h2>
+<table>
+<thead><tr><th style="width:60">编号</th><th style="width:90">分类</th><th>问题与位置</th><th style="width:230">证据 / 建议</th></tr></thead>
+<tbody>
+<tr><td class="sev m">M1</td><td><span class="cat err">确定错误</span></td><td>BUGS.md 仍把"真实 LLM 角色一致性"列为未关闭证据门/上线条件 <span class="loc">BUGS.md:59,75</span></td><td>与主计划"LLM 非 MVP 门槛"冲突；建议从 EVIDENCE-1.6-001 与上线条件中移除。</td></tr>
+<tr><td class="sev m">M2</td><td><span class="cat hist">历史资产</span></td><td>ASR 候选表不含实际首选 qwen3-asr-flash <span class="loc">AI_TECH_EVALUATION.md:36-43 vs :68</span></td><td>第一候选不在自家候选表；建议补一行或注明同属百炼。</td></tr>
+<tr><td class="sev m">M3</td><td><span class="cat hist">历史资产</span></td><td>TECH_STACK 把 CloudBase 写死为"已定稿首发云"，主计划 4.1 仍"云厂商待定" <span class="loc">TECH_STACK.md:22-25 vs 执行计划:1304</span></td><td>跨文件状态冲突；建议标"候选/待 4.1 选定"。</td></tr>
+<tr><td class="sev m">M4</td><td><span class="cat hist">历史资产</span></td><td>AI_COST_VISUALIZATION.html 整页基于旧运行时 LLM+实时 TTS 成本模型 <span class="loc">AI_COST_VISUALIZATION.html:45-67</span></td><td>数字本身自洽，但架构已变；建议页首加"历史理论估算"标注。</td></tr>
+<tr><td class="sev m">M5</td><td><span class="cat err">确定错误</span></td><td>表名拼作 <code>fixed_rulesits</code>（应为 fixed_rulesets） <span class="loc">DATA_MODEL_MIGRATION.md:64</span></td><td>照抄会建错表名；建议改 :64 标题。</td></tr>
+<tr><td class="sev m">M6</td><td><span class="cat err">确定错误</span></td><td>事件状态 ID 大小写分裂：EVENTS_V1 大写 LT01_OPEN，DATA_MODEL 与代码小写 lt01_open <span class="loc">EVENTS_V1.md:141,142,214 vs DATA_MODEL.md:183 vs events-v1.ts:55</span></td><td>对账易误判两套状态机；建议统一为小写并与落库值一致。</td></tr>
+<tr><td class="sev m">M7</td><td><span class="cat err">确定错误</span></td><td>事件3世界键：EVENTS_V1 写 communication_success/repair，实际写 last_communication_result <span class="loc">EVENTS_V1.md:324 vs DATA_MODEL.md:260 vs events-v1.ts:476-492</span></td><td>按规格实现会写白名单外键；建议以 DATA_MODEL+代码为准改 EVENTS_V1。</td></tr>
+<tr><td class="sev m">M8</td><td><span class="cat err">确定错误</span></td><td>第一章日常事件池仅 4 个，低于蓝图自定"每章 5–8 个 daily" <span class="loc">CHAPTER_01:12 vs 蓝图:56,188</span></td><td>连续使用更早撞车；建议补到 ≥5 或注明首章特殊。</td></tr>
+<tr><td class="sev m">M9</td><td><span class="cat err">确定错误</span></td><td>"旧表达提示出现天数"三处口径不一：清单 4 天 vs 七日记录/总览 HTML 5 天 <span class="loc">SELF_TEST_CHECKLIST.md:258 vs SEVEN_DAY_SELF_TEST.md:168 vs OVERVIEW.html:19</span></td><td>评审无法判断哪个为准；建议以逐日记录为准三处同步。</td></tr>
+<tr><td class="sev m">M10</td><td><span class="cat todo">待3.5.4</span></td><td>E01-02 缺"稍后再来"暂停出口（文件自承认），两章未逐章列≥4 种交互类型 <span class="loc">CHAPTER_01:164,1164 vs 蓝图:64,124</span></td><td>与蓝图硬约束冲突；建议补 bro_intent_pause 并在 3.5.4 列交互类型清单。</td></tr>
+<tr><td class="sev m">M11</td><td><span class="cat err">确定错误</span></td><td>平台枚举 domain 用连字符、contracts 用下划线，匹配会全失配 <span class="loc">domain/index.ts:4 vs contracts/fixed-content.ts:7</span></td><td>三端判定会误判不支持；建议统一为下划线版。</td></tr>
+<tr><td class="sev m">M12</td><td><span class="cat err">确定错误</span></td><td>journal_entries 表无 version 列，契约 expectedVersion 乐观锁无处落地 <span class="loc">contracts/journal.ts:17,39 vs schema.ts:697-725</span></td><td>乐观锁空转；建议追加迁移加 version 列并递增。</td></tr>
+<tr><td class="sev m">M13</td><td><span class="cat err">确定错误</span></td><td>journal 契约 eventKey/titleZh/pronunciationNote 在 DB 无对应列 <span class="loc">contracts/journal.ts:8,10,14 vs schema.ts:697-725</span></td><td>出参无法单行组装；建议补列或明确服务端派生。</td></tr>
+<tr><td class="sev m">M14</td><td><span class="cat todo">待3.5.4</span></td><td>ASR 硬编码 MockASR，无"千问首选/豆包 fallback"装配 <span class="loc">api/index.ts:42 ｜ ai/index.ts:13-15 ｜ .env.example:20-23</span></td><td>决策在代码/环境变量无落点；建议 ASR_MODEL 默认 qwen3-asr-flash。</td></tr>
+<tr><td class="sev m">M15</td><td><span class="cat todo">待3.5.4</span></td><td>TTS 仍实时合成任意文本（/v1/audio/speech + Web 实时 synthesize） <span class="loc">api/index.ts:332-359 ｜ VoiceControls.tsx:29,43 ｜ TECH_STACK.md:160,268</span></td><td>违背"只播 Seed Audio 预存文件"；建议改按 audioId 取预存文件并下线该端点。</td></tr>
+<tr><td class="sev m">M16</td><td><span class="cat todo">待3.5.4</span></td><td>缺 llm_assist_enabled 默认关闭开关，MockLLM 直驱对话链 <span class="loc">memory-account-store.ts:35-46 ｜ memory-conversation-store.ts:24,170</span></td><td>"LLM 默认关"无开关可落；建议在 UserSettings 补默认 false 并在对话链读取。</td></tr>
+<tr><td class="sev m">M17</td><td><span class="cat todo">待3.5.4</span></td><td>迁移新端点 N1/N2/N3（ruleset/intents/audio-bindings）后端全部缺失 <span class="loc">api/index.ts 全文</span></td><td>规则集下发/意图预览/音频绑定无端点；建议按 API_MIGRATION 补路由。</td></tr>
+<tr><td class="sev m">M18</td><td><span class="cat todo">待3.5.4</span></td><td>http.ts 全部 21 条错误 message 为英文 <span class="loc">api/http.ts:26-47</span></td><td>用户可见功能错误英文；建议按 API_MIGRATION 3.1 整体中文化。</td></tr>
+<tr><td class="sev m">M19</td><td><span class="cat todo">待3.5.4</span></td><td>Settings 仍可切界面语言到 en，interfaceLocale 可写，copy.ts 保留完整 en 块 <span class="loc">SettingsPage.tsx:60-63 ｜ i18n/copy.ts:34-72</span></td><td>与"interfaceLocale 固定 zh-CN 只读"相悖；建议移除语言选择器与 en 块。</td></tr>
+</tbody></table>
+
+<h2>五、低严重度（37 条）</h2>
+<table>
+<thead><tr><th style="width:60">编号</th><th style="width:90">分类</th><th>问题与位置</th><th style="width:230">证据 / 建议</th></tr></thead>
+<tbody>
+<tr><td class="sev l">L1</td><td><span class="cat err">确定错误</span></td><td>主计划代码块内 4 处字面 <code>&amp;#x20;</code> 按字面渲染为乱码 <span class="loc">执行计划:47,51,55,59</span></td><td>围栏代码块不解析实体；建议改为普通空格（:1548 在段落里无需改）。</td></tr>
+<tr><td class="sev l">L2</td><td><span class="cat err">确定错误</span></td><td>主计划顶层标题层级错乱：1–3 章用 ##、4–13 章用 # <span class="loc">执行计划:16,38,253 vs 268 起</span></td><td>大纲层级错乱；建议统一一级标题。</td></tr>
+<tr><td class="sev l">L3</td><td><span class="cat err">确定错误</span></td><td>3.5.4"苹果样板"任务近乎重复列两次 <span class="loc">执行计划:1252 vs :1258</span></td><td>建议合并为一条。</td></tr>
+<tr><td class="sev l">L4</td><td><span class="cat err">确定错误</span></td><td>两章英文台词排版不一（第一章反引号、第二章不加；结果行前缀不一） <span class="loc">CHAPTER_01:36-41 vs CHAPTER_02:55-60</span></td><td>建议按蓝图 §5 模板统一。</td></tr>
+<tr><td class="sev l">L5</td><td><span class="cat err">确定错误</span></td><td>FIRST_DAY_FLOW.md 与 .html 存在 FD05 台词/FD07 文案微差 <span class="loc">.md:319,444 vs .html:33,35</span></td><td>建议以 .md 为准回填 .html。</td></tr>
+<tr><td class="sev l">L6</td><td><span class="cat err">确定错误</span></td><td>bell 选项引用 bro_bell_reply 但未列入 state.referenceReplyLineIds <span class="loc">fixed-content-v1.ts:237 vs :239</span></td><td>渲染可能漏 bell 参考句；建议对齐或注释。</td></tr>
+<tr><td class="sev l">L7</td><td><span class="cat todo">待3.5.4</span></td><td>first_restored_object 白名单未纳入 small_bell <span class="loc">DATA_MODEL.md:255 vs fixed-content-v1.ts:258</span></td><td>文档滞后；建议在 §6.5 补该值。</td></tr>
+<tr><td class="sev l">L8</td><td><span class="cat todo">待3.5.4</span></td><td>"26 个错误码"口径不明（实际 21+6=27） <span class="loc">MIGRATION_PLAN:116 vs http.ts:27-47</span></td><td>验收计数基准不清；建议注明口径。</td></tr>
+<tr><td class="sev l">L9</td><td><span class="cat todo">待3.5.4</span></td><td>3.5.4 六个交付物 md 尚不存在（计划已正确标待办） <span class="loc">执行计划:1264-1270,1516-1524</span></td><td>预期缺口，非虚报。</td></tr>
+<tr><td class="sev l">L10</td><td><span class="cat todo">待3.5.4</span></td><td>第 3–7 章事件内容尚未编写（仅章门定义） <span class="loc">蓝图:36-40</span></td><td>按 3.5.4 节奏补齐。</td></tr>
+<tr><td class="sev l">L11</td><td><span class="cat todo">待3.5.4</span></td><td>固定内容代码仅 1 章 2 事件，远未达七章×≥8 <span class="loc">fixed-content-v1.ts:267</span></td><td>交互类型 5 种已够，但情景数严重不足。</td></tr>
+<tr><td class="sev l">L12</td><td><span class="cat todo">待3.5.4</span></td><td>固定内容 5 张持久化表尚未在 0000 migration 建立 <span class="loc">DATA_MODEL.md:641 vs 0000_initial.sql</span></td><td>规则集/音频绑定/章节进度无落库；建议追加 migration。</td></tr>
+<tr><td class="sev l">L13</td><td><span class="cat todo">待3.5.4</span></td><td>/v1/events 仍返 events-v1.0.0，未切 fixed-content 且无版本字段 <span class="loc">api/index.ts:252 ｜ memory-event-engine.ts:98</span></td><td>建议接入 fixed-content 并回带版本。</td></tr>
+<tr><td class="sev l">L14</td><td><span class="cat todo">待3.5.4</span></td><td>degradation 兜底文案英文、SSE 错误经 ChatPage 直出英文 <span class="loc">degradation.ts:31-109 ｜ ChatPage.tsx:76</span></td><td>建议中文化或后端按 locale 返回。</td></tr>
+<tr><td class="sev l">L15</td><td><span class="cat todo">待3.5.4</span></td><td>ProtectedRoute 加载文案硬编码英文 <span class="loc">ProtectedRoute.tsx:13</span></td><td>建议改"正在恢复你的房间…"。</td></tr>
+<tr><td class="sev l">L16</td><td><span class="cat todo">待3.5.4</span></td><td>页面 mono 英文 eyebrow 标签硬编码 <span class="loc">MemoryPage:71 ｜ JournalPage:60 ｜ EventPage:121</span></td><td>建议中文化。</td></tr>
+<tr><td class="sev l">L17</td><td><span class="cat todo">待3.5.4</span></td><td>Web 未引入 TECH_STACK 指定的 TanStack Query/Zustand/vite-plugin-pwa <span class="loc">apps/web/package.json</span></td><td>因 Web 已降为测试端，非当前门槛。</td></tr>
+<tr><td class="sev l">L18</td><td><span class="cat todo">待3.5.4</span></td><td>.env WEB_ORIGIN=5173 与 API CORS 默认 27831/29467 不一致 <span class="loc">.env.example:2 ｜ api/index.ts:45</span></td><td>未加载 .env 时本地跨域可能被拦。</td></tr>
+<tr><td class="sev l">L19</td><td><span class="cat todo">待3.5.4</span></td><td>FirstDayPage 进度起始 off-by-one 显示 0/8 <span class="loc">FirstDayPage.tsx:37-39,76</span></td><td>建议起始显示 1/8。</td></tr>
+<tr><td class="sev l">L20</td><td><span class="cat todo">待3.5.4</span></td><td>notFound 返回 400 而非 404；/health 未带规则集版本 <span class="loc">api/index.ts:438,71-77</span></td><td>建议改 404 并补版本字段。</td></tr>
+<tr><td class="sev l">L21</td><td><span class="cat hist">历史资产</span></td><td>DATA_MODEL §6.1 漏列 event_definitions 三个 notNull 列 <span class="loc">DATA_MODEL.md:195-203 vs schema.ts:333-335</span></td><td>建议补 persona_version/prompt_version/output_schema_version。</td></tr>
+<tr><td class="sev l">L22</td><td><span class="cat hist">历史资产</span></td><td>DATA_MODEL §14 仍以旧 5 事件为"首批必须使用"（已声明只追加不重写） <span class="loc">DATA_MODEL.md:577-585,638</span></td><td>建议表头加"以下为 events-v1.0.0 历史事件"注记。</td></tr>
+<tr><td class="sev l">L23</td><td><span class="cat hist">历史资产</span></td><td>3.1 自测把"英文 UI 切换"列为通过项（迁移清单已标弃用） <span class="loc">SELF_TEST_CHECKLIST:30</span></td><td>保持弃用标注即可。</td></tr>
+<tr><td class="sev l">L24</td><td><span class="cat hist">历史资产</span></td><td>自测旧事件名（morrow_letter_v1 等）与新蓝图 b1_/b2_ 体系无交叉 <span class="loc">SELF_TEST_CHECKLIST:242-248 ｜ SEVEN_DAY:29-152</span></td><td>阶段差；建议在 SEVEN_DAY 顶部加说明。</td></tr>
+<tr><td class="sev l">L25</td><td><span class="cat hist">历史资产</span></td><td>/chat SSE MockLLM 自由对话主链路仍默认挂载且可路由 <span class="loc">api/index.ts:393 ｜ web/app.tsx:25</span></td><td>API_MIGRATION 判弃用；正式端应加开关或下线。</td></tr>
+<tr><td class="sev l">L26</td><td><span class="cat ok">非问题</span></td><td>主计划 :8 悬空单句"。" <span class="loc">执行计划:8</span></td><td>排版残句，不影响语义。</td></tr>
+<tr><td class="sev l">L27</td><td><span class="cat ok">非问题</span></td><td>BUGS.md"当前阶段"仍指已完成的阶段 3 <span class="loc">BUGS.md:4</span></td><td>建议顺手更新为阶段 3.5。</td></tr>
+<tr><td class="sev l">L28</td><td><span class="cat ok">非问题</span></td><td>BUGS.md"当前未关闭项"表内含 3 条已闭环 TEST 项 <span class="loc">BUGS.md:55-64</span></td><td>表名与内容口径不一致。</td></tr>
+<tr><td class="sev l">L29</td><td><span class="cat ok">非问题</span></td><td>"仅追加可空列"措辞与 llm_assist_enabled NOT NULL 字面冲突 <span class="loc">DATA_MODEL.md:640</span></td><td>建议补括注 not null default false。</td></tr>
+<tr><td class="sev l">L30</td><td><span class="cat ok">非问题</span></td><td>注销状态机漏列源码枚举已有的 failed <span class="loc">DATA_MODEL.md:449-450 vs schema.ts:189-196</span></td><td>建议补一句。</td></tr>
+<tr><td class="sev l">L31</td><td><span class="cat ok">非问题</span></td><td>意图 match_kind 与 API fallbackKind 命名未对齐 <span class="loc">DATA_MODEL_MIGRATION:157 vs API_MIGRATION:52</span></td><td>建议统一否认用词。</td></tr>
+<tr><td class="sev l">L32</td><td><span class="cat ok">非问题</span></td><td>PET_PERSONA"成熟年轻伙伴"与七章人生弧有表述张力（蓝图已解释） <span class="loc">PET_PERSONA:15</span></td><td>可不改；如求严谨补一句说明。</td></tr>
+<tr><td class="sev l">L33</td><td><span class="cat ok">非问题</span></td><td>memory 契约 sourceType 在 memories 表无独立列（靠外键派生） <span class="loc">contracts/memory.ts:19 vs schema.ts:586-624</span></td><td>可由外键派生。</td></tr>
+<tr><td class="sev l">L34</td><td><span class="cat ok">非问题</span></td><td>language_feedback 契约 suggestedMemoryId/sourceType 与 DB 建模不同 <span class="loc">contracts/feedback.ts:19,28 vs schema.ts:743-781</span></td><td>建议服务端关联组装。</td></tr>
+<tr><td class="sev l">L35</td><td><span class="cat ok">非问题</span></td><td>first_day_v1 仅作魔法字符串依赖，ruleset 无其 EventDefinition（已特判放行） <span class="loc">events-v1.ts:36 vs contracts/events.ts:273</span></td><td>设计内特例。</td></tr>
+<tr><td class="sev l">L36</td><td><span class="cat ok">非问题</span></td><td>运行时事件状态枚举未覆盖 DB 的 abandoned <span class="loc">contracts/events.ts:26-31 vs schema.ts:89-95</span></td><td>视图裁剪。</td></tr>
+<tr><td class="sev l">L37</td><td><span class="cat ok">非问题</span></td><td>根 package.json 无统一 build/test 脚本；ExamplePage 为已注释死代码 <span class="loc">english-pet/package.json ｜ ExamplePage.tsx:8</span></td><td>子包脚本齐备；可删死代码。</td></tr>
+</tbody></table>
+
+<h2>六、已核对为一致 / 无问题（记录在案）</h2>
+<div class="okbox">
+✅ 数据库：schema.ts 与 0000_initial.sql 的 32 个 pgEnum、23 张表、全部外键/唯一索引/部分索引/CHECK 约束逐项对齐。<br>
+✅ API：index.ts 实际 27 个路由与 API_MIGRATION.md 逐行一致；Web 各 api/*.ts 调用路径与后端路由一一对应，无悬空调用、无 import 不存在文件。<br>
+✅ 事件链：events-v1 五事件 ID、初始状态、结果 ID、依赖链与复现链与 DATA_MODEL §14、EVENTS_V1 §2.1 完全吻合；ruleset 恰 5 事件。<br>
+✅ 隐私：PRIVACY_DESIGN 与 PRIVACY_POLICY_DRAFT 在"确认后才存文本、未确认 ASR 不落库、临时录音≤24h、不训练、删除顺序"上完全一致。<br>
+✅ 人设：PET_PERSONA / PET_SYSTEM_PROMPT / PET_RESPONSE_EXAMPLES / 两章内容在 they/them、一次一问、不惩罚缺席、非真人/非唯一朋友、用户=朋友上口径统一。<br>
+✅ 章节数量：第一章 12 事件（7主线/4日常/1回访）、第二章 12 事件（6主线/5日常/1回访），与蓝图 §7 逐行一致；素材音频/图片数复算相符。<br>
+✅ 七日自测：逐日事件、结果、确认记忆条数（7→13）、共同记忆篇数在两份文档间一致。<br>
+✅ HTML：三个 HTML 均有文档级 &lt;title&gt;、无外部资源引用、无可见转义/乱码；AI_COST_VISUALIZATION 数字与 AI_TECH_EVALUATION §8 逐项复算一致。<br>
+✅ 3.5.4 节本身真实存在且与基准一致（每章≥8 情景/≥4 交互、苹果仅样板、七章数与 24 事件自洽），无虚报完成。<br>
+✅ 跨文件/代码路径抽查全部真实存在，无死链；Morrow 系统提示词"低压力同伴"方向与"用户=朋友"一致。
+</div>
+
+<div class="sub" style="margin-top:30px">审计方式：5 路并行只读审计（主计划/技术栈、数据/迁移、内容/角色/隐私、契约/领域/数据库、api/web/ai 运行时），交叉去重后成稿。所有行号可用对应文件 Read 复核。本次只读，未修改任何项目文件。</div>
+</div>
+</body>
+</html>

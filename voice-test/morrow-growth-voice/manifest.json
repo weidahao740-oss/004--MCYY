@@ -1,0 +1,68 @@
+﻿{
+    "schema_version":  "2.0.0",
+    "updated_date":  "2026-09-19",
+    "decision":  "single_voice_for_all_life_stages",
+    "voice_profile_id":  "morrow_voice_v1",
+    "source_asset":  "morrow_age_05_seed_audio_t2a_v1.wav",
+    "canonical_asset":  "morrow_voice_standard_v1.wav",
+    "source_sha256":  "b025ec2afc1ff4bd65c78073b7fbd4446ce991950ab05babe11dd407ca8c1a27",
+    "canonical_sha256":  "8a7d95145f7ff841d2934e2530b3df3f7cf761023fddc4ef43ad52887b23cc5f",
+    "generation":  "seed_audio_1.0_t2a",
+    "loudness":  {
+                     "target_active_rms_dbfs":  -20,
+                     "allowed_tolerance_db":  1,
+                     "peak_ceiling_dbfs":  -3,
+                     "canonical_active_rms_dbfs":  -19.91,
+                     "canonical_peak_dbfs":  -6.41,
+                     "normalizer":  "english-pet/scripts/normalize_morrow_audio.py",
+                     "report":  "morrow_voice_standard_v1.level.json"
+                 },
+    "retired_experiments":  [
+                                {
+                                    "file":  "morrow_adult_candidate_seed_audio_01.wav",
+                                    "previous_status":  "pending_user_review",
+                                    "status":  "retired_experiment",
+                                    "sha256":  "f703ea65e09a30cf09d79e881450e4c7e8827c7715b3b9c19996f4e9569ad3c7"
+                                },
+                                {
+                                    "file":  "morrow_adult_candidate_seed_audio_02.wav",
+                                    "previous_status":  "pending_user_review",
+                                    "status":  "retired_experiment",
+                                    "sha256":  "663118971de10b9cea5f1e8b14f2d2477f6d90f9a2880e0f309f2de82e70f2d5"
+                                },
+                                {
+                                    "file":  "morrow_child_candidate_seed_audio_01.wav",
+                                    "previous_status":  "pending_user_review",
+                                    "status":  "retired_experiment",
+                                    "sha256":  "0dcc595feda95db4d642148ebe37f7367979ba268b67161214cba1ec192ca67a"
+                                },
+                                {
+                                    "file":  "morrow_child_candidate_seed_audio_02.wav",
+                                    "previous_status":  "pending_user_review",
+                                    "status":  "retired_experiment",
+                                    "sha256":  "bc79aaed72652cf5cf93b96b8bc7347bf3547bb137398a1c9efb361519cde22a"
+                                },
+                                {
+                                    "file":  "morrow_teen_standard_v1.wav",
+                                    "previous_status":  "accepted_as_anchor",
+                                    "status":  "retired_experiment",
+                                    "sha256":  "10da85e7d490e9d2b1aa0e3ab0df23dd8d8c651c2153fd48fc64a957b70811ed"
+                                }
+                            ],
+    "release_rules":  [
+                          "Use canonical asset as the only voice reference",
+                          "Normalize every generated file before review",
+                          "Normal and slow may differ in pace only",
+                          "Ready requires text, voice, loudness, and manual review"
+                      ],
+    "release_format":  {
+                           "container":  "WAV",
+                           "codec":  "PCM",
+                           "sample_rate_hz":  16000,
+                           "channels":  1,
+                           "bits_per_sample":  16,
+                           "riff_length_field":  384036,
+                           "data_length_field":  384000,
+                           "length_fields_valid":  true
+                       }
+}

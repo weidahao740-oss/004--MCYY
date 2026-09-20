@@ -62,10 +62,14 @@ current = engine.start(userId, { eventKey: 'room_object_v1', idempotencyKey: id(
 current = act(current, 'continue').instance
 current = act(current, 'submit', { text: "I'd rather have a shelf because it can hold the letter." }).instance
 current = act(current, 'confirm').instance
-current = act(current, 'confirm').instance
-const roomComplete = act(current, 'complete')
+current = act(current, 'confirm', { choiceId: 'window' }).instance
+const roomCompleteKey = id('room-complete')
+const roomComplete = act(current, 'complete', { key: roomCompleteKey })
+const roomReplay = act(current, 'complete', { key: roomCompleteKey })
 assert.equal(roomComplete.outcome?.id, 'shelf_added')
 assert.equal(roomComplete.instance.worldState.room_added_object, 'narrow_shelf')
+assert.equal(roomComplete.instance.worldState.room_added_object_location, 'window')
+assert.deepEqual(roomReplay, roomComplete)
 assertCatalog('literal_misunderstanding_v1')
 
 current = engine.start(userId, { eventKey: 'literal_misunderstanding_v1', idempotencyKey: id('start-misunderstanding') }, 'NEW')
@@ -107,6 +111,35 @@ assert.deepEqual(statuses, [
   { eventKey: 'first_outing_v1', status: 'completed' },
   { eventKey: 'today_story_v1', status: 'locked' },
 ])
+
+// 另一用户：验证落位选择 door 时动态写入 door（而非硬编码 window）
+const doorEngine = new MemoryEventEngine()
+const doorUser = 'event-smoke-user-door'
+function doorAct(inst: EventInstanceView, action: EventActionRequest['action'], options: { text?: string; choiceId?: string } = {}) {
+  return doorEngine.act(doorUser, inst.instanceId, {
+    action,
+    inputMode: options.choiceId ? 'choice' : options.text ? 'text' : 'continue',
+    text: options.text,
+    choiceId: options.choiceId,
+    idempotencyKey: id(`door-${action}`),
+  })
+}
+doorEngine.markFirstDayCompleted(doorUser, 'lamp')
+let d = doorEngine.start(doorUser, { eventKey: 'morrow_letter_v1', idempotencyKey: id('d-letter-start') }, 'NEW')
+d = doorAct(d, 'continue').instance
+d = doorAct(d, 'submit', { text: 'I think it means: keep the light on and leave a sign by the door.' }).instance
+d = doorAct(d, 'confirm').instance
+d = doorAct(d, 'confirm', { choiceId: 'reply_now' }).instance
+doorAct(d, 'complete')
+d = doorEngine.start(doorUser, { eventKey: 'room_object_v1', idempotencyKey: id('d-room-start') }, 'NEW')
+d = doorAct(d, 'continue').instance
+d = doorAct(d, 'submit', { text: 'I would rather have a chair because it is warmer.' }).instance
+d = doorAct(d, 'confirm').instance
+d = doorAct(d, 'confirm', { choiceId: 'door' }).instance
+const doorDone = doorAct(d, 'complete')
+assert.equal(doorDone.outcome?.id, 'chair_added')
+assert.equal(doorDone.instance.worldState.room_added_object, 'low_chair')
+assert.equal(doorDone.instance.worldState.room_added_object_location, 'door')
 
 console.log(JSON.stringify({
   ok: true,

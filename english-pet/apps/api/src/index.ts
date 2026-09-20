@@ -1,4 +1,7 @@
 import { serve } from '@hono/node-server'
+import { existsSync } from 'node:fs'
+import { loadEnvFile } from 'node:process'
+import { fileURLToPath } from 'node:url'
 import {
   completeConversationRequestSchema,
   eventActionRequestSchema,
@@ -15,7 +18,7 @@ import {
   transcribeAudioRequestSchema,
   updateSettingsRequestSchema,
 } from '@english-pet/contracts'
-import { MockASR, MockTTS, safeSynthesize, safeTranscribe } from '@english-pet/ai'
+import { MockASR, MockTTS, QwenASR, safeSynthesize, safeTranscribe } from '@english-pet/ai'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { requestId } from 'hono/request-id'
@@ -30,6 +33,9 @@ import { MemoryJournalStore } from './memory-journal-store.js'
 import { MemoryMemoryStore } from './memory-memory-store.js'
 import { MemoryResurfacingStore } from './memory-resurfacing-store.js'
 
+const envPath = fileURLToPath(new URL('../../../.env', import.meta.url))
+if (existsSync(envPath)) loadEnvFile(envPath)
+
 const app = new Hono()
 const accountStore = new MemoryAccountStore()
 const memoryStore = new MemoryMemoryStore()
@@ -39,10 +45,11 @@ const journalStore = new MemoryJournalStore(memoryStore)
 const conversationStore = new MemoryConversationStore(memoryStore, feedbackStore)
 const eventEngine = new MemoryEventEngine(memoryStore, journalStore, feedbackStore, resurfacingStore)
 const firstDayStore = new MemoryFirstDayStore(accountStore, memoryStore, journalStore, eventEngine)
-const asr = new MockASR()
+// 开发环境未配置百炼密钥时保留 Mock；服务端配置 DASHSCOPE_API_KEY 后启用真实 qwen3-asr-flash。
+const asr = process.env.DASHSCOPE_API_KEY ? new QwenASR() : new MockASR()
 const tts = new MockTTS()
 
-const allowedOrigins = (process.env.WEB_ORIGIN ?? 'http://localhost:27831,http://localhost:29467')
+const allowedOrigins = (process.env.WEB_ORIGIN ?? 'http://localhost:5173')
   .split(',')
   .map((origin) => origin.trim())
   .filter(Boolean)
@@ -73,6 +80,9 @@ app.get('/health', (context) => {
     ok: true,
     service: 'english-pet-api',
     environment: process.env.APP_ENV ?? 'development',
+    // 待 N1 接入：当前为空串占位，正式端需回带 fixed-content 规则集与 Schema 版本。
+    rulesetVersion: '',
+    schemaVersion: '',
   })
 })
 
@@ -249,6 +259,7 @@ app.post('/v1/first-day/actions', async (context) => {
 app.get('/v1/events', (context) => {
   const token = getBearerToken(context.req.header('Authorization'))
   const me = token ? accountStore.me(token) : null
+  // 待 N1 接入 fixed-content 规则集并回带 schemaVersion/personaVersion
   return me ? context.json({ rulesetId: 'events-v1.0.0', events: eventEngine.catalog(me.user.id, me.pet.relationshipStage) }) : errorResponse(context, 'unauthorized', 401)
 })
 
@@ -390,6 +401,7 @@ app.post('/v1/conversations/:id/complete', async (context) => {
   }
 })
 
+// 此为 LLM 实验/测试端链路，正式端默认不挂载，见 API_MIGRATION #24-27 弃用清单。
 app.post('/v1/conversations/:id/messages', async (context) => {
   const token = getBearerToken(context.req.header('Authorization'))
   const me = token ? accountStore.me(token) : null
@@ -415,7 +427,7 @@ app.post('/v1/conversations/:id/messages', async (context) => {
         }
       } catch (error) {
         logger.error({ requestId: context.get('requestId'), error: String(error) })
-        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'error', code: 'reply_failed', message: 'The connection went quiet for a moment.', retryable: true })}\n\n`))
+        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'error', code: 'reply_failed', message: '连接暂时安静了，请稍后再试。', retryable: true })}\n\n`))
       } finally {
         clearTimeout(timeout)
         controller.close()
@@ -435,7 +447,7 @@ app.post('/v1/conversations/:id/messages', async (context) => {
   })
 })
 
-app.notFound((context) => errorResponse(context, 'bad_request', 400))
+app.notFound((context) => errorResponse(context, 'bad_request', 404))
 app.onError((error, context) => {
   logger.error({ requestId: context.get('requestId'), error: String(error) })
   return errorResponse(context, 'internal_error', 500)

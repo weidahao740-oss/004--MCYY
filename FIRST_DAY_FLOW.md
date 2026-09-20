@@ -8,6 +8,8 @@
 >
 > 关联文件：`PET_PERSONA.md`、`PET_SYSTEM_PROMPT.md`、`PET_RESPONSE_EXAMPLES.md`
 
+> 口径说明：本流程对应正式首日；恢复物品三选含小铃铛，事件 ID 以固定内容契约 `birth_restore_object_v1` 为准（灯 lamp / 植物 plant / 小铃铛 small_bell）。本文功能 UI 与系统提示均为中文；英文仅保留为 Morrow 台词与用户参考例句。
+
 ## 1. 首日目标
 
 首日不负责展示全部功能，也不做完整英语水平测试。它只需证明五件事：
@@ -84,13 +86,13 @@
 
 同一浏览器再次进入时显示：
 
-> You were helping me bring one sound back to the room. Would you like to continue?
+> 你刚才在帮我把一个声音带回房间。要继续吗？
 
 操作：
 
-- `Continue`：恢复到上一个已确认状态；
-- `Start again`：二次确认后重置首日事件；
-- `Not now`：进入安静主页，不制造提醒压力。
+- `继续`：恢复到上一个已确认状态；
+- `重新开始`：二次确认后重置首日事件；
+- `暂不`：进入安静主页，不制造提醒压力。
 
 ### 3.4 已完成首日
 
@@ -130,15 +132,15 @@
 
 - 深色但非纯黑的安静房间；
 - 窗边有一束很弱的光；
-- 中央只有一行文字：`There is a faint voice in the room.`；
-- 主按钮：`Listen`；
-- 次操作：`Use text only`；
+- 中央只有一行文字：`房间里有一个微弱的声音。`；
+- 主按钮：`聆听声音`；
+- 次操作：`仅用文字`；
 - 默认开启字幕；首次不自动播放声音，必须由用户点击触发。
 
 ### 交互
 
-- `Listen`：播放 Morrow 的第一句，进入 `FD01_WAKE`；
-- `Use text only`：不播放声音，直接显示字幕并进入 `FD01_WAKE`；
+- `聆听声音`：播放 Morrow 的第一句，进入 `FD01_WAKE`；
+- `仅用文字`：不播放声音，直接显示字幕并进入 `FD01_WAKE`；
 - 不要求登录和麦克风权限。
 
 ### 埋点或状态
@@ -148,7 +150,7 @@
 
 ### 异常
 
-- TTS 加载失败：显示文字，不阻塞；提供 `Try voice again`，但主流程可继续。
+- TTS 加载失败：显示文字，不阻塞；提供 `重新尝试语音`，但主流程可继续。
 
 ---
 
@@ -168,7 +170,7 @@
 
 - Morrow 只以低保真轮廓、眼神或呼吸光表示，不在此阶段展示复杂角色资产；
 - 台词逐句出现；
-- 操作：`Continue`、`Repeat`、`Slower`、`Simpler English`。
+- 操作：`继续`、`重听`、`慢一点`、`简单英语`。
 
 ### 设计目的
 
@@ -190,9 +192,9 @@
 
 ### 输入方式
 
-1. 文字框：`Your name or nickname`；
+1. 文字框：`你的名字或昵称`；
 2. 按住说话；
-3. `Skip for now`。
+3. `暂不提供`。
 
 ### 规则
 
@@ -278,15 +280,15 @@ Morrow 的理解卡片：
 
 操作：
 
-- `Yes, that’s right`
-- `Not quite`
-- `Edit my sentence`
+- `对，就是这样`
+- `不太对`
+- `修改我的句子`
 
 ### 规则
 
 - 确认后，系统记录 `communication_success = true`；
-- `Not quite`：Morrow 只问一个澄清问题，并返回确认；
-- `Edit my sentence`：用户修改发送文本，原始 ASR 文本不用于记忆；
+- `不太对`：Morrow 只问一个澄清问题，并返回确认；
+- `修改我的句子`：用户修改发送文本，原始 ASR 文本不用于记忆；
 - 只有用户确认后的意思才进入生活记忆提案。
 
 ### 反馈
@@ -309,14 +311,15 @@ Morrow：
 
 ### 场景
 
-房间中有两个模糊轮廓：
+房间中有三个模糊轮廓：
 
 - 窗边的灯；
-- 门边的植物。
+- 门边的植物；
+- 一只小铃铛。
 
 ### Morrow 台词
 
-> The room remembers two things, but only one can return tonight. Which one should we bring back?
+> The room remembers a lamp, a plant, and a small bell, but only one can return tonight. Which one should we bring back?
 
 ### 输入方式
 
@@ -325,14 +328,15 @@ Morrow：
 - 参考句：
   - `Let’s bring back the lamp by the window.`
   - `I choose the plant near the door.`
+  - `Let’s bring back the small bell.`
 
 ### 结果规则
 
-- 用户必须表达出 `lamp` 或 `plant` 的明确意图；
+- 用户必须表达出 `lamp`、`plant` 或 `small_bell` 的明确意图；
 - 空间短语不准确但对象清楚时，选择仍成功；
 - 对象不清楚时，Morrow 复述确认；
 - 物品恢复后写入确定性的世界状态：
-  - `first_restored_object = lamp | plant`
+  - `first_restored_object = lamp | plant | small_bell`
   - `restored_at`
   - `source_event = first_day`
 - 此状态不是个人隐私记忆，不依赖记忆卡保存开关。
@@ -346,6 +350,10 @@ Morrow：
 选择植物：
 
 > The plant near the door. It looks less lost already.
+
+选择小铃铛：
+
+> The small bell. It makes one low note. It sounds awake, not alarmed.
 
 ### 状态变化
 
@@ -361,7 +369,7 @@ Morrow：
 
 产品辅助说明：
 
-> Review each item. You can save, edit, or skip it.
+> 逐条审核。你可以保存、编辑或跳过。
 
 ### 三类提案
 
@@ -377,11 +385,11 @@ Morrow：
 
 示例：
 
-> You want to keep: “I felt tired because I had too much work today.”
+> 你想保留："I felt tired because I had too much work today."
 
 用途说明：
 
-> Morrow may bring this expression back in a future conversation.
+> Morrow 可能在以后的对话中再用到这个表达。
 
 #### 关系记忆
 
@@ -393,23 +401,23 @@ Morrow：
 
 ### 每张卡操作
 
-- `Save`
-- `Edit`
-- `Don’t save`
+- `保存`
+- `编辑`
+- `不保存`
 
 ### 规则
 
 - 用户必须对每一张卡作出明确选择；
-- `Edit` 后保存修改文本，不保存模型原文；
-- `Don’t save` 后该提案被丢弃；
+- `编辑` 后保存修改文本，不保存模型原文；
+- `不保存` 后该提案被丢弃；
 - 不允许保存敏感推断；
 - 不保存原始录音；
 - 未登录用户保存到本地访客空间，并显示跨设备限制；
-- 用户可选择 `Sign in to sync`，但也可以 `Continue on this device`。
+- 用户可选择 `登录同步`，但也可以 `仅在本设备继续`。
 
 ### 登录说明
 
-> Save an account only if you want these memories on another device. You can continue on this device without one.
+> 只有想把这些记忆放到其他设备时才需要注册账号。不注册也可以继续在本设备使用。
 
 登录失败不影响首日完成，保留当前设备数据并允许稍后重试。
 
@@ -423,7 +431,7 @@ Morrow：
 
 ### 页面标题
 
-`The first light in the room`
+`房间里的第一束光`
 
 ### 内容结构
 
@@ -440,9 +448,9 @@ Morrow：
 
 ### 操作
 
-- `Go to the room`
-- `Review saved memories`
-- `Close for now`
+- `回到房间`
+- `回顾已保存记忆`
+- `先到这里`
 
 不提供“连续打卡”“明天必须回来”或倒计时奖励。
 
@@ -460,29 +468,29 @@ Morrow：
 
 > 以下为示例数据，用于实现对照，不代表真实用户内容。
 
-## The first light in the room
+## 房间里的第一束光
 
-**What happened**
+**发生了什么**
 
 You told Morrow that work had been very busy and that you felt tired. Morrow understood what you meant, and a little sound returned to the room.
 
-**What you said**
+**你说了什么**
 
 > I’m tired because I have too much work today.
 
-**A more natural way**
+**更自然的说法**
 
 > I felt tired because I had too much work today.
 
-**What changed**
+**发生了什么变化**
 
 You chose the lamp by the window. It is now the first restored object in the room.
 
-**Saved memories**
+**已保存的记忆**
 
-- Life: Work was very busy today, and you felt tired.（仅在用户选择保存时显示）
-- Language: `I felt tired because I had too much work today.`（仅在用户选择保存时显示）
-- Relationship: You and Morrow restored the lamp on your first night.（仅在用户选择保存时显示）
+- 生活记忆：Work was very busy today, and you felt tired.（仅在用户选择保存时显示）
+- 语言记忆：`I felt tired because I had too much work today.`（仅在用户选择保存时显示）
+- 关系记忆：You and Morrow restored the lamp on your first night.（仅在用户选择保存时显示）
 
 **Morrow**
 
@@ -492,7 +500,7 @@ You chose the lamp by the window. It is now the first restored object in the roo
 
 如果用户原表达已经自然，不制造错误：
 
-**A phrase worth keeping**
+**值得保留的表达**
 
 > I needed some time to think it through.
 
@@ -504,16 +512,16 @@ You chose the lamp by the window. It is now the first restored object in the roo
 
 | 场景 | 用户可见反馈 | 系统行为 | 恢复结果 |
 |---|---|---|---|
-| TTS 失败 | `Voice isn’t available right now. You can continue with text.` | 记录错误，不推进或回退状态 | 显示文本，允许继续 |
-| 麦克风权限拒绝 | `Microphone access is off. You can type or use a reference reply.` | 不重复弹权限；提供设置入口 | 主流程继续 |
+| TTS 失败 | `语音暂时不可用。你可以用文字继续。` | 记录错误，不推进或回退状态 | 显示文本，允许继续 |
+| 麦克风权限拒绝 | `麦克风权限未开启。你可以打字或使用参考回复。` | 不重复弹权限；提供设置入口 | 主流程继续 |
 | ASR 无结果 | Morrow 表示没听清 | 不创建用户消息与记忆 | 重试、文字或参考句 |
 | ASR 低置信 | 显示转写供确认 | 暂停事件结算 | 用户确认或编辑后发送 |
-| AI 超时 | `The connection went quiet for a moment.` | 保留用户已提交消息和当前状态 | `Try again` 使用同一幂等键 |
+| AI 超时 | `连接暂时中断了一下。` | 保留用户已提交消息和当前状态 | `重试` 使用同一幂等键 |
 | AI 输出无效 | 不展示无效内容 | 服务端校验失败并有限重试 | 失败后使用安全文本降级 |
 | 网络中断 | 显示离线状态，不假装发送成功 | 草稿保存在客户端；未确认状态不推进 | 网络恢复后由用户重新发送 |
 | 页面刷新 | 无错误提示 | 从最近确认状态恢复 | 不重复生成消息或记忆 |
 | 用户中途退出 | 不弹负罪提示 | 保存暂停状态 | 下次选择继续、重置或暂不继续 |
-| 登录失败 | `Sync isn’t available. Your progress stays on this device.` | 保留访客数据 | 可继续完成首日 |
+| 登录失败 | `同步暂不可用。你的进度保留在本设备。` | 保留访客数据 | 可继续完成首日 |
 | 记忆保存失败 | 卡片标记未保存 | 不假装成功；不进入已确认记忆 | 重试或选择不保存 |
 | 用户拒绝全部记忆 | 正常生成仅含世界变化的日记 | 不保存个人记忆 | 首日仍可完成 |
 | 用户输入敏感凭证 | 提醒不要保存该信息 | 不生成长期记忆提案 | 继续普通话题 |
@@ -582,7 +590,7 @@ FirstDayPage
 ├─ MorrowDialogue          # 台词、字幕、重听、慢速、简化
 ├─ UserReplyComposer       # 文字、参考句、按住说话
 ├─ UnderstandingReview     # 意图确认与编辑
-├─ RestoreChoice           # 灯 / 植物选择
+├─ RestoreChoice           # 灯 / 植物 / 小铃铛 三选一
 ├─ MemoryReview            # 三类记忆卡
 ├─ FirstJournal            # 第一篇共同记忆
 └─ RecoveryNotice          # 网络、语音、登录等恢复提示

@@ -73,7 +73,7 @@ export default function FirstDayPage() {
   const task = zh ? view.userTaskZh : view.userTaskEn
   return (
     <main className="mx-auto max-w-4xl px-5 py-8 sm:px-8 sm:py-12">
-      <header className="flex items-center justify-between gap-4"><div><p className="font-mono text-xs uppercase tracking-[0.18em] text-primary">first-day-1.0</p><h1 className="mt-2 font-serif text-4xl">{zh ? '房间里的第一束光' : 'The first light in the room'}</h1></div><Badge variant="outline">{progress}/8</Badge></header>
+      <header className="flex items-center justify-between gap-4"><div><p className="font-mono text-xs uppercase tracking-[0.18em] text-primary">first-day-1.0</p><h1 className="mt-2 font-serif text-4xl">{zh ? '房间里的第一束光' : 'The first light in the room'}</h1></div><Badge variant="outline">{progress + 1}/8</Badge></header>
       <section className="mt-7 border border-card-border bg-card p-6 shadow-xl sm:p-9">
         <div className="space-y-3">{view.morrowLines.map((line) => <p key={line} className="border-l-2 border-primary pl-4 text-lg leading-8">{line}</p>)}</div>
         <p className="mt-6 text-sm text-muted-foreground">{task}</p>

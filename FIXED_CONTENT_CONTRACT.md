@@ -1,26 +1,38 @@
-# FIXED_CONTENT_CONTRACT — 固定内容、中文 UI 与翻译功能契约
+# FIXED\_CONTENT\_CONTRACT — 固定内容、中文 UI 与翻译功能契约
 
-> 版本：1.0.0  
-> 状态：阶段 3.5.1 定稿，可直接进入内容扩充与工程迁移设计  
-> 适用端：Web 测试端、微信小程序、App  
-> 可执行 Schema：`english-pet/packages/contracts/src/fixed-content.ts`  
-> 示例规则集：`english-pet/packages/domain/src/fixed-content-v1.ts`
+> 版本：1.0.0
+> 状态：阶段 3.5.1 定稿，可直接进入内容扩充与工程迁移设计
+> 适用端：Web 测试端、微信小程序、App
+> 可执行 Schema：
+>
+> `english-pet/packages/contracts/src/fixed-content.ts`
+> 示例规则集：
+>
+> `english-pet/packages/domain/src/fixed-content-v1.ts`
 
 ## 1. 目标与硬边界
 
-本契约把一次互动定义为“版本化固定内容 + 确定性意图匹配 + 白名单状态迁移”。运行时不依赖生成式大模型，也不把关键词命中包装成开放式理解。
+本契约把一次互动定义为 “版本化固定内容 + 确定性意图匹配 + 白名单状态迁移”。运行时不依赖生成式大模型，也不把关键词命中包装成开放式理解。
 
 必须满足：
 
+
+
 1. 所有功能界面、按钮、导航、状态、错误、权限和说明使用中文；
+
 2. 英文只作为学习内容出现，并与人工中文译文成对发布；
+
 3. 自由文字与确认后的 ASR 文本进入同一确定性匹配器；
+
 4. 只有唯一、达到阈值的意图可以推进事件；
+
 5. 无匹配、低置信、冲突、用户否认和重复提交均不推进；
+
 6. 世界状态、长期记忆和音频只能引用契约中声明过的 ID；
+
 7. 现有 LLM 适配器保留但默认关闭，不是 MVP 核心依赖。
 
-本阶段不开发小程序/App、不采购云资源、不接入真实 ASR/TTS，也不迁移旧 Web 主链路。
+本阶段不开发小程序 / App、不采购云资源、不接入真实 ASR/TTS，也不迁移旧 Web 主链路。
 
 ## 2. 权威对象与版本
 
@@ -28,55 +40,82 @@
 
 所有机器 ID 使用小写蛇形：`^[a-z][a-z0-9_]*$`。发布后 ID 不得改变语义；废弃时标为 retired，由新 ID 替代，不复用旧 ID。
 
-| 对象 | 必填标识 | 版本规则 |
-|---|---|---|
-| 规则集 | `fixed-content-v1.0.0` | Schema 或全局匹配规则变化时升级 |
-| 章节 | `chapter_01_birth` | 章节 ID 稳定，章节内容另行版本化 |
-| 事件 | `birth_first_voice_v1` | 事件语义或状态机不兼容变化时换 ID/主版本 |
-| 状态 | `bfv_reply` | 事件内唯一；已发布埋点引用后不改义 |
-| 意图 | `bfv_intent_help` | 事件内唯一；表示可结算的用户意思 |
-| 台词 | `bfv_prompt_line` | 规则集内全局唯一 |
-| 学习内容 | `bfv_prompt_line_content` | 规则集内全局唯一 |
-| 音频 | `bfv_prompt_line_audio_normal` | 与台词、文本版本、语速一一绑定 |
-| 结果 | `bfv_outcome_helped` | 只允许写入声明过的世界状态 |
-| 记忆规则 | `bfv_relationship_memory` | 只生成待审核提案，不直接成为长期事实 |
+
+
+| 对象   | 必填标识                           | 版本规则                     |
+| ---- | ------------------------------ | ------------------------ |
+| 规则集  | `fixed-content-v1.0.0`         | Schema 或全局匹配规则变化时升级      |
+| 章节   | `chapter_01_birth`             | 章节 ID 稳定，章节内容另行版本化       |
+| 事件   | `birth_first_voice_v1`         | 事件语义或状态机不兼容变化时换 ID / 主版本 |
+| 状态   | `bfv_reply`                    | 事件内唯一；已发布埋点引用后不改义        |
+| 意图   | `bfv_intent_help`              | 事件内唯一；表示可结算的用户意思         |
+| 台词   | `bfv_prompt_line`              | 规则集内全局唯一                 |
+| 学习内容 | `bfv_prompt_line_content`      | 规则集内全局唯一                 |
+| 音频   | `bfv_prompt_line_audio_normal` | 与台词、文本版本、语速一一绑定          |
+| 结果   | `bfv_outcome_helped`           | 只允许写入声明过的世界状态            |
+| 记忆规则 | `bfv_relationship_memory`      | 只生成待审核提案，不直接成为长期事实       |
 
 ### 2.2 版本联动
 
 每条英文学习内容必须包含：
 
-```text
-content_id + text_version + english
-+ translation.text_zh + translation.version + manual_reviewed
+
+
+```
+content\_id + text\_version + english
+
+\+ translation.text\_zh + translation.version + manual\_reviewed
 ```
 
 任何英文字符、标点或缩写变化都升级 `text_version`；中文译文独立升级 `translation.version`。音频绑定同时记录两者，避免旧音频与新文本混用。
 
 兼容规则：
 
-- 只改中文译文：升级译文版本，音频无需重录，但绑定元数据随新发布更新；
-- 改英文但发音完全相同也视为新文本版本，重新生成/审核音频；
-- 改意图阈值、优先级或关键词：升级规则集版本；
-- 改状态迁移或结果写入：至少升级事件版本；不兼容时更换事件主版本或事件 ID；
-- 客户端必须按服务端返回的 `schemaVersion` 校验，不识别时停止事件并显示中文升级提示。
+
+
+* 只改中文译文：升级译文版本，音频无需重录，但绑定元数据随新发布更新；
+
+* 改英文但发音完全相同也视为新文本版本，重新生成 / 审核音频；
+
+* 改意图阈值、优先级或关键词：升级规则集版本；
+
+* 改状态迁移或结果写入：至少升级事件版本；不兼容时更换事件主版本或事件 ID；
+
+* 客户端必须按服务端返回的 `schemaVersion` 校验，不识别时停止事件并显示中文升级提示。
 
 ## 3. 顶层 Schema
 
-```ts
+
+
+```
 type FixedContentRuleset = {
-  id: string
-  version: SemVer
-  schemaVersion: SemVer
-  personaVersion: string
-  defaultUiLocale: 'zh-CN'
-  learningLocale: 'en'
-  supportedPlatforms: ['web_test', 'wechat_mini_program', 'mobile_app']
-  matchingPolicy: MatchingPolicy
-  fallbacks: Fallback[4]
-  translationToggle: TranslationToggle
-  audioBindings: AudioBinding[]
-  events: FixedEvent[]
-  llmPolicy: LlmPolicy
+
+&#x20; id: string
+
+&#x20; version: SemVer
+
+&#x20; schemaVersion: SemVer
+
+&#x20; personaVersion: string
+
+&#x20; defaultUiLocale: 'zh-CN'
+
+&#x20; learningLocale: 'en'
+
+&#x20; supportedPlatforms: \['web\_test', 'wechat\_mini\_program', 'mobile\_app']
+
+&#x20; matchingPolicy: MatchingPolicy
+
+&#x20; fallbacks: Fallback\[4]
+
+&#x20; translationToggle: TranslationToggle
+
+&#x20; audioBindings: AudioBinding\[]
+
+&#x20; events: FixedEvent\[]
+
+&#x20; llmPolicy: LlmPolicy
+
 }
 ```
 
@@ -84,22 +123,39 @@ Schema 以 TypeScript/Zod 文件为机器权威，本文件解释产品含义。
 
 ## 4. 事件结构
 
-```ts
+
+
+```
 type FixedEvent = {
-  id: string
-  version: SemVer
-  chapterId: string
-  sequence: number
-  titleZh: string
-  estimatedMinutes: { min: number; max: number }
-  entryStateId: string
-  lines: FixedContentLine[]
-  intents: FixedIntent[]
-  states: FixedContentState[]
-  transitions: FixedContentTransition[]
-  outcomes: FixedOutcome[]
-  memoryRules: FixedMemoryRule[]
-  boundariesZh: string[]
+
+&#x20; id: string
+
+&#x20; version: SemVer
+
+&#x20; chapterId: string
+
+&#x20; sequence: number
+
+&#x20; titleZh: string
+
+&#x20; estimatedMinutes: { min: number; max: number }
+
+&#x20; entryStateId: string
+
+&#x20; lines: FixedContentLine\[]
+
+&#x20; intents: FixedIntent\[]
+
+&#x20; states: FixedContentState\[]
+
+&#x20; transitions: FixedContentTransition\[]
+
+&#x20; outcomes: FixedOutcome\[]
+
+&#x20; memoryRules: FixedMemoryRule\[]
+
+&#x20; boundariesZh: string\[]
+
 }
 ```
 
@@ -107,13 +163,21 @@ type FixedEvent = {
 
 每个状态必须声明：
 
-- 中文页面标题与中文用户任务；
-- 本状态展示的固定台词 ID；
-- 允许的输入模式：文字、确认后的 ASR 文本、参考句、选项、继续；
-- 中文选项及其提交的意图；
-- 最多两条可编辑英文参考句；
-- 可恢复点；
-- `advanceOnlyOnResolvedIntent: true`。
+
+
+* 中文页面标题与中文用户任务；
+
+* 本状态展示的固定台词 ID；
+
+* 允许的输入模式：文字、确认后的 ASR 文本、参考句、选项、继续；
+
+* 中文选项及其提交的意图；
+
+* 最多两条可编辑英文参考句；
+
+* 可恢复点；
+
+* `advanceOnlyOnResolvedIntent: true`。
 
 客户端只能展示配置；服务端才有权判定意图和迁移。草稿、未确认 ASR、重复幂等键和兜底结果不能改变服务器状态。
 
@@ -121,7 +185,7 @@ type FixedEvent = {
 
 固定台词必须同时包含英文和人工中文译文。英文可由 Morrow 说出，也可作为系统参考句；中文译文不进入 TTS。
 
-功能选项使用中文，例如“继续”“稍后再来”“窗边的灯”。若选项用于学习表达，应同时关联一条可编辑英文参考句；点击选项提交确定意图，选择参考句则先放入输入框，用户仍可编辑。
+功能选项使用中文，例如 “继续”“稍后再来”“窗边的灯”。若选项用于学习表达，应同时关联一条可编辑英文参考句；点击选项提交确定意图，选择参考句则先放入输入框，用户仍可编辑。
 
 ## 5. 确定性意图匹配
 
@@ -129,10 +193,15 @@ type FixedEvent = {
 
 只有以下文本可进入匹配：
 
-- 用户直接提交的非空文字；
-- 用户已经查看、修改或确认的 ASR 转写；
-- 用户确认提交的参考句；
-- 中文按钮直接提交的声明意图 ID。
+
+
+* 用户直接提交的非空文字；
+
+* 用户已经查看、修改或确认的 ASR 转写；
+
+* 用户确认提交的参考句；
+
+* 中文按钮直接提交的声明意图 ID。
 
 未确认 ASR 只用于转写审核，不进入事件消息、匹配、反馈或记忆。
 
@@ -142,122 +211,197 @@ type FixedEvent = {
 
 ### 5.3 匹配优先级
 
-```text
-1. 显式中文选项（直接提交声明意图 ID）
-2. 完整短语精确匹配
-3. 当前状态内关键词组计分
-4. 排除短语、否定和多意图冲突检查
-5. 兜底；保持当前状态
+
+
+```
+1\. 显式中文选项（直接提交声明意图 ID）
+
+2\. 完整短语精确匹配
+
+3\. 当前状态内关键词组计分
+
+4\. 排除短语、否定和多意图冲突检查
+
+5\. 兜底；保持当前状态
 ```
 
 规则：
 
-- 只在当前状态的 `eligibleStateIds` 中匹配；
-- 精确短语命中仍需通过排除短语与否定检查；
-- 关键词组可声明 `allOf / anyOf / noneOf / weight`；
-- 候选分数必须达到规则集阈值和意图自身阈值；
-- 第一候选必须至少领先第二候选规定分差；
-- 同分、差距不足、同时出现互斥对象或否定冲突时不得推进；
-- 最多显示 3 个中文候选意图，让用户明确选择或修改英文；
-- 匹配结果必须记录 `rulesetVersion + eventVersion + stateId + inputHash + resolvedIntentId`，不记录原始录音。
+
+
+* 只在当前状态的 `eligibleStateIds` 中匹配；
+
+* 精确短语命中仍需通过排除短语与否定检查；
+
+* 关键词组可声明 `allOf / anyOf / noneOf / weight`；
+
+* 候选分数必须达到规则集阈值和意图自身阈值；
+
+* 第一候选必须至少领先第二候选规定分差；
+
+* 同分、差距不足、同时出现互斥对象或否定冲突时不得推进；
+
+* 最多显示 3 个中文候选意图，让用户明确选择或修改英文；
+
+* 匹配结果必须记录 `rulesetVersion + eventVersion + stateId + inputHash + resolvedIntentId`，不记录原始录音。
 
 ### 5.4 否认与纠正
 
-若用户点击“不是这个意思”：
+若用户点击 “不是这个意思”：
+
+
 
 1. 丢弃临时理解和临时结果；
+
 2. 保持最近确认状态；
+
 3. 展示原输入的可编辑版本；
+
 4. 展示最多 3 个中文候选意图及相应可编辑英文参考句；
-5. 只有重新确认后的输入/选项可再次匹配；
+
+5. 只有重新确认后的输入 / 选项可再次匹配；
+
 6. 被否认内容不得写入日记、反馈或记忆。
 
 ## 6. 中文安全兜底
 
-| 情况 | 中文文案 | 状态行为 |
-|---|---|---|
-| 无匹配 | 我还不能可靠判断你的意思。你可以换一种说法，或选择下面的参考意图。 | 保持当前状态；不写结果；显示候选与参考句 |
-| ASR 低置信 | 我不确定是否听对了。请先检查并修改转写文字，再确认发送。 | 不进入匹配；不创建已确认消息 |
-| 用户否认 | 好的，刚才的理解不算。请修改原句，或从候选意图中重新选择。 | 清除临时理解；回到最近确认状态 |
-| 重复输入 | 这条内容已经处理过，不会重复推进。你可以继续当前步骤或修改表达。 | 返回既有幂等结果；不得重复结算 |
-| 意图冲突/接近 | 我看到了两种可能的意思，请选一个，或修改你的英文。 | 按无匹配处理；显示候选，不猜测 |
 
-兜底是产品能力说明，不由 Morrow 假装理解。禁止使用“我明白了”后仍要求用户选择；禁止随机挑选最高分；禁止无结果时自动走最常见分支。
+
+| 情况        | 中文文案                              | 状态行为                 |
+| --------- | --------------------------------- | -------------------- |
+| 无匹配       | 我还不能可靠判断你的意思。你可以换一种说法，或选择下面的参考意图。 | 保持当前状态；不写结果；显示候选与参考句 |
+| ASR 低置信   | 我不确定是否听对了。请先检查并修改转写文字，再确认发送。      | 不进入匹配；不创建已确认消息       |
+| 用户否认      | 好的，刚才的理解不算。请修改原句，或从候选意图中重新选择。     | 清除临时理解；回到最近确认状态      |
+| 重复输入      | 这条内容已经处理过，不会重复推进。你可以继续当前步骤或修改表达。  | 返回既有幂等结果；不得重复结算      |
+| 意图冲突 / 接近 | 我看到了两种可能的意思，请选一个，或修改你的英文。         | 按无匹配处理；显示候选，不猜测      |
+
+兜底是产品能力说明，不由 Morrow 假装理解。禁止使用 “我明白了” 后仍要求用户选择；禁止随机挑选最高分；禁止无结果时自动走最常见分支。
 
 ## 7. 中文 UI 与英文学习内容边界
 
 ### 7.1 必须中文
 
-- 底部/侧边导航、页面标题、标签页；
-- 登录、注册、退出、同步、账号注销；
-- 开始、继续、暂停、结束、返回、重试、取消、确认、编辑、删除；
-- 录音权限、网络、加载、超时、失败、离线和恢复说明；
-- ASR 转写审核、置信度说明和发送前提示；
-- 记忆类型、保存/不保存、暂停/恢复、删除确认；
-- 共同记忆册结构标题、反馈分类和设置项；
-- 字幕、语速、重听、音量、缓存与隐私说明；
-- 事件状态、章节进度、解锁原因和不可用原因；
-- 候选意图、匹配失败、否认和重复提交提示；
-- 所有功能性 Toast、Dialog、Empty、Error 和帮助文案。
+
+
+* 底部 / 侧边导航、页面标题、标签页；
+
+* 登录、注册、退出、同步、账号注销；
+
+* 开始、继续、暂停、结束、返回、重试、取消、确认、编辑、删除；
+
+* 录音权限、网络、加载、超时、失败、离线和恢复说明；
+
+* ASR 转写审核、置信度说明和发送前提示；
+
+* 记忆类型、保存 / 不保存、暂停 / 恢复、删除确认；
+
+* 共同记忆册结构标题、反馈分类和设置项；
+
+* 字幕、语速、重听、音量、缓存与隐私说明；
+
+* 事件状态、章节进度、解锁原因和不可用原因；
+
+* 候选意图、匹配失败、否认和重复提交提示；
+
+* 所有功能性 Toast、Dialog、Empty、Error 和帮助文案。
 
 正式产品不提供整套英文 UI 切换。旧 Web 的英文 UI 只作为历史测试能力，迁移时移除正式入口。
 
 ### 7.2 保持英文为主并配人工译文
 
-- Morrow 的主要对话台词；
-- 事件内来信、物品说明、场景提示等学习材料；
-- 可编辑参考句；
-- 用户已确认的英文原表达；
-- “更自然的表达”和复现短语；
-- 需要学习的英语词组、句型与例句。
+
+
+* Morrow 的主要对话台词；
+
+* 事件内来信、物品说明、场景提示等学习材料；
+
+* 可编辑参考句；
+
+* 用户已确认的英文原表达；
+
+* “更自然的表达” 和复现短语；
+
+* 需要学习的英语词组、句型与例句。
 
 人名 Morrow、内容 ID、文件名和技术诊断信息不属于可学习正文；技术诊断不直接暴露给普通用户。
 
-## 8. “查看中文 / 收起中文”组件
+## 8. “查看中文 / 收起中文” 组件
 
 固定行为：
 
-- 位置：每个主要英文内容块右下角；
-- 默认：收起；按钮为“查看中文”；
-- 展开：在同一内容块内紧邻英文显示人工译文；按钮变为“收起中文”；
-- 作用域：仅当前内容块，不联动其他台词，不跨会话记忆；
-- 不影响音频播放、事件进度、匹配结果、学习反馈或埋点成功定义；
-- 没有英文学习内容时不显示按钮；
-- 译文加载失败时显示中文功能错误，英文正文仍可继续；
-- 屏幕阅读器按钮须带当前展开状态；键盘与触控都能操作；
-- 多句连续台词可按一个语义块合并展示，但每条内容 ID 与译文仍需可追踪；
-- 历史共同记忆回看时使用生成当时的文本/译文版本，不静默替换含义。
 
-禁止行为：运行时机器翻译、用占位译文发布、展开译文后自动改变用户输入、把查看译文当成“使用提示”或降低结果。
+
+* 位置：每个主要英文内容块右下角；
+
+* 默认：收起；按钮为 “查看中文”；
+
+* 展开：在同一内容块内紧邻英文显示人工译文；按钮变为 “收起中文”；
+
+* 作用域：仅当前内容块，不联动其他台词，不跨会话记忆；
+
+* 不影响音频播放、事件进度、匹配结果、学习反馈或埋点成功定义；
+
+* 没有英文学习内容时不显示按钮；
+
+* 译文加载失败时显示中文功能错误，英文正文仍可继续；
+
+* 屏幕阅读器按钮须带当前展开状态；键盘与触控都能操作；
+
+* 多句连续台词可按一个语义块合并展示，但每条内容 ID 与译文仍需可追踪；
+
+* 历史共同记忆回看时使用生成当时的文本 / 译文版本，不静默替换含义。
+
+禁止行为：运行时机器翻译、用占位译文发布、展开译文后自动改变用户输入、把查看译文当成 “使用提示” 或降低结果。
 
 ## 9. 预制 TTS 一一绑定
 
 每条 `audioRequired: true` 的固定台词必须绑定：
 
-```ts
+
+
+```
 type AudioBinding = {
-  audioId: string
-  lineId: string
-  contentId: string
-  textVersion: SemVer
-  translationVersion: SemVer
-  variant: 'normal' | 'slow'
-  voiceProfileId: string
-  fileRef: string
-  checksumSha256: string | null
-  status: 'planned' | 'ready' | 'retired'
+
+&#x20; audioId: string
+
+&#x20; lineId: string
+
+&#x20; contentId: string
+
+&#x20; textVersion: SemVer
+
+&#x20; translationVersion: SemVer
+
+&#x20; variant: 'normal' | 'slow'
+
+&#x20; voiceProfileId: string
+
+&#x20; fileRef: string
+
+&#x20; checksumSha256: string | null
+
+&#x20; status: 'planned' | 'ready' | 'retired'
+
 }
 ```
 
 规则：
 
+
+
 1. 每条需语音台词必须有 normal 与 slow 两个独立音频 ID；
+
 2. 文件路径包含章节、事件、台词、文本版本与语速，不覆盖旧文件；
-3. `ready` 前必须完成人工试听并写入 SHA-256；`planned` 可用于内容准备，但正式端不得播放；
+
+3. `ready` 前必须转换为 WAV / PCM / 16 kHz / 单声道 / 16-bit，并验证 RIFF 与 data 长度字段正确；随后完成响度处理与人工试听并写入 SHA-256。有效语音 RMS 目标为 `-20 dBFS`（允许 `±1 dB`），峰值不高于 `-3 dBFS`；`planned` 可用于内容准备，但正式端不得播放；
+
 4. 英文文本版本不一致时客户端拒绝使用缓存音频；
+
 5. 中文译文只用于显示，不进入 Morrow 音频；
-6. TTS 缺失/失败时显示英文正文与人工译文按钮，事件仍可完成；
-7. `voiceProfileId = morrow_voice_pending_v1` 只是音色待定标识，阶段 1.6 试听后替换为已审核音色版本。
+
+6. TTS 缺失 / 失败时显示英文正文与人工译文按钮，事件仍可完成；
+
+7. `voiceProfileId = morrow_voice_v1` 是已审核的全生命周期唯一 Morrow 音色。所有 `ready` 音频必须使用该音色参考，并通过统一响度处理和人工试听。
 
 ## 10. 结果、状态与记忆
 
@@ -269,33 +413,49 @@ type AudioBinding = {
 
 长期记忆提案只允许两种来源：
 
-- `declared_event_rule`：事件配置中明确声明的记忆规则，且来源意图已经确认；
-- `explicit_user_request`：用户明确要求系统记住某件事，经确认后生成提案。
+
+
+* `declared_event_rule`：事件配置中明确声明的记忆规则，且来源意图已经确认；
+
+* `explicit_user_request`：用户明确要求系统记住某件事，经确认后生成提案。
 
 两种来源都必须：
 
-- `requiresUserConfirmation: true`；
-- 保存前显示可编辑文本；
-- 拒绝敏感推断、未确认文本、错误理解和原始录音；
-- 用户删除或暂停后不再调用；
-- 记忆提案失败不撤销已完成的世界状态。
+
+
+* `requiresUserConfirmation: true`；
+
+* 保存前显示可编辑文本；
+
+* 拒绝敏感推断、未确认文本、错误理解和原始录音；
+
+* 用户删除或暂停后不再调用；
+
+* 记忆提案失败不撤销已完成的世界状态。
 
 禁止从关键词命中自动推断偏好。例如选择水壶不等于用户喜欢喝茶。
 
 ## 11. LLM 适配器政策
 
-```text
+
+
+```
 adapterRetained = true
+
 enabledByDefault = false
+
 coreDependency = false
+
 mayAdvanceState = false
+
 mayWriteMemory = false
+
 mayCreateContentIds = false
 ```
 
-旧 LLM 适配器作为历史与未来实验资产保留。未来即使开启，只能作为非权威、可关闭的增强；其输出必须落回已经声明的内容/意图/状态白名单，不能创造剧情、台词、译文、结果、记忆或世界状态。无任何 LLM 密钥时，完整事件仍须运行。
+旧 LLM 适配器作为历史与未来实验资产保留。未来即使开启，只能作为非权威、可关闭的增强；其输出必须落回已经声明的内容 / 意图 / 状态白名单，不能创造剧情、台词、译文、结果、记忆或世界状态。无任何 LLM 密钥时，完整事件仍须运行。
 
-## 12. 两个“出生与苏醒”示例事件
+## 12. 两个 “出生与苏醒” 示例事件
 
 示例已写入 `fixed-content-v1.ts` 并由 Zod 在模块加载时解析。
 
@@ -303,18 +463,26 @@ mayCreateContentIds = false
 
 有效分支：
 
+
+
 1. `bfv_intent_help` → 用户愿意帮助探索 → `bfv_outcome_helped`；
+
 2. `bfv_intent_check` → 用户先询问 Morrow 状态 → `bfv_outcome_checked`；
+
 3. `bfv_intent_pause` → 平静暂停 → `bfv_outcome_paused`。
 
-无匹配或帮助/否定冲突时停留 `bfv_reply`，不写第一回应风格。事件只可提议一条“完成第一次理解”的关系记忆，用户确认前不是事实。
+无匹配或帮助 / 否定冲突时停留 `bfv_reply`，不写第一回应风格。事件只可提议一条 “完成第一次理解” 的关系记忆，用户确认前不是事实。
 
 ### 12.2 `birth_restore_object_v1`：让第一件东西清晰起来
 
 有效分支：
 
+
+
 1. `bro_intent_lamp` → 恢复灯 → `first_restored_object = lamp`；
+
 2. `bro_intent_plant` → 恢复植物 → `first_restored_object = plant`；
+
 3. `bro_intent_bell` → 恢复小铃铛 → `first_restored_object = small_bell`。
 
 同时出现两个对象、出现否定冲突或未提及支持对象时不推进。三个结果均有固定英文台词、人工中文译文和 normal/slow 预制音频 ID。事件可生成语言与关系记忆提案，均需用户确认。
@@ -323,26 +491,42 @@ mayCreateContentIds = false
 
 三端共享同一 HTTPS API 返回的规则集，不在客户端复制业务判断：
 
-- Web 测试端：用于内容调试、状态机与接口自动化；
-- 微信小程序：适配录音授权、文件上传、音频缓存和小程序生命周期；
-- App：适配系统录音、后台/前台切换、音频缓存和原生账号能力。
+
+
+* Web 测试端：用于内容调试、状态机与接口自动化；
+
+* 微信小程序：适配录音授权、文件上传、音频缓存和小程序生命周期；
+
+* App：适配系统录音、后台 / 前台切换、音频缓存和原生账号能力。
 
 客户端适配层只负责录音、播放、缓存、通知和本地草稿。意图解析、迁移、结果、记忆白名单和版本校验属于平台无关服务端。
 
 ## 14. 最小验收清单
 
-- [x] 无生成式大模型也能描述并运行完整事件；
-- [x] 每个状态只由声明意图推进；
-- [x] 无匹配、低置信、否认、重复和冲突不推进；
-- [x] 所有功能文案有中文边界；
-- [x] 所有主要英文内容包含人工中文译文与独立版本；
-- [x] 翻译按钮位置、默认状态、作用域和无障碍行为明确；
-- [x] 每条需语音台词具有 normal/slow 音频 ID 与文本版本绑定；
-- [x] 记忆只来自声明事件规则或用户显式请求，并始终要求确认；
-- [x] 两个出生章节示例事件均有 3 条有效分支；
-- [x] Web 测试端、微信小程序和 App 共用同一 Schema；
-- [x] LLM 适配器保留但默认关闭且无状态推进权限。
+
+
+* [x] 无生成式大模型也能描述并运行完整事件；
+
+* [x] 每个状态只由声明意图推进；
+
+* [x] 无匹配、低置信、否认、重复和冲突不推进；
+
+* [x] 所有功能文案有中文边界；
+
+* [x] 所有主要英文内容包含人工中文译文与独立版本；
+
+* [x] 翻译按钮位置、默认状态、作用域和无障碍行为明确；
+
+* [x] 每条需语音台词具有 normal/slow 音频 ID 与文本版本绑定；
+
+* [x] 记忆只来自声明事件规则或用户显式请求，并始终要求确认；
+
+* [x] 两个出生章节示例事件均有 3 条有效分支；
+
+* [x] Web 测试端、微信小程序和 App 共用同一 Schema；
+
+* [x] LLM 适配器保留但默认关闭且无状态推进权限。
 
 ## 15. 下一阶段输入
 
-3.5.2 应直接复用本契约：先确定用户在故事中的身份，再为七章建立进入/完成条件；首批“出生与苏醒”“童年探索”每章列出 10—15 个事件，并为每条主要英文内容、分支、人工译文和素材需求分配稳定 ID。未经新产品决定，不改变本契约的中文 UI、确定性匹配、人工译文、预制音频和记忆确认边界。
+3.5.2 应直接复用本契约：先确定用户在故事中的身份，再为七章建立进入 / 完成条件；首批 “出生与苏醒”“童年探索” 每章列出 10—15 个事件，并为每条主要英文内容、分支、人工译文和素材需求分配稳定 ID。未经新产品决定，不改变本契约的中文 UI、确定性匹配、人工译文、预制音频和记忆确认边界。

@@ -113,7 +113,7 @@
 
 - 导航/标题/按钮/状态/错误/空态/帮助：RoomPage、HomePage、EventPage、MemoryPage、JournalPage、FirstDayPage、SettingsPage、NotFoundPage、Layout —— 全部功能文案用中文（契约 7.1 全清单）。
 - 首日状态机 `memory-first-day-store.ts` 的 `screenCopy`：目前每屏同时给 `zh`/`en`，改后只下发 `userTaskZh`，`morrowLines` 保留英文学习台词并配人工译文。
-- `http.ts` 的 `messages`：26 个错误码全部改中文（含新增的版本/意图类错误码）。
+- `http.ts` 的 `messages`：现有 21 个 + 新增 6 个 = 27 个错误码全部需中文化（含新增的版本/意图类错误码）。
 - `pet-home.ts` 的 `statusTextEn / returnMessageEn / dailyEventSummary.titleEn` 字段移除，只留 `*Zh`。
 
 ### 4.3 英文学习内容保留英文 + 人工译文

@@ -236,6 +236,8 @@ const firstObjectEvent: FixedEvent = {
         { id: 'bro_choice_plant', labelZh: '门边的植物', submitsIntentId: 'bro_intent_plant', referenceReplyLineId: 'bro_plant_reply' },
         { id: 'bro_choice_bell', labelZh: '小铃铛', submitsIntentId: 'bro_intent_bell', referenceReplyLineId: 'bro_bell_reply' },
       ],
+      // 契约限制 referenceReplyLineIds 最多两条（.max(2)），此处保留 lamp/plant 两条可见参考句；
+      // bell 选项的参考句 bro_bell_reply 作为额外选项，通过 choices[].referenceReplyLineId 单独挂载，不重复列入此列表。
       referenceReplyLineIds: ['bro_lamp_reply', 'bro_plant_reply'], recoverable: true, checkpoint: true, advanceOnlyOnResolvedIntent: true,
     },
     {
@@ -275,7 +277,7 @@ const audioBindings: AudioBinding[] = events.flatMap((event) =>
           textVersion: line.learningContent.textVersion,
           translationVersion: line.learningContent.translation.version,
           variant,
-          voiceProfileId: 'morrow_voice_pending_v1',
+          voiceProfileId: 'morrow_voice_v1',
           fileRef: `tts/${event.chapterId}/${event.id}/${line.id}/1.0.0/${variant}.wav`,
           checksumSha256: null,
           status: 'planned' as const,

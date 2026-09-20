@@ -60,7 +60,7 @@ export default function VoiceComposer({ token, zh, enabled, disabled, onUseTrans
   if (transcript) {
     return (
       <div className="mt-3 border border-primary/25 bg-primary/5 p-4">
-        <div className="flex items-center justify-between gap-3"><p className="text-sm font-medium">{zh ? '请确认转写内容' : 'Review the transcript'}</p><span className="text-xs text-muted-foreground">Mock ASR · {transcript.confidence === null ? '—' : `${Math.round(transcript.confidence * 100)}%`}</span></div>
+        <div className="flex items-center justify-between gap-3"><p className="text-sm font-medium">{zh ? '请确认转写内容' : 'Review the transcript'}</p><span className="text-xs text-muted-foreground">{transcript.provider} · {transcript.confidence === null ? (zh ? '请人工确认' : 'Review required') : `${Math.round(transcript.confidence * 100)}%`}</span></div>
         <Textarea className="mt-3" value={editedText} onChange={(event) => setEditedText(event.target.value)} rows={2} />
         <p className="mt-2 text-xs text-muted-foreground">{zh ? '只有你确认后的文字会发送；原始录音不会长期保存。' : 'Only confirmed text is sent. Raw audio is not stored long term.'}</p>
         <div className="mt-3 flex gap-2"><Button type="button" size="sm" onClick={() => { onUseTranscript(editedText); discard() }} disabled={!editedText.trim()}>{zh ? '使用这段文字' : 'Use this text'}</Button><Button type="button" size="sm" variant="ghost" onClick={discard}><X />{zh ? '取消' : 'Cancel'}</Button></div>

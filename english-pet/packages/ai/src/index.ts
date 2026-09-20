@@ -12,6 +12,7 @@ export { MockLLM } from './llm/mock.js'
 
 export * from './asr/adapter.js'
 export { OpenAICompatibleASR } from './asr/openai-compatible.js'
+export { QwenASR } from './asr/qwen.js'
 export { MockASR } from './asr/mock.js'
 
 export * from './tts/adapter.js'

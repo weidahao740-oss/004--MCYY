@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { InterfaceLocale, LanguageLevel, SpeechRate } from '@english-pet/contracts'
+import type { LanguageLevel, SpeechRate } from '@english-pet/contracts'
 import { Trash2 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
@@ -57,9 +57,9 @@ export default function SettingsPage() {
         <Card>
           <CardHeader><CardTitle>{t.interfaceLanguage}</CardTitle><CardDescription>{t.settingsBody}</CardDescription></CardHeader>
           <CardContent>
-            <Select value={locale} disabled={saving} onValueChange={(value) => void save({ interfaceLocale: value as InterfaceLocale })}>
+            <Select value="zh-CN" disabled>
               <SelectTrigger className="max-w-xs"><SelectValue /></SelectTrigger>
-              <SelectContent><SelectItem value="zh-CN">{t.chinese}</SelectItem><SelectItem value="en">{t.english}</SelectItem></SelectContent>
+              <SelectContent><SelectItem value="zh-CN">{t.chinese}</SelectItem></SelectContent>
             </Select>
           </CardContent>
         </Card>

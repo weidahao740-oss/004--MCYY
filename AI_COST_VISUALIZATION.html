@@ -9,6 +9,7 @@
   统一假设：每事件 10 轮；LLM 输入 47,500 token/输出 2,000 token；
             用户语音 50 秒；宠物 TTS ≈ 800 字符；汇率 1 USD = 7.2 CNY。
   这是基于公开单价的理论估算，实际成本需真实密钥验证后校准。
+  ⚠ 基于旧运行时架构（运行时 LLM + 实时 TTS）的历史理论估算；新架构（LLM 默认关闭 + Seed Audio 1.0 预制）成本待按执行计划 1.6 重算。
   单价来源：OpenAI/Anthropic/DeepSeek/Kimi/火山/阿里云官方定价页（详见评估文档）。
 -->
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
@@ -27,7 +28,7 @@
 <body>
 <header>
   <h1>Morrow 单次事件 AI 成本可视化</h1>
-  <p class="sub">理论估算 · 基于 2026-09 公开单价 · 非真实用量测算 · 详见 AI_TECH_EVALUATION.md</p>
+  <p class="sub">理论估算 · 基于 2026-09 公开单价 · 非真实用量测算 · 详见 AI_TECH_EVALUATION.md<br/>⚠ 基于旧运行时架构（运行时 LLM + 实时 TTS）的历史估算；新架构（LLM 默认关闭 + Seed Audio 1.0 预制）成本待按执行计划 1.6 重算，本页数字不改。</p>
 </header>
 
 <div class="wrap">

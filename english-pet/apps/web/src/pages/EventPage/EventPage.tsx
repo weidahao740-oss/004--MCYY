@@ -118,7 +118,7 @@ export default function EventPage() {
     return (
       <main className="mx-auto max-w-5xl px-5 py-8 sm:px-8 sm:py-12">
         <div className="max-w-2xl">
-          <p className="font-mono text-xs uppercase tracking-[0.18em] text-primary">events-v1.0.0</p>
+          <p className="font-mono text-xs uppercase tracking-[0.18em] text-primary">事件集 v1.0.0</p>
           <h1 className="mt-3 font-serif text-4xl">{zh ? '共同生活事件' : 'Shared life events'}</h1>
           <p className="mt-4 leading-7 text-muted-foreground">{zh ? '每次只进行一个事件。暂停不会扣分，误解只会触发一次轻量澄清。' : 'Only one event runs at a time. Pausing has no penalty, and misunderstandings lead to a light clarification.'}</p>
         </div>
