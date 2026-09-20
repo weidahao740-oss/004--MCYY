@@ -111,7 +111,7 @@ def main() -> None:
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with wave.open(str(args.output), "wb") as target:
-        # Do not reuse params.nframes: Seed Audio streaming WAV files may leave
+        # Do not reuse params.nframes: generated WAV sources may contain
         # RIFF/data length placeholders in the source header. writeframes()
         # calculates a valid frame count from the actual PCM payload.
         target.setnchannels(1)

@@ -1755,7 +1755,7 @@
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true,
-          "default": "'normal'"
+          "default": "'1.0'"
         },
         "requires_user_confirmation": {
           "name": "requires_user_confirmation",
@@ -3076,7 +3076,7 @@
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true,
-          "default": "'normal'"
+          "default": "'1.0'"
         },
         "subtitles_enabled": {
           "name": "subtitles_enabled",
@@ -3700,8 +3700,9 @@
       "name": "speech_rate",
       "schema": "public",
       "values": [
-        "slow",
-        "normal"
+        "1.0",
+        "0.8",
+        "0.6"
       ]
     },
     "public.user_status": {

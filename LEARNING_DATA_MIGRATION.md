@@ -241,9 +241,9 @@ learning?: {
 
 ---
 
-## 7. 风险与实施顺序（避免 Seed Audio 返工）
+## 7. 风险与实施顺序（避免预制语音返工）
 
-> 关键约束：预制语音（Seed Audio）绑定到**具体文本版本**（契约 §9）。一旦学习元数据导致新增/改写台词，就要重录。所以顺序必须是"先冻结元数据定义，再补事件，最后才碰音频"。
+> 关键约束：千问 `qwen-audio-3.0-tts-flash` 预制语音绑定到**具体文本版本**（契约 §9）。一旦学习元数据导致新增/改写台词，就要重新生成。所以顺序必须是“先冻结元数据定义，再补事件，最后才制作音频”。
 
 1. **第 1 步：冻结 `learning_objects` 定义**（`objectKey`、`kind`、`tier` 枚举）。
    - 风险：objectKey 一旦被 25 事件引用后再改名，全部元数据与映射表返工。
@@ -253,8 +253,8 @@ learning?: {
 4. **第 4 步：DB migration**（只向前追加）：新增 5 张用户/全局表与 4 个新枚举；`user_settings` 加 `difficulty_tier/tier_source/tier_updated_at`；`intent_resolution_records` 加 `hint_kind/hint_was_used` 可空列。
 5. **第 5 步：实现 N4–N9**，接通 `idempotency_records` 与读取链路。
 6. **第 6 步：运行时接线**——事件启动读难度档、按 `masteryEvidence` 结算掌握、按 `review_schedule` 到期排复现。
-7. **第 7 步（最后）：Seed Audio 预制语音**。
-   - 只有在第 3 步台词/学习元数据全部定稿后才生成 normal/slow 音频；否则文本版本一变就要重录，造成 `audio_bindings` 返工。
+7. **第 7 步（最后）：`qwen-audio-3.0-tts-flash` 预制语音**。
+   - 只有在第 3 步台词/学习元数据全部定稿后才生成一份正常语速音频；否则文本版本一变就要重录，造成 `audio_bindings` 返工。
 
 **必须先做**：第 1 步（冻结对象定义）→ 第 3 步（25 事件元数据）。这两步未完成前，不得开始任何台词音频预制。
 

@@ -1,5 +1,6 @@
 import { serve } from '@hono/node-server'
 import { existsSync } from 'node:fs'
+import { readFile } from 'node:fs/promises'
 import { loadEnvFile } from 'node:process'
 import { fileURLToPath } from 'node:url'
 import {
@@ -19,6 +20,7 @@ import {
   updateSettingsRequestSchema,
 } from '@english-pet/contracts'
 import { MockASR, MockTTS, QwenASR, safeSynthesize, safeTranscribe } from '@english-pet/ai'
+import { getProductionAudioBinding, resolveProductionAudioFile } from '@english-pet/domain'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { requestId } from 'hono/request-id'
@@ -337,6 +339,45 @@ app.post('/v1/audio/transcriptions', async (context) => {
     editable: true as const,
     degraded: outcome.degraded,
     userMessage: outcome.userMessage,
+  })
+})
+
+// N3：解析预制音频绑定。ready 返回版本绑定与可播 fileRef；planned/retired/未登记不返回可播地址，前端降级文字+译文。
+app.get('/v1/audio/bindings/:audioId', (context) => {
+  const binding = getProductionAudioBinding(context.req.param('audioId'))
+  if (!binding) {
+    return errorResponse(context, 'audio_not_found', 404)
+  }
+  if (binding.status !== 'ready' || !binding.fileRef) {
+    return errorResponse(context, 'audio_not_ready', 404)
+  }
+  return context.json({
+    audioId: binding.audioId,
+    lineId: binding.lineId,
+    contentId: binding.contentId,
+    textVersion: binding.textVersion,
+    translationVersion: binding.translationVersion,
+    voiceProfileId: binding.voiceProfileId,
+    fileRef: binding.fileRef,
+    status: binding.status,
+    checksumSha256: binding.checksumSha256,
+    durationSeconds: binding.durationSeconds,
+    sourceModel: binding.sourceModel,
+  })
+})
+
+// 开发态：按 fileRef（tts/...）直接返回已审核 WAV；正式端由对象存储 + CDN 提供，此路由不暴露密钥。
+app.get('/tts/*', async (context) => {
+  const pathname = context.req.path.replace(/^\/tts\//, 'tts/')
+  if (!pathname.endsWith('.wav')) return errorResponse(context, 'audio_not_found', 404)
+  const file = resolveProductionAudioFile(pathname)
+  if (!file) return errorResponse(context, 'audio_not_found', 404)
+  const body = await readFile(file)
+  return new Response(body, {
+    headers: {
+      'Content-Type': 'audio/wav',
+      'Cache-Control': 'public, max-age=31536000, immutable',
+    },
   })
 })
 

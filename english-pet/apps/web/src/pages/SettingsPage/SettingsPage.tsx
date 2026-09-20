@@ -68,7 +68,7 @@ export default function SettingsPage() {
           <CardHeader><CardTitle>{t.englishVoice}</CardTitle><CardDescription>{locale === 'en' ? 'Adjust support and listening pace without taking a level test.' : '无需水平测试，即可调整辅助程度和听力语速。'}</CardDescription></CardHeader>
           <CardContent className="grid gap-6 sm:grid-cols-2">
             <div className="space-y-2"><Label>{t.englishSupport}</Label><Select value={session.settings.languageLevel} disabled={saving} onValueChange={(value) => void save({ languageLevel: value as LanguageLevel })}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent><SelectItem value="L1">{t.moreSupport}</SelectItem><SelectItem value="L2">{t.everyday}</SelectItem><SelectItem value="L3">{t.independent}</SelectItem><SelectItem value="L4">{t.nuance}</SelectItem></SelectContent></Select></div>
-            <div className="space-y-2"><Label>{t.speechRate}</Label><Select value={session.settings.speechRate} disabled={saving} onValueChange={(value) => void save({ speechRate: value as SpeechRate })}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent><SelectItem value="slow">{t.slow}</SelectItem><SelectItem value="normal">{t.normal}</SelectItem></SelectContent></Select></div>
+            <div className="space-y-2"><Label>{t.speechRate}</Label><Select value={session.settings.speechRate} disabled={saving} onValueChange={(value) => void save({ speechRate: value as SpeechRate })}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent><SelectItem value="1.0">1.0×</SelectItem><SelectItem value="0.8">0.8×</SelectItem><SelectItem value="0.6">0.6×</SelectItem></SelectContent></Select></div>
           </CardContent>
         </Card>
 

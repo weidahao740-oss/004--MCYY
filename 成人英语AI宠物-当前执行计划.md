@@ -9,7 +9,7 @@
 1. **先读本文件**：确认当前任务、顺序、完成门槛和阻塞项。
 2. 需要稳定产品或技术结论时，读 `PROJECT_BASELINE.md`。
 3. 需要具体实现时，只读本文件点名的专项文档或代码。
-4. **不要默认读取历史归档。** 只有发生结论冲突、追溯原因、审计或回滚时，才读 `archive/PROJECT_HISTORY.md`。
+4. 已丢弃、已否决、已淘汰或被新决策替代的信息不读取、不记录、不归档，直接删除。
 
 ---
 
@@ -17,21 +17,24 @@
 
 | 项目 | 状态 |
 |---|---|
-| 当前阶段 | 新版 1.6：固定 Morrow 唯一音色试产试听验收 |
-| 当前第一行动 | 按每条英文词数与 normal/slow 语速自动计算纯朗读时长，再在前后各增加 1 秒余量，重新试产 3 组候选 |
-| 当前阻塞 | 二次试产因固定总时长过紧仍出现断句或未说完，6 条候选已全部删除；需先固化按文字长度计算 duration 的规则 |
-| 下一任务 | 实现并确认 duration 自动计算规则后重新生成 6 条；由用户试听确认，再决定是否批量制作首两章 |
+| 当前阶段 | 新版 1.6：145 条正式预制语音已通过客观验证与抽样试听验收；进入阶段 4 |
+| 当前第一行动 | 明确首个正式客户端上线顺序（微信小程序 / App）与云厂商、基础设施选型（PostgreSQL、对象存储/CDN、部署与域名） |
+| 当前阻塞 | 无 |
+| 下一任务 | 按上述客户端与基础设施决策，落地阶段 4.1（PostgreSQL 持久化 + 对象存储） |
 | 当前正式平台 | 微信小程序和 App；Web 仅作开发测试 |
 
 ### 当前资产状态
 
-- 正式唯一 `voiceProfileId`：`morrow_voice_v1`。
-- 原始选定音色：`voice-test/morrow-growth-voice/morrow_age_05_seed_audio_t2a_v1.wav`。
-- 发布基准参考：`voice-test/morrow-growth-voice/morrow_voice_standard_v1.wav`。
-- 发布基准规格为 WAV / PCM / 16 kHz / 单声道 / 16-bit，长度字段有效；有效语音 RMS 约 `-19.91 dBFS`、峰值约 `-6.41 dBFS`，SHA-256 为 `8a7d95145f7ff841d2934e2530b3df3f7cf761023fddc4ef43ad52887b23cc5f`。
-- 旧少年锚点、幼年/成年候选及 18/25/50 岁实验音频保留用于追溯，但全部不进入正式内容。
+- 正式唯一 `voiceProfileId`：`morrow_voice_v1`，制作模型 `qwen-audio-3.0-tts-flash`。
+- 专属复刻音色的唯一参考：`voice-test/morrow-growth-voice/morrow_voice_standard_v1.wav`。
+- 发布基准规格为 WAV / PCM / 16 kHz / 单声道 / 16-bit，长度字段有效；有效语音 RMS `-20.43 ~ -20.0 dBFS`、峰值 `-9.02 ~ -3.0 dBFS`，全部达标。
+- 第一、二章 `audioRequired:true` 冻结英文台词已批量制作：第一章 75、第二章 70，合计 145 条正常语速音频，全部 `ready`，总时长约 739.5 秒。
+- **验收结论（2026-09-20）**：145 条正式音频已完成验收——客观校验全部通过，17 条代表样本主观试听用户确认通过；当前阶段语音证据门关闭。
+- 试听样本索引：`voice-test/morrow-production/试听样本索引.html`（17 条，覆盖两章/首中尾/短中长）。
+- 生产资产根目录：`voice-test/morrow-production/`；台词清单 `inventory.json`，音频绑定登记 `manifest.json`（含 contentId+lineId+textVersion+translationVersion+voiceProfileId、fileRef、时长、SHA-256、响度、状态），排除项 `excluded.json`。
+- 运行时组合台词 `brw_prompt_line`、`brc_prompt_line` 含运行时注入变量，单条固定音频无法忠实覆盖，已排除并登记为 `planned`，待工程化时决定播放方案。
 - 10 条 ASR 测试录音、录音原稿和千问 ASR 结果继续保留。
-- 固定音色、A2A 提示模板与响度规范：`MORROW_VOICE_SAMPLE_PLAN.md`。
+- 固定音色、千问复刻音色生成参数与响度规范：`MORROW_VOICE_SAMPLE_PLAN.md`。
 - 响度处理脚本：`english-pet/scripts/normalize_morrow_audio.py`。
 
 ---
@@ -42,8 +45,7 @@
 
 - [x] 全生命周期统一使用 `morrow_voice_v1`，不再按幼年、少年、成年更换声线。
 - [x] 成长只通过台词内容、词汇复杂度、语句长度、停顿、情绪和剧情经历表达。
-- [x] Seed Audio 正式台词统一使用 A2A，并以 `morrow_voice_standard_v1.wav` 为 `@音频1`。
-- [x] 旧成长音色候选标记为淘汰，仅保留用于决策追溯。
+- [x] 正式台词统一使用千问 `qwen-audio-3.0-tts-flash`，并复用基于 `morrow_voice_standard_v1.wav` 创建的专属复刻音色。
 
 ### 3.2 响度与发布规则
 
@@ -53,9 +55,10 @@
 - [x] 输出统一为 WAV / PCM / 16 kHz / 单声道 / 16-bit，RIFF 与 data 长度字段必须正确。
 - [x] 后处理不得改变音高、音色、语速和措辞。
 - [x] 已提供确定性处理脚本 `english-pet/scripts/normalize_morrow_audio.py`。
-- [x] 已删除上一轮 6 条试产候选、旧响度报告和旧技术清单。
-- [x] 已在 Seed Audio 1.0 A2A 提示和 duration 参数中直接指定 4/5、5/6、7/8 秒（normal/slow），并加入立即开口、连续朗读、结束即停及发布标准要求，重新生成 6 条候选。
-- [ ] 本轮按用户要求不做格式、响度、静音区间、文本或听感检查；由用户按 `voice-test/morrow-preproduction/README.md` 直接试听并逐条登记结论。
+- [x] 千问生成规则：固定模型为 `qwen-audio-3.0-tts-flash`，复用同一专属音色，每条台词只生成一份正常语速音频。
+- [x] 播放规则：用户可选择 `1.0×`、`0.8×`、`0.6×`，客户端对同一音频实时变速并保持音高。
+- [x] 短/中/长 3 条正常语速千问原始候选已于 2026-09-20 生成人工试听通过。
+- [x] 通过候选已完成发布响度与格式处理，保存在 `voice-test/morrow-preproduction/ready/`，并在 `release_manifest.json` 登记格式、响度、时长、SHA-256 和审核状态。
 
 ### 3.3 当前禁止事项
 
@@ -65,25 +68,22 @@
 
 ---
 
-## 4. 下一任务：首两章固定音色预制语音
+## 4. 已完成：首两章固定音色预制语音批量制作
 
-> 进入条件：`morrow_voice_v1` 的 normal/slow 试产台词通过声线、音量和语速试听。
+- [x] 从第一、二章提取全部 `audioRequired: true` 的冻结英文台词（第一章 75、第二章 70，合计 145 条）。
+- [x] 绑定 `contentId + lineId + textVersion + translationVersion + voiceProfileId`，登记路径、时长、SHA-256、响度处理报告和审核状态（见 `voice-test/morrow-production/manifest.json`）。
+- [x] 每条台词只生成一份正常语速音频（`rate=1.0`、`pitch=1.0`、英语提示），按 `tts/<chapter>/<event>/<line>/1.0.0/audio.wav` 保存。
+- [x] 全部输出为 WAV / PCM / 16 kHz / 单声道 / 16-bit，有效语音 RMS `-20 dBFS±1 dB`，峰值 `≤ -3 dBFS`，RIFF/data 长度字段合法。
+- [x] `brw_prompt_line`、`brc_prompt_line` 两条含运行时注入变量的台词不做固定音频，已登记为 `planned`。
+- [x] 将 `manifest.json` 的绑定接入后端：新增生产绑定加载器 `packages/domain/src/audio-bindings.ts` 与 `GET /v1/audio/bindings/:audioId`（N3）；ready 返回版本绑定与可播 fileRef，planned/retired/未登记返回 `audio_not_ready`/`audio_not_found`，前端降级文字+译文；开发态 `/tts/*` 直接返回已审核 WAV。
 
-- [ ] 从第一、二章提取全部 `audioRequired: true` 的冻结英文台词。
-- [ ] 检查每条台词的 `contentId`、`lineId`、`textVersion` 和 `translationVersion`。
-- [ ] 统一使用 `morrow_voice_v1` 生成 normal 与 slow。
-- [ ] 按 `contentId + textVersion + variant` 保存，不覆盖旧版本。
-- [ ] 逐条人工试听，不合格项单独重生成。
-- [ ] 登记文件路径、时长、SHA-256 和审核状态。
-- [ ] 只有审核通过的音频才能标记为 `ready`。
-- [ ] 将正式音频绑定写入固定内容配置。
+### 完成门槛核对
 
-### 完成门槛
-
-- 首两章所有 `audioRequired: true` 台词均有 normal/slow；
-- 文本、译文、固定音色和音频版本一一对应；
-- 所有 `ready` 音频均有人工审核记录和 SHA-256；
-- 缺失或播放失败时仍可使用英文正文、人工译文和文字交互完成事件。
+- 首两章所有 `audioRequired: true` 台词均有一份正常语速音频（145/145，排除 2 条运行时组合句）；
+- 客户端使用同一音频按 `1.0×`、`0.8×`、`0.6×` 播放并保持音高；
+- 文本、译文、固定音色和音频版本一一对应（均为 1.0.0）；
+- 所有 `ready` 音频有 SHA-256 与响度处理报告；
+- 音频缺失或播放失败时仍可用英文正文、人工译文和文字交互完成事件。
 
 ---
 
@@ -137,7 +137,7 @@
 - [ ] 完成全中文 UI、账号、主页、事件、对话、记忆、共同记忆和设置。
 - [ ] 完成“查看中文 / 收起中文”。
 - [ ] 完成录音授权、ASR、修改确认、文字回退和弱网恢复。
-- [ ] 完成预制音频播放、缓存、重听和慢速版本。
+- [ ] 完成预制音频播放、缓存、重听和 `1.0×`、`0.8×`、`0.6×` 变速播放。
 - [ ] 上线“出生与苏醒”和“童年探索”。
 - [ ] 上线 8—12 个固定对话主题。
 - [ ] 完成隐私说明、用户协议、账号注销和问题反馈。
@@ -163,5 +163,5 @@
 
 - 完成一个当前任务后：更新本文件的状态与下一行动。
 - 某项形成长期有效结论后：写入 `PROJECT_BASELINE.md`。
-- 已完成的过程细节：从本文件删除，必要时追加到 `archive/PROJECT_HISTORY.md`。
+- 已丢弃、已否决、已淘汰或被新决策替代的信息直接删除，不保留过程说明或历史副本。
 - 不在本文件重复粘贴专项文档的完整规格。

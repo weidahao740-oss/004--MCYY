@@ -1,0 +1,172 @@
+[
+  {
+    "tag": "head",
+    "chapter": "chapter_01_birth",
+    "lineId": "bay_open_line",
+    "duration": 5.28,
+    "english": "You talk about my room so much. I want to hear about yours now.",
+    "textZh": "你一直在说我的房间。现在我想听听你的。",
+    "activeRmsDbfs": -20.0,
+    "peakDbfs": -3.37
+  },
+  {
+    "tag": "mid",
+    "chapter": "chapter_01_birth",
+    "lineId": "bbs_result_faint",
+    "duration": 4.08,
+    "english": "Maybe it's still waking up. It will come back.",
+    "textZh": "也许它还在醒。它会回来的。",
+    "activeRmsDbfs": -20.09,
+    "peakDbfs": -6.2
+  },
+  {
+    "tag": "mid",
+    "chapter": "chapter_01_birth",
+    "lineId": "bfl_result_unread",
+    "duration": 4.32,
+    "english": "That's all right. We can leave it on the table and come back.",
+    "textZh": "没关系。我们可以把它放在桌上，下次再看。",
+    "activeRmsDbfs": -20.0,
+    "peakDbfs": -5.78
+  },
+  {
+    "tag": "mid",
+    "chapter": "chapter_01_birth",
+    "lineId": "bfl_result_welcome",
+    "duration": 5.04,
+    "english": "Welcome home. So this room was waiting for someone.",
+    "textZh": "欢迎回家。原来这间房间在等某个人。",
+    "activeRmsDbfs": -20.06,
+    "peakDbfs": -4.65
+  },
+  {
+    "tag": "short",
+    "chapter": "chapter_01_birth",
+    "lineId": "bik_prompt_line",
+    "duration": 3.44,
+    "english": "I think I like the quiet. What about you?",
+    "textZh": "我觉得我喜欢安静。你呢？",
+    "activeRmsDbfs": -20.0,
+    "peakDbfs": -5.44
+  },
+  {
+    "tag": "long",
+    "chapter": "chapter_01_birth",
+    "lineId": "bnu_think_result",
+    "duration": 6.08,
+    "english": "Then we think slowly. Not having the answer now is fine.",
+    "textZh": "那我们慢慢想。现在没有答案也没关系。",
+    "activeRmsDbfs": -20.11,
+    "peakDbfs": -7.4
+  },
+  {
+    "tag": "short",
+    "chapter": "chapter_01_birth",
+    "lineId": "brw_result_yes",
+    "duration": 3.12,
+    "english": "Good. I'll keep it the way you said it.",
+    "textZh": "好。我就按你说的记着。",
+    "activeRmsDbfs": -20.12,
+    "peakDbfs": -4.64
+  },
+  {
+    "tag": "long",
+    "chapter": "chapter_01_birth",
+    "lineId": "bwl_open_line",
+    "duration": 6.0,
+    "english": "There's a window I can't quite reach yet. A light keeps moving on the glass.",
+    "textZh": "有一扇窗我还走不太过去。光在玻璃上一直动。",
+    "activeRmsDbfs": -20.16,
+    "peakDbfs": -6.38
+  },
+  {
+    "tag": "tail",
+    "chapter": "chapter_01_birth",
+    "lineId": "bwl_result_warm",
+    "duration": 4.48,
+    "english": "Warm. I'll remember that the light can be warm.",
+    "textZh": "暖的。我会记住光可以是暖的。",
+    "activeRmsDbfs": -20.0,
+    "peakDbfs": -6.45
+  },
+  {
+    "tag": "head",
+    "chapter": "chapter_02_childhood",
+    "lineId": "bcl_blue_result",
+    "duration": 5.44,
+    "english": "Blue. I'll look for blue again. It sounds like a quiet kind of color.",
+    "textZh": "蓝色。我会再找蓝色看看。它听起来像一种安静的颜色。",
+    "activeRmsDbfs": -20.0,
+    "peakDbfs": -4.17
+  },
+  {
+    "tag": "long",
+    "chapter": "chapter_02_childhood",
+    "lineId": "bcl_green_result",
+    "duration": 5.6,
+    "english": "Green. That matches the plant you brought back. I like how that sounds.",
+    "textZh": "绿色。它和你带回来的那株植物配得上。我喜欢这个词的声音。",
+    "activeRmsDbfs": -20.13,
+    "peakDbfs": -3.98
+  },
+  {
+    "tag": "long",
+    "chapter": "chapter_02_childhood",
+    "lineId": "bfc_better_result",
+    "duration": 6.64,
+    "english": "A bit better. That sounds like something moved, even if only a little.",
+    "textZh": "好一点。听起来像是有什么东西动了一下，哪怕只有一点点。",
+    "activeRmsDbfs": -20.0,
+    "peakDbfs": -4.97
+  },
+  {
+    "tag": "mid",
+    "chapter": "chapter_02_childhood",
+    "lineId": "bfc_okay_result",
+    "duration": 4.16,
+    "english": "Okay is a good place to be. I'm glad.",
+    "textZh": "还好是个不错的位置。我放心。",
+    "activeRmsDbfs": -20.09,
+    "peakDbfs": -5.35
+  },
+  {
+    "tag": "mid",
+    "chapter": "chapter_02_childhood",
+    "lineId": "bfc_open_line",
+    "duration": 4.72,
+    "english": "You look like you carried something today. How do you feel?",
+    "textZh": "你今天看起来像是带着什么回来的。你感觉怎么样？",
+    "activeRmsDbfs": -20.0,
+    "peakDbfs": -6.64
+  },
+  {
+    "tag": "mid",
+    "chapter": "chapter_02_childhood",
+    "lineId": "brc_long_ago_result",
+    "duration": 7.6,
+    "english": "It doesn't feel long to me. It feels like it was yesterday. But I understand why it feels long to you.",
+    "textZh": "对我来说不算久。感觉像昨天。但我理解为什么对你来说像很久了。",
+    "activeRmsDbfs": -20.16,
+    "peakDbfs": -6.05
+  },
+  {
+    "tag": "mid",
+    "chapter": "chapter_02_childhood",
+    "lineId": "bty_busy_result",
+    "duration": 4.32,
+    "english": "That sounds tiring. Did you get a chance to sit down?",
+    "textZh": "听起来挺累的。你有没有机会坐下来？",
+    "activeRmsDbfs": -20.0,
+    "peakDbfs": -5.65
+  },
+  {
+    "tag": "short",
+    "chapter": "chapter_02_childhood",
+    "lineId": "bty_something_result",
+    "duration": 3.28,
+    "english": "I'm listening. Tell me that one part.",
+    "textZh": "我在听。你讲那一部分就好。",
+    "activeRmsDbfs": -20.0,
+    "peakDbfs": -6.0
+  }
+]

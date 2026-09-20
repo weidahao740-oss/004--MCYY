@@ -21,6 +21,8 @@ export type ApiErrorCode =
   | 'resurfacing_not_available'
   | 'first_day_action_not_allowed'
   | 'first_day_memory_review_incomplete'
+  | 'audio_not_found'
+  | 'audio_not_ready'
   | 'internal_error'
 
 const messages: Record<ApiErrorCode, string> = {
@@ -44,6 +46,8 @@ const messages: Record<ApiErrorCode, string> = {
   resurfacing_not_available: '这条可选表达已不可用。',
   first_day_action_not_allowed: '当前首日步骤不允许此操作。',
   first_day_memory_review_incomplete: '继续前请审核每一条首日记忆提案。',
+  audio_not_found: '未找到该音频绑定。',
+  audio_not_ready: '这条语音尚未准备好，你可以先看文字和译文继续。',
   internal_error: '服务暂时无法完成请求。',
 }
 

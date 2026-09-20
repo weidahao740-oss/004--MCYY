@@ -28,7 +28,7 @@ CREATE TYPE "public"."resurfacing_mode" AS ENUM('optional_prompt', 'natural_mode
 CREATE TYPE "public"."resurfacing_result" AS ENUM('used', 'paraphrased', 'ignored', 'declined', 'not_applicable');--> statement-breakpoint
 CREATE TYPE "public"."resurfacing_status" AS ENUM('pending', 'eligible', 'served', 'mastered', 'snoozed', 'cancelled');--> statement-breakpoint
 CREATE TYPE "public"."revision_actor" AS ENUM('user', 'system');--> statement-breakpoint
-CREATE TYPE "public"."speech_rate" AS ENUM('slow', 'normal');--> statement-breakpoint
+CREATE TYPE "public"."speech_rate" AS ENUM('1.0', '0.8', '0.6');--> statement-breakpoint
 CREATE TYPE "public"."user_status" AS ENUM('active', 'suspended', 'deletion_pending', 'deleted');--> statement-breakpoint
 CREATE TABLE "account_deletion_requests" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
@@ -333,7 +333,7 @@ CREATE TABLE "user_settings" (
 	"user_id" uuid PRIMARY KEY NOT NULL,
 	"language_level" "language_level" DEFAULT 'L2' NOT NULL,
 	"preferred_reply_length" "reply_length" DEFAULT 'standard' NOT NULL,
-	"speech_rate" "speech_rate" DEFAULT 'normal' NOT NULL,
+	"speech_rate" "speech_rate" DEFAULT '1.0' NOT NULL,
 	"subtitles_enabled" boolean DEFAULT true NOT NULL,
 	"correction_preference" "correction_preference" DEFAULT 'after_conversation' NOT NULL,
 	"memory_enabled" boolean DEFAULT true NOT NULL,

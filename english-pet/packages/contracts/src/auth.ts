@@ -4,7 +4,7 @@ export const accountKindSchema = z.enum(['guest', 'registered'])
 export const userStatusSchema = z.enum(['active', 'suspended', 'deletion_pending'])
 export const languageLevelSchemaV1 = z.enum(['L1', 'L2', 'L3', 'L4'])
 export const replyLengthSchema = z.enum(['short', 'standard'])
-export const speechRateSchema = z.enum(['slow', 'normal'])
+export const speechRateSchema = z.enum(['1.0', '0.8', '0.6'])
 export const interfaceLocaleSchema = z.enum(['zh-CN', 'en'])
 export const correctionPreferenceSchema = z.enum([
   'after_conversation',

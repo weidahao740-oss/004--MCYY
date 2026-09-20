@@ -1,0 +1,50 @@
+{
+    "model":  "qwen-audio-3.0-tts-flash",
+    "voice_profile_id":  "morrow_voice_v1",
+    "source_variant":  "normal",
+    "playback_rates":  [
+                           1,
+                           0.8,
+                           0.6
+                       ],
+    "preserve_pitch":  true,
+    "status":  "ready",
+    "files":  [
+                  {
+                      "name":  "short",
+                      "file":  "C:\\004-MCYY\\voice-test\\morrow-preproduction\\ready\\morrow_short.wav",
+                      "duration_seconds":  2.96,
+                      "sample_rate_hz":  16000,
+                      "channels":  1,
+                      "bits_per_sample":  16,
+                      "active_rms_dbfs":  -20.2,
+                      "peak_dbfs":  -7.32,
+                      "sha256":  "5d277b17c06c3435d38b701be4ad3eeab47065f4c033c5c9337b9b26a0d837e9",
+                      "review_status":  "approved"
+                  },
+                  {
+                      "name":  "medium",
+                      "file":  "C:\\004-MCYY\\voice-test\\morrow-preproduction\\ready\\morrow_medium.wav",
+                      "duration_seconds":  5.68,
+                      "sample_rate_hz":  16000,
+                      "channels":  1,
+                      "bits_per_sample":  16,
+                      "active_rms_dbfs":  -20.12,
+                      "peak_dbfs":  -3.85,
+                      "sha256":  "a1d35c66c1c8f2f06e704aec837cff28ceb73b60fd9711b34098a55303b5f479",
+                      "review_status":  "approved"
+                  },
+                  {
+                      "name":  "long",
+                      "file":  "C:\\004-MCYY\\voice-test\\morrow-preproduction\\ready\\morrow_long.wav",
+                      "duration_seconds":  7.12,
+                      "sample_rate_hz":  16000,
+                      "channels":  1,
+                      "bits_per_sample":  16,
+                      "active_rms_dbfs":  -20.0,
+                      "peak_dbfs":  -5.72,
+                      "sha256":  "b262012121f71147490a6d305b59d5dd750fe0b5a113186ce1d66bdcc185b134",
+                      "review_status":  "approved"
+                  }
+              ]
+}

@@ -39,7 +39,7 @@
 |---|---|---|---|---|---|
 | 1 | 事件引擎运行时（状态机、目录、start/act、幂等缓存） | `apps/api/src/memory-event-engine.ts` | 修改 | 现有引擎读 `eventsV1`（`events-v1.0.0`），且用 `chooseTransition()`/`inferOutcome()` 自由文本别名猜分支，违背"只由唯一意图推进" | 改为读取 `fixedContentV1`；删除 `chooseTransition/inferOutcome` 启发式，替换为契约第 5 节确定性匹配器；保留实例化、幂等 `responseByIdempotencyKey`、`worldState` 写入与暂停/恢复骨架 |
 | 2 | 旧事件规则集（5 个事件、误解分支、`understanding` 相位） | `packages/domain/src/events-v1.ts`、`packages/contracts/src/events.ts`（`eventDefinitionSchema`/`eventRulesetSchema`） | 弃用（正式端） | 其 `eventRulesetSchema` 要求 `events.length(5)`、含自由 `misunderstanding` 结构，与固定内容契约的 `fixedContentRulesetSchema` 不兼容 | 作为历史 Web 原型保留在仓库；新端点不再下发；`GET /v1/events` 改下发固定内容目录 |
-| 3 | 新固定内容规则集与两个出生事件 | `packages/domain/src/fixed-content-v1.ts`、`packages/contracts/src/fixed-content.ts` | 保留（升格为主链路） | 已是 Zod 机器权威、模块加载即校验、含 normal/slow 音频绑定与 `llmPolicy` | 直接成为服务端权威；新增"规则集下发 + 意图匹配"读路径；内容按 `MORROW_LIFE_STORY_BIBLE.md` 第 7 章扩充 |
+| 3 | 新固定内容规则集与两个出生事件 | `packages/domain/src/fixed-content-v1.ts`、`packages/contracts/src/fixed-content.ts` | 保留（升格为主链路） | 已是 Zod 机器权威、模块加载即校验、含单一正常语速音频绑定与 `llmPolicy` | 直接成为服务端权威；新增"规则集下发 + 意图匹配"读路径；内容按 `MORROW_LIFE_STORY_BIBLE.md` 第 7 章扩充 |
 | 4 | 长期记忆（proposed/confirmed/paused/rejected、敏感拦截、搜索入上下文） | `apps/api/src/memory-memory-store.ts`、`packages/contracts/src/memory.ts` | 修改 | 能力骨架符合"提案需确认"，但 `proposeFromConversation()` 由 LLM 对话触发，属契约禁止的关键词/对话推断 | 保留 `list/act/search/clearUser` 与敏感拦截、版本冲突；记忆来源收窄到 `proposeFromEvent()`（事件声明规则）与显式请求确认；停用对话触发的自动提案 |
 | 5 | 共同记忆册（日记条目：edit/hide/restore/delete、版本冲突、关联记忆） | `apps/api/src/memory-journal-store.ts`、`packages/contracts/src/journal.ts` | 修改 | 结构可用，但条目为自由文本，缺"按当时文本/译文版本回看" | 保留 CRUD 与乐观锁；新增/补 `textVersion`+`translationVersion` 快照，回看时用生成当时版本，不静默替换含义（契约第 8 节） |
 | 6 | 首日流程（FD00→FD07 状态机、取名/说今天/选物/记忆复核/日记） | `apps/api/src/memory-first-day-store.ts`、`packages/contracts/src/first-day.ts` | 修改 | 现有首日与 `events-v1` 耦合（`markFirstDayCompleted` 写 `first_day_v1`），且 `restoredObject` 只有 lamp/plant，无 small_bell | 首日改为固定内容前导：FD01/FD05 用固定台词+人工译文；选物对齐 `birth_restore_object_v1` 三选；FD06 记忆复核改走固定内容 `memoryRules` 提案 |
@@ -50,7 +50,7 @@
 | 11 | 自由对话主链路（SSE 流式、MockLLM 生成回复、对话级记忆提案） | `apps/api/src/memory-conversation-store.ts`、`apps/api/src/morrow-system-prompt.ts`、`packages/contracts/src/conversation.ts` | 弃用（正式端主链路） | `MemoryConversationStore.send()` 直接 `new MockLLM()` 并 `safeComplete` 生成开放式回复，是被契约取代的对象 | 正式端不再以"自由聊天"为核心；该链路由固定内容事件驱动。保留代码作为 LLM 实验资产，默认不挂载 |
 | 12 | Web 对话页（流式气泡、VoiceComposer、VoiceControls） | `apps/web/src/pages/ChatPage/ChatPage.tsx`、`VoiceComposer.tsx`、`VoiceControls.tsx`、`apps/web/src/api/conversation-api.ts` | 弃用（正式端 UI） | 它是 LLM 流式对话的壳 | 测试端可临时保留联调；正式端事件 UI 改由事件页渲染固定台词+译文按钮+中文选项 |
 | 13 | Mock ASR（返回可编辑转写 + 置信度） | `packages/ai/src/asr/mock.ts`、`asr/adapter.ts`、`packages/contracts/src/voice.ts` | 保留（测试端） | 契约要求"确认后 ASR 文本才进匹配器"，Mock 正好演示该流程 | 保留为 Web 测试端实现；输出必须经用户确认/编辑后才作为 `confirmed_asr_text` 进入意图匹配；正式端 ASR 由小程序/App 适配层另接 |
-| 14 | Mock TTS（静音 WAV）与按需合成端点 | `packages/ai/src/tts/mock.ts`、`tts/adapter.ts`、`tts/openai-compatible.ts` | 修改 | 契约要求预制 normal/slow 音频与台词/文本版本绑定，反对运行时按需合成任意文本 | 测试端保留静音 WAV 用于走通链路；正式端播放改为按 `audioBindings[].fileRef` 取预制文件；`POST /v1/audio/speech` 按需合成弃用（见 API 清单） |
+| 14 | Mock TTS（静音 WAV）与按需合成端点 | `packages/ai/src/tts/mock.ts`、`tts/adapter.ts`、`tts/openai-compatible.ts` | 修改 | 契约要求单一正常语速预制音频与台词/文本版本绑定，正式素材固定由 `qwen-audio-3.0-tts-flash` 离线制作，反对运行时按需合成任意文本 | 测试端保留静音 WAV 用于走通链路；正式端播放改为按 `audioBindings[].fileRef` 取千问预制文件；`POST /v1/audio/speech` 按需合成弃用（见 API 清单） |
 | 15 | LLM 适配器（接口 + Mock + OpenAI 兼容） | `packages/ai/src/llm/adapter.ts`、`llm/mock.ts`、`llm/openai-compatible.ts` | 保留（默认关闭） | 契约明确保留为历史/未来实验资产 | 不删；新主链路不 import `MockLLM`；仅在显式开启且输出落回白名单时作为非权威增强；无密钥不报错 |
 | 16 | 结构化输出校验（morrowReply-1.0 Schema）与系统提示词 | `packages/ai/src/validation.ts`、`apps/api/src/morrow-system-prompt.ts` | 弃用（主链路） | 它约束的是"LLM 自由生成回复"，固定内容无需 LLM 输出 Schema | 保留文件仅供 LLM 实验；事件主链路改用 `fixedContentRulesetSchema` 校验 |
 | 17 | i18n 英文 UI 切换 | `apps/web/src/i18n/copy.ts`（`zh-CN`/`en` 双表 + `getCopy/currentLocale`）、`packages/contracts/src/auth.ts`（`interfaceLocaleSchema = zh-CN|en`） | 修改 | 契约第 7.1 节：正式产品不提供整套英文 UI 切换 | 移除正式入口：`copy.ts` 只保留 `zh-CN` 一套；设置页删除"界面语言"切换；`interfaceLocale` 字段保留兼容但固定为 `zh-CN` |
@@ -154,7 +154,7 @@
 - 客户端只依赖"抽象接口"（对齐 `TECH_STACK.md` 第 5 节的 `RecorderAdapter / AudioPlayerAdapter` 形态）：
   - 录音：`requestPermission / start / stop(→ { audio, mimeType }) / cancel`；
   - 播放：`play(source, rate) / stop`，另加按 `audioId` 取预制文件与本地缓存命中；
-  - 缓存：按 `audioId + textVersion + translationVersion + variant` 做 key，版本不一致即失效。
+  - 缓存：按 `audioId + textVersion + translationVersion` 做 key，版本不一致即失效。
 - 正式端由微信小程序（`wx.*` 录音/InnerAudioContext）与 App（原生录音/AVPlayer 或 RN 原生模块）各自新增实现，不改事件引擎、记忆、意图匹配等平台无关逻辑。
 - 未确认 ASR 只用于转写审核，不进事件消息/匹配/记忆（契约 5.1）。
 
@@ -171,7 +171,7 @@
 | P3 事件引擎改挂 | `MemoryEventEngine` 改读固定内容规则集，删 `chooseTransition/inferOutcome`；幂等键保留 | 走完 `birth_first_voice_v1` 全部分支，结果写 `worldStateWrites`，重复提交返回同一实例 | 旧 `events-v1` 用例失配：冒烟测试参数换成固定内容事件 ID |
 | P4 记忆/日记/反馈收窄 | 记忆提案只来自事件 `memoryRules`；日记补文本/译文版本快照；反馈挂事件结果 | 事件完成后出现一条待确认提案；确认/拒绝/暂停均符合契约 | 对话自动提案停用影响回归：`memory-conversation-store.smoke.ts` 相应标记为实验性 |
 | P5 全中文与译文按钮 | `copy.ts` 收单语、错误表中文化、`translationToggle` 组件落地 | 无英文 UI 残留；按钮收起/展开/作用域符合契约第 8 节 | 漏改：grep `en` 文案与 `interfaceLocale` 引用逐一清零 |
-| P6 音频绑定与播放 | 预制 `fileRef` 下发；播放适配器按版本 key 缓存；`planned` 音频不播 | 任一 `audioRequired` 台词能取到 normal/slow 绑定；版本错配拒绝缓存 | 预制音频尚未就绪：`planned` 时降级为纯文本+译文，事件仍可完成 |
+| P6 音频绑定与播放 | 预制 `fileRef` 下发；播放适配器按版本 key 缓存；`planned` 音频不播 | 任一 `audioRequired` 台词能取到单一正常语速音频绑定；版本错配拒绝缓存 | 预制音频尚未就绪：`planned` 时降级为纯文本+译文，事件仍可完成 |
 | P7 首日流程对齐 | 首日三选对齐 `birth_restore_object_v1`；FD06 复核固定内容记忆规则 | 首日走完并自动 `markFirstDayCompleted`，三选世界状态正确 | `restoredObject` 枚举扩 `small_bell`：同步 contract 与 store |
 | P8 LLM 默认关闭核验 | 服务端不再默认实例化 `MockLLM`；缺密钥启动不报错；对话实验路径隔离 | 不设 `LLM_*` 环境变量跑通 P1–P7 全部冒烟 | 残留隐式依赖：grep 服务端是否仍 import `MockLLM` |
 

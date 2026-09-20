@@ -46,7 +46,7 @@ export const relationshipStageEnum = pgEnum('relationship_stage', [
 ])
 export const languageLevelEnum = pgEnum('language_level', ['L1', 'L2', 'L3', 'L4'])
 export const replyLengthEnum = pgEnum('reply_length', ['short', 'standard'])
-export const speechRateEnum = pgEnum('speech_rate', ['slow', 'normal'])
+export const speechRateEnum = pgEnum('speech_rate', ['1.0', '0.8', '0.6'])
 export const correctionPreferenceEnum = pgEnum('correction_preference', [
   'after_conversation',
   'only_when_blocking',
@@ -306,7 +306,7 @@ export const userSettings = pgTable('user_settings', {
   preferredReplyLength: replyLengthEnum('preferred_reply_length')
     .notNull()
     .default('standard'),
-  speechRate: speechRateEnum('speech_rate').notNull().default('normal'),
+  speechRate: speechRateEnum('speech_rate').notNull().default('1.0'),
   subtitlesEnabled: boolean('subtitles_enabled').notNull().default(true),
   correctionPreference: correctionPreferenceEnum('correction_preference')
     .notNull()

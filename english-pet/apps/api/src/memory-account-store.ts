@@ -37,7 +37,7 @@ const userIdByToken = new Map<string, string>()
 const defaultSettings: UserSettings & { llmAssistEnabled: boolean } = {
   languageLevel: 'L2',
   preferredReplyLength: 'standard',
-  speechRate: 'normal',
+  speechRate: '1.0',
   subtitlesEnabled: true,
   correctionPreference: 'after_conversation',
   memoryEnabled: true,

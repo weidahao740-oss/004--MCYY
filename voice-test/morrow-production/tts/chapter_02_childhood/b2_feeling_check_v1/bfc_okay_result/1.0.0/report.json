@@ -1,0 +1,37 @@
+{
+  "input": "C:\\004-MCYY\\voice-test\\morrow-production\\raw\\chapter_02_childhood\\b2_feeling_check_v1\\bfc_okay_result.wav",
+  "output": "C:\\004-MCYY\\voice-test\\morrow-production\\tts\\chapter_02_childhood\\b2_feeling_check_v1\\bfc_okay_result\\1.0.0\\audio.wav",
+  "target_active_rms_dbfs": -20.0,
+  "peak_ceiling_dbfs": -3.0,
+  "applied_gain_db": 2.5,
+  "source_format": {
+    "sample_rate_hz": 24000,
+    "channels": 1,
+    "bits_per_sample": 16
+  },
+  "output_format": {
+    "container": "WAV",
+    "codec": "PCM",
+    "sample_rate_hz": 16000,
+    "channels": 1,
+    "bits_per_sample": 16,
+    "frames": 66560,
+    "duration_seconds": 4.16,
+    "riff_length_field": 133156,
+    "expected_riff_length": 133156,
+    "data_length_field": 133120,
+    "expected_data_length": 133120,
+    "length_fields_valid": true,
+    "required_format_valid": true
+  },
+  "before": {
+    "peak_dbfs": -7.85,
+    "rms_dbfs": -24.54,
+    "active_rms_dbfs": -22.5
+  },
+  "after": {
+    "peak_dbfs": -5.35,
+    "rms_dbfs": -22.04,
+    "active_rms_dbfs": -20.09
+  }
+}

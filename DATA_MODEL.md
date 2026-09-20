@@ -643,7 +643,7 @@ packages/database/
 阶段 3.5.3 把现有“LLM 适配器 + 事件配置”骨架迁移为“版本化固定内容 + 确定性意图匹配 + 白名单状态迁移”。本次迁移**只向前追加**，不重写本节及以上既有内容：
 
 - 现有 23 张表中 19 张保留不动，4 张仅追加可空列：`user_settings.llm_assist_enabled`（默认 false）、`event_definitions`/`event_instances` 各加 `chapter_id` 与 `event_type`、`memories` 加 `memory_rule_id` 与 `proposal_source`；
-- 拟新增 5 张表：规则集登记 `fixed_rulesets`、学习内容与译文版本 `learning_contents`、预制音频绑定 `audio_bindings`（normal/slow，planned/ready/retired）、章节成长进度 `user_chapter_progress`、意图解析留痕 `intent_resolution_records`（只存 `rulesetVersion+eventVersion+stateId+inputHash+resolvedIntentId` 哈希，不存原始录音）；
+- 拟新增 5 张表：规则集登记 `fixed_rulesets`、学习内容与译文版本 `learning_contents`、预制音频绑定 `audio_bindings`（单一正常语速音频，planned/ready/retired）、章节成长进度 `user_chapter_progress`、意图解析留痕 `intent_resolution_records`（只存 `rulesetVersion+eventVersion+stateId+inputHash+resolvedIntentId` 哈希，不存原始录音）；
 - 记忆确认状态机整体沿用现有 `memories.status`（`proposed→confirmed/paused/rejected/deleted/expired`）与既有 `requires_user_confirmation=true` 约束，仅补充白名单来源字段；
 - 世界状态继续由 `user_world_state` key-value 承载，章节门控另立专用表；未确认 ASR 不入库、原始录音不落库只存临时文件标识、敏感记忆 restricted、账号删除级联均沿用 PRIVACY_DESIGN 约束。
 

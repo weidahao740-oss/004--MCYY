@@ -12,6 +12,8 @@ export class WebAudioPlayerAdapter implements IAudioPlayerAdapter {
     this.objectUrl = URL.createObjectURL(source)
     this.audio = new Audio(this.objectUrl)
     this.audio.playbackRate = rate
+    this.audio.preservesPitch = true
+    ;(this.audio as HTMLAudioElement & { webkitPreservesPitch?: boolean }).webkitPreservesPitch = true
     this.audio.addEventListener('ended', () => this.stop(), { once: true })
     await this.audio.play()
   }

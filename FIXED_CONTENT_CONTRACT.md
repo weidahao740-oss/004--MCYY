@@ -372,8 +372,6 @@ type AudioBinding = {
 
 &#x20; translationVersion: SemVer
 
-&#x20; variant: 'normal' | 'slow'
-
 &#x20; voiceProfileId: string
 
 &#x20; fileRef: string
@@ -389,9 +387,9 @@ type AudioBinding = {
 
 
 
-1. 每条需语音台词必须有 normal 与 slow 两个独立音频 ID；
+1. 每条需语音台词必须且只能绑定一个正常语速音频 ID；
 
-2. 文件路径包含章节、事件、台词、文本版本与语速，不覆盖旧文件；
+2. 文件路径包含章节、事件、台词与文本版本，不覆盖旧文件；
 
 3. `ready` 前必须转换为 WAV / PCM / 16 kHz / 单声道 / 16-bit，并验证 RIFF 与 data 长度字段正确；随后完成响度处理与人工试听并写入 SHA-256。有效语音 RMS 目标为 `-20 dBFS`（允许 `±1 dB`），峰值不高于 `-3 dBFS`；`planned` 可用于内容准备，但正式端不得播放；
 
@@ -401,7 +399,9 @@ type AudioBinding = {
 
 6. TTS 缺失 / 失败时显示英文正文与人工译文按钮，事件仍可完成；
 
-7. `voiceProfileId = morrow_voice_v1` 是已审核的全生命周期唯一 Morrow 音色。所有 `ready` 音频必须使用该音色参考，并通过统一响度处理和人工试听。
+7. `voiceProfileId = morrow_voice_v1` 是已审核的全生命周期唯一 Morrow 音色。所有 `ready` 音频必须由 `qwen-audio-3.0-tts-flash` 使用该专属复刻音色按正常语速生成，并通过统一响度处理和人工试听。
+
+8. 用户可选择 `1.0×`、`0.8×`、`0.6×` 播放速度；客户端对同一音频实时变速并保持音高，不创建独立慢速音频。
 
 ## 10. 结果、状态与记忆
 
@@ -485,7 +485,7 @@ mayCreateContentIds = false
 
 3. `bro_intent_bell` → 恢复小铃铛 → `first_restored_object = small_bell`。
 
-同时出现两个对象、出现否定冲突或未提及支持对象时不推进。三个结果均有固定英文台词、人工中文译文和 normal/slow 预制音频 ID。事件可生成语言与关系记忆提案，均需用户确认。
+同时出现两个对象、出现否定冲突或未提及支持对象时不推进。三个结果均有固定英文台词、人工中文译文和一个预制音频 ID。事件可生成语言与关系记忆提案，均需用户确认。
 
 ## 13. 跨端消费契约
 
@@ -517,7 +517,7 @@ mayCreateContentIds = false
 
 * [x] 翻译按钮位置、默认状态、作用域和无障碍行为明确；
 
-* [x] 每条需语音台词具有 normal/slow 音频 ID 与文本版本绑定；
+* [x] 每条需语音台词具有一个音频 ID，并与文本版本绑定；
 
 * [x] 记忆只来自声明事件规则或用户显式请求，并始终要求确认；
 

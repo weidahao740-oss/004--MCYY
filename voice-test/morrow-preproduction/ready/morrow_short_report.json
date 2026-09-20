@@ -1,0 +1,37 @@
+{
+  "input": "C:\\004-MCYY\\voice-test\\morrow-preproduction\\qwen-raw\\morrow_short_qwen_raw.wav",
+  "output": "C:\\004-MCYY\\voice-test\\morrow-preproduction\\ready\\morrow_short.wav",
+  "target_active_rms_dbfs": -20.0,
+  "peak_ceiling_dbfs": -3.0,
+  "applied_gain_db": 2.03,
+  "source_format": {
+    "sample_rate_hz": 24000,
+    "channels": 1,
+    "bits_per_sample": 16
+  },
+  "output_format": {
+    "container": "WAV",
+    "codec": "PCM",
+    "sample_rate_hz": 16000,
+    "channels": 1,
+    "bits_per_sample": 16,
+    "frames": 47360,
+    "duration_seconds": 2.96,
+    "riff_length_field": 94756,
+    "expected_riff_length": 94756,
+    "data_length_field": 94720,
+    "expected_data_length": 94720,
+    "length_fields_valid": true,
+    "required_format_valid": true
+  },
+  "before": {
+    "peak_dbfs": -9.35,
+    "rms_dbfs": -23.62,
+    "active_rms_dbfs": -22.03
+  },
+  "after": {
+    "peak_dbfs": -7.32,
+    "rms_dbfs": -21.59,
+    "active_rms_dbfs": -20.2
+  }
+}

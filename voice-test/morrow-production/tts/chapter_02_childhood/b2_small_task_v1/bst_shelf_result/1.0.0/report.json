@@ -1,0 +1,37 @@
+{
+  "input": "C:\\004-MCYY\\voice-test\\morrow-production\\raw\\chapter_02_childhood\\b2_small_task_v1\\bst_shelf_result.wav",
+  "output": "C:\\004-MCYY\\voice-test\\morrow-production\\tts\\chapter_02_childhood\\b2_small_task_v1\\bst_shelf_result\\1.0.0\\audio.wav",
+  "target_active_rms_dbfs": -20.0,
+  "peak_ceiling_dbfs": -3.0,
+  "applied_gain_db": 3.06,
+  "source_format": {
+    "sample_rate_hz": 24000,
+    "channels": 1,
+    "bits_per_sample": 16
+  },
+  "output_format": {
+    "container": "WAV",
+    "codec": "PCM",
+    "sample_rate_hz": 16000,
+    "channels": 1,
+    "bits_per_sample": 16,
+    "frames": 79360,
+    "duration_seconds": 4.96,
+    "riff_length_field": 158756,
+    "expected_riff_length": 158756,
+    "data_length_field": 158720,
+    "expected_data_length": 158720,
+    "length_fields_valid": true,
+    "required_format_valid": true
+  },
+  "before": {
+    "peak_dbfs": -8.14,
+    "rms_dbfs": -25.78,
+    "active_rms_dbfs": -23.06
+  },
+  "after": {
+    "peak_dbfs": -5.08,
+    "rms_dbfs": -22.72,
+    "active_rms_dbfs": -20.08
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "input": "C:\\004-MCYY\\voice-test\\morrow-production\\raw\\chapter_01_birth\\b1_tomorrow_plan_v1\\btp_result_road.wav",
+  "output": "C:\\004-MCYY\\voice-test\\morrow-production\\tts\\chapter_01_birth\\b1_tomorrow_plan_v1\\btp_result_road\\1.0.0\\audio.wav",
+  "target_active_rms_dbfs": -20.0,
+  "peak_ceiling_dbfs": -3.0,
+  "applied_gain_db": 2.57,
+  "source_format": {
+    "sample_rate_hz": 24000,
+    "channels": 1,
+    "bits_per_sample": 16
+  },
+  "output_format": {
+    "container": "WAV",
+    "codec": "PCM",
+    "sample_rate_hz": 16000,
+    "channels": 1,
+    "bits_per_sample": 16,
+    "frames": 83200,
+    "duration_seconds": 5.2,
+    "riff_length_field": 166436,
+    "expected_riff_length": 166436,
+    "data_length_field": 166400,
+    "expected_data_length": 166400,
+    "length_fields_valid": true,
+    "required_format_valid": true
+  },
+  "before": {
+    "peak_dbfs": -8.06,
+    "rms_dbfs": -24.96,
+    "active_rms_dbfs": -22.57
+  },
+  "after": {
+    "peak_dbfs": -5.49,
+    "rms_dbfs": -22.39,
+    "active_rms_dbfs": -20.07
+  }
+}

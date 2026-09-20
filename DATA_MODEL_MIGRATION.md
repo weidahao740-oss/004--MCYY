@@ -99,23 +99,22 @@
 
 ### 2.3 音频绑定表 `audio_bindings`（【拟新增】表）
 
-- 为什么需要：契约 §9 要求每条需语音台词绑定 `audioId/lineId/contentId/textVersion/translationVersion/variant normal|slow/voiceProfileId/fileRef/checksumSha256/status planned|ready|retired`，且 normal/slow 是两条独立音频 ID；`ready` 前必须人工试听并写 SHA-256。现有表无任何音频登记表。
+- 为什么需要：契约 §9 要求每条需语音台词绑定 `audioId/lineId/contentId/textVersion/translationVersion/voiceProfileId/fileRef/checksumSha256/status planned|ready|retired`，每条台词只登记一个正常语速音频；`ready` 前必须人工试听并写 SHA-256。现有表无任何音频登记表。
 - 挂法：新表。
 - 拟议列：
   - `id uuid` 主键；
-  - `audio_id varchar(96)` 唯一，如 `bfv_prompt_line_audio_normal`；
+  - `audio_id varchar(96)` 唯一，如 `bfv_prompt_line_audio`；
   - `ruleset_id varchar(96)`；
   - `line_id varchar(96)`，如 `bfv_prompt_line`；
   - `content_id varchar(96)` + `text_version varchar(32)` + `translation_version varchar(32)`：与 §2.2 三元组对齐，英文版本不一致时客户端拒绝缓存旧音频；
-  - `variant speech_rateEnum`：直接复用既有 `speech_rateEnum('slow','normal')`，不新建枚举；
-  - `voice_profile_id varchar(96)`，首版 `morrow_voice_v1`；
-  - `file_ref varchar(512)`：对象存储路径键（如 `tts/<chapter_id>/<event_id>/<line_id>/1.0.0/normal.wav`），库内只存标识不存二进制；
+  - `voice_profile_id varchar(96)`，首版 `morrow_voice_v1`；正式素材固定由 `qwen-audio-3.0-tts-flash` 使用该专属复刻音色按正常语速生成；
+  - `file_ref varchar(512)`：对象存储路径键（如 `tts/<chapter_id>/<event_id>/<line_id>/1.0.0/audio.wav`），库内只存标识不存二进制；
   - `checksum_sha256 varchar(64)` 可空，`ready` 前必填；
   - `active_rms_dbfs numeric(5,2)` 与 `peak_dbfs numeric(5,2)` 可空，`ready` 前必须符合统一响度规范；
   - `loudness_report_ref varchar(512)` 可空，`ready` 前保存确定性后处理报告路径；
   - `status`（【拟新增】枚举 `planned/ready/retired`）；
   - `created_at`。
-  - 唯一约束：`(line_id, variant, text_version)`。
+  - 唯一约束：`(line_id, text_version)`。
 - 与现有字段关系：与用户录音无关——本表登记的是发布态 TTS 素材；用户原始录音不落库、只走临时桶（见 §4）。
 
 ### 2.4 章节成长进度表 `user_chapter_progress`（【拟新增】表）
@@ -195,9 +194,9 @@
 
 1. 新建 `learning_contents`、`audio_bindings`；
 2. 从种子事件配置抽取全部台词/参考句/选项写入 `learning_contents`（`text_version=1.0.0`、`translation_version=1.0.0`、`manual_reviewed` 按人工审核结果填）；
-3. 每条需语音台词生成 normal/slow 两条 `audio_bindings`，`file_ref` 按 `tts/<chapter_id>/<event_id>/<line_id>/1.0.0/<variant>.wav` 约定，未试听前 `status=planned`、`checksum_sha256=null`；
+3. 每条需语音台词生成一条 `audio_bindings`，`file_ref` 按 `tts/<chapter_id>/<event_id>/<line_id>/1.0.0/audio.wav` 约定，未试听前 `status=planned`、`checksum_sha256=null`；
 4. 衔接说明：此时客户端仍可从内存规则集渲染；数据库表是“登记副本”，供版本校验与音频缓存校验。
-   独立验证：`audio_bindings` 每个 `line_id` 恰有 normal/slow 两行；`manual_reviewed=true` 的内容才能被正式端引用。
+   独立验证：`audio_bindings` 每个 `line_id` 恰有一行；`manual_reviewed=true` 的内容才能被正式端引用。
 
 ### 步骤 3：成长与世界状态落库
 

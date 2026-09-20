@@ -1,0 +1,37 @@
+{
+  "input": "C:\\004-MCYY\\voice-test\\morrow-production\\raw\\chapter_01_birth\\b1_window_light_v1\\bwl_result_uncertain.wav",
+  "output": "C:\\004-MCYY\\voice-test\\morrow-production\\tts\\chapter_01_birth\\b1_window_light_v1\\bwl_result_uncertain\\1.0.0\\audio.wav",
+  "target_active_rms_dbfs": -20.0,
+  "peak_ceiling_dbfs": -3.0,
+  "applied_gain_db": 4.37,
+  "source_format": {
+    "sample_rate_hz": 24000,
+    "channels": 1,
+    "bits_per_sample": 16
+  },
+  "output_format": {
+    "container": "WAV",
+    "codec": "PCM",
+    "sample_rate_hz": 16000,
+    "channels": 1,
+    "bits_per_sample": 16,
+    "frames": 58880,
+    "duration_seconds": 3.68,
+    "riff_length_field": 117796,
+    "expected_riff_length": 117796,
+    "data_length_field": 117760,
+    "expected_data_length": 117760,
+    "length_fields_valid": true,
+    "required_format_valid": true
+  },
+  "before": {
+    "peak_dbfs": -9.65,
+    "rms_dbfs": -26.51,
+    "active_rms_dbfs": -24.37
+  },
+  "after": {
+    "peak_dbfs": -5.28,
+    "rms_dbfs": -22.14,
+    "active_rms_dbfs": -20.0
+  }
+}

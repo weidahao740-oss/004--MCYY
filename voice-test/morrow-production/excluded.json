@@ -1,0 +1,22 @@
+[
+  {
+    "chapterId": "chapter_01_birth",
+    "eventId": "b1_return_first_words_v1",
+    "lineId": "brw_prompt_line",
+    "audioId": "brw_prompt_line_audio",
+    "contentId": "brw_prompt_line_content",
+    "status": "planned",
+    "reason": "Runtime template line with injected user sentence; blueprint says do not regenerate the full-sentence audio.",
+    "english": "It was \"{{confirmed_user_sentence}}\". Did you mean it the way I heard it?"
+  },
+  {
+    "chapterId": "chapter_02_childhood",
+    "eventId": "b2_recall_room_v1",
+    "lineId": "brc_prompt_line",
+    "audioId": "brc_prompt_line_audio",
+    "contentId": "brc_prompt_line_content",
+    "status": "planned",
+    "reason": "Runtime template line with injected user sentence; blueprint says do not regenerate the full-sentence audio.",
+    "english": "Do you remember the {{first_restored_object}}? That was the first thing we brought back."
+  }
+]

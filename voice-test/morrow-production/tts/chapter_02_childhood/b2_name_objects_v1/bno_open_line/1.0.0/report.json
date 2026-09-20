@@ -1,0 +1,37 @@
+{
+  "input": "C:\\004-MCYY\\voice-test\\morrow-production\\raw\\chapter_02_childhood\\b2_name_objects_v1\\bno_open_line.wav",
+  "output": "C:\\004-MCYY\\voice-test\\morrow-production\\tts\\chapter_02_childhood\\b2_name_objects_v1\\bno_open_line\\1.0.0\\audio.wav",
+  "target_active_rms_dbfs": -20.0,
+  "peak_ceiling_dbfs": -3.0,
+  "applied_gain_db": 1.98,
+  "source_format": {
+    "sample_rate_hz": 24000,
+    "channels": 1,
+    "bits_per_sample": 16
+  },
+  "output_format": {
+    "container": "WAV",
+    "codec": "PCM",
+    "sample_rate_hz": 16000,
+    "channels": 1,
+    "bits_per_sample": 16,
+    "frames": 84480,
+    "duration_seconds": 5.28,
+    "riff_length_field": 168996,
+    "expected_riff_length": 168996,
+    "data_length_field": 168960,
+    "expected_data_length": 168960,
+    "length_fields_valid": true,
+    "required_format_valid": true
+  },
+  "before": {
+    "peak_dbfs": -7.38,
+    "rms_dbfs": -23.59,
+    "active_rms_dbfs": -21.98
+  },
+  "after": {
+    "peak_dbfs": -5.4,
+    "rms_dbfs": -21.61,
+    "active_rms_dbfs": -20.0
+  }
+}

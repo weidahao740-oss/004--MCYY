@@ -49,7 +49,7 @@ export const fixedContentLineSchema = z.object({
   ]),
   learningContent: learningContentPairSchema,
   audioRequired: z.boolean(),
-  audioIds: z.array(idSchema).max(2),
+  audioIds: z.array(idSchema).max(1),
 })
 export type FixedContentLine = z.infer<typeof fixedContentLineSchema>
 
@@ -59,7 +59,6 @@ export const audioBindingSchema = z.object({
   contentId: idSchema,
   textVersion: semanticVersionSchema,
   translationVersion: semanticVersionSchema,
-  variant: z.enum(['normal', 'slow']),
   voiceProfileId: idSchema,
   fileRef: z.string().min(1).max(500),
   checksumSha256: sha256Schema.nullable(),
@@ -372,11 +371,8 @@ export const fixedContentRulesetSchema = z
       if (line.audioIds.some((audioId) => !bindingIds.has(audioId))) {
         context.addIssue({ code: 'custom', path: ['events', 'lines', line.id, 'audioIds'], message: '台词音频 ID 未在 audioBindings 中声明' })
       }
-      if (line.audioRequired) {
-        const variants = new Set(bindings.map((binding) => binding.variant))
-        if (!variants.has('normal') || !variants.has('slow')) {
-          context.addIssue({ code: 'custom', path: ['audioBindings', line.id], message: '需语音台词必须同时绑定 normal 与 slow' })
-        }
+      if (line.audioRequired && bindings.length !== 1) {
+        context.addIssue({ code: 'custom', path: ['audioBindings', line.id], message: '需语音台词必须且只能绑定一个正常语速音频' })
       }
     }
   })

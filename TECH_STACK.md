@@ -320,6 +320,8 @@ user\_identities
 
 
 
+* 正式预制语音固定由千问 `qwen-audio-3.0-tts-flash` 使用 `morrow_voice_v1` 专属复刻音色离线制作；产品运行时只读取审核通过的正常语速预存文件，不实时调用 TTS；
+
 * PostgreSQL 保存结构化业务数据；
 
 * 对象存储只保存确有必要的音频和资源；
@@ -435,9 +437,9 @@ ASR\_API\_BASE\_URL
 
 ASR\_API\_KEY
 
-TTS\_API\_BASE\_URL
+DASHSCOPE_API_KEY            # 服务端用于千问 ASR 与离线预制语音制作
 
-TTS\_API\_KEY
+QWEN_TTS_MODEL=qwen-audio-3.0-tts-flash
 
 OBJECT\_STORAGE\_BUCKET
 ```
@@ -484,4 +486,4 @@ OBJECT\_STORAGE\_BUCKET
 
 3. **Web 仅作测试端**：本阶段 Web 定位为内容调试、状态机与接口自动化的测试端；不迁移旧 Web 正式主链路，正式入口（英文 UI 等历史测试能力）随迁移移除。微信小程序 / App 仍按既有适配器边界（`RecorderAdapter`/`AudioPlayerAdapter` 等）后续适配，本阶段不开发。
 
-4. **客户端录音适配边界**：客户端适配层只负责录音、播放、缓存、通知与本地草稿；意图解析、迁移、结果写入、记忆白名单与版本校验一律在服务端。未确认 ASR 只用于转写审核，不进库、不进匹配；原始录音走临时桶，ASR 完成并经用户确认后即删，库内只存确认后文本与 `input_hash`。预制 TTS 音频按 normal/slow 绑定版本号缓存校验，TTS 缺失时降级为英文正文 + 人工译文展示，事件仍可完成。
+4. **客户端录音适配边界**：客户端适配层只负责录音、播放、缓存、通知与本地草稿；意图解析、迁移、结果写入、记忆白名单与版本校验一律在服务端。未确认 ASR 只用于转写审核，不进库、不进匹配；原始录音走临时桶，ASR 完成并经用户确认后即删，库内只存确认后文本与 `input_hash`。预制 TTS 音频统一由 `qwen-audio-3.0-tts-flash` 离线制作，按单一音频绑定版本号缓存校验；TTS 缺失时降级为英文正文 + 人工译文展示，事件仍可完成。

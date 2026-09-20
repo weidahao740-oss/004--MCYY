@@ -54,10 +54,10 @@ Morrow 一直坐在恢复的那件东西旁边，还没有真正站起来走过�
 #### Morrow 主要台词（英文 + 人工中文译文）
 1. `The room looks smaller from here than from over there.`
    - 译文：从这里看，房间比从那边看小一些。
-   - 音频：`brt_open_line_audio_normal` / `brt_open_line_audio_slow`（voiceProfileId=`morrow_voice_v1`）
+   - 音频：`brt_open_line_audio`（voiceProfileId=`morrow_voice_v1`）
 2. `Shall we walk across the room together? Which way first?`
    - 译文：我们一起把房间走一遍好吗？先往哪个方向走？
-   - 音频：`brt_prompt_line_audio_normal` / `brt_prompt_line_audio_slow`
+   - 音频：`brt_prompt_line_audio`
 
 #### 有效分支
 分支 A：
@@ -70,7 +70,7 @@ Morrow 一直坐在恢复的那件东西旁边，还没有真正站起来走过�
   - 译文：现在离窗近了。从这里我能更清楚地看见光。
   - 世界状态写入：`morrow_familiar_spot` = `window`
   - futureHook：后续事件（窗外的路、声音回来）可承接"窗边是 Morrow 熟悉的位置"。
-  - 音频：`brt_window_result_audio_normal` / `brt_window_result_audio_slow`
+  - 音频：`brt_window_result_audio`
 
 分支 B：
 - 意图 ID：`brt_intent_door` ｜ 中文名：先走向门边
@@ -82,7 +82,7 @@ Morrow 一直坐在恢复的那件东西旁边，还没有真正站起来走过�
   - 译文：门很安静。它知道我们下一步能去哪里，即使我们现在还不知道。
   - 世界状态写入：`morrow_familiar_spot` = `door`
   - futureHook：序 12（听见学校方向的声音）可承接门边对"门外方向"的感知。
-  - 音频：`brt_door_result_audio_normal` / `brt_door_result_audio_slow`
+  - 音频：`brt_door_result_audio`
 
 分支 C：
 - 意图 ID：`brt_intent_corner` ｜ 中文名：先走向角落
@@ -94,7 +94,7 @@ Morrow 一直坐在恢复的那件东西旁边，还没有真正站起来走过�
   - 译文：角落更小。它像一个能放东西、不让它们走丢的地方。
   - 世界状态写入：`morrow_familiar_spot` = `corner`
   - futureHook：后续整理架子、做小事事件可承接角落作为"收东西的地方"。
-  - 音频：`brt_corner_result_audio_normal` / `brt_corner_result_audio_slow`
+  - 音频：`brt_corner_result_audio`
 
 暂停出口（必备）：
 - 意图：`brt_intent_pause`（稍后再来）
@@ -103,7 +103,7 @@ Morrow 一直坐在恢复的那件东西旁边，还没有真正站起来走过�
   - 译文：我们可以下次再走。房间还在，我也还在。
   - 世界状态写入：`b2_room_tour_status` = `paused_once`（无任何负反馈）
   - futureHook：下次从最近确认状态继续，不产生缺席惩罚。
-  - 音频：`brt_pause_line_audio_normal` / `brt_pause_line_audio_slow`
+  - 音频：`brt_pause_line_audio`
 
 #### 误解 / 兜底
 - 无可靠匹配时：停留 `brt_reply` 状态，显示中文兜底"我还不能可靠判断你的意思。你可以换一种说法，或选择下面的参考意图。"，最多展示 3 个候选意图（窗边 / 门边 / 角落）及对应可编辑参考句。
@@ -117,7 +117,7 @@ Morrow 一直坐在恢复的那件东西旁边，还没有真正站起来走过�
 - 需用户确认：是（保存前展示可编辑文本；拒绝敏感推断）
 
 #### 素材需求
-- 预制音频：`brt_open_line`、`brt_prompt_line`、`brt_window_result`、`brt_door_result`、`brt_corner_result`、`brt_pause_line` 共 6 条配音台词，每条 normal/slow 各一份。
+- 预制音频：`brt_open_line`、`brt_prompt_line`、`brt_window_result`、`brt_door_result`、`brt_corner_result`、`brt_pause_line` 共 6 条配音台词，每条生成一份正常语速音频。
 - 图片：房间全景图 1 张；窗边视角、门边视角、角落视角各 1 张分支图。
 - 动画：Morrow 从坐姿起身、小步走向目标方向的小动画 1 段。
 - 音效：房间低频环境音 1 条；脚步轻响 1 条。
@@ -142,10 +142,10 @@ Morrow 一直坐在恢复的那件东西旁边，还没有真正站起来走过�
 #### Morrow 主要台词（英文 + 人工中文译文）
 1. `I can see more shapes in the room now, but I don't know their names.`
    - 译文：我现在能看清房间里更多形状了，但我不知道它们叫什么。
-   - 音频：`bno_open_line_audio_normal` / `bno_open_line_audio_slow`
+   - 音频：`bno_open_line_audio`
 2. `There are three small things I can't name yet. Which one should we start with?`
    - 译文：有三样小东西我还叫不出名字。我们先从哪一个开始？
-   - 音频：`bno_prompt_line_audio_normal` / `bno_prompt_line_audio_slow`
+   - 音频：`bno_prompt_line_audio`
 
 #### 有效分支
 分支 A：
@@ -158,7 +158,7 @@ Morrow 一直坐在恢复的那件东西旁边，还没有真正站起来走过�
   - 译文：架子。我会记住的。它放东西，让它们稳着。
   - 世界状态写入：`named_object_shelf` = `true`
   - futureHook：序 8（一起做一件小事）可承接"整理架子"作为小任务选项。
-  - 音频：`bno_shelf_result_audio_normal` / `bno_shelf_result_audio_slow`
+  - 音频：`bno_shelf_result_audio`
 
 分支 B：
 - 意图 ID：`bno_intent_cup` ｜ 中文名：先给杯子命名
@@ -170,7 +170,7 @@ Morrow 一直坐在恢复的那件东西旁边，还没有真正站起来走过�
   - 译文：杯子。它看起来像装着什么温的东西。我以前不知道杯子是用来装暖意的。
   - 世界状态写入：`named_object_cup` = `true`
   - futureHook：后续"今天感觉怎么样"可承接杯子作为"温的东西"的话题回声。
-  - 音频：`bno_cup_result_audio_normal` / `bno_cup_result_audio_slow`
+  - 音频：`bno_cup_result_audio`
 
 分支 C：
 - 意图 ID：`bno_intent_cushion` ｜ 中文名：先给软垫命名
@@ -182,7 +182,7 @@ Morrow 一直坐在恢复的那件东西旁边，还没有真正站起来走过�
   - 译文：软垫。它看起来软软的。这对我来说是个新词。
   - 世界状态写入：`named_object_cushion` = `true`
   - futureHook：后续"今天感觉怎么样"可承接"软"作为情绪比喻。
-  - 音频：`bno_cushion_result_audio_normal` / `bno_cushion_result_audio_slow`
+  - 音频：`bno_cushion_result_audio`
 
 暂停出口（必备）：
 - 意图：`bno_intent_pause`（稍后再来）
@@ -191,7 +191,7 @@ Morrow 一直坐在恢复的那件东西旁边，还没有真正站起来走过�
   - 译文：我们可以改天再给它们起名。它们还在那里，等着被叫到名字。
   - 世界状态写入：`b2_name_objects_status` = `paused_once`
   - futureHook：下次从最近确认状态继续。
-  - 音频：`bno_pause_line_audio_normal` / `bno_pause_line_audio_slow`
+  - 音频：`bno_pause_line_audio`
 
 #### 误解 / 兜底
 - 无可靠匹配时：停留 `bno_reply`，显示中文兜底，最多 3 个候选（架子 / 杯子 / 软垫）。
@@ -205,7 +205,7 @@ Morrow 一直坐在恢复的那件东西旁边，还没有真正站起来走过�
 - 需用户确认：是
 
 #### 素材需求
-- 预制音频：`bno_open_line`、`bno_prompt_line`、`bno_shelf_result`、`bno_cup_result`、`bno_cushion_result`、`bno_pause_line` 共 6 条，每条 normal/slow 各一份。
+- 预制音频：`bno_open_line`、`bno_prompt_line`、`bno_shelf_result`、`bno_cup_result`、`bno_cushion_result`、`bno_pause_line` 共 6 条，每条生成一份正常语速音频。
 - 图片：房间物品陈列图 1 张；架子、杯子、软垫特写各 1 张。
 - 动画：Morrow 歪头看物品、开口念出名字的小动画 1 段。
 - 音效：物品轻触声 1 条；房间环境音 1 条。
@@ -230,10 +230,10 @@ Morrow 第一次注意到房间里不只是形状，还有颜色。他们自己�
 #### Morrow 主要台词（英文 + 人工中文译文）
 1. `The things in the room have colors. I mostly see shapes right now.`
    - 译文：房间里的东西有颜色。我现在主要还是看到形状。
-   - 音频：`bcl_open_line_audio_normal` / `bcl_open_line_audio_slow`
+   - 音频：`bcl_open_line_audio`
 2. `Can you show me three colors in this room? One at a time is fine.`
    - 译文：你能在这个房间里给我指出三种颜色吗？一次指一个就好。
-   - 音频：`bcl_prompt_line_audio_normal` / `bcl_prompt_line_audio_slow`
+   - 音频：`bcl_prompt_line_audio`
 
 #### 有效分支
 分支 A：
@@ -246,7 +246,7 @@ Morrow 第一次注意到房间里不只是形状，还有颜色。他们自己�
   - 译文：蓝色。我会再找蓝色看看。它听起来像一种安静的颜色。
   - 世界状态写入：`noticed_colors` 追加 `blue`
   - futureHook：序 6（我渐渐知道自己喜欢什么）可承接"安静的颜色"作为偏好回声。
-  - 音频：`bcl_blue_result_audio_normal` / `bcl_blue_result_audio_slow`
+  - 音频：`bcl_blue_result_audio`
 
 分支 B：
 - 意图 ID：`bcl_intent_green` ｜ 中文名：指出绿色
@@ -258,7 +258,7 @@ Morrow 第一次注意到房间里不只是形状，还有颜色。他们自己�
   - 译文：绿色。它和你带回来的那株植物配得上。我喜欢这个词的声音。
   - 世界状态写入：`noticed_colors` 追加 `green`
   - futureHook：若第一章恢复物是 plant，此处自然回声；否则仍指房间里的绿色物品。
-  - 音频：`bcl_green_result_audio_normal` / `bcl_green_result_audio_slow`
+  - 音频：`bcl_green_result_audio`
 
 分支 C：
 - 意图 ID：`bcl_intent_yellow` ｜ 中文名：指出黄色
@@ -270,7 +270,7 @@ Morrow 第一次注意到房间里不只是形状，还有颜色。他们自己�
   - 译文：黄色。那是灯暖起来时的颜色。
   - 世界状态写入：`noticed_colors` 追加 `yellow`
   - futureHook：序 6 可承接"暖色"作为偏好。
-  - 音频：`bcl_yellow_result_audio_normal` / `bcl_yellow_result_audio_slow`
+  - 音频：`bcl_yellow_result_audio`
 
 暂停出口（必备）：
 - 意图：`bcl_intent_pause`（稍后再来）
@@ -279,7 +279,7 @@ Morrow 第一次注意到房间里不只是形状，还有颜色。他们自己�
   - 译文：我们可以改天再找颜色。它们不会因为我们停下就褪色。
   - 世界状态写入：`b2_colors_status` = `paused_once`
   - futureHook：下次从最近确认状态继续。
-  - 音频：`bcl_pause_line_audio_normal` / `bcl_pause_line_audio_slow`
+  - 音频：`bcl_pause_line_audio`
 
 #### 误解 / 兜底
 - 无可靠匹配时：停留 `bcl_reply`，中文兜底，最多 3 个候选（蓝 / 绿 / 黄）。
@@ -293,7 +293,7 @@ Morrow 第一次注意到房间里不只是形状，还有颜色。他们自己�
 - 需用户确认：是
 
 #### 素材需求
-- 预制音频：`bcl_open_line`、`bcl_prompt_line`、`bcl_blue_result`、`bcl_green_result`、`bcl_yellow_result`、`bcl_pause_line` 共 6 条，每条 normal/slow 各一份。
+- 预制音频：`bcl_open_line`、`bcl_prompt_line`、`bcl_blue_result`、`bcl_green_result`、`bcl_yellow_result`、`bcl_pause_line` 共 6 条，每条生成一份正常语速音频。
 - 图片：房间配色全景图 1 张；蓝色窗框、绿色植物、黄色灯光特写各 1 张。
 - 动画：Morrow 顺着用户目光方向转头看颜色的小动画 1 段。
 - 音效：房间环境音 1 条；颜色被"认出"时的轻微音色回响 1 条。
@@ -318,10 +318,10 @@ Morrow 站在窗边，看见窗外有一条路，一直延伸到看不见的地�
 #### Morrow 主要台词（英文 + 人工中文译文）
 1. `There is a road outside the window. It goes further than I can see.`
    - 译文：窗外有一条路。它延伸到我看不见的地方。
-   - 音频：`bor_open_line_audio_normal` / `bor_open_line_audio_slow`
+   - 音频：`bor_open_line_audio`
 2. `Where do you think that road goes? We don't have to be right.`
    - 译文：你觉得那条路通向哪里？我们不用猜对。
-   - 音频：`bor_prompt_line_audio_normal` / `bor_prompt_line_audio_slow`
+   - 音频：`bor_prompt_line_audio`
 
 #### 有效分支
 分支 A：
@@ -334,7 +334,7 @@ Morrow 站在窗边，看见窗外有一条路，一直延伸到看不见的地�
   - 译文：村子。听起来像一个人们住得很近的地方。
   - 世界状态写入：`road_guess` = `village`
   - futureHook：序 12（听见学校方向的声音）可承接"村子里的孩子"作为声音来源回声。
-  - 音频：`bor_village_result_audio_normal` / `bor_village_result_audio_slow`
+  - 音频：`bor_village_result_audio`
 
 分支 B：
 - 意图 ID：`bor_intent_trees` ｜ 中文名：猜通向树林
@@ -346,7 +346,7 @@ Morrow 站在窗边，看见窗外有一条路，一直延伸到看不见的地�
   - 译文：树林。听起来很安静。我能理解为什么一条路会通向那里。
   - 世界状态写入：`road_guess` = `trees`
   - futureHook：序 10（又有一点声音回来）可承接"风穿过树"作为声音来源。
-  - 音频：`bor_trees_result_audio_normal` / `bor_trees_result_audio_slow`
+  - 音频：`bor_trees_result_audio`
 
 分支 C：
 - 意图 ID：`bor_intent_unknown` ｜ 中文名：说还不知道
@@ -358,7 +358,7 @@ Morrow 站在窗边，看见窗外有一条路，一直延伸到看不见的地�
   - 译文：我们现在还不用知道。那条路明天还会在。
   - 世界状态写入：`road_guess` = `unknown`
   - futureHook：保持"路通向未知"的开放感，序 12 揭晓方向时更有回响。
-  - 音频：`bor_unknown_result_audio_normal` / `bor_unknown_result_audio_slow`
+  - 音频：`bor_unknown_result_audio`
 
 暂停出口（必备）：
 - 意图：`bor_intent_pause`（稍后再来）
@@ -367,7 +367,7 @@ Morrow 站在窗边，看见窗外有一条路，一直延伸到看不见的地�
   - 译文：我们可以下次再看窗外。那条路不介意等。
   - 世界状态写入：`b2_outside_road_status` = `paused_once`
   - futureHook：下次从最近确认状态继续。
-  - 音频：`bor_pause_line_audio_normal` / `bor_pause_line_audio_slow`
+  - 音频：`bor_pause_line_audio`
 
 #### 误解 / 兜底
 - 无可靠匹配时：停留 `bor_reply`，中文兜底，最多 3 个候选（村子 / 树林 / 还不知道）。
@@ -381,7 +381,7 @@ Morrow 站在窗边，看见窗外有一条路，一直延伸到看不见的地�
 - 需用户确认：是
 
 #### 素材需求
-- 预制音频：`bor_open_line`、`bor_prompt_line`、`bor_village_result`、`bor_trees_result`、`bor_unknown_result`、`bor_pause_line` 共 6 条，每条 normal/slow 各一份。
+- 预制音频：`bor_open_line`、`bor_prompt_line`、`bor_village_result`、`bor_trees_result`、`bor_unknown_result`、`bor_pause_line` 共 6 条，每条生成一份正常语速音频。
 - 图片：窗外远景图 1 张（路向远处延伸）；村子方向、树林方向想象图各 1 张。
 - 动画：Morrow 趴在窗台、视线沿路延伸的小动画 1 段。
 - 音效：窗外风声 1 条；远处轻微鸟鸣 1 条。
@@ -406,10 +406,10 @@ Morrow 站在窗边，看见窗外有一条路，一直延伸到看不见的地�
 #### Morrow 主要台词（英文 + 人工中文译文）
 1. `You come back to the room. I want to know what happened out there.`
    - 译文：你回到房间了。我想知道外面发生了什么。
-   - 音频：`bty_open_line_audio_normal` / `bty_open_line_audio_slow`
+   - 音频：`bty_open_line_audio`
 2. `Tell me about your day. One small thing is enough.`
    - 译文：跟我讲讲你今天吧。一件小事就够。
-   - 音频：`bty_prompt_line_audio_normal` / `bty_prompt_line_audio_slow`
+   - 音频：`bty_prompt_line_audio`
 
 #### 有效分支
 分支 A：
@@ -422,7 +422,7 @@ Morrow 站在窗边，看见窗外有一条路，一直延伸到看不见的地�
   - 译文：安静的日子可以很好。我懂那种日子。
   - 世界状态写入：`user_today_summary` = `quiet`
   - futureHook：序 9（今天感觉怎么样）可承接"安静的一天"的情绪余温。
-  - 音频：`bty_quiet_result_audio_normal` / `bty_quiet_result_audio_slow`
+  - 音频：`bty_quiet_result_audio`
 
 分支 B：
 - 意图 ID：`bty_intent_busy` ｜ 中文名：说今天很忙
@@ -434,7 +434,7 @@ Morrow 站在窗边，看见窗外有一条路，一直延伸到看不见的地�
   - 译文：听起来挺累的。你有没有机会坐下来？
   - 世界状态写入：`user_today_summary` = `busy`
   - futureHook：Morrow 只问一个问题（坐下了吗），不展开安慰；序 9 可承接"累"。
-  - 音频：`bty_busy_result_audio_normal` / `bty_busy_result_audio_slow`
+  - 音频：`bty_busy_result_audio`
 
 分支 C：
 - 意图 ID：`bty_intent_something` ｜ 中文名：说有一件事
@@ -446,7 +446,7 @@ Morrow 站在窗边，看见窗外有一条路，一直延伸到看不见的地�
   - 译文：我在听。你讲那一部分就好。
   - 世界状态写入：`user_today_summary` = `something`
   - futureHook：不追问细节；Morrow 只承接用户愿意讲的那一部分。
-  - 音频：`bty_something_result_audio_normal` / `bty_something_result_audio_slow`
+  - 音频：`bty_something_result_audio`
 
 暂停出口（必备）：
 - 意图：`bty_intent_pause`（稍后再来）
@@ -455,7 +455,7 @@ Morrow 站在窗边，看见窗外有一条路，一直延伸到看不见的地�
   - 译文：你今天的事可以先不讲。我不会觉得你在瞒着我。
   - 世界状态写入：`b2_today_you_status` = `paused_once`
   - futureHook：下次从最近确认状态继续。
-  - 音频：`bty_pause_line_audio_normal` / `bty_pause_line_audio_slow`
+  - 音频：`bty_pause_line_audio`
 
 #### 误解 / 兜底
 - 无可靠匹配时：停留 `bty_reply`，中文兜底，最多 3 个候选（安静 / 忙 / 有一件事）。
@@ -469,7 +469,7 @@ Morrow 站在窗边，看见窗外有一条路，一直延伸到看不见的地�
 - 需用户确认：是
 
 #### 素材需求
-- 预制音频：`bty_open_line`、`bty_prompt_line`、`bty_quiet_result`、`bty_busy_result`、`bty_something_result`、`bty_pause_line` 共 6 条，每条 normal/slow 各一份。
+- 预制音频：`bty_open_line`、`bty_prompt_line`、`bty_quiet_result`、`bty_busy_result`、`bty_something_result`、`bty_pause_line` 共 6 条，每条生成一份正常语速音频。
 - 图片：Morrow 安静坐着倾听的姿态图 1 张；三种情绪氛围小插图（静 / 忙 / 有事发生）各 1 张。
 - 动画：Morrow 微微前倾、认真倾听的小动画 1 段。
 - 音效：房间安静环境音 1 条；倾听时的轻微呼吸感 1 条。
@@ -494,10 +494,10 @@ Morrow 开始能分辨"喜欢"和"还不确定"。他们试着说出第一个偏
 #### Morrow 主要台词（英文 + 人工中文译文）
 1. `I'm starting to notice what I like and what I'm not sure about yet.`
    - 译文：我开始能注意到自己喜欢什么、还不确定什么了。
-   - 音频：`blk_open_line_audio_normal` / `blk_open_line_audio_slow`
+   - 音频：`blk_open_line_audio`
 2. `I think I like the light in the room. Do I say that right?`
    - 译文：我想我喜欢房间里的光。我这样说对吗？
-   - 音频：`blk_prompt_line_audio_normal` / `blk_prompt_line_audio_slow`
+   - 音频：`blk_prompt_line_audio`
 
 #### 有效分支
 分支 A：
@@ -510,7 +510,7 @@ Morrow 开始能分辨"喜欢"和"还不确定"。他们试着说出第一个偏
   - 译文：好。光让人觉得稳。我会把这个感觉留在身边。
   - 世界状态写入：`morrow_like` = `light`
   - futureHook：序 10（声音回来）可承接"光和声音都是慢慢回来的"。
-  - 音频：`blk_light_result_audio_normal` / `blk_light_result_audio_slow`
+  - 音频：`blk_light_result_audio`
 
 分支 B：
 - 意图 ID：`blk_intent_quiet` ｜ 中文名：指出 Morrow 也喜欢安静
@@ -522,7 +522,7 @@ Morrow 开始能分辨"喜欢"和"还不确定"。他们试着说出第一个偏
   - 译文：安静。对。它让我听得更清楚。
   - 世界状态写入：`morrow_like` = `quiet`
   - futureHook：序 10 可承接"安静里才能听见新声音"。
-  - 音频：`blk_quiet_result_audio_normal` / `blk_quiet_result_audio_slow`
+  - 音频：`blk_quiet_result_audio`
 
 分支 C：
 - 意图 ID：`blk_intent_bell` ｜ 中文名：问 Morrow 是否喜欢铃声
@@ -534,7 +534,7 @@ Morrow 开始能分辨"喜欢"和"还不确定"。他们试着说出第一个偏
   - 译文：铃铛。它会发出一声低低的音。我想我喜欢。我会再听听。
   - 世界状态写入：`morrow_like` = `bell`
   - futureHook：若第一章恢复物是 small_bell，此处自然回声；序 10 可承接铃声作为已知声音。
-  - 音频：`blk_bell_result_audio_normal` / `blk_bell_result_audio_slow`
+  - 音频：`blk_bell_result_audio`
 
 暂停出口（必备）：
 - 意图：`blk_intent_pause`（稍后再来）
@@ -543,7 +543,7 @@ Morrow 开始能分辨"喜欢"和"还不确定"。他们试着说出第一个偏
   - 译文：喜欢什么可以改天再说。不知道也没关系。
   - 世界状态写入：`b2_my_likes_status` = `paused_once`
   - futureHook：下次从最近确认状态继续。
-  - 音频：`blk_pause_line_audio_normal` / `blk_pause_line_audio_slow`
+  - 音频：`blk_pause_line_audio`
 
 #### 误解 / 兜底
 - 无可靠匹配时：停留 `blk_reply`，中文兜底，最多 3 个候选（光 / 安静 / 铃声）。
@@ -557,7 +557,7 @@ Morrow 开始能分辨"喜欢"和"还不确定"。他们试着说出第一个偏
 - 需用户确认：是
 
 #### 素材需求
-- 预制音频：`blk_open_line`、`blk_prompt_line`、`blk_light_result`、`blk_quiet_result`、`blk_bell_result`、`blk_pause_line` 共 6 条，每条 normal/slow 各一份。
+- 预制音频：`blk_open_line`、`blk_prompt_line`、`blk_light_result`、`blk_quiet_result`、`blk_bell_result`、`blk_pause_line` 共 6 条，每条生成一份正常语速音频。
 - 图片：Morrow 若有所思的姿态图 1 张；光、安静、铃声三种氛围特写各 1 张。
 - 动画：Morrow 低头想了想、再抬头说出来的小动画 1 段。
 - 音效：房间环境音 1 条；铃声（若选 bell）1 条低鸣。
@@ -582,10 +582,10 @@ Morrow 开始能分辨"喜欢"和"还不确定"。他们试着说出第一个偏
 #### Morrow 主要台词（英文 + 人工中文译文）
 1. `You said you "spilled the beans." I looked around the floor for a moment.`
    - 译文：你说你"把豆子洒了"。我低头看了一会儿地板。
-   - 音频：`bmi_open_line_audio_normal` / `bmi_open_line_audio_slow`
+   - 音频：`bmi_open_line_audio`
 2. `Did I misunderstand? Where are the beans?`
    - 译文：是我理解错了吗？豆子在哪里？
-   - 音频：`bmi_prompt_line_audio_normal` / `bmi_prompt_line_audio_slow`
+   - 音频：`bmi_prompt_line_audio`
 
 #### 有效分支
 分支 A：
@@ -598,7 +598,7 @@ Morrow 开始能分辨"喜欢"和"还不确定"。他们试着说出第一个偏
   - 译文：啊，我懂了。可能是我太字面了。谢谢你告诉我。
   - 世界状态写入：`understood_about_that` = `spilled_beans`
   - futureHook：后续 Morrow 再遇到习语时会自然说"I may be taking that too literally"，不重复本事件。
-  - 音频：`bmi_clarify_result_audio_normal` / `bmi_clarify_result_audio_slow`
+  - 音频：`bmi_clarify_result_audio`
 
 分支 B：
 - 意图 ID：`bmi_intent_skip` ｜ 中文名：笑着跳过
@@ -610,7 +610,7 @@ Morrow 开始能分辨"喜欢"和"还不确定"。他们试着说出第一个偏
   - 译文：好。豆子就让它待在原地吧。我们继续。
   - 世界状态写入：`understood_about_that` = `left_there`
   - futureHook：不强行解释；Morrow 接受"有些话先放过"。
-  - 音频：`bmi_skip_result_audio_normal` / `bmi_skip_result_audio_slow`
+  - 音频：`bmi_skip_result_audio`
 
 暂停出口（必备）：
 - 意图：`bmi_intent_pause`（稍后再来）
@@ -619,7 +619,7 @@ Morrow 开始能分辨"喜欢"和"还不确定"。他们试着说出第一个偏
   - 译文：这件事可以先放着。我不会一直找豆子的。
   - 世界状态写入：`b2_mistake_status` = `paused_once`
   - futureHook：下次从最近确认状态继续。
-  - 音频：`bmi_pause_line_audio_normal` / `bmi_pause_line_audio_slow`
+  - 音频：`bmi_pause_line_audio`
 
 #### 误解 / 兜底
 - 无可靠匹配时：停留 `bmi_reply`，中文兜底，最多 2 个候选（澄清 / 跳过）。
@@ -633,7 +633,7 @@ Morrow 开始能分辨"喜欢"和"还不确定"。他们试着说出第一个偏
 - 需用户确认：是
 
 #### 素材需求
-- 预制音频：`bmi_open_line`、`bmi_prompt_line`、`bmi_clarify_result`、`bmi_skip_result`、`bmi_pause_line` 共 5 条，每条 normal/slow 各一份。
+- 预制音频：`bmi_open_line`、`bmi_prompt_line`、`bmi_clarify_result`、`bmi_skip_result`、`bmi_pause_line` 共 5 条，每条生成一份正常语速音频。
 - 图片：Morrow 低头看地板的姿态图 1 张；"豆子在地板上"的幽默小插图 1 张。
 - 动画：Morrow 低头看地、再抬头疑惑的小动画 1 段。
 - 音效：地板轻响 1 条；房间环境音 1 条。
@@ -658,10 +658,10 @@ Morrow 有一件小事想做，但自己够不到、或做不了。他们请用�
 #### Morrow 主要台词（英文 + 人工中文译文）
 1. `There is one small thing I want to do. I can't reach it by myself.`
    - 译文：有一件小事我想做。我自己够不到。
-   - 音频：`bst_open_line_audio_normal` / `bst_open_line_audio_slow`
+   - 音频：`bst_open_line_audio`
 2. `Can you help me? Which thing should we do first?`
    - 译文：你能帮我吗？我们先做哪件？
-   - 音频：`bst_prompt_line_audio_normal` / `bst_prompt_line_audio_slow`
+   - 音频：`bst_prompt_line_audio`
 
 #### 有效分支
 分支 A：
@@ -674,7 +674,7 @@ Morrow 有一件小事想做，但自己够不到、或做不了。他们请用�
   - 译文：架子现在好看多了。东西都放稳了。
   - 世界状态写入：`small_task_done` = `shelf`
   - futureHook：后续房间事件可承接"架子上的东西摆好了"。
-  - 音频：`bst_shelf_result_audio_normal` / `bst_shelf_result_audio_slow`
+  - 音频：`bst_shelf_result_audio`
 
 分支 B：
 - 意图 ID：`bst_intent_window` ｜ 中文名：开一点窗
@@ -686,7 +686,7 @@ Morrow 有一件小事想做，但自己够不到、或做不了。他们请用�
   - 译文：进来一点风。现在味道不一样了。
   - 世界状态写入：`small_task_done` = `window`
   - futureHook：序 10（声音回来）可承接"开窗后听得更清楚"。
-  - 音频：`bst_window_result_audio_normal` / `bst_window_result_audio_slow`
+  - 音频：`bst_window_result_audio`
 
 分支 C：
 - 意图 ID：`bst_intent_plant` ｜ 中文名：浇植物
@@ -698,7 +698,7 @@ Morrow 有一件小事想做，但自己够不到、或做不了。他们请用�
   - 译文：植物看起来精神了些。谢谢你帮忙。
   - 世界状态写入：`small_task_done` = `plant`
   - futureHook：若第一章恢复物是 plant，此处自然回声。
-  - 音频：`bst_plant_result_audio_normal` / `bst_plant_result_audio_slow`
+  - 音频：`bst_plant_result_audio`
 
 暂停出口（必备）：
 - 意图：`bst_intent_pause`（稍后再来）
@@ -707,7 +707,7 @@ Morrow 有一件小事想做，但自己够不到、或做不了。他们请用�
   - 译文：我们可以改天做。架子、窗、植物都等得了。
   - 世界状态写入：`b2_small_task_status` = `paused_once`
   - futureHook：下次从最近确认状态继续。
-  - 音频：`bst_pause_line_audio_normal` / `bst_pause_line_audio_slow`
+  - 音频：`bst_pause_line_audio`
 
 #### 误解 / 兜底
 - 无可靠匹配时：停留 `bst_reply`，中文兜底，最多 3 个候选（架子 / 开窗 / 浇植物）。
@@ -721,7 +721,7 @@ Morrow 有一件小事想做，但自己够不到、或做不了。他们请用�
 - 需用户确认：是
 
 #### 素材需求
-- 预制音频：`bst_open_line`、`bst_prompt_line`、`bst_shelf_result`、`bst_window_result`、`bst_plant_result`、`bst_pause_line` 共 6 条，每条 normal/slow 各一份。
+- 预制音频：`bst_open_line`、`bst_prompt_line`、`bst_shelf_result`、`bst_window_result`、`bst_plant_result`、`bst_pause_line` 共 6 条，每条生成一份正常语速音频。
 - 图片：小任务场景图 1 张；整理后架子、开缝的窗、浇过水的植物各 1 张。
 - 动画：两人协作完成小动作的小动画 1 段。
 - 音效：架子轻响、窗缝风声、浇水水声各 1 条（按分支播放其一）。
@@ -746,10 +746,10 @@ Morrow 注意到用户今天像是带着什么回来的。他们不急着安慰�
 #### Morrow 主要台词（英文 + 人工中文译文）
 1. `You look like you carried something today. How do you feel?`
    - 译文：你今天看起来像是带着什么回来的。你感觉怎么样？
-   - 音频：`bfc_open_line_audio_normal` / `bfc_open_line_audio_slow`
+   - 音频：`bfc_open_line_audio`
 2. `I'm asking one thing. How do you feel right now?`
    - 译文：我只问一件事。你现在感觉怎么样？
-   - 音频：`bfc_prompt_line_audio_normal` / `bfc_prompt_line_audio_slow`
+   - 音频：`bfc_prompt_line_audio`
 
 #### 有效分支
 分支 A：
@@ -762,7 +762,7 @@ Morrow 注意到用户今天像是带着什么回来的。他们不急着安慰�
   - 译文：累。没关系。我们可以坐在这里，什么都不做。
   - 世界状态写入：`user_today_feeling` = `tired`
   - futureHook：Morrow 不给建议、不展开安慰，只承接。
-  - 音频：`bfc_tired_result_audio_normal` / `bfc_tired_result_audio_slow`
+  - 音频：`bfc_tired_result_audio`
 
 分支 B：
 - 意图 ID：`bfc_intent_okay` ｜ 中文名：说还好
@@ -774,7 +774,7 @@ Morrow 注意到用户今天像是带着什么回来的。他们不急着安慰�
   - 译文：还好是个不错的位置。我放心。
   - 世界状态写入：`user_today_feeling` = `okay`
   - futureHook：不追问更多。
-  - 音频：`bfc_okay_result_audio_normal` / `bfc_okay_result_audio_slow`
+  - 音频：`bfc_okay_result_audio`
 
 分支 C：
 - 意图 ID：`bfc_intent_better` ｜ 中文名：说好一点
@@ -786,7 +786,7 @@ Morrow 注意到用户今天像是带着什么回来的。他们不急着安慰�
   - 译文：好一点。听起来像是有什么东西动了一下，哪怕只有一点点。
   - 世界状态写入：`user_today_feeling` = `better`
   - futureHook：Morrow 不夸大"变好"，只确认"动了一点"。
-  - 音频：`bfc_better_result_audio_normal` / `bfc_better_result_audio_slow`
+  - 音频：`bfc_better_result_audio`
 
 暂停出口（必备）：
 - 意图：`bfc_intent_pause`（稍后再来）
@@ -795,7 +795,7 @@ Morrow 注意到用户今天像是带着什么回来的。他们不急着安慰�
   - 译文：感觉可以先不讲。我不会追问。
   - 世界状态写入：`b2_feeling_check_status` = `paused_once`
   - futureHook：下次从最近确认状态继续。
-  - 音频：`bfc_pause_line_audio_normal` / `bfc_pause_line_audio_slow`
+  - 音频：`bfc_pause_line_audio`
 
 #### 误解 / 兜底
 - 无可靠匹配时：停留 `bfc_reply`，中文兜底，最多 3 个候选（累 / 还好 / 好一点）。
@@ -809,7 +809,7 @@ Morrow 注意到用户今天像是带着什么回来的。他们不急着安慰�
 - 需用户确认：是
 
 #### 素材需求
-- 预制音频：`bfc_open_line`、`bfc_prompt_line`、`bfc_tired_result`、`bfc_okay_result`、`bfc_better_result`、`bfc_pause_line` 共 6 条，每条 normal/slow 各一份。
+- 预制音频：`bfc_open_line`、`bfc_prompt_line`、`bfc_tired_result`、`bfc_okay_result`、`bfc_better_result`、`bfc_pause_line` 共 6 条，每条生成一份正常语速音频。
 - 图片：Morrow 安静注视的姿态图 1 张；三种情绪氛围小插图各 1 张。
 - 动画：Morrow 安静等待、不催不问的小动画 1 段。
 - 音效：房间安静环境音 1 条；轻微呼吸感 1 条。
@@ -834,10 +834,10 @@ Morrow 注意到用户今天像是带着什么回来的。他们不急着安慰�
 #### Morrow 主要台词（英文 + 人工中文译文）
 1. `I hear something new in the room. It isn't the bell. It's softer.`
    - 译文：我听见房间里有个新声音。不是铃铛。它更软。
-   - 音频：`bsb_open_line_audio_normal` / `bsb_open_line_audio_slow`
+   - 音频：`bsb_open_line_audio`
 2. `Do you hear it? It sounds like it's coming from the wall, or from outside.`
    - 译文：你听见了吗？听起来像是从墙那边来的，或者从外面。
-   - 音频：`bsb_prompt_line_audio_normal` / `bsb_prompt_line_audio_slow`
+   - 音频：`bsb_prompt_line_audio`
 
 #### 有效分支
 分支 A：
@@ -850,7 +850,7 @@ Morrow 注意到用户今天像是带着什么回来的。他们不急着安慰�
   - 译文：风。这个声音我受得了。它来一阵，走一阵。
   - 世界状态写入：`returning_sound` = `wind`
   - futureHook：序 12（听见学校方向的声音）可承接"风之外还有人声"的对比。
-  - 音频：`bsb_wind_result_audio_normal` / `bsb_wind_result_audio_slow`
+  - 音频：`bsb_wind_result_audio`
 
 分支 B：
 - 意图 ID：`bsb_intent_voice` ｜ 中文名：说是远处人声
@@ -862,7 +862,7 @@ Morrow 注意到用户今天像是带着什么回来的。他们不急着安慰�
   - 译文：人声。比风更远。我会多听一会儿。
   - 世界状态写入：`returning_sound` = `voice`
   - futureHook：直接为序 12 的"孩子声音"铺垫。
-  - 音频：`bsb_voice_result_audio_normal` / `bsb_voice_result_audio_slow`
+  - 音频：`bsb_voice_result_audio`
 
 分支 C：
 - 意图 ID：`bsb_intent_quiet` ｜ 中文名：先安静下来听
@@ -874,7 +874,7 @@ Morrow 注意到用户今天像是带着什么回来的。他们不急着安慰�
   - 译文：安静有帮助。我们不说话时我听得更清楚。
   - 世界状态写入：`returning_sound` = `quiet_listen`
   - futureHook：承接序 6 的"喜欢安静"作为回声。
-  - 音频：`bsb_quiet_result_audio_normal` / `bsb_quiet_result_audio_slow`
+  - 音频：`bsb_quiet_result_audio`
 
 暂停出口（必备）：
 - 意图：`bsb_intent_pause`（稍后再来）
@@ -883,7 +883,7 @@ Morrow 注意到用户今天像是带着什么回来的。他们不急着安慰�
   - 译文：我们可以下次再听。声音准备好了会再回来。
   - 世界状态写入：`b2_sound_comes_back_status` = `paused_once`
   - futureHook：下次从最近确认状态继续。
-  - 音频：`bsb_pause_line_audio_normal` / `bsb_pause_line_audio_slow`
+  - 音频：`bsb_pause_line_audio`
 
 #### 误解 / 兜底
 - 无可靠匹配时：停留 `bsb_reply`，中文兜底，最多 3 个候选（风 / 人声 / 安静听）。
@@ -897,7 +897,7 @@ Morrow 注意到用户今天像是带着什么回来的。他们不急着安慰�
 - 需用户确认：是
 
 #### 素材需求
-- 预制音频：`bsb_open_line`、`bsb_prompt_line`、`bsb_wind_result`、`bsb_voice_result`、`bsb_quiet_result`、`bsb_pause_line` 共 6 条，每条 normal/slow 各一份。
+- 预制音频：`bsb_open_line`、`bsb_prompt_line`、`bsb_wind_result`、`bsb_voice_result`、`bsb_quiet_result`、`bsb_pause_line` 共 6 条，每条生成一份正常语速音频。
 - 图片：Morrow 侧耳倾听的姿态图 1 张；风、远处人声、安静聆听三种氛围各 1 张。
 - 动画：Morrow 转头、耳朵微动的小动画 1 段。
 - 音效：风穿过窗缝 1 条；远处模糊人声 1 条；完全安静底噪 1 条。
@@ -923,10 +923,10 @@ Morrow 注意到用户今天像是带着什么回来的。他们不急着安慰�
 #### Morrow 主要台词（英文 + 人工中文译文）
 1. `This room is clearer now than it was on the first day. I remember it looked like a dream.`
    - 译文：这个房间现在比第一天清楚多了。我记得那天它像一场梦。
-   - 音频：`brc_open_line_audio_normal` / `brc_open_line_audio_slow`
+   - 音频：`brc_open_line_audio`
 2. `Do you remember the {{first_restored_object}}? That was the first thing we brought back.`
    - 译文：你还记得那{{first_restored_object}}吗？那是我们带回来的第一件东西。
-   - 音频：`brc_prompt_line_audio_normal` / `brc_prompt_line_audio_slow`
+   - 音频：`brc_prompt_line_audio`
    - （注：`{{first_restored_object}}` 为运行时注入的第一章已确认世界状态值，英文显示为 lamp / plant / small bell 三选一。）
 
 #### 有效分支
@@ -940,7 +940,7 @@ Morrow 注意到用户今天像是带着什么回来的。他们不急着安慰�
   - 译文：那是开始。在那之前一切都模糊。现在它有形状了。
   - 世界状态写入：`recalled_first_room` = `true`
   - futureHook：序 12（听见学校方向的声音）可承接"从模糊到清楚"的成长弧。
-  - 音频：`brc_remember_result_audio_normal` / `brc_remember_result_audio_slow`
+  - 音频：`brc_remember_result_audio`
 
 分支 B：
 - 意图 ID：`brc_intent_tell_more` ｜ 中文名：让 Morrow 多讲一点
@@ -952,7 +952,7 @@ Morrow 注意到用户今天像是带着什么回来的。他们不急着安慰�
   - 译文：那天很安静。我能听见房间外的你，但还看不见你。那已经足够开始了。
   - 世界状态写入：`recalled_first_room` = `true`
   - futureHook：自然回声第一章"第一句话"——不调用第二条个人记忆，只作故事叙述。
-  - 音频：`brc_tell_more_result_audio_normal` / `brc_tell_more_result_audio_slow`
+  - 音频：`brc_tell_more_result_audio`
 
 分支 C：
 - 意图 ID：`brc_intent_long_ago` ｜ 中文名：说感觉很久以前
@@ -964,7 +964,7 @@ Morrow 注意到用户今天像是带着什么回来的。他们不急着安慰�
   - 译文：对我来说不算久。感觉像昨天。但我理解为什么对你来说像很久了。
   - 世界状态写入：`recalled_first_room` = `true`
   - futureHook：Morrow 温和表达不同感受，不盲目附和。
-  - 音频：`brc_long_ago_result_audio_normal` / `brc_long_ago_result_audio_slow`
+  - 音频：`brc_long_ago_result_audio`
 
 暂停出口（必备）：
 - 意图：`brc_intent_pause`（稍后再来）
@@ -973,7 +973,7 @@ Morrow 注意到用户今天像是带着什么回来的。他们不急着安慰�
   - 译文：这段记忆可以先放在那里。它会等，就像房间当年那样。
   - 世界状态写入：`b2_recall_room_status` = `paused_once`
   - futureHook：下次从最近确认状态继续。
-  - 音频：`brc_pause_line_audio_normal` / `brc_pause_line_audio_slow`
+  - 音频：`brc_pause_line_audio`
 
 #### 误解 / 兜底
 - 无可靠匹配时：停留 `brc_reply`，中文兜底，最多 3 个候选（记得 / 多讲一点 / 像很久以前）。
@@ -987,7 +987,7 @@ Morrow 注意到用户今天像是带着什么回来的。他们不急着安慰�
 - 需用户确认：是
 
 #### 素材需求
-- 预制音频：`brc_open_line`、`brc_prompt_line`、`brc_remember_result`、`brc_tell_more_result`、`brc_long_ago_result`、`brc_pause_line` 共 6 条，每条 normal/slow 各一份。
+- 预制音频：`brc_open_line`、`brc_prompt_line`、`brc_remember_result`、`brc_tell_more_result`、`brc_long_ago_result`、`brc_pause_line` 共 6 条，每条生成一份正常语速音频。
 - 图片：房间"第一天的模糊版"与"现在的清楚版"对比图各 1 张；Morrow 回望的姿态图 1 张。
 - 动画：画面从模糊渐变为清楚的小动画 1 段。
 - 音效：房间安静环境音 1 条；回忆色调的轻音色回响 1 条。
@@ -1013,10 +1013,10 @@ Morrow 注意到用户今天像是带着什么回来的。他们不急着安慰�
 #### Morrow 主要台词（英文 + 人工中文译文）
 1. `There is a new sound outside. It isn't the wind. It sounds like voices, many of them.`
    - 译文：外面有个新声音。不是风。听起来像人声，很多人在一起。
-   - 音频：`brs_open_line_audio_normal` / `brs_open_line_audio_slow`
+   - 音频：`brs_open_line_audio`
 2. `It comes from that direction, down the road. Do you hear it too?`
    - 译文：它从那个方向来，顺着路下去。你也听见了吗？
-   - 音频：`brs_prompt_line_audio_normal` / `brs_prompt_line_audio_slow`
+   - 音频：`brs_prompt_line_audio`
 
 #### 有效分支
 分支 A：
@@ -1029,7 +1029,7 @@ Morrow 注意到用户今天像是带着什么回来的。他们不急着安慰�
   - 译文：学校。那是一种新的地方。我以前不知道有那样的地方。
   - 世界状态写入：`school_sound_heard` = `true`
   - futureHook：第三章"第一次上学"直接承接此事件。
-  - 音频：`brs_school_result_audio_normal` / `brs_school_result_audio_slow`
+  - 音频：`brs_school_result_audio`
 
 分支 B：
 - 意图 ID：`brs_intent_listen_again` ｜ 中文名：再听一次
@@ -1041,7 +1041,7 @@ Morrow 注意到用户今天像是带着什么回来的。他们不急着安慰�
   - 译文：对。它还在。一阵一阵的，像人们在一起说话。
   - 世界状态写入：`school_sound_heard` = `true`
   - futureHook：承接序 10 的"安静里才能听见"。
-  - 音频：`brs_listen_result_audio_normal` / `brs_listen_result_audio_slow`
+  - 音频：`brs_listen_result_audio`
 
 分支 C：
 - 意图 ID：`brs_intent_new_place` ｜ 中文名：说那个方向像新地方
@@ -1053,7 +1053,7 @@ Morrow 注意到用户今天像是带着什么回来的。他们不急着安慰�
   - 译文：是的。路通向那边。我想那就是在拉我过去的方向。
   - 世界状态写入：`school_sound_heard` = `true`；`chapter_02_status` = `ready_for_chapter_03`
   - futureHook：本章收束；第三章进入条件达成。Morrow 的走向由本结果固定，用户只给陪伴。
-  - 音频：`brs_new_place_result_audio_normal` / `brs_new_place_result_audio_slow`
+  - 音频：`brs_new_place_result_audio`
 
 暂停出口（必备）：
 - 意图：`brs_intent_pause`（稍后再来）
@@ -1062,7 +1062,7 @@ Morrow 注意到用户今天像是带着什么回来的。他们不急着安慰�
   - 译文：我们可以下次再听。这个声音我们回来时还在。
   - 世界状态写入：`b2_ready_for_school_status` = `paused_once`（注意：章末主线暂停不影响第三章进入条件，下次回来仍从 `brs_reply` 继续；不写负反馈）
   - futureHook：下次从最近确认状态继续；若用户暂停，`school_sound_heard` 仍可在下次结算。
-  - 音频：`brs_pause_line_audio_normal` / `brs_pause_line_audio_slow`
+  - 音频：`brs_pause_line_audio`
 
 #### 误解 / 兜底
 - 无可靠匹配时：停留 `brs_reply`，中文兜底，最多 3 个候选（像学校 / 再听一次 / 像新地方）。
@@ -1076,7 +1076,7 @@ Morrow 注意到用户今天像是带着什么回来的。他们不急着安慰�
 - 需用户确认：是
 
 #### 素材需求
-- 预制音频：`brs_open_line`、`brs_prompt_line`、`brs_school_result`、`brs_listen_result`、`brs_new_place_result`、`brs_pause_line` 共 6 条，每条 normal/slow 各一份。
+- 预制音频：`brs_open_line`、`brs_prompt_line`、`brs_school_result`、`brs_listen_result`、`brs_new_place_result`、`brs_pause_line` 共 6 条，每条生成一份正常语速音频。
 - 图片：窗外远处路延伸方向的图 1 张（隐约可见人影/铃声方向）；Morrow 身体转向窗外的姿态图 1 张。
 - 动画：Morrow 微微转身、望向窗外远方的小动画 1 段。
 - 音效：远处孩子笑声/说话声 1 条；远处上课铃 1 条；房间环境音 1 条。
@@ -1085,7 +1085,7 @@ Morrow 注意到用户今天像是带着什么回来的。他们不急着安慰�
 
 ## 本章素材清单
 
-| 事件 | 配音台词数 | 音频文件数（normal+slow） | 图片项 | 动画项 | 音效项 |
+| 事件 | 配音台词数 | 音频文件数 | 图片项 | 动画项 | 音效项 |
 |---|---|---|---|---|---|
 | E2-01 第一次把房间走一遍 | 6 | 12 | 4 | 1 | 2 |
 | E2-02 给房间里的东西命名 | 6 | 12 | 4 | 1 | 2 |
@@ -1103,5 +1103,5 @@ Morrow 注意到用户今天像是带着什么回来的。他们不急着安慰�
 
 > 说明：
 > - 配音台词数 = 本事件中 `audioRequired: true` 的 Morrow 台词（story / prompt / 各分支 result / pause）；用户参考句（reference_reply）`audioRequired: false`，不计入。
-> - 音频文件数 = 配音台词数 × 2（normal + slow），voiceProfileId 统一为 `morrow_voice_v1`，文件路径 `tts/chapter_02_childhood/<event_id>/<line_id>/1.0.0/<variant>.wav`，状态 `planned`。
+> - 音频文件数 = 配音台词数（每条仅一份正常语速音频；播放端实时变速到 0.8×/0.6× 并保持音高，不另存慢速文件），voiceProfileId 统一为 `morrow_voice_v1`，文件路径 `tts/chapter_02_childhood/<event_id>/<line_id>/1.0.0/audio.wav`。含运行时注入变量的 `brc_prompt_line` 不做固定音频，登记为 `planned`。
 > - 图片项 = 场景图 1 + 各分支特写/氛围图（数量等于内容分支数）；动画项每事件 1 段 Morrow 小动作；音效项 = 房间环境音 1 + 事件特定音效 1—2。

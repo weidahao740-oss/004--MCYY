@@ -50,7 +50,7 @@ for await (const _event of conversationStore.send(
   {
     user: { id: conversationUser, accountKind: 'guest', status: 'active', email: null, displayName: 'Guest', createdAt: new Date().toISOString() },
     settings: {
-      languageLevel: 'L2', preferredReplyLength: 'standard', speechRate: 'normal', subtitlesEnabled: true,
+      languageLevel: 'L2', preferredReplyLength: 'standard', speechRate: '1.0', subtitlesEnabled: true,
       correctionPreference: 'after_conversation', memoryEnabled: true, voiceInputEnabled: true, voiceOutputEnabled: true,
       interfaceLocale: 'zh-CN', timeZone: 'Asia/Shanghai',
     },

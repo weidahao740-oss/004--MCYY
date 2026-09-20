@@ -30,7 +30,7 @@ function learningLine(
       },
     },
     audioRequired,
-    audioIds: audioRequired ? [`${id}_audio_normal`, `${id}_audio_slow`] : [],
+    audioIds: audioRequired ? [`${id}_audio`] : [],
   }
 }
 
@@ -270,18 +270,17 @@ const events = [firstVoiceEvent, firstObjectEvent]
 const audioBindings: AudioBinding[] = events.flatMap((event) =>
   event.lines.flatMap((line) =>
     line.audioRequired
-      ? (['normal', 'slow'] as const).map((variant) => ({
-          audioId: `${line.id}_audio_${variant}`,
+      ? [{
+          audioId: `${line.id}_audio`,
           lineId: line.id,
           contentId: line.learningContent.contentId,
           textVersion: line.learningContent.textVersion,
           translationVersion: line.learningContent.translation.version,
-          variant,
           voiceProfileId: 'morrow_voice_v1',
-          fileRef: `tts/${event.chapterId}/${event.id}/${line.id}/1.0.0/${variant}.wav`,
+          fileRef: `tts/${event.chapterId}/${event.id}/${line.id}/1.0.0/audio.wav`,
           checksumSha256: null,
           status: 'planned' as const,
-        }))
+        }]
       : [],
   ),
 )

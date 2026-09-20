@@ -1,0 +1,37 @@
+{
+  "input": "C:\\004-MCYY\\voice-test\\morrow-production\\raw\\chapter_01_birth\\b1_first_feeling_v1\\bff_pause_line.wav",
+  "output": "C:\\004-MCYY\\voice-test\\morrow-production\\tts\\chapter_01_birth\\b1_first_feeling_v1\\bff_pause_line\\1.0.0\\audio.wav",
+  "target_active_rms_dbfs": -20.0,
+  "peak_ceiling_dbfs": -3.0,
+  "applied_gain_db": 2.26,
+  "source_format": {
+    "sample_rate_hz": 24000,
+    "channels": 1,
+    "bits_per_sample": 16
+  },
+  "output_format": {
+    "container": "WAV",
+    "codec": "PCM",
+    "sample_rate_hz": 16000,
+    "channels": 1,
+    "bits_per_sample": 16,
+    "frames": 88320,
+    "duration_seconds": 5.52,
+    "riff_length_field": 176676,
+    "expected_riff_length": 176676,
+    "data_length_field": 176640,
+    "expected_data_length": 176640,
+    "length_fields_valid": true,
+    "required_format_valid": true
+  },
+  "before": {
+    "peak_dbfs": -9.98,
+    "rms_dbfs": -24.84,
+    "active_rms_dbfs": -22.26
+  },
+  "after": {
+    "peak_dbfs": -7.72,
+    "rms_dbfs": -22.58,
+    "active_rms_dbfs": -20.07
+  }
+}

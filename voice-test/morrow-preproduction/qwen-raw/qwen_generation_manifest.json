@@ -1,0 +1,30 @@
+{
+  "model": "qwen-audio-3.0-tts-flash",
+  "voice_id": "qwen-audio-3.0-tts-flash-morrow-4709e7ec2ab7478fa1c98f5e617e936f",
+  "files": [
+    {
+      "file": "C:\\004-MCYY\\voice-test\\morrow-preproduction\\qwen-raw\\morrow_short_qwen_raw.wav",
+      "text": "Which one should we bring back first?",
+      "rate": 1.0,
+      "characters": 37
+    },
+    {
+      "file": "C:\\004-MCYY\\voice-test\\morrow-preproduction\\qwen-raw\\morrow_medium_qwen_raw.wav",
+      "text": "The bell makes one low note. It sounds awake, not alarmed.",
+      "rate": 1.0,
+      "characters": 58
+    },
+    {
+      "file": "C:\\004-MCYY\\voice-test\\morrow-preproduction\\qwen-raw\\morrow_long_qwen_raw.wav",
+      "text": "The room remembers a lamp, a plant, and a small bell, but only one is clear.",
+      "rate": 1.0,
+      "characters": 76
+    }
+  ],
+  "playback_rates": [
+    1.0,
+    0.8,
+    0.6
+  ],
+  "preserve_pitch": true
+}

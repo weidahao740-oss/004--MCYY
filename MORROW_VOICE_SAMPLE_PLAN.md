@@ -1,19 +1,18 @@
-# Morrow 固定音色与标准样音计划
+# Morrow 固定音色与千问预制语音计划
 
-> 版本：4.1.0
-> 日期：2026-09-19
-> 状态：唯一标准音色已定稿，进入预制语音试生产
+> 版本：5.0.0
+> 日期：2026-09-20
+> 状态：已完成——第一、二章 145 条正式预制语音按单音频方案批量制作，客观校验全部通过，17 条代表样本主观试听经用户确认通过（2026-09-20），语音证据门关闭
 
-## 1. 最终音色决策
+## 1. 最终方案
 
-Morrow 在第 1—7 章及全部年龄阶段中使用同一个固定音色，不再随成长阶段更换声线。
+Morrow 在第 1—7 章及全部年龄阶段使用同一个固定音色，所有正式音频统一由千问 `qwen-audio-3.0-tts-flash` 制作。
 
 - 正式 `voiceProfileId`：`morrow_voice_v1`
-- 原始选定样音：`voice-test/morrow-growth-voice/morrow_age_05_seed_audio_t2a_v1.wav`
-- 发布基准参考：`voice-test/morrow-growth-voice/morrow_voice_standard_v1.wav`
-- 生成方式：Seed Audio 1.0 T2A
-- 标准音色原始 SHA-256：`b025ec2afc1ff4bd65c78073b7fbd4446ce991950ab05babe11dd407ca8c1a27`
-- 发布基准 SHA-256：`8a7d95145f7ff841d2934e2530b3df3f7cf761023fddc4ef43ad52887b23cc5f`
+- 正式制作模型：`qwen-audio-3.0-tts-flash`
+- 唯一参考音频：`voice-test/morrow-growth-voice/morrow_voice_standard_v1.wav`
+- 千问专属复刻音色：基于唯一参考音频创建并与正式模型绑定；音色 ID 仅记录在生成清单或服务端配置中
+- 参考音频 SHA-256：`8a7d95145f7ff841d2934e2530b3df3f7cf761023fddc4ef43ad52887b23cc5f`
 
 发布基准只做电平校准，不改变音高、音色、语速或措辞。
 
@@ -27,87 +26,64 @@ Morrow 在第 1—7 章及全部年龄阶段中使用同一个固定音色，不
 
 成长只通过台词内容、词汇复杂度、语句长度、停顿、情绪和剧情经历表达，不改变角色声线。
 
-## 3. 后续生成规则
+## 3. 千问生成规则
 
-1. 每条 Morrow 台词都使用 `morrow_voice_standard_v1.wav` 作为唯一参考音频。
-2. Seed Audio 1.0 使用 A2A 模式，提示词用 `@音频1` 指代该参考音频。
-3. 不再要求模型把声音变幼、变成年或变老，也不使用年龄变化提示词。
-4. 可以调整语速、停顿和情绪强度，但不得改变音高、共鸣位置、性别表达和核心音色。
-5. 千问模型只有在能够稳定复用同一正式音色时才可使用；否则不用于正式 Morrow 台词。
-6. 每条固定台词生成 normal 与 slow 两个版本，并分别审核。
-7. 生成结果必须经过统一响度处理，未经处理和审核不得标记为 `ready`。
+1. 所有正式台词固定使用 `qwen-audio-3.0-tts-flash`。
+2. 复用基于 `morrow_voice_standard_v1.wav` 创建的同一专属复刻音色，不为每条台词重复创建音色。
+3. 每条台词只生成一份正常语速音频，`rate=1.0`、`pitch=1.0`、`language_hints=["en"]`。
+4. 用户播放时可选择 `1.0×`、`0.8×`、`0.6×`，客户端实时变速并保持音高；不生成独立慢速文件。
+5. 模型根据文本、标点、语速和表达指令自然决定朗读时长，不传固定总时长。
+6. 原始候选直接采用模型返回结果，不额外处理首尾时长。
+7. 指令保持清楚自然、克制、亲近，禁止播音腔、客服腔、舞台表演、夸张兴奋和甜腻撒娇。
+8. 每条固定台词生成一份音频并逐条试听；不合格项单独重新生成。
+9. API Key 只放服务端环境变量，不写入源码、文档、结果 JSON 或仓库。
 
-### Seed Audio 1.0 A2A 通用提示模板
+## 4. 当前试产资产
 
-```text
-使用 @音频1 的同一角色音色和声线说出以下英文。严格保持参考音频的音高、共鸣位置、音色质感、性别表达和亲近感，不改变年龄，不重新设计声音。只根据台词语义自然调整停顿和情绪；英语清楚自然、克制，不要播音腔、客服腔、舞台表演、夸张兴奋或甜腻撒娇。无音乐、无环境声、无音效。完整朗读：<英文台词>
-```
+- 原始目录：`voice-test/morrow-preproduction/qwen-raw/`
+- 发布目录：`voice-test/morrow-preproduction/ready/`
+- 原始清单：`voice-test/morrow-preproduction/qwen-raw/qwen_generation_manifest.json`
+- 发布清单：`voice-test/morrow-preproduction/ready/release_manifest.json`
+- 范围：短/中/长 3 条正常语速音频
+- 当前状态：人工试听通过，发布格式与响度处理完成
 
-慢速版只追加：
+## 5. 响度统一规范
 
-```text
-语速比正常版慢约 15%—20%，保持自然短语节奏，不逐词机械拖长，不改变音高和音色。
-```
-
-## 4. 响度统一规范
-
-生成模型的原始振幅、动态范围、停顿长度和余量具有随机性，即使参考音色相同，导出的音量也可能不同。因此发布流程必须包含确定性后处理。
-
-### 当前发布基准
+生成模型的原始振幅、动态范围、停顿长度和余量具有随机性，因此发布流程必须包含确定性后处理。
 
 - 容器与编码：WAV / PCM；
 - 采样率：`16 kHz`；
 - 声道：单声道；
 - 位深：`16-bit`；
-- WAV 的 RIFF 与 data 长度字段必须与实际文件长度完全一致；
+- WAV 的 RIFF 与 data 长度字段必须与实际文件长度一致；
 - 目标有效语音 RMS：`-20 dBFS`；
 - 允许误差：`±1 dB`；
 - 峰值上限：`-3 dBFS`；
-- 不改变音高、语速和音色；
+- 不改变音高、语速、音色或措辞；
 - 不以模型原始输出音量作为发布音量。
 
-处理脚本：
-
-```text
-english-pet/scripts/normalize_morrow_audio.py
-```
-
-用法：
+处理脚本：`english-pet/scripts/normalize_morrow_audio.py`
 
 ```text
 python english-pet/scripts/normalize_morrow_audio.py <input.wav> <output.wav> --sample-rate 16000 --target-active-rms-dbfs -20 --peak-ceiling-dbfs -3 --report <report.json>
 ```
 
-## 5. 质量门槛
+## 6. 质量门槛
 
 每条 `ready` 音频必须同时满足：
 
-- 使用 `morrow_voice_standard_v1.wav` 作为唯一声音参考；
+- 模型为 `qwen-audio-3.0-tts-flash`；
+- 使用正式 Morrow 专属复刻音色；
 - 文本逐字准确；
 - 听感仍是同一个 Morrow，没有明显换人；
-- normal / slow 只改变语速，不改变音色和音高；
+- 唯一音频在 `1.0×`、`0.8×`、`0.6×` 播放时保持音高，变速听感自然；
 - 文件为 WAV / PCM / 16 kHz / 单声道 / 16-bit；
 - RIFF 与 data 长度字段正确；
 - 有效语音 RMS 在 `-21～-19 dBFS`；
 - 峰值不高于 `-3 dBFS`；
 - 无削波、爆音、底噪突变、音乐或环境声；
-- 文件路径、时长、SHA-256、处理报告和人工审核结论已登记。
-
-## 6. 已淘汰探索资产
-
-以下资产不进入正式内容，仅保留用于决策追溯：
-
-- `morrow_teen_standard_v1.wav`；
-- `morrow_child_candidate_seed_audio_01.wav`；
-- `morrow_child_candidate_seed_audio_02.wav`；
-- `morrow_adult_candidate_seed_audio_01.wav`；
-- `morrow_adult_candidate_seed_audio_02.wav`；
-- `morrow_age_18_seed_audio_a2a_v1.wav`；
-- `morrow_age_25_seed_audio_a2a_v1.wav`；
-- `morrow_age_50_seed_audio_a2a_v1.wav`。
-
-淘汰原因：用户确认成长阶段不改变音色；此前候选与参考音色差异不足或不再符合单一声线方案。
+- 文件路径、模型、音色标识、生成参数、时长、SHA-256、处理报告和人工审核结论已登记。
 
 ## 7. 下一步
 
-使用固定音色与响度流程制作少量 normal / slow 试产台词。试听确认“声线一致、音量一致、慢速自然”后，再批量制作首两章预制语音。
+已完成第一、二章 145 条批量制作与验收（见 `voice-test/morrow-production/manifest.json`）。下一步进入阶段 4：首个正式客户端顺序与云厂商/基础设施选型。

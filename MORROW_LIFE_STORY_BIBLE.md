@@ -111,7 +111,7 @@
 #### Morrow 主要台词（英文 + 人工中文译文）
 1. <英文台词>
    - 译文：<人工中文>
-   - 音频：<line_id>_audio_normal / <line_id>_audio_slow（voiceProfileId=morrow_voice_v1）
+   - 音频：<line_id>_audio（voiceProfileId=morrow_voice_v1）
 
 #### 有效分支（至少 2—3 条）
 分支 A：
@@ -139,7 +139,7 @@
 - 需用户确认：是（保存前展示可编辑文本；拒绝敏感推断）
 
 #### 素材需求
-- 预制音频：列出全部需语音 line 的 normal/slow（见上）
+- 预制音频：列出全部需语音 line 的单一正常语速音频（见上）
 - 图片：<本事件需要的场景/物品图，占位说明>
 - 动画：<需要的小动作，占位说明>
 - 音效：<环境音/事件音，占位说明>
@@ -163,7 +163,7 @@
   - 第一章 `birth`：已种子 `birth_first_voice_v1`、`birth_restore_object_v1`；新增用 `b1_<short>_v1`。
   - 第二章 `childhood`：用 `b2_<short>_v1`。
 - 状态/意图/台词/结果/记忆规则 ID 在事件内唯一，沿用既有缩写风格（如 `bfv_`、`bro_`），新事件用各自缩写前缀，避免跨事件撞名。
-- 音频 ID：`<line_id>_audio_normal`、`<line_id>_audio_slow`；文件路径 `tts/<chapter_id>/<event_id>/<line_id>/1.0.0/<variant>.wav`。
+- 音频 ID：`<line_id>_audio`；文件路径 `tts/<chapter_id>/<event_id>/<line_id>/1.0.0/<variant>.wav`。
 - 发布后 ID 不改义；废弃用 `retired`，由新 ID 替代，不复用旧 ID。
 
 ---

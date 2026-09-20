@@ -36,7 +36,7 @@
 | 20 | `POST /v1/events/:id/resurfacing` | 记录复现提示结果 used/paraphrased/ignored… | 保留（收窄） | 字段不变；触发与记录限定为"已确认且未暂停记忆"，一次最多 1 条 | `resurfacing_not_available`→中文 | `index.ts:276`、`contracts/src/resurfacing.ts`、`memory-resurfacing-store.ts` |
 | 21 | `POST /v1/events/:id/actions` | 事件状态推进（核心） | 改字段 | 由"启发式猜分支"改为确定性意图匹配：输入仅经标准化后在当前状态 `eligibleStateIds` 打分；未达阈值返回保持状态+最多 3 候选；`worldStateWrites` 白名单写入 | `event_not_found`→中文；`transition_not_allowed` 语义保留但改由"无唯一可达意图"触发；新增意图类错误码（见第 3 节） | `index.ts:291`、`memory-event-engine.ts`（`act()`）、`contracts/src/event-runtime.ts` |
 | 22 | `POST /v1/audio/transcriptions` | 上传音频得可编辑转写+置信度 | 保留（测试端） | 字段不变；转写必须经用户确认/编辑后才作为 `confirmed_asr_text` 进匹配 | 低置信→中文"请先检查并修改转写再发送"；失败不阻塞，可打字 | `index.ts:307`、`contracts/src/voice.ts`、`packages/ai/src/asr/*` |
-| 23 | `POST /v1/audio/speech` | 按需把任意文本合成语音 | 弃用 | 正式端不再运行时合成任意文本；改用预制 normal/slow 音频（见新增端点 26） | 测试端可临时保留；正式端下线后返回中文"请使用预置音频" | `index.ts:332`、`contracts/src/voice.ts`、`packages/ai/src/tts/*` |
+| 23 | `POST /v1/audio/speech` | 按需把任意文本合成语音 | 弃用 | 正式端不再运行时合成任意文本；改用单一正常语速预制音频（见新增端点 26） | 测试端可临时保留；正式端下线后返回中文"请使用预置音频" | `index.ts:332`、`contracts/src/voice.ts`、`packages/ai/src/tts/*` |
 | 24 | `POST /v1/conversations` | 创建/取当前自由对话 | 弃用（正式端） | 自由对话由固定内容事件取代；此端点及 SSE 不再是主链路 | 保留为 LLM 实验，默认不挂载；缺密钥不报错 | `index.ts:361`、`memory-conversation-store.ts` |
 | 25 | `GET /v1/conversations/current` | 取当前对话 | 弃用（正式端） | 同上 | 同上 | `index.ts:367` |
 | 26 | `POST /v1/conversations/:id/complete` | 结束对话并出语言反馈 | 弃用（正式端） | 对话结束反馈停用；语言反馈改由事件结果产出（见 #21/#14） | 同上 | `index.ts:373`、`contracts/src/feedback.ts` |
@@ -50,7 +50,7 @@
 |---|---|---|---|---|---|
 | N1 | `GET /v1/fixed-content/ruleset` | 下发当前权威规则集（章节/事件/台词/意图/状态/迁移/结果/记忆规则/音频绑定/llmPolicy） | 响应即 `FixedContentRuleset`（`fixed-content-v1.0.0`）：含 `id/version/schemaVersion/personaVersion/defaultUiLocale/learningLocale/supportedPlatforms/matchingPolicy/fallbacks/translationToggle/audioBindings/events/llmPolicy` | 响应必带 `schemaVersion`；客户端不识别则停止事件并中文提示升级 | 读 `packages/domain/src/fixed-content-v1.ts` + `contracts/src/fixed-content.ts`；在 `apps/api/src/index.ts` 新增路由 |
 | N2 | `POST /v1/events/:id/intents` | 对当前状态做确定性意图匹配/预览，**不推进状态**；用于"无匹配时返回最多 3 个中文候选意图 + 可编辑英文参考句" | 请求：`{ text, inputMode: 'text'|'confirmed_asr_text'|'reference_reply'|'choice', choiceId?, idempotencyKey }`；响应：`{ resolvedIntentId?: string, candidates: { intentId, labelZh }[] (≤3), fallbackKind?: 'no_match'|'low_confidence'|'user_denial'|'repeated_input', messageZh }` | 同分/分差不足/否定冲突→按无匹配返回候选，不推进；所有文案中文 | 复用契约第 5 节匹配器；与 #21 同一套标准化逻辑 |
-| N3 | `GET /v1/audio/bindings/:audioId` | 解析预制音频绑定，返回播放地址与版本绑定 | 响应：`{ audioId, lineId, contentId, textVersion, translationVersion, variant:'normal'|'slow', voiceProfileId, fileRef, status:'ready'|'planned'|'retired', checksumSha256 }` | `status='planned'` 或 `retired`→不返回可播地址，前端降级纯文本+译文；`textVersion/translationVersion` 与客户端缓存不一致→拒绝用缓存 | 读 `FixedContentRuleset.audioBindings` |
+| N3 | `GET /v1/audio/bindings/:audioId` | 解析预制音频绑定，返回播放地址与版本绑定 | 响应：`{ audioId, lineId, contentId, textVersion, translationVersion, voiceProfileId, fileRef, status:'ready'|'planned'|'retired', checksumSha256 }` | `status='planned'` 或 `retired`→不返回可播地址，前端降级纯文本+译文；`textVersion/translationVersion` 与客户端缓存不一致→拒绝用缓存 | 读 `FixedContentRuleset.audioBindings` |
 
 > 说明：**记忆提案确认**不新增端点，复用现有 `POST /v1/memories/:id/actions`（#14，confirm/edit）。
 
