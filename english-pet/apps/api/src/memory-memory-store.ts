@@ -182,6 +182,13 @@ export class MemoryMemoryStore {
     return addProposal(userId, proposal, { eventInstanceId })
   }
 
+  /** 固定内容事件完成时：按 memoryRules 渲染好的多条"待确认"提案一次性落地（去重/敏感词/TTL 由 addProposal 统一处理）。 */
+  proposeFromFixedEvent(userId: string, eventInstanceId: string, proposals: MemoryProposalInput[]): Memory[] {
+    return proposals
+      .map((proposal) => addProposal(userId, proposal, { eventInstanceId }))
+      .filter((item): item is Memory => item !== null)
+  }
+
   proposeFromEvent(userId: string, eventInstanceId: string, eventKey: string, outcomeId: string) {
     const definition = getEventDefinition(eventKey)
     if (!definition) return []

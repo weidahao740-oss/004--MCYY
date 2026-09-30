@@ -1,0 +1,5 @@
+{
+  "hello i can hear someone beyond the room": "assets/voice/bfv_wake_line.wav",
+  "i'm morrow what should we do first": "assets/voice/bfv_prompt_line.wav",
+  "which one should we bring back first": "assets/voice/bro_prompt_line.wav"
+}

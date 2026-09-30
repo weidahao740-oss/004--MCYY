@@ -1,0 +1,811 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>P4-T06-04 Morrow 第一章关键页面与组件规范画廊</title>
+<style>
+/* ============================================================
+   Morrow 设计系统 token
+   手机画布严格 = 源底图比例 1536×2752（w/h = 0.5581）
+   画廊外框 300×537（=300*2752/1536），内部 UI 按母版比例换算
+   ============================================================ */
+:root{
+  --gold:#F2D389;
+  --gold-dim:rgba(242,211,137,.55);
+  --text:#F5F7FA;
+  --muted:#C8D7E0;
+  --muted-dim:rgba(200,215,224,.55);
+  --nav-bg:#081B28;
+  --glass-cool:rgba(55,78,98,.42);
+  --glass-line:rgba(255,255,255,.55);
+  --bubble:rgba(210,224,232,.82);
+  --bubble-line:rgba(255,255,255,.72);
+  --bubble-text:#1c3040;
+  --danger:#E8A0A0;
+  --danger-bg:rgba(180,80,80,.28);
+  --ok:#9FD3B6;
+  --warn:#E8C98A;
+  --font-cn:"PingFang SC","Microsoft YaHei UI","Microsoft YaHei",system-ui,sans-serif;
+  --font-en:Arial,Inter,system-ui,sans-serif;
+  --touch-min:44px;
+  --safe-top:env(safe-area-inset-top,0px);
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#0a1a26;color:var(--text);font-family:var(--font-cn);line-height:1.5}
+
+/* ===== 画廊外壳 ===== */
+.gallery{display:flex;min-height:100vh}
+.sidebar{position:sticky;top:0;align-self:flex-start;height:100vh;width:230px;flex:0 0 230px;
+  background:#07141d;border-right:1px solid rgba(255,255,255,.06);padding:22px 16px;overflow-y:auto}
+.sidebar h1{font-size:15px;color:var(--gold);margin-bottom:4px;font-weight:700}
+.sidebar .sub{font-size:11px;color:var(--muted-dim);margin-bottom:18px;line-height:1.5}
+.sidebar a{display:block;color:var(--muted);text-decoration:none;font-size:12.5px;
+  padding:6px 10px;border-radius:8px;margin-bottom:1px}
+.sidebar a:hover{background:rgba(255,255,255,.05);color:var(--text)}
+.sidebar a.grp{color:var(--gold);font-weight:700;margin-top:12px;font-size:12px;letter-spacing:.5px}
+.main{flex:1;padding:28px 32px 80px;max-width:1480px}
+.main h2{font-size:22px;color:var(--gold);margin:36px 0 4px;font-weight:700}
+.main h2:first-of-type{margin-top:0}
+.main .desc{font-size:13px;color:var(--muted);margin-bottom:18px;max-width:820px;line-height:1.6}
+.grid{display:flex;flex-wrap:wrap;gap:26px;align-items:flex-start}
+
+/* ===== 手机外框：严格 1536/2752 ===== */
+.phone{position:relative;width:300px;aspect-ratio:1536/2752;border-radius:34px;overflow:hidden;
+  background:#102b3a;box-shadow:0 18px 50px rgba(0,0,0,.5);isolation:isolate;flex:0 0 auto}
+.phone .label{position:absolute;bottom:-26px;left:0;right:0;font-size:11.5px;color:var(--muted);
+  text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.phone .tag{position:absolute;top:8px;left:10px;z-index:30;font-size:9.5px;
+  background:rgba(8,27,40,.85);color:var(--gold);padding:2px 8px;border-radius:99px;
+  border:1px solid rgba(242,211,137,.4);letter-spacing:.3px}
+
+/* 底图层：完整等比，无 cover 横裁 */
+.phone .room{position:absolute;inset:0;
+  background:url('assets/Morrow固定房间小图预览-V5-核心形象校正版.png') center center / 100% 100% no-repeat}
+.phone .room.dim{filter:brightness(.5)}
+.phone .room.dimmer{filter:brightness(.25)}
+.phone .plain{position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 20%,#1c3a4d 0%,#0c2231 60%,#071620 100%)}
+
+/* 状态栏（系统层） */
+.statusbar{position:absolute;z-index:6;top:0;left:0;right:0;height:26px;display:flex;
+  align-items:center;justify-content:space-between;padding:0 16px;font:600 10.5px/1 var(--font-en);color:#fff}
+.statusbar .right{display:flex;align-items:center;gap:4px}
+.statusbar .dot{width:3px;height:3px;border-radius:50%;background:#fff;display:inline-block}
+.statusbar .batt{width:13px;height:7px;border:1px solid #fff;border-radius:2px;position:relative}
+.statusbar .batt::before{content:"";position:absolute;left:1px;top:1px;bottom:1px;width:7px;background:#fff;border-radius:1px}
+
+/* ===== 通用 UI 原子 ===== */
+.ui{position:absolute;z-index:5}
+
+/* 状态胶囊（左上） */
+.pill{border-radius:999px;border:1.2px solid rgba(255,255,255,.55);
+  background:linear-gradient(135deg,rgba(255,232,180,.32) 0%,rgba(178,213,223,.16) 46%,rgba(255,255,255,.08) 100%);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3)}
+.state{left:4%;top:8%;min-height:32px;padding:0 14px;display:flex;align-items:center;
+  justify-content:center;font-size:11.5px;font-weight:700;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.3)}
+
+/* 设置：白色线性图标，无背景/边框/磨砂，透明命中区 ≥44 */
+.gear{right:2%;top:8%;width:44px;height:44px;display:grid;place-items:center;
+  background:transparent;border:0;backdrop-filter:none;border-radius:0}
+.gear svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;
+  filter:drop-shadow(0 1px 3px rgba(0,0,0,.4))}
+
+/* P10 唯一返回：左 chevron 线性图标，无背景/边框 */
+.back{left:2%;top:8%;width:44px;height:44px;display:grid;place-items:center;
+  background:transparent;border:0;backdrop-filter:none;border-radius:0;color:#fff}
+.back svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
+  filter:drop-shadow(0 1px 3px rgba(0,0,0,.4))}
+
+/* Morrow 台词气泡（严格对照主动邀请确认稿） */
+.bubble{position:absolute;top:17%;right:5%;width:64%;min-height:120px;padding:14px 16px 14px;
+  border-radius:26px;background:var(--bubble);border:1.5px solid var(--bubble-line);
+  backdrop-filter:blur(14px) saturate(1.1);-webkit-backdrop-filter:blur(14px) saturate(1.1);
+  box-shadow:0 12px 36px rgba(8,28,42,.22),inset 0 1px 0 rgba(255,255,255,.6);color:var(--bubble-text)}
+/* 融合尾巴：从气泡底部中央收尖，指向 Morrow 头部 */
+.bubble.tail-down::after{content:"";position:absolute;left:50%;bottom:-22px;transform:translateX(-50%);
+  width:0;height:0;border-left:11px solid transparent;border-right:11px solid transparent;
+  border-top:24px solid var(--bubble);filter:drop-shadow(0 4px 4px rgba(8,28,42,.15))}
+.bubble .en{font:700 15.5px/1.3 var(--font-en);letter-spacing:.2px;color:var(--bubble-text)}
+.bubble .ctl{display:flex;align-items:center;gap:10px;margin-top:12px}
+.bubble .play{width:30px;height:30px;min-width:30px;min-height:30px;border-radius:50%;
+  background:#fff;display:grid;place-items:center;flex:0 0 auto;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.bubble .play::before{content:"";border-left:9px solid #1c3040;border-top:6px solid transparent;border-bottom:6px solid transparent;margin-left:2px}
+.bubble .listen{font-size:12.5px;font-weight:600;color:#2a3f50}
+.bubble .cn{margin-left:auto;min-height:32px;padding:0 14px;border-radius:999px;border:1.2px solid rgba(28,48,64,.35);
+  background:rgba(255,255,255,.25);color:#1c3040;font-size:12px;display:flex;align-items:center;white-space:nowrap}
+.bubble .speed{font-size:10.5px;color:#2a3f50;background:rgba(255,255,255,.35);border-radius:99px;padding:3px 8px}
+
+/* 按钮 */
+.actions{position:absolute;left:5%;right:5%;bottom:13%;display:flex;gap:12px}
+.btn{min-height:46px;border-radius:999px;display:flex;align-items:center;justify-content:center;
+  font-size:13.5px;font-weight:700;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border:1.5px solid rgba(255,255,255,.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.22);
+  min-width:44px;min-height:44px}
+.btn.primary{flex:1;background:linear-gradient(135deg,rgba(255,228,168,.28),rgba(18,41,52,.55));color:var(--gold)}
+.btn.secondary{flex:1;background:linear-gradient(135deg,rgba(190,210,219,.22),rgba(18,41,52,.5));color:#fff}
+.btn.ghost{background:rgba(14,34,46,.55);color:var(--muted);border-color:rgba(255,255,255,.3)}
+.btn.pause{background:transparent;border:0;color:#fff;font-size:13px;font-weight:600;min-width:44px;min-height:44px}
+
+/* 探索提示条（无尾巴、冷蓝灰） */
+.tip{position:absolute;left:8%;right:8%;bottom:14%;min-height:36px;border-radius:999px;
+  background:rgba(14,34,46,.72);border:1.2px solid rgba(255,255,255,.4);backdrop-filter:blur(10px);
+  display:flex;align-items:center;justify-content:center;padding:0 14px;color:#f5fbff;font-size:11.5px;
+  box-shadow:0 6px 20px rgba(0,0,0,.2)}
+.tip.warm{background:rgba(242,211,137,.2);border-color:var(--gold);color:var(--gold)}
+
+/* 底部导航 */
+.nav{position:absolute;z-index:7;left:0;right:0;bottom:0;height:12.5%;
+  background:linear-gradient(to top,rgba(9,25,35,.96) 0%,rgba(11,30,42,.9) 72%,rgba(11,30,42,.78) 100%);
+  border-top:1px solid rgba(255,255,255,.08);display:grid;grid-template-columns:repeat(3,1fr);
+  padding-bottom:max(6px,var(--safe-bottom))}
+.nav div{display:flex;align-items:center;justify-content:center;position:relative;font-size:13px;font-weight:700;color:var(--muted);min-width:44px;min-height:44px}
+.nav div.active{color:var(--gold)}
+.nav div.active::after{content:"";position:absolute;bottom:7px;width:26px;height:3px;border-radius:99px;background:var(--gold);box-shadow:0 0 8px rgba(242,211,137,.6)}
+.homebar{position:absolute;z-index:8;bottom:5px;left:50%;transform:translateX(-50%);width:80px;height:4px;border-radius:99px;background:rgba(255,255,255,.85)}
+
+/* 快速表达上拉层 */
+.sheet{position:absolute;left:0;right:0;bottom:0;z-index:15;background:linear-gradient(to top,rgba(10,28,40,.98) 0%,rgba(14,38,54,.96) 100%);
+  border-radius:20px 20px 0 0;border-top:1px solid rgba(255,255,255,.12);padding:10px 14px 16px;
+  box-shadow:0 -12px 40px rgba(0,0,0,.4)}
+.sheet .grip{width:34px;height:4px;border-radius:99px;background:rgba(255,255,255,.3);margin:0 auto 10px}
+.sheet .inputrow{display:flex;align-items:center;gap:8px}
+.sheet .field{flex:1;min-height:44px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);
+  border-radius:99px;padding:0 14px;display:flex;align-items:center;font-size:12.5px;color:var(--muted)}
+.sheet .field.typed{color:var(--text)}
+.sheet .mic{width:44px;height:44px;border-radius:50%;background:var(--gold);display:grid;place-items:center;flex:0 0 auto}
+.sheet .mic svg{width:19px;height:19px;stroke:#1a2e3c;fill:none;stroke-width:2;stroke-linecap:round}
+.sheet .send{min-height:44px;padding:0 16px;border-radius:999px;background:var(--gold);color:#1a2e3c;
+  font-weight:700;font-size:12.5px;border:0}
+.sheet .chips-title{font-size:10.5px;color:var(--muted-dim);margin-top:8px}
+
+.asr{margin-top:8px;background:rgba(242,211,137,.1);border:1px dashed var(--gold);border-radius:12px;padding:8px 10px}
+.asr .asr-text{font-size:12.5px;color:var(--text);font-family:var(--font-en)}
+.asr .asr-hint{font-size:10.5px;color:var(--gold);margin-top:3px}
+.asr.lowconf{border-color:var(--warn);background:rgba(232,201,138,.08)}
+
+.wave{display:flex;align-items:center;justify-content:center;gap:3px;height:36px;margin:6px 0}
+.wave i{width:3px;background:var(--gold);border-radius:2px;animation:wv 1s ease-in-out infinite}
+.wave i:nth-child(1){height:10px}.wave i:nth-child(2){height:20px;animation-delay:.1s}
+.wave i:nth-child(3){height:30px;animation-delay:.2s}.wave i:nth-child(4){height:22px;animation-delay:.3s}
+.wave i:nth-child(5){height:12px;animation-delay:.4s}.wave i:nth-child(6){height:18px;animation-delay:.5s}
+.wave i:nth-child(7){height:26px;animation-delay:.6s}.wave i:nth-child(8){height:12px;animation-delay:.7s}
+@keyframes wv{0%,100%{transform:scaleY(.6)}50%{transform:scaleY(1.15)}}
+
+/* 帮助卡 */
+.helpcard{position:absolute;left:5%;right:5%;bottom:16%;z-index:12;
+  background:rgba(10,28,40,.94);border:1px solid rgba(255,255,255,.14);border-radius:14px;
+  padding:10px 12px;backdrop-filter:blur(12px)}
+.helpcard .h-title{font-size:10.5px;color:var(--gold);font-weight:700;margin-bottom:6px;letter-spacing:.5px}
+.helpcard .kw{display:flex;flex-wrap:wrap;gap:6px}
+.helpcard .kw span{font-size:12px;font-family:var(--font-en);background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.14);padding:4px 10px;border-radius:99px;color:var(--text)}
+.helpcard .skeleton{font-size:12.5px;font-family:var(--font-en);color:var(--gold);background:rgba(242,211,137,.08);
+  padding:6px 8px;border-radius:8px;margin-top:5px}
+.helpcard .ref{font-size:12px;font-family:var(--font-en);color:var(--text);background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.14);padding:6px 8px;border-radius:8px;margin-top:5px}
+.helpcard .cand{font-size:12px;color:var(--text);padding:7px 9px;border-radius:8px;margin-top:5px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);display:flex;justify-content:space-between;align-items:center}
+.helpcard .cand .go{color:var(--gold);font-size:10.5px}
+
+/* 结束层 */
+.endcard{position:absolute;left:4%;right:4%;bottom:13%;z-index:14;
+  background:linear-gradient(to top,rgba(10,28,40,.97),rgba(14,38,54,.92));
+  border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:14px;backdrop-filter:blur(14px)}
+.endcard .end-line{font-size:12.5px;color:var(--text);line-height:1.5}
+.endcard .end-en{font-family:var(--font-en);font-size:12px;color:var(--gold);margin-top:6px;font-weight:600}
+.endcard .end-nat{font-size:11px;color:var(--muted);margin-top:6px;padding-top:7px;border-top:1px dashed rgba(255,255,255,.15)}
+.endcard .end-nat b{color:var(--ok);font-weight:600}
+.endcard .end-actions{display:flex;gap:10px;margin-top:10px}
+
+/* 列表页 P8/P9/P10（P8/P9 无返回箭头） */
+.list{position:absolute;inset:0;display:flex;flex-direction:column;padding:44px 14px 84px;overflow:hidden}
+.list h3{font-size:16px;font-weight:700;color:var(--text);margin-bottom:3px}
+.list.with-back h3{padding-left:44px}
+.list .sub2{font-size:11px;color:var(--muted-dim);margin-bottom:12px}
+.list.with-back .sub2{padding-left:44px}
+.card2{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;
+  padding:10px 12px;margin-bottom:8px}
+.card2 .t{font-size:12.5px;color:var(--text);font-weight:600}
+.card2 .d{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.5}
+.card2 .en{font-family:var(--font-en);font-size:11.5px;color:var(--gold);margin-top:3px}
+.tabs{display:flex;gap:6px;margin-bottom:10px}
+.tabs .t{font-size:11.5px;padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.06);color:var(--muted)}
+.tabs .t.on{background:var(--gold);color:#1a2e3c;font-weight:700}
+.setrow{display:flex;justify-content:space-between;align-items:center;padding:10px 2px;border-bottom:1px solid rgba(255,255,255,.07);font-size:12.5px}
+.setrow .k{color:var(--text)}
+.setrow .v{color:var(--muted);font-size:11.5px}
+.switch2{width:36px;height:21px;border-radius:99px;background:rgba(255,255,255,.18);position:relative;flex:0 0 auto}
+.switch2::after{content:"";position:absolute;left:2px;top:2px;width:17px;height:17px;border-radius:50%;background:#fff}
+.switch2.on{background:var(--gold)}
+.switch2.on::after{left:17px;background:#1a2e3c}
+
+/* 状态横幅 */
+.banner{position:absolute;left:4%;right:4%;top:11%;z-index:20;padding:8px 12px;border-radius:10px;
+  font-size:11.5px;display:flex;align-items:center;gap:8px;backdrop-filter:blur(10px)}
+.banner.err{background:var(--danger-bg);border:1px solid rgba(232,160,160,.5);color:#ffd9d9}
+.banner.warn{background:rgba(232,201,138,.15);border:1px solid rgba(232,201,138,.5);color:var(--warn)}
+.banner.info{background:rgba(55,78,98,.6);border:1px solid rgba(255,255,255,.2);color:var(--text)}
+.banner .retry{margin-left:auto;font-size:11px;color:var(--gold);font-weight:700;white-space:nowrap}
+
+/* 加载/空态 */
+.skel{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:rgba(10,28,40,.7)}
+.skel .pulse{width:54px;height:54px;border-radius:50%;background:radial-gradient(circle,rgba(242,211,137,.5),transparent 70%);animation:pulse 2s ease-in-out infinite)}
+@keyframes pulse{0%,100%{opacity:.4;transform:scale(.9)}50%{opacity:1;transform:scale(1.1)}}
+.skel .sk-txt{font-size:11.5px;color:var(--muted)}
+.empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:0 28px;text-align:center}
+.empty .eicon{width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.06);display:grid;place-items:center;font-size:22px;color:var(--muted-dim)}
+.empty .et{font-size:13.5px;color:var(--text);font-weight:600}
+.empty .ed{font-size:11px;color:var(--muted-dim);line-height:1.6}
+
+/* 触摸热区微光 */
+.hotspot{position:absolute;width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(242,211,137,.5);
+  background:radial-gradient(circle,rgba(242,211,137,.25),transparent 70%);animation:ripple 2s ease-out infinite}
+@keyframes ripple{0%{transform:scale(.7);opacity:.8}100%{transform:scale(1.4);opacity:0}}
+
+/* token 展示 */
+.tokens{display:flex;flex-wrap:wrap;gap:14px}
+.token{width:110px}
+.token .sw{width:100%;height:56px;border-radius:10px;border:1px solid rgba(255,255,255,.15)}
+.token .nm{font-size:11px;color:var(--text);margin-top:6px;font-weight:600}
+.token .vl{font-size:10px;color:var(--muted);font-family:var(--font-en)}
+.touchdemo{display:flex;gap:14px;align-items:center;margin-top:10px}
+.touchdemo .box{width:44px;height:44px;border:1.5px dashed var(--gold);border-radius:10px;display:grid;place-items:center;font-size:10px;color:var(--gold)}
+
+.prefbar{position:relative;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;padding:12px 14px;margin-bottom:12px;font-size:12px;color:var(--muted);line-height:1.7}
+.prefbar b{color:var(--gold)}
+
+@media (prefers-reduced-motion: reduce){
+  .wave i,.hotspot,.skel .pulse{animation:none!important}
+}
+</style>
+</head>
+<body>
+<div class="gallery">
+  <nav class="sidebar">
+    <h1>Morrow P4-T06-04</h1>
+    <div class="sub">第一章关键页面与组件规范画廊<br>手机画布严格 1536×2752<br>画廊外框 300×537</div>
+    <a class="grp">设计系统</a>
+    <a href="#tokens">Token / 组件 / 触控</a>
+    <a class="grp">P1-P10 页面</a>
+    <a href="#p1">P1 初次进入</a>
+    <a href="#p2">P2 初次相遇流程</a>
+    <a href="#p3">P3 陪伴首页（多状态）</a>
+    <a href="#p4">P4 情境互动</a>
+    <a href="#p5">P5 快速表达/录音/ASR</a>
+    <a href="#p6">P6 逐级帮助/候选意思</a>
+    <a href="#p7">P7 互动结束</a>
+    <a href="#p8">P8 成长</a>
+    <a href="#p9">P9 词语回声</a>
+    <a href="#p10">P10 设置与隐私</a>
+    <a class="grp">横切状态</a>
+    <a href="#cross">有声/静音/reduced motion</a>
+    <a href="#assets">Morrow 素材清单索引</a>
+  </nav>
+
+  <main class="main">
+
+  <h2 id="tokens">0. 设计系统 Token 与组件基线</h2>
+  <div class="desc">冷蓝磨砂 + 暖金强调 + 成人克制感。手机画布严格 = 源底图 1536×2752（w/h 0.5581）；底图完整等比不裁切，UI 叠加其上。所有可点击命中区 ≥ 44×44 CSS px。</div>
+  <div class="tokens">
+    <div class="token"><div class="sw" style="background:#F2D389"></div><div class="nm">暖金强调</div><div class="vl">#F2D389</div></div>
+    <div class="token"><div class="sw" style="background:#F5F7FA"></div><div class="nm">冷白正文</div><div class="vl">#F5F7FA</div></div>
+    <div class="token"><div class="sw" style="background:#C8D7E0"></div><div class="nm">低亮灰蓝</div><div class="vl">#C8D7E0</div></div>
+    <div class="token"><div class="sw" style="background:#081B28"></div><div class="nm">深蓝黑导航</div><div class="vl">#081B28 ~92%</div></div>
+    <div class="token"><div class="sw" style="background:rgba(55,78,98,.6)"></div><div class="nm">冷蓝灰浮层</div><div class="vl">#374E62→#718DA3</div></div>
+    <div class="token"><div class="sw" style="background:rgba(210,224,232,.82)"></div><div class="nm">英文台词气泡</div><div class="vl">~82% 磨砂</div></div>
+    <div class="token"><div class="sw" style="background:rgba(180,80,80,.6)"></div><div class="nm">错误/危险</div><div class="vl">#E8A0A0</div></div>
+    <div class="token"><div class="sw" style="background:rgba(159,211,182,.6)"></div><div class="nm">成功/自然表达</div><div class="vl">#9FD3B6</div></div>
+  </div>
+  <div style="margin-top:22px">
+    <div style="font-size:13px;color:var(--text);font-weight:700;margin-bottom:8px">最小触控区 44×44 CSS px</div>
+    <div class="touchdemo">
+      <div class="box">44×44</div>
+      <div style="font-size:11.5px;color:var(--muted);max-width:380px">设置（白色线性图标）、播放、麦克风、发送、查看中文、导航项、P10 返回 chevron、P4 暂停文字——命中区全部 ≥44×44，视觉图标可更小。</div>
+    </div>
+  </div>
+
+  <!-- P1 -->
+  <h2 id="p1">P1 初次进入与中文欢迎</h2>
+  <div class="desc">新用户第一屏，不注册、不问卷。暗房间 + 呼吸金光点；Morrow 不完整现身。</div>
+  <div class="grid">
+    <div class="phone">
+      <span class="tag">P1 正常</span>
+      <div class="plain"></div>
+      <div class="statusbar"><span>9:41</span><span class="right"><span class="dot"></span><div class="batt"></div></span></div>
+      <div style="position:absolute;top:30%;left:0;right:0;text-align:center">
+        <div style="width:70px;height:70px;margin:0 auto;border-radius:50%;background:radial-gradient(circle,rgba(242,211,137,.35),transparent 70%);animation:pulse 3.6s ease-in-out infinite"></div>
+        <div style="font-size:12.5px;color:var(--muted);margin-top:16px">房间里有一个微弱的声音。</div>
+      </div>
+      <div class="actions" style="bottom:14%;flex-direction:column;gap:10px">
+        <div class="btn primary">听听看</div>
+        <div class="btn secondary">先看文字</div>
+      </div>
+      <div style="position:absolute;bottom:5%;left:0;right:0;text-align:center;font-size:10.5px;color:var(--muted-dim)">可以先体验，需要跨设备保存时再绑定账号</div>
+      <div class="homebar"></div>
+      <div class="label">P1-a 正常</div>
+    </div>
+    <div class="phone">
+      <span class="tag">P1 加载</span>
+      <div class="room dimmer"></div>
+      <div class="statusbar"><span>9:41</span><span class="right"><span class="dot"></span><div class="batt"></div></span></div>
+      <div class="skel" style="background:transparent"><div class="pulse"></div><div class="sk-txt">房间轮廓正在淡入…</div></div>
+      <div class="homebar"></div>
+      <div class="label">P1-b 加载</div>
+    </div>
+  </div>
+
+  <!-- P2 -->
+  <h2 id="p2">P2 第一次看见 Morrow（连续流程）</h2>
+  <div class="desc">Morrow 苏醒→自我介绍→第一次表达→三件模糊轮廓（灯/植物/铃铛，全显示）。无底部导航。</div>
+  <div class="grid">
+    <div class="phone">
+      <span class="tag">P2 苏醒</span>
+      <div class="room dim"></div>
+      <div class="statusbar"><span>9:41</span><span class="right"><span class="dot"></span><div class="batt"></div></span></div>
+      <div class="ui pill state" style="left:4%;top:8%">刚刚醒来</div>
+      <div class="bubble tail-down" style="top:16%">
+        <div class="en">Hello? I can hear someone beyond the room.</div>
+        <div class="ctl"><span class="play"></span><span class="listen">重听</span><button class="cn">查看中文</button></div>
+      </div>
+      <div class="actions" style="bottom:14%"><div class="btn primary">继续</div><div class="btn secondary">先看文字</div></div>
+      <div class="label">P2-a 苏醒第一句</div>
+    </div>
+    <div class="phone">
+      <span class="tag">P2 三件物品</span>
+      <div class="room"></div>
+      <div class="statusbar"><span>9:41</span><span class="right"><span class="dot"></span><div class="batt"></div></span></div>
+      <div class="ui pill state" style="left:4%;top:8%">房间记得三样东西</div>
+      <div class="bubble tail-down" style="top:15%;width:60%">
+        <div class="en">A lamp, a plant, and a small bell.</div>
+        <div class="ctl"><button class="cn">查看中文</button></div>
+      </div>
+      <div class="hotspot" style="left:6%;top:46%"></div>
+      <div class="hotspot" style="left:14%;top:64%"></div>
+      <div class="hotspot" style="right:6%;top:70%"></div>
+      <div style="position:absolute;bottom:6%;left:0;right:0;text-align:center;font-size:11px;color:var(--gold)">点一点你想先看清的那样东西</div>
+      <div class="label">P2-b 灯/绿植/铃铛三件全显示</div>
+    </div>
+    <div class="phone">
+      <span class="tag">P2 自我介绍</span>
+      <div class="room"></div>
+      <div class="statusbar"><span>9:41</span><span class="right"><span class="dot"></span><div class="batt"></div></span></div>
+      <div class="ui pill state" style="left:4%;top:8%">正在认识你</div>
+      <div class="bubble tail-down" style="top:16%">
+        <div class="en">I'm Morrow. What should we do first?</div>
+        <div class="ctl"><span class="play"></span><span class="listen">重听</span><span class="speed">0.8×</span><button class="cn">查看中文</button></div>
+      </div>
+      <div class="actions" style="bottom:14%">
+        <div class="btn secondary">告诉 Morrow 我的称呼</div>
+        <div class="btn ghost">跳过</div>
+      </div>
+      <div class="label">P2-c 自我介绍</div>
+    </div>
+  </div>
+
+  <!-- P3 -->
+  <h2 id="p3">P3 陪伴首页（至少两种动态生活状态）</h2>
+  <div class="desc">同一底图完整显示（灯/绿植/铃铛/信封全露），只切 UI 层。主动邀请气泡严格对照确认稿。</div>
+  <div class="grid">
+    <div class="phone">
+      <span class="tag">P3 主动邀请</span>
+      <div class="room"></div>
+      <div class="statusbar"><span>9:44</span><span class="right"><span class="dot"></span><span class="dot"></span><div class="batt"></div></span></div>
+      <div class="ui pill state">正在听窗边的声音</div>
+      <div class="ui gear"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+      <div class="bubble tail-down">
+        <div class="en">I hear something<br>near the window.</div>
+        <div class="ctl"><span class="play"></span><span class="listen">重听</span><button class="cn">查看中文</button></div>
+      </div>
+      <div class="actions"><div class="btn primary">和我一起听听</div><div class="btn secondary">稍后再说</div></div>
+      <nav class="nav"><div class="active">陪伴</div><div>成长</div><div>词语回声</div></nav>
+      <div class="homebar"></div>
+      <div class="label">P3-a 主动邀请（对照确认稿）</div>
+    </div>
+
+    <div class="phone">
+      <span class="tag">P3 首次探索</span>
+      <div class="room"></div>
+      <div class="statusbar"><span>9:44</span><span class="right"><span class="dot"></span><div class="batt"></div></span></div>
+      <div class="ui pill state">正在观察房间</div>
+      <div class="ui gear"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+      <div class="tip">可以点点 Morrow 或房间里的东西试试看。</div>
+      <nav class="nav"><div class="active">陪伴</div><div>成长</div><div>词语回声</div></nav>
+      <div class="homebar"></div>
+      <div class="label">P3-b 首次探索引导</div>
+    </div>
+
+    <div class="phone">
+      <span class="tag">P3 普通自由陪伴</span>
+      <div class="room"></div>
+      <div class="statusbar"><span>9:44</span><span class="right"><span class="dot"></span><div class="batt"></div></span></div>
+      <div class="ui pill state">正在安静陪伴</div>
+      <div class="ui gear"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+      <div class="actions" style="bottom:15%;justify-content:center">
+        <div class="btn primary" style="max-width:180px">和 Morrow 说话</div>
+      </div>
+      <nav class="nav"><div class="active">陪伴</div><div>成长</div><div>词语回声</div></nav>
+      <div class="homebar"></div>
+      <div class="label">P3-c 普通自由陪伴</div>
+    </div>
+
+    <div class="phone">
+      <span class="tag">P3 离线</span>
+      <div class="room"></div>
+      <div class="statusbar"><span>9:44</span><span class="right" style="opacity:.5"><span class="dot"></span><div class="batt"></div></span></div>
+      <div class="ui pill state">正在安静陪伴</div>
+      <div class="banner warn">连接暂时中断，房间与 Morrow 还在。文字草稿会留在本地。</div>
+      <nav class="nav"><div class="active">陪伴</div><div>成长</div><div>词语回声</div></nav>
+      <div class="homebar"></div>
+      <div class="label">P3-d 离线</div>
+    </div>
+  </div>
+
+  <!-- P4 -->
+  <h2 id="p4">P4 情境互动页（S0–S8 状态机）</h2>
+  <div class="desc">隐藏底部导航，左上不使用通用返回箭头，改「暂停」文字动作。覆盖邀请/听懂/歧义/没听懂/候选/暂停。</div>
+  <div class="grid">
+    <div class="phone">
+      <span class="tag">P4 S2 邀请</span>
+      <div class="room"></div>
+      <div class="statusbar"><span>9:45</span><span class="right"><span class="dot"></span><div class="batt"></div></span></div>
+      <div class="ui pill state" style="left:4%;top:8%">窗边</div>
+      <div class="ui" style="right:4%;top:8%;min-width:44px;min-height:44px;display:flex;align-items:center;padding:0 8px;font-size:12.5px;color:#fff">暂停</div>
+      <div class="bubble tail-down" style="top:16%;width:62%">
+        <div class="en">Did you hear it too?<br>What was it like?</div>
+        <div class="ctl"><span class="play"></span><span class="listen">重听</span><span class="speed">0.6×</span><button class="cn">查看中文</button></div>
+      </div>
+      <div class="sheet" style="padding-top:8px">
+        <div class="inputrow">
+          <div class="field">打字或按住麦克风告诉 Morrow…</div>
+          <div class="mic"><svg viewBox="0 0 24 24"><path d="M12 3a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div>
+        </div>
+        <div class="chips-title" style="color:var(--gold)">给我一点帮助 ▾</div>
+      </div>
+      <div class="label">P4-a S2 邀请（右上暂停文字）</div>
+    </div>
+
+    <div class="phone">
+      <span class="tag">P4 S5 听懂</span>
+      <div class="room"></div>
+      <div class="statusbar"><span>9:45</span><span class="right"><span class="dot"></span><div class="batt"></div></span></div>
+      <div class="ui pill state" style="left:4%;top:8%">明白了</div>
+      <div class="ui" style="right:4%;top:8%;min-width:44px;min-height:44px;display:flex;align-items:center;padding:0 8px;font-size:12.5px;color:#fff">暂停</div>
+      <div class="bubble tail-down" style="top:16%">
+        <div class="en">Near the window. Let's go.</div>
+        <div class="ctl"><span class="play"></span><span class="listen">重听</span><button class="cn">查看中文</button></div>
+      </div>
+      <div style="position:absolute;bottom:18%;left:0;right:0;text-align:center;font-size:11.5px;color:var(--gold)">✓ Morrow 正按你的意思走过去</div>
+      <div class="label">P4-b S5 听懂</div>
+    </div>
+
+    <div class="phone">
+      <span class="tag">P4 S4b 歧义</span>
+      <div class="room"></div>
+      <div class="statusbar"><span>9:45</span><span class="right"><span class="dot"></span><div class="batt"></div></span></div>
+      <div class="ui pill state" style="left:4%;top:8%">我可能听错了</div>
+      <div class="ui" style="right:4%;top:8%;min-width:44px;min-height:44px;display:flex;align-items:center;padding:0 8px;font-size:12.5px;color:#fff">暂停</div>
+      <div class="bubble tail-down" style="top:16%">
+        <div class="en">Did you mean the bell, or the lamp?</div>
+        <div class="ctl"><button class="cn">查看中文</button></div>
+      </div>
+      <div class="sheet" style="padding-top:8px">
+        <div class="inputrow"><div class="field typed">I hear a sound near…</div>
+        <div class="mic"><svg viewBox="0 0 24 24"><path d="M12 3a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div></div>
+      </div>
+      <div class="label">P4-c S4b 歧义</div>
+    </div>
+
+    <div class="phone">
+      <span class="tag">P4 S4c 没听懂</span>
+      <div class="room"></div>
+      <div class="statusbar"><span>9:45</span><span class="right"><span class="dot"></span><div class="batt"></div></span></div>
+      <div class="ui pill state" style="left:4%;top:8%">没跟上</div>
+      <div class="ui" style="right:4%;top:8%;min-width:44px;min-height:44px;display:flex;align-items:center;padding:0 8px;font-size:12.5px;color:#fff">暂停</div>
+      <div class="bubble tail-down" style="top:16%">
+        <div class="en">I hear the words, but not the meaning.</div>
+        <div class="ctl"><button class="cn">查看中文</button></div>
+      </div>
+      <div class="sheet" style="padding-top:8px">
+        <div style="font-size:11px;color:var(--warn);margin-bottom:6px">没听懂意思，可以重新说、打字，或点下面帮你一下</div>
+        <div class="inputrow"><div class="field">重新说一次，或改简单一点…</div>
+        <div class="mic"><svg viewBox="0 0 24 24"><path d="M12 3a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div></div>
+      </div>
+      <div class="label">P4-d S4c 没听懂</div>
+    </div>
+
+    <div class="phone">
+      <span class="tag">P4 S4d 候选意思</span>
+      <div class="room dim"></div>
+      <div class="statusbar"><span>9:45</span><span class="right"><span class="dot"></span><div class="batt"></div></span></div>
+      <div class="ui pill state" style="left:4%;top:8%">帮我一下</div>
+      <div class="ui" style="right:4%;top:8%;min-width:44px;min-height:44px;display:flex;align-items:center;padding:0 8px;font-size:12.5px;color:#fff">暂停</div>
+      <div class="helpcard">
+        <div class="h-title">你是想说哪一个？</div>
+        <div class="cand">声音像铃铛<span class="go">选它 ›</span></div>
+        <div class="cand">再听一次<span class="go">选它 ›</span></div>
+        <div class="cand">走近窗边看看<span class="go">选它 ›</span></div>
+      </div>
+      <div class="label">P4-e S4d 候选意思</div>
+    </div>
+  </div>
+
+  <!-- P5 -->
+  <h2 id="p5">P5 快速表达 / 录音 / ASR 确认层</h2>
+  <div class="desc">底部上拉层。文字始终可用；ASR 必须确认后才发送。覆盖正常/录音/待确认/低置信/麦克风拒绝/无结果。</div>
+  <div class="grid">
+    <div class="phone">
+      <span class="tag">P5 正常输入</span>
+      <div class="room"></div>
+      <div class="statusbar"><span>9:46</span><span class="right"><span class="dot"></span><div class="batt"></div></span></div>
+      <div class="ui pill state" style="left:4%;top:8%">正在安静陪伴</div>
+      <div class="sheet">
+        <div class="grip"></div>
+        <div class="inputrow">
+          <div class="field typed">I hear a soft sound by the window.</div>
+          <div class="mic"><svg viewBox="0 0 24 24"><path d="M12 3a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div>
+          <button class="send">发送</button>
+        </div>
+        <div class="chips-title">查看简单表达 ▾</div>
+      </div>
+      <div class="label">P5-a 文字输入</div>
+    </div>
+
+    <div class="phone">
+      <span class="tag">P5 录音中</span>
+      <div class="room"></div>
+      <div class="statusbar"><span>9:46</span><span class="right"><span class="dot"></span><div class="batt"></div></span></div>
+      <div class="ui pill state" style="left:4%;top:8%">正在听你说</div>
+      <div class="sheet">
+        <div class="grip"></div>
+        <div style="text-align:center;font-size:11.5px;color:var(--muted);margin-bottom:2px">正在听… 松开发送</div>
+        <div class="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="inputrow"><div class="field" style="justify-content:center;color:var(--gold)">按住说话</div></div>
+      </div>
+      <div class="label">P5-b 录音中</div>
+    </div>
+
+    <div class="phone">
+      <span class="tag">P5 ASR 低置信</span>
+      <div class="room"></div>
+      <div class="statusbar"><span>9:46</span><span class="right"><span class="dot"></span><div class="batt"></div></span></div>
+      <div class="ui pill state" style="left:4%;top:8%">可能没听准</div>
+      <div class="sheet">
+        <div class="grip"></div>
+        <div class="asr lowconf">
+          <div class="asr-text">I here a soft… <span style="color:var(--warn)">?</span></div>
+          <div class="asr-hint">我不确定是否听对了，请先检查并修改转写文字</div>
+        </div>
+        <div class="inputrow" style="margin-top:8px">
+          <div class="field typed">I here a soft…</div>
+          <button class="send">发送</button>
+        </div>
+      </div>
+      <div class="label">P5-c ASR 低置信</div>
+    </div>
+
+    <div class="phone">
+      <span class="tag">P5 麦克风拒绝</span>
+      <div class="room"></div>
+      <div class="statusbar"><span>9:46</span><span class="right"><span class="dot"></span><div class="batt"></div></span></div>
+      <div class="ui pill state" style="left:4%;top:8%">可以打字继续</div>
+      <div class="banner err">麦克风权限未开启。你可以打字继续。</div>
+      <div class="sheet">
+        <div class="grip"></div>
+        <div class="inputrow">
+          <div class="field">打字告诉 Morrow…</div>
+          <div class="mic" style="opacity:.35"><svg viewBox="0 0 24 24"><path d="M12 3a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div>
+        </div>
+      </div>
+      <div class="label">P5-d 麦克风拒绝</div>
+    </div>
+  </div>
+
+  <!-- P6 -->
+  <h2 id="p6">P6 逐级帮助与候选意思</h2>
+  <div class="desc">场景区内折叠展开器。四级：关键词→句型骨架→可编辑参考句→候选意思。</div>
+  <div class="grid">
+    <div class="phone">
+      <span class="tag">P6 L1 关键词</span>
+      <div class="room"></div>
+      <div class="statusbar"><span>9:47</span><span class="right"><span class="dot"></span><div class="batt"></div></span></div>
+      <div class="ui pill state" style="left:4%;top:8%">一点点提示</div>
+      <div class="helpcard">
+        <div class="h-title">关键词</div>
+        <div class="kw"><span>sound</span><span>window</span><span>bell</span><span>listen</span></div>
+      </div>
+      <div class="label">P6-a L1</div>
+    </div>
+    <div class="phone">
+      <span class="tag">P6 L2 骨架</span>
+      <div class="room"></div>
+      <div class="statusbar"><span>9:47</span><span class="right"><span class="dot"></span><div class="batt"></div></span></div>
+      <div class="ui pill state" style="left:4%;top:8%">换个说法</div>
+      <div class="helpcard">
+        <div class="h-title">句型骨架</div>
+        <div class="skeleton">I hear ___ .</div>
+        <div class="skeleton">The sound is ___ .</div>
+      </div>
+      <div class="label">P6-b L2</div>
+    </div>
+    <div class="phone">
+      <span class="tag">P6 L4 候选</span>
+      <div class="room dim"></div>
+      <div class="statusbar"><span>9:47</span><span class="right"><span class="dot"></span><div class="batt"></div></span></div>
+      <div class="ui pill state" style="left:4%;top:8%">帮我一下</div>
+      <div class="helpcard">
+        <div class="h-title">你是想说哪一个？</div>
+        <div class="cand">声音像铃铛<span class="go">选它 ›</span></div>
+        <div class="cand">再听一次<span class="go">选它 ›</span></div>
+        <div class="cand">走近窗边<span class="go">选它 ›</span></div>
+      </div>
+      <div class="label">P6-c L4 候选意思</div>
+    </div>
+  </div>
+
+  <!-- P7 -->
+  <h2 id="p7">P7 互动结束层</h2>
+  <div class="desc">底部上拉总结：Morrow 结束回应→房间变化→用户成功表达→一条更自然表达→回到房间。无分数。</div>
+  <div class="grid">
+    <div class="phone">
+      <span class="tag">P7 结束</span>
+      <div class="room"></div>
+      <div class="statusbar"><span>9:48</span><span class="right"><span class="dot"></span><div class="batt"></div></span></div>
+      <div class="ui pill state" style="left:4%;top:8%">这次一起做了什么</div>
+      <div class="endcard">
+        <div class="end-line">Morrow 第一次走近了窗边，铃铛也清楚了一些。</div>
+        <div class="end-en">You said: I hear a soft sound by the window.</div>
+        <div class="end-nat">更自然：<b>It sounds like a small bell by the window.</b></div>
+        <div class="end-actions">
+          <div class="btn primary">回到房间</div>
+          <div class="btn secondary">再听一次</div>
+        </div>
+      </div>
+      <div class="label">P7-a 结束总结</div>
+    </div>
+  </div>
+
+  <!-- P8 -->
+  <h2 id="p8">P8 成长页（只回看已发生）</h2>
+  <div class="desc">无进度条、无百分比。<b>无返回箭头</b>（已有底部导航）。覆盖正常/空/加载/失败。</div>
+  <div class="grid">
+    <div class="phone">
+      <span class="tag">P8 正常</span>
+      <div class="plain"></div>
+      <div class="statusbar"><span>9:49</span><span class="right"><span class="dot"></span><div class="batt"></div></span></div>
+      <div class="list">
+        <h3>成长</h3>
+        <div class="sub2">只记录已经发生的变化</div>
+        <div class="card2"><div class="t">Morrow 第一次走近了窗边</div><div class="d">从醒来时的角落，走到窗边一起听声音。</div></div>
+        <div class="card2"><div class="t">房间里恢复了一盏灯</div><div class="d">灯从模糊轮廓变清晰，房间暖了一点。</div></div>
+        <div class="card2"><div class="t">Morrow 说话更完整了</div><div class="d">比刚醒来时愿意主动分享。</div></div>
+      </div>
+      <nav class="nav"><div>陪伴</div><div class="active">成长</div><div>词语回声</div></nav>
+      <div class="homebar"></div>
+      <div class="label">P8-a 成长回顾（无返回箭头）</div>
+    </div>
+    <div class="phone">
+      <span class="tag">P8 空态</span>
+      <div class="plain"></div>
+      <div class="statusbar"><span>9:49</span><span class="right"><span class="dot"></span><div class="batt"></div></span></div>
+      <div class="empty">
+        <div class="eicon">✦</div>
+        <div class="et">还没有成长变化</div>
+        <div class="ed">和 Morrow 经历一些小事后，这里会慢慢出现你们的痕迹。</div>
+      </div>
+      <nav class="nav"><div>陪伴</div><div class="active">成长</div><div>词语回声</div></nav>
+      <div class="homebar"></div>
+      <div class="label">P8-b 空态</div>
+    </div>
+    <div class="phone">
+      <span class="tag">P8 失败重试</span>
+      <div class="plain"></div>
+      <div class="statusbar"><span>9:49</span><span class="right"><span class="dot"></span><div class="batt"></div></span></div>
+      <div class="banner err">成长记录暂时没加载出来<span class="retry">重试</span></div>
+      <nav class="nav"><div>陪伴</div><div class="active">成长</div><div>词语回声</div></nav>
+      <div class="homebar"></div>
+      <div class="label">P8-c 失败+重试</div>
+    </div>
+  </div>
+
+  <!-- P9 -->
+  <h2 id="p9">P9 词语回声页</h2>
+  <div class="desc">三分类。<b>无返回箭头</b>（已有底部导航）。不展示未学、正确率。</div>
+  <div class="grid">
+    <div class="phone">
+      <span class="tag">P9 正常</span>
+      <div class="plain"></div>
+      <div class="statusbar"><span>9:50</span><span class="right"><span class="dot"></span><div class="batt"></div></span></div>
+      <div class="list">
+        <h3>词语回声</h3>
+        <div class="sub2">你已经在真实互动里遇见过的词和句子</div>
+        <div class="tabs"><div class="t on">最近遇见</div><div class="t">还想再用</div><div class="t">已经很熟</div></div>
+        <div class="card2"><div class="en">hear / a sound</div><div class="d">刚才在窗边一起听到的声音</div></div>
+        <div class="card2"><div class="en">by the window</div><div class="d">Morrow 第一次走近窗边时说的</div></div>
+        <div class="card2"><div class="en">soft</div><div class="d">你形容那个声音时用的词</div></div>
+      </div>
+      <nav class="nav"><div>陪伴</div><div>成长</div><div class="active">词语回声</div></nav>
+      <div class="homebar"></div>
+      <div class="label">P9-a 词条（无返回箭头）</div>
+    </div>
+    <div class="phone">
+      <span class="tag">P9 空态</span>
+      <div class="plain"></div>
+      <div class="statusbar"><span>9:50</span><span class="right"><span class="dot"></span><div class="batt"></div></span></div>
+      <div class="empty">
+        <div class="eicon">❝</div>
+        <div class="et">还没有遇见的词</div>
+        <div class="ed">你和 Morrow 说过的话，会慢慢在这里留下回声。</div>
+      </div>
+      <nav class="nav"><div>陪伴</div><div>成长</div><div class="active">词语回声</div></nav>
+      <div class="homebar"></div>
+      <div class="label">P9-b 空态</div>
+    </div>
+  </div>
+
+  <!-- P10 -->
+  <h2 id="p10">P10 设置与隐私</h2>
+  <div class="desc">唯一返回：左 chevron 线性图标，无背景/边框/磨砂，透明命中区 ≥44。</div>
+  <div class="grid">
+    <div class="phone">
+      <span class="tag">P10 正常</span>
+      <div class="plain"></div>
+      <div class="statusbar"><span>9:51</span><span class="right"><span class="dot"></span><div class="batt"></div></span></div>
+      <div class="ui back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></div>
+      <div class="list with-back" style="padding-top:44px">
+        <h3>设置与隐私</h3>
+        <div class="sub2">Morrow 是 AI 角色，不是真人</div>
+        <div style="font-size:10.5px;color:var(--gold);font-weight:700;margin:8px 0 2px;letter-spacing:.5px">体验</div>
+        <div class="setrow"><span class="k">默认语速</span><span class="v">1.0× ›</span></div>
+        <div class="setrow"><span class="k">英文字幕</span><div class="switch2 on"></div></div>
+        <div class="setrow"><span class="k">查看中文译文</span><div class="switch2 on"></div></div>
+        <div class="setrow"><span class="k">默认输入方式</span><span class="v">文字/语音 ›</span></div>
+        <div class="setrow"><span class="k">声音</span><div class="switch2 on"></div></div>
+        <div style="font-size:10.5px;color:var(--gold);font-weight:700;margin:10px 0 2px;letter-spacing:.5px">记忆与数据</div>
+        <div class="setrow"><span class="k">自动记住非敏感互动</span><div class="switch2 on"></div></div>
+        <div class="setrow"><span class="k">原始录音</span><span class="v">用完即删 ›</span></div>
+        <div class="setrow" style="color:var(--danger)"><span class="k" style="color:var(--danger)">清空全部数据</span></div>
+        <div style="font-size:10.5px;color:var(--gold);font-weight:700;margin:10px 0 2px;letter-spacing:.5px">关于</div>
+        <div class="setrow"><span class="k">隐私说明与用户协议</span><span class="v">›</span></div>
+        <div class="setrow"><span class="k">问题反馈</span><span class="v">›</span></div>
+      </div>
+      <div class="label">P10-a 唯一透明 chevron 返回</div>
+    </div>
+  </div>
+
+  <h2 id="cross">横切状态：有声 / 静音 / reduced motion</h2>
+  <div class="prefbar">
+    <b>有声：</b>环境声 25–30% + Morrow 语音 + 动作音效。<br>
+    <b>静音：</b>所有听觉信息视觉化——铃铛响→波纹+中文描述；Morrow 语音→字幕+查看中文+重听仍可用，听力证据不虚构。<br>
+    <b>reduced motion：</b>取消位移与循环，只留淡变与单次光晕；声波/涟漪/呼吸光点动画关闭。
+  </div>
+
+  <h2 id="assets">Morrow 素材清单索引</h2>
+  <div class="desc">完整清单见《规范文档.md》。底图完整等比显示，灯/绿植/铃铛/信封全可见；UI 全部可编辑叠加。</div>
+  <div class="grid">
+    <div class="phone" style="width:270px">
+      <div class="list" style="padding:16px">
+        <div class="card2"><div class="t">动作 12 项</div><div class="d">呼吸/看用户/看物品/耳听/尾巴光/听懂/没听懂/安静/结束/走向/物品清晰/碎片聚拢</div></div>
+        <div class="card2"><div class="t">表情 / 光效</div><div class="d">好奇/温柔/疑惑/放松；尾巴暖金/月牙/耳尖/物品环/涟漪</div></div>
+      </div>
+      <div class="label">动作/表情/光效</div>
+    </div>
+    <div class="phone" style="width:270px">
+      <div class="list" style="padding:16px">
+        <div class="card2"><div class="t">声音</div><div class="d">room_wind_low_v1 / ear_turn_soft_v1 / bell_low_once_v1 / morrow_voice_v1</div></div>
+        <div class="card2"><div class="t">房间（底图内不可改）</div><div class="d">窗/森林小路/墙灯/绿植/信封/铃铛/家具/Morrow 姿态光影</div></div>
+      </div>
+      <div class="label">声音/房间/UI</div>
+    </div>
+  </div>
+
+  <p style="margin-top:60px;font-size:11px;color:var(--muted-dim);text-align:center">
+    P4-T06-04 · 手机画布 1536×2752 · 底图完整等比无裁切 · UI 可编辑
+  </p>
+  </main>
+</div>
+</body>
+</html>

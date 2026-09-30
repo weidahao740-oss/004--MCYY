@@ -47,7 +47,7 @@ export const sessionResponseSchema = z.object({
   user: publicUserSchema,
   settings: userSettingsSchema,
   pet: petSummarySchema,
-  persistence: z.enum(['memory', 'postgresql']),
+  persistence: z.enum(['memory', 'sqlite', 'postgresql']),
 })
 
 export const meResponseSchema = sessionResponseSchema.omit({ token: true })

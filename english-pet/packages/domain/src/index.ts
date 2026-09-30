@@ -1,5 +1,12 @@
 export { eventsV1, getEventDefinition } from './events-v1'
 export { fixedContentV1, getFixedContentEvent } from './fixed-content-v1'
+export { previewFixedContentIntent } from './intent-matcher'
+export type {
+  IntentMatcherCandidate,
+  IntentMatcherInput,
+  IntentMatcherRequest,
+  IntentMatcherResult,
+} from './intent-matcher'
 export {
   getProductionAudioBinding,
   listProductionAudioBindings,

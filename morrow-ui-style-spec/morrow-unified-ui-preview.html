@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Morrow统一UI规范预览</title>
+<style>
+:root{
+  --glass:rgba(222,235,241,.72);
+  --glass-border:rgba(255,255,255,.68);
+  --dark-glass:rgba(14,31,42,.72);
+  --nav:rgba(13,30,41,.88);
+  --gold:#f5d68b;
+  --text:#eaf7ff;
+  --muted:rgba(205,222,230,.78);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#0b2230;color:var(--text);font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif}
+body{display:flex;justify-content:center;padding:24px 12px;background:radial-gradient(circle at 70% 0%,#244b5d 0,#0b2230 48%,#07161f 100%)}
+.phone{position:relative;width:min(390px,96vw);aspect-ratio:390/844;border-radius:38px;overflow:hidden;background:#102b3a;box-shadow:0 24px 80px rgba(0,0,0,.45);isolation:isolate}
+.scene{position:absolute;inset:0;background:url('file:///C:/004-MCYY/视觉设计/Morrow固定房间小图预览-V5-核心形象校正版.png') center/cover no-repeat;filter:saturate(.96)}
+.scene::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(6,20,30,.18),transparent 32%,transparent 72%,rgba(6,20,30,.36));pointer-events:none}
+.statusbar{position:absolute;z-index:6;top:0;left:0;right:0;height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font:700 18px/1 -apple-system,Segoe UI,sans-serif;color:#fff;letter-spacing:.2px}
+.signal{display:flex;gap:3px;align-items:end}.signal i{width:3px;border-radius:2px;background:#fff}.signal i:nth-child(1){height:7px}.signal i:nth-child(2){height:10px}.signal i:nth-child(3){height:14px}.signal i:nth-child(4){height:18px}.battery{width:27px;height:14px;border:2px solid #fff;border-radius:4px;position:relative;margin-left:6px}.battery::after{content:"";position:absolute;right:-5px;top:3px;width:2px;height:6px;background:#fff}.battery::before{content:"";position:absolute;left:2px;top:2px;bottom:2px;width:18px;background:#fff;border-radius:1px}.wifi{width:17px;height:13px;margin-right:4px;position:relative}.wifi::before{content:"";position:absolute;left:0;top:0;width:17px;height:17px;border:2px solid #fff;border-color:#fff transparent transparent #fff;transform:rotate(45deg);border-radius:50%}.wifi::after{content:"";position:absolute;width:4px;height:4px;background:#fff;border-radius:50%;left:6px;bottom:0}
+.ui{position:absolute;z-index:5}
+.pill{
+  border-radius:999px;
+  border:1.5px solid rgba(255,255,255,.58);
+  background:linear-gradient(135deg,rgba(255,239,196,.38) 0%,rgba(178,213,223,.20) 46%,rgba(255,255,255,.10) 100%);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  box-shadow:0 8px 28px rgba(3,18,28,.20),inset 0 1px 0 rgba(255,255,255,.35),inset 0 0 0 1px rgba(255,255,255,.08);
+}
+.state{left:18px;top:64px;height:54px;min-width:190px;padding:0 28px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.25)}
+.gear{right:18px;top:64px;width:54px;height:54px;border-radius:18px;display:grid;place-items:center;color:#fff;background:rgba(17,38,50,.48);border:1.5px solid rgba(255,255,255,.55);backdrop-filter:blur(10px);box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
+.gear svg{width:28px;height:28px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.bubble{position:absolute;top:135px;right:18px;width:322px;min-height:156px;padding:20px 22px 15px;border-radius:30px;background:var(--glass);border:2px solid var(--glass-border);backdrop-filter:blur(14px) saturate(1.15);-webkit-backdrop-filter:blur(14px) saturate(1.15);box-shadow:0 16px 45px rgba(8,28,42,.20),inset 0 1px 0 rgba(255,255,255,.72);color:#162d3d}
+.bubble::before{content:"";position:absolute;left:72px;bottom:-23px;width:42px;height:42px;background:linear-gradient(135deg,rgba(222,235,241,.72),rgba(222,235,241,.52));border-right:2px solid var(--glass-border);border-bottom:2px solid var(--glass-border);transform:rotate(45deg) skew(-8deg);clip-path:polygon(0 0,100% 100%,0 100%);filter:blur(.15px)}
+.bubble .english{font:700 25px/1.22 "Segoe UI",Arial,sans-serif;letter-spacing:.1px}.controls{display:flex;align-items:center;gap:12px;margin-top:14px}.play{width:43px;height:43px;border-radius:50%;background:rgba(255,255,255,.34);display:grid;place-items:center;flex:0 0 auto}.play::before{content:"";border-left:13px solid #142f40;border-top:8px solid transparent;border-bottom:8px solid transparent;margin-left:3px}.listen{font-size:19px;font-weight:600;color:#20394a}.cn{margin-left:auto;height:43px;padding:0 18px;border-radius:999px;border:0;background:rgba(19,42,55,.62);color:#fff;font-size:18px;display:flex;align-items:center;white-space:nowrap}
+.actions{position:absolute;left:22px;right:22px;bottom:112px;display:flex;gap:18px}.action{height:62px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:2px solid rgba(255,255,255,.52);box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}.primary{flex:1;background:linear-gradient(135deg,rgba(255,230,164,.24),rgba(18,41,52,.55));color:var(--gold)}.secondary{flex:1;background:linear-gradient(135deg,rgba(190,210,219,.22),rgba(18,41,52,.50));color:#fff}
+.tip{position:absolute;left:30px;right:30px;bottom:124px;min-height:48px;border-radius:999px;background:rgba(14,34,46,.70);border:1.5px solid rgba(255,255,255,.52);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;padding:0 18px;color:#f5fbff;font-size:18px;box-shadow:0 10px 30px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.18)}
+.nav{position:absolute;z-index:7;left:0;right:0;bottom:0;height:112px;background:linear-gradient(to top,rgba(9,25,35,.94) 0%,rgba(11,30,42,.88) 72%,rgba(11,30,42,.72) 100%);border-top:1px solid rgba(255,255,255,.08);display:grid;grid-template-columns:repeat(3,1fr);padding-bottom:16px}.nav div{display:flex;align-items:center;justify-content:center;position:relative;font-size:25px;font-weight:700;color:var(--muted)}.nav div.active{color:var(--gold)}.nav div.active::after{content:"";position:absolute;bottom:18px;width:48px;height:4px;border-radius:99px;background:var(--gold);box-shadow:0 0 12px rgba(245,214,139,.65)}
+.homebar{position:absolute;z-index:8;bottom:8px;left:50%;transform:translateX(-50%);width:130px;height:5px;border-radius:99px;background:rgba(255,255,255,.92)}
+.switch{position:fixed;top:12px;left:12px;display:flex;gap:6px;z-index:20}.switch button{border:1px solid #d7e6ec;background:#102b3a;color:#fff;border-radius:999px;padding:8px 12px;font-size:13px}.switch button.on{background:#f5d68b;color:#102b3a}.hidden{display:none!important}
+</style>
+</style>
+</head>
+<body>
+<div class="switch">
+  <button id="btnInvite" class="on" onclick="setMode('invite')">主动邀请</button>
+  <button id="btnExplore" onclick="setMode('explore')">探索引导</button>
+</div>
+<main class="phone">
+  <div class="scene"></div>
+  <div class="statusbar"><span>9:44</span><span style="display:flex;align-items:center"><span class="signal"><i></i><i></i><i></i><i></i></span><span class="wifi"></span><span class="battery"></span></span></div>
+  <div id="stateInvite" class="ui pill state">正在看地上的信</div>
+  <div id="stateExplore" class="ui pill state hidden">正在观察房间</div>
+  <div class="ui gear"><svg viewBox="0 0 24 24"><path d="M7 12a5 5 0 0 1 10 0v3h-2v-3a3 3 0 1 0-6 0v3H7z"/><path d="M6 15h2v2H6zM16 15h2v2h-2zM8 19h8v2H8z"/></svg></div>
+
+  <section id="bubble" class="bubble">
+    <div class="english">I found a letter<br>on the floor.</div>
+    <div class="controls"><span class="play"></span><span class="listen">重听</span><button class="cn">查看中文</button></div>
+  </section>
+  <div id="actions" class="actions"><div class="action primary">和我一起看看</div><div class="action secondary">稍后再说</div></div>
+  <div id="tip" class="tip hidden">可以点点 Morrow 或房间里的东西试试看。</div>
+
+  <nav class="nav"><div class="active">陪伴</div><div>成长</div><div>词语回声</div></nav>
+  <div class="homebar"></div>
+</main>
+<script>
+function setMode(mode){
+  const invite=mode==='invite';
+  document.getElementById('bubble').classList.toggle('hidden',!invite);
+  document.getElementById('actions').classList.toggle('hidden',!invite);
+  document.getElementById('tip').classList.toggle('hidden',invite);
+  document.getElementById('stateInvite').classList.toggle('hidden',!invite);
+  document.getElementById('stateExplore').classList.toggle('hidden',invite);
+  document.getElementById('btnInvite').classList.toggle('on',invite);
+  document.getElementById('btnExplore').classList.toggle('on',!invite);
+}
+</script>
+</body>
+</html>

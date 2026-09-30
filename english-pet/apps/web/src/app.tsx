@@ -3,7 +3,7 @@ import { Layout } from '@/components/Layout';
 import ProtectedRoute from '@/auth/ProtectedRoute';
 import HomePage from '@/pages/HomePage/HomePage';
 import ChatPage from '@/pages/ChatPage/ChatPage';
-import EventPage from '@/pages/EventPage/EventPage';
+import FixedEventPage from '@/pages/FixedEventPage/FixedEventPage';
 import FirstDayPage from '@/pages/FirstDayPage/FirstDayPage';
 import JournalPage from '@/pages/JournalPage/JournalPage';
 import MemoryPage from '@/pages/MemoryPage/MemoryPage';
@@ -19,7 +19,7 @@ export default function App() {
         <Route element={<ProtectedRoute />}>
           <Route path="room" element={<RoomPage />} />
           <Route path="first-day" element={<FirstDayPage />} />
-          <Route path="events" element={<EventPage />} />
+          <Route path="events" element={<FixedEventPage />} />
           <Route path="journal" element={<JournalPage />} />
           <Route path="memories" element={<MemoryPage />} />
           <Route path="chat" element={<ChatPage />} />

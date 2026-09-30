@@ -1,5 +1,16 @@
 # 项目技术规范
 
+## 本地启动
+
+在 `C:\004-MCYY` 双击 `启动项目.cmd`。脚本会：
+
+1. 检查 Node.js、npm 和项目依赖；
+2. 分别打开 `Morrow API` 与 `Morrow Web` 命令窗口；
+3. 等待后端 `http://localhost:8787/health` 和前端 `http://localhost:5173` 就绪；
+4. 自动在浏览器打开前端页面和后端健康检查页。
+
+重复双击不会重复启动已占用的端口。停止项目时，在 `Morrow API` 和 `Morrow Web` 窗口分别按 `Ctrl+C`，或直接关闭两个窗口。
+
 ## 技术栈
 
 - 前端: React 19 + TypeScript

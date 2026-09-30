@@ -7,6 +7,9 @@ import {
   completeConversationRequestSchema,
   eventActionRequestSchema,
   firstDayActionRequestSchema,
+  fixedContentIntentPreviewRequestSchema,
+  fixedEventAdvanceRequestSchema,
+  fixedEventStartRequestSchema,
   journalActionRequestSchema,
   loginRequestSchema,
   memoryActionRequestSchema,
@@ -20,7 +23,13 @@ import {
   updateSettingsRequestSchema,
 } from '@english-pet/contracts'
 import { MockASR, MockTTS, QwenASR, safeSynthesize, safeTranscribe } from '@english-pet/ai'
-import { getProductionAudioBinding, resolveProductionAudioFile } from '@english-pet/domain'
+import {
+  fixedContentV1,
+  getFixedContentEvent,
+  getProductionAudioBinding,
+  previewFixedContentIntent,
+  resolveProductionAudioFile,
+} from '@english-pet/domain'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { requestId } from 'hono/request-id'
@@ -34,21 +43,79 @@ import { MemoryFirstDayStore } from './memory-first-day-store.js'
 import { MemoryJournalStore } from './memory-journal-store.js'
 import { MemoryMemoryStore } from './memory-memory-store.js'
 import { MemoryResurfacingStore } from './memory-resurfacing-store.js'
+import { resolveDbPath } from './sqlite-db.js'
+import { SqliteAccountStore } from './sqlite-account-store.js'
+import { SqliteConversationStore } from './sqlite-conversation-store.js'
+import { SqliteEventEngine } from './sqlite-event-engine.js'
+import { SqliteFeedbackStore } from './sqlite-feedback-store.js'
+import { SqliteFirstDayStore } from './sqlite-first-day-store.js'
+import { SqliteFixedEventEngine } from './sqlite-fixed-event-engine.js'
+import { SqliteJournalStore } from './sqlite-journal-store.js'
+import { SqliteMemoryStore } from './sqlite-memory-store.js'
+import { SqliteResurfacingStore } from './sqlite-resurfacing-store.js'
 
 const envPath = fileURLToPath(new URL('../../../.env', import.meta.url))
 if (existsSync(envPath)) loadEnvFile(envPath)
 
 const app = new Hono()
-const accountStore = new MemoryAccountStore()
-const memoryStore = new MemoryMemoryStore()
-const feedbackStore = new MemoryFeedbackStore(memoryStore)
-const resurfacingStore = new MemoryResurfacingStore(memoryStore)
-const journalStore = new MemoryJournalStore(memoryStore)
-const conversationStore = new MemoryConversationStore(memoryStore, feedbackStore)
-const eventEngine = new MemoryEventEngine(memoryStore, journalStore, feedbackStore, resurfacingStore)
-const firstDayStore = new MemoryFirstDayStore(accountStore, memoryStore, journalStore, eventEngine)
-// 开发环境未配置百炼密钥时保留 Mock；服务端配置 DASHSCOPE_API_KEY 后启用真实 qwen3-asr-flash。
-const asr = process.env.DASHSCOPE_API_KEY ? new QwenASR() : new MockASR()
+
+// 存储驱动选择：STORE_DRIVER=sqlite（默认，本地 SQLite 持久化）或 memory（干净测试）。
+// 组合图与依赖关系与原内存版完全一致，仅替换实现。
+const storeDriver = (process.env.STORE_DRIVER ?? 'sqlite').trim().toLowerCase()
+const persistence: 'memory' | 'sqlite' = storeDriver === 'memory' ? 'memory' : 'sqlite'
+logger.info({ storeDriver, persistence, sqlitePath: persistence === 'sqlite' ? resolveDbPath() : null }, 'store driver')
+
+let accountStore: MemoryAccountStore | SqliteAccountStore
+let memoryStore: MemoryMemoryStore | SqliteMemoryStore
+let feedbackStore: MemoryFeedbackStore | SqliteFeedbackStore
+let resurfacingStore: MemoryResurfacingStore | SqliteResurfacingStore
+let journalStore: MemoryJournalStore | SqliteJournalStore
+let conversationStore: MemoryConversationStore | SqliteConversationStore
+let eventEngine: MemoryEventEngine | SqliteEventEngine
+let firstDayStore: MemoryFirstDayStore | SqliteFirstDayStore
+
+if (storeDriver === 'memory') {
+  const a = new MemoryAccountStore()
+  const m = new MemoryMemoryStore()
+  const f = new MemoryFeedbackStore(m)
+  const r = new MemoryResurfacingStore(m)
+  const j = new MemoryJournalStore(m)
+  const c = new MemoryConversationStore(m, f)
+  const e = new MemoryEventEngine(m, j, f, r)
+  const fd = new MemoryFirstDayStore(a, m, j, e)
+  accountStore = a
+  memoryStore = m
+  feedbackStore = f
+  resurfacingStore = r
+  journalStore = j
+  conversationStore = c
+  eventEngine = e
+  firstDayStore = fd
+} else {
+  const a = new SqliteAccountStore()
+  const m = new SqliteMemoryStore()
+  const f = new SqliteFeedbackStore(m)
+  const r = new SqliteResurfacingStore(m)
+  const j = new SqliteJournalStore(m)
+  const c = new SqliteConversationStore(m, f)
+  const e = new SqliteEventEngine(m, j, f, r)
+  const fd = new SqliteFirstDayStore(a, m, j, e)
+  accountStore = a
+  memoryStore = m
+  feedbackStore = f
+  resurfacingStore = r
+  journalStore = j
+  conversationStore = c
+  eventEngine = e
+  firstDayStore = fd
+}
+
+// 固定内容事件引擎：纯函数意图匹配器 + SQLite 状态推进。固定走本地 SQLite（openDatabase），不区分 STORE_DRIVER。
+const fixedEventEngine = new SqliteFixedEventEngine({ memoryStore, journalStore })
+
+// ASR 显式驱动：AI_ASR_PROVIDER=qwen 才走真实百炼 qwen3-asr-flash；否则一律 MockASR。
+// 不再因 DASHSCOPE_API_KEY 隐式走网络。TTS 保持 MockTTS。
+const asr = process.env.AI_ASR_PROVIDER === 'qwen' ? new QwenASR() : new MockASR()
 const tts = new MockTTS()
 
 const allowedOrigins = (process.env.WEB_ORIGIN ?? 'http://localhost:5173')
@@ -82,10 +149,18 @@ app.get('/health', (context) => {
     ok: true,
     service: 'english-pet-api',
     environment: process.env.APP_ENV ?? 'development',
-    // 待 N1 接入：当前为空串占位，正式端需回带 fixed-content 规则集与 Schema 版本。
-    rulesetVersion: '',
-    schemaVersion: '',
+    // N1/N2 已接入 fixed-content 规则集：回带规则集 id 与 schema 版本。
+    rulesetVersion: fixedContentV1.id,
+    schemaVersion: fixedContentV1.schemaVersion,
   })
+})
+
+// N1：下发 fixed-content 规则集本体（与其它 /v1 一致，需 Bearer token）。
+app.get('/v1/fixed-content/ruleset', (context) => {
+  const token = getBearerToken(context.req.header('Authorization'))
+  const me = token ? accountStore.me(token) : null
+  if (!me) return errorResponse(context, 'unauthorized', 401)
+  return context.json(fixedContentV1)
 })
 
 app.post('/v1/auth/guest', (context) => {
@@ -145,6 +220,7 @@ app.delete('/v1/me/account', (context) => {
   journalStore.clearUser(userId)
   resurfacingStore.clearUser(userId)
   memoryStore.clearUser(userId)
+  fixedEventEngine.clearUser(userId)
   return context.body(null, 204)
 })
 app.get('/v1/me', (context) => {
@@ -188,7 +264,7 @@ app.post('/v1/pet/actions', async (context) => {
 app.get('/v1/journals', (context) => {
   const token = getBearerToken(context.req.header('Authorization'))
   const me = token ? accountStore.me(token) : null
-  return me ? context.json({ entries: journalStore.list(me.user.id), persistence: 'memory' as const }) : errorResponse(context, 'unauthorized', 401)
+  return me ? context.json({ entries: journalStore.list(me.user.id), persistence }) : errorResponse(context, 'unauthorized', 401)
 })
 
 app.post('/v1/journals/:id/actions', async (context) => {
@@ -317,6 +393,88 @@ app.post('/v1/events/:id/actions', async (context) => {
   }
 })
 
+// N2：确定性意图预览。纯预览，不推进事件状态、不写记忆。
+app.post('/v1/events/:id/intents', async (context) => {
+  const token = getBearerToken(context.req.header('Authorization'))
+  const me = token ? accountStore.me(token) : null
+  if (!me) return errorResponse(context, 'unauthorized', 401)
+  const event = getFixedContentEvent(context.req.param('id'))
+  if (!event) return errorResponse(context, 'event_not_found', 404)
+  const body = await context.req.json().catch(() => null)
+  const parsed = fixedContentIntentPreviewRequestSchema.safeParse(body)
+  if (!parsed.success) return errorResponse(context, 'bad_request', 400, parsed.error.flatten())
+  const result = previewFixedContentIntent({
+    event,
+    stateId: parsed.data.stateId,
+    input: {
+      inputMode: parsed.data.inputMode,
+      text: parsed.data.text,
+      choiceId: parsed.data.choiceId,
+    },
+    policy: fixedContentV1.matchingPolicy,
+    fallbacks: fixedContentV1.fallbacks,
+  })
+  return context.json(result)
+})
+
+// ── 固定内容事件引擎（状态推进 + SQLite 落库）──
+// 目录：返回两个出生事件的可用/已完成/锁定状态。
+app.get('/v1/fixed-content/events', (context) => {
+  const token = getBearerToken(context.req.header('Authorization'))
+  const me = token ? accountStore.me(token) : null
+  if (!me) return errorResponse(context, 'unauthorized', 401)
+  return context.json({ events: fixedEventEngine.catalog(me.user.id) })
+})
+
+// 当前活动实例：无进行中事件时返回 { instance: null }。
+app.get('/v1/fixed-content/events/current', (context) => {
+  const token = getBearerToken(context.req.header('Authorization'))
+  const me = token ? accountStore.me(token) : null
+  if (!me) return errorResponse(context, 'unauthorized', 401)
+  return context.json({ instance: fixedEventEngine.current(me.user.id) })
+})
+
+app.post('/v1/fixed-content/events/:eventId/start', async (context) => {
+  const token = getBearerToken(context.req.header('Authorization'))
+  const me = token ? accountStore.me(token) : null
+  if (!me) return errorResponse(context, 'unauthorized', 401)
+  const body = await context.req.json().catch(() => null)
+  const parsed = fixedEventStartRequestSchema.safeParse(body)
+  if (!parsed.success) return errorResponse(context, 'bad_request', 400, parsed.error.flatten())
+  try {
+    return context.json(fixedEventEngine.start(me.user.id, {
+      eventId: context.req.param('eventId'),
+      idempotencyKey: parsed.data.idempotencyKey,
+    }), 201)
+  } catch (error) {
+    if (!(error instanceof Error)) throw error
+    if (error.message === 'fixed_event_locked') return errorResponse(context, 'fixed_event_locked', 409)
+    throw error
+  }
+})
+
+app.post('/v1/fixed-content/events/:instanceId/advance', async (context) => {
+  const token = getBearerToken(context.req.header('Authorization'))
+  const me = token ? accountStore.me(token) : null
+  if (!me) return errorResponse(context, 'unauthorized', 401)
+  const body = await context.req.json().catch(() => null)
+  const parsed = fixedEventAdvanceRequestSchema.safeParse(body)
+  if (!parsed.success) return errorResponse(context, 'bad_request', 400, parsed.error.flatten())
+  try {
+    return context.json(fixedEventEngine.advance(me.user.id, context.req.param('instanceId'), {
+      inputMode: parsed.data.inputMode,
+      text: parsed.data.text,
+      choiceId: parsed.data.choiceId,
+      idempotencyKey: parsed.data.idempotencyKey,
+    }))
+  } catch (error) {
+    if (!(error instanceof Error)) throw error
+    if (error.message === 'fixed_event_not_found') return errorResponse(context, 'fixed_event_not_found', 404)
+    if (error.message === 'fixed_no_active_event') return errorResponse(context, 'fixed_no_active_event', 409)
+    throw error
+  }
+})
+
 app.post('/v1/audio/transcriptions', async (context) => {
   const token = getBearerToken(context.req.header('Authorization'))
   if (!token || !accountStore.me(token)) return errorResponse(context, 'unauthorized', 401)
@@ -344,6 +502,8 @@ app.post('/v1/audio/transcriptions', async (context) => {
 
 // N3：解析预制音频绑定。ready 返回版本绑定与可播 fileRef；planned/retired/未登记不返回可播地址，前端降级文字+译文。
 app.get('/v1/audio/bindings/:audioId', (context) => {
+  const token = getBearerToken(context.req.header('Authorization'))
+  if (!token || !accountStore.me(token)) return errorResponse(context, 'unauthorized', 401)
   const binding = getProductionAudioBinding(context.req.param('audioId'))
   if (!binding) {
     return errorResponse(context, 'audio_not_found', 404)

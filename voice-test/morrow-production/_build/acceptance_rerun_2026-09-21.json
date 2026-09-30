@@ -1,0 +1,5111 @@
+{
+  "generated_by": "verify_release_audio_2026-09-21.py",
+  "scope": "Independent re-verification of all 145 released Morrow WAV files",
+  "acceptance_band": {
+    "format": "WAV/PCM/16kHz/mono/16-bit, RIFF & data length fields consistent",
+    "active_rms_dbfs": [
+      -21.0,
+      -19.0
+    ],
+    "peak_dbfs_max": -3.0,
+    "duration_tolerance_seconds": 0.05
+  },
+  "summary": {
+    "manifest_total": 145,
+    "manifest_included_count": 145,
+    "per_file_pass_count": 145,
+    "per_file_fail_count": 0,
+    "disk_tts_audio_wav_count": 145,
+    "duplicate_audioIds": [],
+    "extra_audio_on_disk_not_in_manifest": [],
+    "manifest_refs_missing_on_disk": [],
+    "excluded_lines_that_should_have_no_audio_but_do": [],
+    "measured_active_rms_range_dbfs": [
+      -20.43,
+      -20.0
+    ],
+    "measured_peak_range_dbfs": [
+      -9.02,
+      -3.0
+    ],
+    "all_sha256_match_manifest": true
+  },
+  "failures": [],
+  "per_file": [
+    {
+      "fileRef": "tts/chapter_01_birth/birth_first_voice_v1/bfv_wake_line/1.0.0/audio.wav",
+      "audioId": "bfv_wake_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "04ea1fe87d7f1ab7fba80db48666688df09a523ce825d6f42e0595bdd2459e76",
+        "durationSeconds": 4.08,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -6.31
+      },
+      "measured": {
+        "sha256": "04ea1fe87d7f1ab7fba80db48666688df09a523ce825d6f42e0595bdd2459e76",
+        "duration_seconds": 4.08,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -6.31,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 130604
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/birth_first_voice_v1/bfv_prompt_line/1.0.0/audio.wav",
+      "audioId": "bfv_prompt_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "5f158f67958bd96b3e5f9ed9d1f8a7e4d53ce50cbeaa0d1c7364209a1f26bc00",
+        "durationSeconds": 3.52,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -7.22
+      },
+      "measured": {
+        "sha256": "5f158f67958bd96b3e5f9ed9d1f8a7e4d53ce50cbeaa0d1c7364209a1f26bc00",
+        "duration_seconds": 3.52,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -7.22,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 112684
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/birth_first_voice_v1/bfv_confirm_help/1.0.0/audio.wav",
+      "audioId": "bfv_confirm_help_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "808d2018e7506f640a974de1778d6e7c44fd8933a560af190a00b87717cf590c",
+        "durationSeconds": 4.88,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -5.79
+      },
+      "measured": {
+        "sha256": "808d2018e7506f640a974de1778d6e7c44fd8933a560af190a00b87717cf590c",
+        "duration_seconds": 4.88,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -5.79,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 156204
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/birth_first_voice_v1/bfv_confirm_question/1.0.0/audio.wav",
+      "audioId": "bfv_confirm_question_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "7a6eabc9ce6b89654dfe747c17f33f9be304ccf439b493f2b17ba123158736c4",
+        "durationSeconds": 5.04,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -6.98
+      },
+      "measured": {
+        "sha256": "7a6eabc9ce6b89654dfe747c17f33f9be304ccf439b493f2b17ba123158736c4",
+        "duration_seconds": 5.04,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -6.98,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 161324
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/birth_first_voice_v1/bfv_pause_line/1.0.0/audio.wav",
+      "audioId": "bfv_pause_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "2d836b48a17da099984bd0b278ab0eee87381e185e938223858f000be368ccb0",
+        "durationSeconds": 5.84,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -6.65
+      },
+      "measured": {
+        "sha256": "2d836b48a17da099984bd0b278ab0eee87381e185e938223858f000be368ccb0",
+        "duration_seconds": 5.84,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -6.65,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 186924
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/birth_restore_object_v1/bro_open_line/1.0.0/audio.wav",
+      "audioId": "bro_open_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "a21acbe8282b382bacf3c673cbb558a637dffc0ff6162e353a48e53e3dfdb926",
+        "durationSeconds": 6.8,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -6.25
+      },
+      "measured": {
+        "sha256": "a21acbe8282b382bacf3c673cbb558a637dffc0ff6162e353a48e53e3dfdb926",
+        "duration_seconds": 6.8,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -6.25,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 217644
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/birth_restore_object_v1/bro_prompt_line/1.0.0/audio.wav",
+      "audioId": "bro_prompt_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "15f12712be1bc123bd22d0adf4057a12b95198e355fadbcfda96719eafe390ff",
+        "durationSeconds": 2.88,
+        "activeRmsDbfs": -20.11,
+        "peakDbfs": -9.02
+      },
+      "measured": {
+        "sha256": "15f12712be1bc123bd22d0adf4057a12b95198e355fadbcfda96719eafe390ff",
+        "duration_seconds": 2.88,
+        "measured_active_rms_dbfs": -20.11,
+        "measured_peak_dbfs": -9.02,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 92204
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/birth_restore_object_v1/bro_lamp_result/1.0.0/audio.wav",
+      "audioId": "bro_lamp_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "ebc075dcd3b2017dc809290e2d414e8a8057e42e10fc869f48f9a48965f3e33d",
+        "durationSeconds": 5.2,
+        "activeRmsDbfs": -20.12,
+        "peakDbfs": -5.54
+      },
+      "measured": {
+        "sha256": "ebc075dcd3b2017dc809290e2d414e8a8057e42e10fc869f48f9a48965f3e33d",
+        "duration_seconds": 5.2,
+        "measured_active_rms_dbfs": -20.12,
+        "measured_peak_dbfs": -5.54,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 166444
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/birth_restore_object_v1/bro_plant_result/1.0.0/audio.wav",
+      "audioId": "bro_plant_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "2bb93fc36197005d985f7e42138c0fae4148626ab6d423a57fda4196c653e556",
+        "durationSeconds": 3.44,
+        "activeRmsDbfs": -20.08,
+        "peakDbfs": -5.12
+      },
+      "measured": {
+        "sha256": "2bb93fc36197005d985f7e42138c0fae4148626ab6d423a57fda4196c653e556",
+        "duration_seconds": 3.44,
+        "measured_active_rms_dbfs": -20.08,
+        "measured_peak_dbfs": -5.12,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 110124
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/birth_restore_object_v1/bro_bell_result/1.0.0/audio.wav",
+      "audioId": "bro_bell_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "94149a17af3b76047890514f9c0a9d18547c06a01d710e640dead6d87cdad133",
+        "durationSeconds": 6.0,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -4.46
+      },
+      "measured": {
+        "sha256": "94149a17af3b76047890514f9c0a9d18547c06a01d710e640dead6d87cdad133",
+        "duration_seconds": 6.0,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -4.46,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 192044
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_remember_name_v1/brn_open_line/1.0.0/audio.wav",
+      "audioId": "brn_open_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "252bc877234d31fcd0e8bfc09e08ef1cee787124241cad77344eab660a618344",
+        "durationSeconds": 6.08,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -5.28
+      },
+      "measured": {
+        "sha256": "252bc877234d31fcd0e8bfc09e08ef1cee787124241cad77344eab660a618344",
+        "duration_seconds": 6.08,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -5.28,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 194604
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_remember_name_v1/brn_prompt_line/1.0.0/audio.wav",
+      "audioId": "brn_prompt_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "93d0cde4b30785764567501d38cc3c042146eb5a49af71c97d77fe81d1093692",
+        "durationSeconds": 6.24,
+        "activeRmsDbfs": -20.05,
+        "peakDbfs": -7.01
+      },
+      "measured": {
+        "sha256": "93d0cde4b30785764567501d38cc3c042146eb5a49af71c97d77fe81d1093692",
+        "duration_seconds": 6.24,
+        "measured_active_rms_dbfs": -20.05,
+        "measured_peak_dbfs": -7.01,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 199724
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_remember_name_v1/brn_result_keep/1.0.0/audio.wav",
+      "audioId": "brn_result_keep_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "c7d94b6e81c3e28d518fe32c09ab6f568023c7b464ad50663600e123d96aae09",
+        "durationSeconds": 4.72,
+        "activeRmsDbfs": -20.07,
+        "peakDbfs": -6.42
+      },
+      "measured": {
+        "sha256": "c7d94b6e81c3e28d518fe32c09ab6f568023c7b464ad50663600e123d96aae09",
+        "duration_seconds": 4.72,
+        "measured_active_rms_dbfs": -20.07,
+        "measured_peak_dbfs": -6.42,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 151084
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_remember_name_v1/brn_result_short/1.0.0/audio.wav",
+      "audioId": "brn_result_short_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "67f18a0277ff6577f865288e2905b986436c01846349330ece25cf7cfe0b9744",
+        "durationSeconds": 4.72,
+        "activeRmsDbfs": -20.06,
+        "peakDbfs": -6.39
+      },
+      "measured": {
+        "sha256": "67f18a0277ff6577f865288e2905b986436c01846349330ece25cf7cfe0b9744",
+        "duration_seconds": 4.72,
+        "measured_active_rms_dbfs": -20.06,
+        "measured_peak_dbfs": -6.39,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 151084
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_remember_name_v1/brn_result_choose/1.0.0/audio.wav",
+      "audioId": "brn_result_choose_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "5beab524c8d1df638c897ec971b79a8ce211bf2246ddfb9f17c44df40e06b688",
+        "durationSeconds": 4.72,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -6.65
+      },
+      "measured": {
+        "sha256": "5beab524c8d1df638c897ec971b79a8ce211bf2246ddfb9f17c44df40e06b688",
+        "duration_seconds": 4.72,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -6.65,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 151084
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_remember_name_v1/brn_pause_line/1.0.0/audio.wav",
+      "audioId": "brn_pause_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "f9d564bfd955bea4d9e74ae4211f481de5505931afa8fab8934289162dee41bc",
+        "durationSeconds": 4.96,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -7.21
+      },
+      "measured": {
+        "sha256": "f9d564bfd955bea4d9e74ae4211f481de5505931afa8fab8934289162dee41bc",
+        "duration_seconds": 4.96,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -7.21,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 158764
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_first_feeling_v1/bff_open_line/1.0.0/audio.wav",
+      "audioId": "bff_open_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "6eca809a6c42a18788f042a95d7e37507df0628009d0a1aacb7617782912e790",
+        "durationSeconds": 5.6,
+        "activeRmsDbfs": -20.1,
+        "peakDbfs": -6.26
+      },
+      "measured": {
+        "sha256": "6eca809a6c42a18788f042a95d7e37507df0628009d0a1aacb7617782912e790",
+        "duration_seconds": 5.6,
+        "measured_active_rms_dbfs": -20.1,
+        "measured_peak_dbfs": -6.26,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 179244
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_first_feeling_v1/bff_prompt_line/1.0.0/audio.wav",
+      "audioId": "bff_prompt_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "803a4ccee5d9f12d9c879802b62277f3f51a3dcdfd88ad6d1ee3ba36880277c5",
+        "durationSeconds": 5.6,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -5.68
+      },
+      "measured": {
+        "sha256": "803a4ccee5d9f12d9c879802b62277f3f51a3dcdfd88ad6d1ee3ba36880277c5",
+        "duration_seconds": 5.6,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -5.68,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 179244
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_first_feeling_v1/bff_result_new/1.0.0/audio.wav",
+      "audioId": "bff_result_new_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "2fa78c3f0b6b792a8772c7f7dc55034d9f2e3d8331cbb0d48f901c85b1bbe709",
+        "durationSeconds": 5.6,
+        "activeRmsDbfs": -20.07,
+        "peakDbfs": -8.75
+      },
+      "measured": {
+        "sha256": "2fa78c3f0b6b792a8772c7f7dc55034d9f2e3d8331cbb0d48f901c85b1bbe709",
+        "duration_seconds": 5.6,
+        "measured_active_rms_dbfs": -20.07,
+        "measured_peak_dbfs": -8.75,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 179244
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_first_feeling_v1/bff_result_nervous/1.0.0/audio.wav",
+      "audioId": "bff_result_nervous_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "9322a17b026839275aa5c1ec14cd1d88c70b6adb515f4b332b341dd79bee7b77",
+        "durationSeconds": 5.76,
+        "activeRmsDbfs": -20.13,
+        "peakDbfs": -4.33
+      },
+      "measured": {
+        "sha256": "9322a17b026839275aa5c1ec14cd1d88c70b6adb515f4b332b341dd79bee7b77",
+        "duration_seconds": 5.76,
+        "measured_active_rms_dbfs": -20.13,
+        "measured_peak_dbfs": -4.33,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 184364
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_first_feeling_v1/bff_result_shared/1.0.0/audio.wav",
+      "audioId": "bff_result_shared_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "7b1bf9267068f2ca7d52b735183fb3b17ce9ef0c2ef98197c870f52fb1004309",
+        "durationSeconds": 5.44,
+        "activeRmsDbfs": -20.13,
+        "peakDbfs": -6.83
+      },
+      "measured": {
+        "sha256": "7b1bf9267068f2ca7d52b735183fb3b17ce9ef0c2ef98197c870f52fb1004309",
+        "duration_seconds": 5.44,
+        "measured_active_rms_dbfs": -20.13,
+        "measured_peak_dbfs": -6.83,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 174124
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_first_feeling_v1/bff_pause_line/1.0.0/audio.wav",
+      "audioId": "bff_pause_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "957b4209c3d1f9a6d0951b3dc6bfd7835c8d78c38e64f29d4dda96300ccf8c54",
+        "durationSeconds": 5.52,
+        "activeRmsDbfs": -20.07,
+        "peakDbfs": -7.72
+      },
+      "measured": {
+        "sha256": "957b4209c3d1f9a6d0951b3dc6bfd7835c8d78c38e64f29d4dda96300ccf8c54",
+        "duration_seconds": 5.52,
+        "measured_active_rms_dbfs": -20.07,
+        "measured_peak_dbfs": -7.72,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 176684
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_window_light_v1/bwl_open_line/1.0.0/audio.wav",
+      "audioId": "bwl_open_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "1c6421a02580d71279d95fe1d3b271de241aabf7a2cd9696320361a2e0056467",
+        "durationSeconds": 6.0,
+        "activeRmsDbfs": -20.16,
+        "peakDbfs": -6.38
+      },
+      "measured": {
+        "sha256": "1c6421a02580d71279d95fe1d3b271de241aabf7a2cd9696320361a2e0056467",
+        "duration_seconds": 6.0,
+        "measured_active_rms_dbfs": -20.16,
+        "measured_peak_dbfs": -6.38,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 192044
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_window_light_v1/bwl_prompt_line/1.0.0/audio.wav",
+      "audioId": "bwl_prompt_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "50ef2b03cef7caf1fecdb2811cb3d2e2f747cc0c99ba56f4cd3ab884e29b910f",
+        "durationSeconds": 5.36,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -7.25
+      },
+      "measured": {
+        "sha256": "50ef2b03cef7caf1fecdb2811cb3d2e2f747cc0c99ba56f4cd3ab884e29b910f",
+        "duration_seconds": 5.36,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -7.25,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 171564
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_window_light_v1/bwl_result_warm/1.0.0/audio.wav",
+      "audioId": "bwl_result_warm_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "d4a67e483d31b44eee502578118fa10bec62db40dafcb11fee6a3391b74499e0",
+        "durationSeconds": 4.48,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -6.45
+      },
+      "measured": {
+        "sha256": "d4a67e483d31b44eee502578118fa10bec62db40dafcb11fee6a3391b74499e0",
+        "duration_seconds": 4.48,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -6.45,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 143404
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_window_light_v1/bwl_result_sun/1.0.0/audio.wav",
+      "audioId": "bwl_result_sun_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "8104c8532981ec3d0160c901af47723dce065db3e08e503c035809b58ca14dee",
+        "durationSeconds": 4.8,
+        "activeRmsDbfs": -20.07,
+        "peakDbfs": -6.68
+      },
+      "measured": {
+        "sha256": "8104c8532981ec3d0160c901af47723dce065db3e08e503c035809b58ca14dee",
+        "duration_seconds": 4.8,
+        "measured_active_rms_dbfs": -20.07,
+        "measured_peak_dbfs": -6.68,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 153644
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_window_light_v1/bwl_result_uncertain/1.0.0/audio.wav",
+      "audioId": "bwl_result_uncertain_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "564011f44961af2bfed89c03e339d13f244870458ede9bf0980cacb47a894695",
+        "durationSeconds": 3.68,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -5.28
+      },
+      "measured": {
+        "sha256": "564011f44961af2bfed89c03e339d13f244870458ede9bf0980cacb47a894695",
+        "duration_seconds": 3.68,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -5.28,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 117804
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_window_light_v1/bwl_pause_line/1.0.0/audio.wav",
+      "audioId": "bwl_pause_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "cef7c1e44c25867e39716434d4ef23faea0623300265346e658e729a2fe6efe6",
+        "durationSeconds": 4.72,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -6.73
+      },
+      "measured": {
+        "sha256": "cef7c1e44c25867e39716434d4ef23faea0623300265346e658e729a2fe6efe6",
+        "duration_seconds": 4.72,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -6.73,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 151084
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_first_letter_v1/bfl_open_line/1.0.0/audio.wav",
+      "audioId": "bfl_open_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "5e7858898871874ee17611b734780522c410f8ea05d9875f73df9687bf913873",
+        "durationSeconds": 6.08,
+        "activeRmsDbfs": -20.43,
+        "peakDbfs": -3.0
+      },
+      "measured": {
+        "sha256": "5e7858898871874ee17611b734780522c410f8ea05d9875f73df9687bf913873",
+        "duration_seconds": 6.08,
+        "measured_active_rms_dbfs": -20.43,
+        "measured_peak_dbfs": -3.0,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 194604
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_first_letter_v1/bfl_prompt_line/1.0.0/audio.wav",
+      "audioId": "bfl_prompt_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "e5d26c78214951a3d3bbd75edf19cb1bdab54b18b86c5cc8fb522c8a8c4964a2",
+        "durationSeconds": 4.24,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -7.52
+      },
+      "measured": {
+        "sha256": "e5d26c78214951a3d3bbd75edf19cb1bdab54b18b86c5cc8fb522c8a8c4964a2",
+        "duration_seconds": 4.24,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -7.52,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 135724
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_first_letter_v1/bfl_result_welcome/1.0.0/audio.wav",
+      "audioId": "bfl_result_welcome_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "110887ff62db95d2e7447dcd8aeac581f508dc93eb4730e41c068ac90aef9205",
+        "durationSeconds": 5.04,
+        "activeRmsDbfs": -20.06,
+        "peakDbfs": -4.65
+      },
+      "measured": {
+        "sha256": "110887ff62db95d2e7447dcd8aeac581f508dc93eb4730e41c068ac90aef9205",
+        "duration_seconds": 5.04,
+        "measured_active_rms_dbfs": -20.06,
+        "measured_peak_dbfs": -4.65,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 161324
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_first_letter_v1/bfl_result_unread/1.0.0/audio.wav",
+      "audioId": "bfl_result_unread_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "b2bf918369149a7f96fbb450b177ff7ef260563630d737281be391ae291b021d",
+        "durationSeconds": 4.32,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -5.78
+      },
+      "measured": {
+        "sha256": "b2bf918369149a7f96fbb450b177ff7ef260563630d737281be391ae291b021d",
+        "duration_seconds": 4.32,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -5.78,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 138284
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_first_letter_v1/bfl_result_slow/1.0.0/audio.wav",
+      "audioId": "bfl_result_slow_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "2c37d61ef36d2f3cc1e5980b6b5ead468b78bb5cd46f7a3de688e035c966f2c8",
+        "durationSeconds": 4.24,
+        "activeRmsDbfs": -20.08,
+        "peakDbfs": -5.51
+      },
+      "measured": {
+        "sha256": "2c37d61ef36d2f3cc1e5980b6b5ead468b78bb5cd46f7a3de688e035c966f2c8",
+        "duration_seconds": 4.24,
+        "measured_active_rms_dbfs": -20.08,
+        "measured_peak_dbfs": -5.51,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 135724
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_first_letter_v1/bfl_pause_line/1.0.0/audio.wav",
+      "audioId": "bfl_pause_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "ac89fc92e7d3b41cd9e98468df187e9c56a92b06395fe9dec61756efb6df2162",
+        "durationSeconds": 4.32,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -7.5
+      },
+      "measured": {
+        "sha256": "ac89fc92e7d3b41cd9e98468df187e9c56a92b06395fe9dec61756efb6df2162",
+        "duration_seconds": 4.32,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -7.5,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 138284
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_bell_sound_v1/bbs_open_line/1.0.0/audio.wav",
+      "audioId": "bbs_open_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "00004b9d5108fcfdce110d0220762aa0da495e6a01c5d2a3472df8b0768107f9",
+        "durationSeconds": 6.32,
+        "activeRmsDbfs": -20.05,
+        "peakDbfs": -5.05
+      },
+      "measured": {
+        "sha256": "00004b9d5108fcfdce110d0220762aa0da495e6a01c5d2a3472df8b0768107f9",
+        "duration_seconds": 6.32,
+        "measured_active_rms_dbfs": -20.05,
+        "measured_peak_dbfs": -5.05,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 202284
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_bell_sound_v1/bbs_prompt_line/1.0.0/audio.wav",
+      "audioId": "bbs_prompt_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "97a0796b7564a1fe5d6e0f6995e74d6d2d842699dd5b6e13ad22134cd36010cb",
+        "durationSeconds": 4.24,
+        "activeRmsDbfs": -20.11,
+        "peakDbfs": -8.29
+      },
+      "measured": {
+        "sha256": "97a0796b7564a1fe5d6e0f6995e74d6d2d842699dd5b6e13ad22134cd36010cb",
+        "duration_seconds": 4.24,
+        "measured_active_rms_dbfs": -20.11,
+        "measured_peak_dbfs": -8.29,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 135724
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_bell_sound_v1/bbs_result_bell/1.0.0/audio.wav",
+      "audioId": "bbs_result_bell_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "432e10bb01c3758bb83c50f66d580a8f864ed569c68de90ffaa92549cb17a5dc",
+        "durationSeconds": 4.24,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -5.43
+      },
+      "measured": {
+        "sha256": "432e10bb01c3758bb83c50f66d580a8f864ed569c68de90ffaa92549cb17a5dc",
+        "duration_seconds": 4.24,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -5.43,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 135724
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_bell_sound_v1/bbs_result_room/1.0.0/audio.wav",
+      "audioId": "bbs_result_room_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "b25aeb64208dbab17ae75a9ed1425f1df24be8abfb60be4cd463fc1c1d5c075e",
+        "durationSeconds": 3.76,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -5.57
+      },
+      "measured": {
+        "sha256": "b25aeb64208dbab17ae75a9ed1425f1df24be8abfb60be4cd463fc1c1d5c075e",
+        "duration_seconds": 3.76,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -5.57,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 120364
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_bell_sound_v1/bbs_result_faint/1.0.0/audio.wav",
+      "audioId": "bbs_result_faint_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "e80b3d1c0eb6e3141c018ff14bfbae7dac2e71cffe238d7020de0f25b95097aa",
+        "durationSeconds": 4.08,
+        "activeRmsDbfs": -20.09,
+        "peakDbfs": -6.2
+      },
+      "measured": {
+        "sha256": "e80b3d1c0eb6e3141c018ff14bfbae7dac2e71cffe238d7020de0f25b95097aa",
+        "duration_seconds": 4.08,
+        "measured_active_rms_dbfs": -20.09,
+        "measured_peak_dbfs": -6.2,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 130604
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_bell_sound_v1/bbs_pause_line/1.0.0/audio.wav",
+      "audioId": "bbs_pause_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "6316051f2b46166ffdb3328d270d528e76da6c8f063a35480837dee2f7e3f902",
+        "durationSeconds": 4.8,
+        "activeRmsDbfs": -20.13,
+        "peakDbfs": -6.36
+      },
+      "measured": {
+        "sha256": "6316051f2b46166ffdb3328d270d528e76da6c8f063a35480837dee2f7e3f902",
+        "duration_seconds": 4.8,
+        "measured_active_rms_dbfs": -20.13,
+        "measured_peak_dbfs": -6.36,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 153644
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_ask_about_you_v1/bay_open_line/1.0.0/audio.wav",
+      "audioId": "bay_open_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "c20c62c735fb25a6f78caf488200e53f24c5a1cb52763a5cd572d58420c9fed3",
+        "durationSeconds": 5.28,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -3.37
+      },
+      "measured": {
+        "sha256": "c20c62c735fb25a6f78caf488200e53f24c5a1cb52763a5cd572d58420c9fed3",
+        "duration_seconds": 5.28,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -3.37,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 169004
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_ask_about_you_v1/bay_prompt_line/1.0.0/audio.wav",
+      "audioId": "bay_prompt_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "2cebdb03ca93c5c5addedd181f68df05bfe1f74ace9bff8b8c46b4ba658bcd35",
+        "durationSeconds": 3.84,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -4.33
+      },
+      "measured": {
+        "sha256": "2cebdb03ca93c5c5addedd181f68df05bfe1f74ace9bff8b8c46b4ba658bcd35",
+        "duration_seconds": 3.84,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -4.33,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 122924
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_ask_about_you_v1/bay_result_longday/1.0.0/audio.wav",
+      "audioId": "bay_result_longday_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "494dc83cf8fcc9dd9227682f32dc48be870030cd89f4a5ac1b65d5afb23e8c44",
+        "durationSeconds": 5.6,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -6.86
+      },
+      "measured": {
+        "sha256": "494dc83cf8fcc9dd9227682f32dc48be870030cd89f4a5ac1b65d5afb23e8c44",
+        "duration_seconds": 5.6,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -6.86,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 179244
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_ask_about_you_v1/bay_result_ordinary/1.0.0/audio.wav",
+      "audioId": "bay_result_ordinary_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "002192bac5524780698d1f22b2060a39045489eb9b8ddca1ae53acc21016b2d7",
+        "durationSeconds": 5.2,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -6.64
+      },
+      "measured": {
+        "sha256": "002192bac5524780698d1f22b2060a39045489eb9b8ddca1ae53acc21016b2d7",
+        "duration_seconds": 5.2,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -6.64,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 166444
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_ask_about_you_v1/bay_result_declined/1.0.0/audio.wav",
+      "audioId": "bay_result_declined_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "c69444795b2fb644af51e7f1d3212e67c568fd9ed893fcb2c87fdc7a5da2f750",
+        "durationSeconds": 4.16,
+        "activeRmsDbfs": -20.25,
+        "peakDbfs": -6.95
+      },
+      "measured": {
+        "sha256": "c69444795b2fb644af51e7f1d3212e67c568fd9ed893fcb2c87fdc7a5da2f750",
+        "duration_seconds": 4.16,
+        "measured_active_rms_dbfs": -20.25,
+        "measured_peak_dbfs": -6.95,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 133164
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_ask_about_you_v1/bay_pause_line/1.0.0/audio.wav",
+      "audioId": "bay_pause_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "d2f7dc12c1bd7e0ab9050010a929582fa78ff5524f41d34a059611cbdd2cef00",
+        "durationSeconds": 4.72,
+        "activeRmsDbfs": -20.12,
+        "peakDbfs": -5.12
+      },
+      "measured": {
+        "sha256": "d2f7dc12c1bd7e0ab9050010a929582fa78ff5524f41d34a059611cbdd2cef00",
+        "duration_seconds": 4.72,
+        "measured_active_rms_dbfs": -20.12,
+        "measured_peak_dbfs": -5.12,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 151084
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_what_i_like_v1/bik_open_line/1.0.0/audio.wav",
+      "audioId": "bik_open_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "dd642db90ccc478462edf865d0fbd410e244dffed0d45b3ab2d918dae222d56c",
+        "durationSeconds": 6.4,
+        "activeRmsDbfs": -20.14,
+        "peakDbfs": -8.13
+      },
+      "measured": {
+        "sha256": "dd642db90ccc478462edf865d0fbd410e244dffed0d45b3ab2d918dae222d56c",
+        "duration_seconds": 6.4,
+        "measured_active_rms_dbfs": -20.14,
+        "measured_peak_dbfs": -8.13,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 204844
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_what_i_like_v1/bik_prompt_line/1.0.0/audio.wav",
+      "audioId": "bik_prompt_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "f60c732ff6ce890edca14cc4d6db095f7031e7c9b21178b9cc2f53fb4afbe975",
+        "durationSeconds": 3.44,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -5.44
+      },
+      "measured": {
+        "sha256": "f60c732ff6ce890edca14cc4d6db095f7031e7c9b21178b9cc2f53fb4afbe975",
+        "duration_seconds": 3.44,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -5.44,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 110124
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_what_i_like_v1/bik_result_quiet/1.0.0/audio.wav",
+      "audioId": "bik_result_quiet_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "94d63f8ac0a926501ec46b44f00a9a0bc2f4736386a2fa53e22a95b68c6c4280",
+        "durationSeconds": 4.32,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -6.41
+      },
+      "measured": {
+        "sha256": "94d63f8ac0a926501ec46b44f00a9a0bc2f4736386a2fa53e22a95b68c6c4280",
+        "duration_seconds": 4.32,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -6.41,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 138284
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_what_i_like_v1/bik_result_outside/1.0.0/audio.wav",
+      "audioId": "bik_result_outside_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "1ba48553e115d82ca5158c7f17ab341d29f7947775bd049f5a441b200fd470e5",
+        "durationSeconds": 4.48,
+        "activeRmsDbfs": -20.21,
+        "peakDbfs": -3.71
+      },
+      "measured": {
+        "sha256": "1ba48553e115d82ca5158c7f17ab341d29f7947775bd049f5a441b200fd470e5",
+        "duration_seconds": 4.48,
+        "measured_active_rms_dbfs": -20.21,
+        "measured_peak_dbfs": -3.71,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 143404
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_what_i_like_v1/bik_result_unsure/1.0.0/audio.wav",
+      "audioId": "bik_result_unsure_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "e393e11ae640f92d40bfd253c036f82f1c28ac1d9b14dbff66e2e06d1eb07158",
+        "durationSeconds": 5.36,
+        "activeRmsDbfs": -20.23,
+        "peakDbfs": -5.71
+      },
+      "measured": {
+        "sha256": "e393e11ae640f92d40bfd253c036f82f1c28ac1d9b14dbff66e2e06d1eb07158",
+        "duration_seconds": 5.36,
+        "measured_active_rms_dbfs": -20.23,
+        "measured_peak_dbfs": -5.71,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 171564
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_what_i_like_v1/bik_pause_line/1.0.0/audio.wav",
+      "audioId": "bik_pause_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "ec198d0221d6f8917444fa49b162ba0a1e02650eb041fd7c9996f305d04c3a6c",
+        "durationSeconds": 5.92,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -6.1
+      },
+      "measured": {
+        "sha256": "ec198d0221d6f8917444fa49b162ba0a1e02650eb041fd7c9996f305d04c3a6c",
+        "duration_seconds": 5.92,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -6.1,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 189484
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_tomorrow_plan_v1/btp_open_line/1.0.0/audio.wav",
+      "audioId": "btp_open_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "4bbe04d7fcb0708a1f28515648bf16dafd8726377d6018e859d8269a41c88347",
+        "durationSeconds": 5.28,
+        "activeRmsDbfs": -20.06,
+        "peakDbfs": -6.0
+      },
+      "measured": {
+        "sha256": "4bbe04d7fcb0708a1f28515648bf16dafd8726377d6018e859d8269a41c88347",
+        "duration_seconds": 5.28,
+        "measured_active_rms_dbfs": -20.06,
+        "measured_peak_dbfs": -6.0,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 169004
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_tomorrow_plan_v1/btp_prompt_line/1.0.0/audio.wav",
+      "audioId": "btp_prompt_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "e69cf57d9132b155af35a56c6968420e1a49443d39f39e5fb7d58caeedf06856",
+        "durationSeconds": 3.92,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -6.17
+      },
+      "measured": {
+        "sha256": "e69cf57d9132b155af35a56c6968420e1a49443d39f39e5fb7d58caeedf06856",
+        "duration_seconds": 3.92,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -6.17,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 125484
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_tomorrow_plan_v1/btp_result_road/1.0.0/audio.wav",
+      "audioId": "btp_result_road_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "50517fe4f7c7b3071e9d832eeaec6d93b0374d7de02f4822dd588b0b44aaacf4",
+        "durationSeconds": 5.2,
+        "activeRmsDbfs": -20.07,
+        "peakDbfs": -5.49
+      },
+      "measured": {
+        "sha256": "50517fe4f7c7b3071e9d832eeaec6d93b0374d7de02f4822dd588b0b44aaacf4",
+        "duration_seconds": 5.2,
+        "measured_active_rms_dbfs": -20.07,
+        "measured_peak_dbfs": -5.49,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 166444
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_tomorrow_plan_v1/btp_result_letter/1.0.0/audio.wav",
+      "audioId": "btp_result_letter_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "1ada38e161cc63291a37e7e488bbf7230cf6bd9d77bbc34ba004d06bd133f474",
+        "durationSeconds": 4.8,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -6.33
+      },
+      "measured": {
+        "sha256": "1ada38e161cc63291a37e7e488bbf7230cf6bd9d77bbc34ba004d06bd133f474",
+        "duration_seconds": 4.8,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -6.33,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 153644
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_tomorrow_plan_v1/btp_result_rest/1.0.0/audio.wav",
+      "audioId": "btp_result_rest_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "652474d60122e665e292a44c2048f9abca8e5dc84206acf816b396110787855d",
+        "durationSeconds": 4.96,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -4.82
+      },
+      "measured": {
+        "sha256": "652474d60122e665e292a44c2048f9abca8e5dc84206acf816b396110787855d",
+        "duration_seconds": 4.96,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -4.82,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 158764
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_tomorrow_plan_v1/btp_pause_line/1.0.0/audio.wav",
+      "audioId": "btp_pause_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "ef72f6859f2a49c51b85c85c3059f769b10fa481fbee92d426bd80073ca4aaf1",
+        "durationSeconds": 4.24,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -7.04
+      },
+      "measured": {
+        "sha256": "ef72f6859f2a49c51b85c85c3059f769b10fa481fbee92d426bd80073ca4aaf1",
+        "duration_seconds": 4.24,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -7.04,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 135724
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_return_first_words_v1/brw_open_line/1.0.0/audio.wav",
+      "audioId": "brw_open_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "90c534415475867a528dfc9f8c553fa6d300c3c3815fad9e08e1532212344e2c",
+        "durationSeconds": 4.08,
+        "activeRmsDbfs": -20.07,
+        "peakDbfs": -6.72
+      },
+      "measured": {
+        "sha256": "90c534415475867a528dfc9f8c553fa6d300c3c3815fad9e08e1532212344e2c",
+        "duration_seconds": 4.08,
+        "measured_active_rms_dbfs": -20.07,
+        "measured_peak_dbfs": -6.72,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 130604
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_return_first_words_v1/brw_result_yes/1.0.0/audio.wav",
+      "audioId": "brw_result_yes_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "017786897532991950f901233653e708fa648473d2f2f72bbf8ad7152652f8b3",
+        "durationSeconds": 3.12,
+        "activeRmsDbfs": -20.12,
+        "peakDbfs": -4.64
+      },
+      "measured": {
+        "sha256": "017786897532991950f901233653e708fa648473d2f2f72bbf8ad7152652f8b3",
+        "duration_seconds": 3.12,
+        "measured_active_rms_dbfs": -20.12,
+        "measured_peak_dbfs": -4.64,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 99884
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_return_first_words_v1/brw_result_update/1.0.0/audio.wav",
+      "audioId": "brw_result_update_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "a8d863f31a0b72be284a3fddd0ba635197bcd85eb51c14e9158b382f3376d28d",
+        "durationSeconds": 4.08,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -5.46
+      },
+      "measured": {
+        "sha256": "a8d863f31a0b72be284a3fddd0ba635197bcd85eb51c14e9158b382f3376d28d",
+        "duration_seconds": 4.08,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -5.46,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 130604
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_return_first_words_v1/brw_result_longago/1.0.0/audio.wav",
+      "audioId": "brw_result_longago_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "8c89b58fd4b52fcca291b32f25207b1ad744dd30409ed4b539b2392c8bd170c3",
+        "durationSeconds": 5.2,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -3.2
+      },
+      "measured": {
+        "sha256": "8c89b58fd4b52fcca291b32f25207b1ad744dd30409ed4b539b2392c8bd170c3",
+        "duration_seconds": 5.2,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -3.2,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 166444
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_return_first_words_v1/brw_pause_line/1.0.0/audio.wav",
+      "audioId": "brw_pause_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "b2dfed0ccffcd39375fd05d5c502d3e561d12e94169376357f8cd1e1b69eed57",
+        "durationSeconds": 4.88,
+        "activeRmsDbfs": -20.12,
+        "peakDbfs": -4.95
+      },
+      "measured": {
+        "sha256": "b2dfed0ccffcd39375fd05d5c502d3e561d12e94169376357f8cd1e1b69eed57",
+        "duration_seconds": 4.88,
+        "measured_active_rms_dbfs": -20.12,
+        "measured_peak_dbfs": -4.95,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 156204
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_ready_for_outside_v1/bgo_open_line/1.0.0/audio.wav",
+      "audioId": "bgo_open_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "bf4b0898debbdc4dca5d9dd977c3825f9119cf652853a3e33a9d713f79324af8",
+        "durationSeconds": 6.24,
+        "activeRmsDbfs": -20.05,
+        "peakDbfs": -3.52
+      },
+      "measured": {
+        "sha256": "bf4b0898debbdc4dca5d9dd977c3825f9119cf652853a3e33a9d713f79324af8",
+        "duration_seconds": 6.24,
+        "measured_active_rms_dbfs": -20.05,
+        "measured_peak_dbfs": -3.52,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 199724
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_ready_for_outside_v1/bgo_prompt_line/1.0.0/audio.wav",
+      "audioId": "bgo_prompt_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "a09f8b83052b210dde800a8dc8893793869247416a82414334f762bfceb24984",
+        "durationSeconds": 3.76,
+        "activeRmsDbfs": -20.18,
+        "peakDbfs": -5.58
+      },
+      "measured": {
+        "sha256": "a09f8b83052b210dde800a8dc8893793869247416a82414334f762bfceb24984",
+        "duration_seconds": 3.76,
+        "measured_active_rms_dbfs": -20.18,
+        "measured_peak_dbfs": -5.58,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 120364
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_ready_for_outside_v1/bgo_result_go/1.0.0/audio.wav",
+      "audioId": "bgo_result_go_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "9a6c69dff3486e40e172acff40c38095695a12e28ed8e3de96b2cb966fbf8f56",
+        "durationSeconds": 4.24,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -5.98
+      },
+      "measured": {
+        "sha256": "9a6c69dff3486e40e172acff40c38095695a12e28ed8e3de96b2cb966fbf8f56",
+        "duration_seconds": 4.24,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -5.98,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 135724
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_ready_for_outside_v1/bgo_result_later/1.0.0/audio.wav",
+      "audioId": "bgo_result_later_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "6bf9ce7302763b7a5e50476743d163e930211eb1798e11f78029775bd60c7963",
+        "durationSeconds": 4.8,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -7.6
+      },
+      "measured": {
+        "sha256": "6bf9ce7302763b7a5e50476743d163e930211eb1798e11f78029775bd60c7963",
+        "duration_seconds": 4.8,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -7.6,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 153644
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_ready_for_outside_v1/bgo_result_curious/1.0.0/audio.wav",
+      "audioId": "bgo_result_curious_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "8c4fae8db8c77d39a46a5a081c48ef8cf6000ec722f08ab867cd25400f044ce4",
+        "durationSeconds": 4.4,
+        "activeRmsDbfs": -20.34,
+        "peakDbfs": -6.14
+      },
+      "measured": {
+        "sha256": "8c4fae8db8c77d39a46a5a081c48ef8cf6000ec722f08ab867cd25400f044ce4",
+        "duration_seconds": 4.4,
+        "measured_active_rms_dbfs": -20.34,
+        "measured_peak_dbfs": -6.14,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 140844
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_ready_for_outside_v1/bgo_pause_line/1.0.0/audio.wav",
+      "audioId": "bgo_pause_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "5c328c9fc9c5f86f67526062323677b9046f470fe1f7534406ae8624bce6246b",
+        "durationSeconds": 5.84,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -7.11
+      },
+      "measured": {
+        "sha256": "5c328c9fc9c5f86f67526062323677b9046f470fe1f7534406ae8624bce6246b",
+        "duration_seconds": 5.84,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -7.11,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 186924
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_not_sure_v1/bnu_open_line/1.0.0/audio.wav",
+      "audioId": "bnu_open_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "ddf9a7af1d4afc353eea4b037a0ec0876da2455b1d8f2fb7f74c1ef14e3517d9",
+        "durationSeconds": 4.0,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -7.1
+      },
+      "measured": {
+        "sha256": "ddf9a7af1d4afc353eea4b037a0ec0876da2455b1d8f2fb7f74c1ef14e3517d9",
+        "duration_seconds": 4.0,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -7.1,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 128044
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_not_sure_v1/bnu_prompt_line/1.0.0/audio.wav",
+      "audioId": "bnu_prompt_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "12f1b270f42fcdc4bda155033bd5de46ae1304d4721586c5d996bf20adc5da00",
+        "durationSeconds": 4.56,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -7.45
+      },
+      "measured": {
+        "sha256": "12f1b270f42fcdc4bda155033bd5de46ae1304d4721586c5d996bf20adc5da00",
+        "duration_seconds": 4.56,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -7.45,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 145964
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_not_sure_v1/bnu_fine_result/1.0.0/audio.wav",
+      "audioId": "bnu_fine_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "cbb14da6d4a843b3ada9b227b57494738988773c1cf514ec207255635b762cbe",
+        "durationSeconds": 3.28,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -5.82
+      },
+      "measured": {
+        "sha256": "cbb14da6d4a843b3ada9b227b57494738988773c1cf514ec207255635b762cbe",
+        "duration_seconds": 3.28,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -5.82,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 105004
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_not_sure_v1/bnu_think_result/1.0.0/audio.wav",
+      "audioId": "bnu_think_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "3cbbf555c53e4f33a83967e1e98fd70d4aaf3533b923c45ed2afa895e5ab0492",
+        "durationSeconds": 6.08,
+        "activeRmsDbfs": -20.11,
+        "peakDbfs": -7.4
+      },
+      "measured": {
+        "sha256": "3cbbf555c53e4f33a83967e1e98fd70d4aaf3533b923c45ed2afa895e5ab0492",
+        "duration_seconds": 6.08,
+        "measured_active_rms_dbfs": -20.11,
+        "measured_peak_dbfs": -7.4,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 194604
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_not_sure_v1/bnu_later_result/1.0.0/audio.wav",
+      "audioId": "bnu_later_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "bac30a75deec550ad8e4a5d312a12940408c64cae4d8d1e2d6d91c408c7fcace",
+        "durationSeconds": 3.84,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -4.64
+      },
+      "measured": {
+        "sha256": "bac30a75deec550ad8e4a5d312a12940408c64cae4d8d1e2d6d91c408c7fcace",
+        "duration_seconds": 3.84,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -4.64,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 122924
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_01_birth/b1_not_sure_v1/bnu_pause_line/1.0.0/audio.wav",
+      "audioId": "bnu_pause_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "56a0bb24db62f815fbc073e7bcfb6991ef515545fda9269fc363a847ab58d105",
+        "durationSeconds": 5.04,
+        "activeRmsDbfs": -20.06,
+        "peakDbfs": -7.02
+      },
+      "measured": {
+        "sha256": "56a0bb24db62f815fbc073e7bcfb6991ef515545fda9269fc363a847ab58d105",
+        "duration_seconds": 5.04,
+        "measured_active_rms_dbfs": -20.06,
+        "measured_peak_dbfs": -7.02,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 161324
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_room_tour_v1/brt_open_line/1.0.0/audio.wav",
+      "audioId": "brt_open_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "e44ce5d1a5c8f2e7c58b97fcb48d097eeb8593d1eec3afe19c7ded04813be876",
+        "durationSeconds": 4.0,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -7.44
+      },
+      "measured": {
+        "sha256": "e44ce5d1a5c8f2e7c58b97fcb48d097eeb8593d1eec3afe19c7ded04813be876",
+        "duration_seconds": 4.0,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -7.44,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 128044
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_room_tour_v1/brt_prompt_line/1.0.0/audio.wav",
+      "audioId": "brt_prompt_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "387ea62b96205b801e53bdc91180ab66970c411efe9c7ef85abcd92df8e83cd1",
+        "durationSeconds": 4.48,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -6.78
+      },
+      "measured": {
+        "sha256": "387ea62b96205b801e53bdc91180ab66970c411efe9c7ef85abcd92df8e83cd1",
+        "duration_seconds": 4.48,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -6.78,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 143404
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_room_tour_v1/brt_window_result/1.0.0/audio.wav",
+      "audioId": "brt_window_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "b69f4f7a7ca9b54d07cf0313a88d6186162978065e7a20d5785d5021af10adc4",
+        "durationSeconds": 4.48,
+        "activeRmsDbfs": -20.29,
+        "peakDbfs": -6.5
+      },
+      "measured": {
+        "sha256": "b69f4f7a7ca9b54d07cf0313a88d6186162978065e7a20d5785d5021af10adc4",
+        "duration_seconds": 4.48,
+        "measured_active_rms_dbfs": -20.29,
+        "measured_peak_dbfs": -6.5,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 143404
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_room_tour_v1/brt_door_result/1.0.0/audio.wav",
+      "audioId": "brt_door_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "8521aadc99101d7c42e805227488c39865f8dadfedf4194c28b955f4c53ec34e",
+        "durationSeconds": 5.68,
+        "activeRmsDbfs": -20.11,
+        "peakDbfs": -5.74
+      },
+      "measured": {
+        "sha256": "8521aadc99101d7c42e805227488c39865f8dadfedf4194c28b955f4c53ec34e",
+        "duration_seconds": 5.68,
+        "measured_active_rms_dbfs": -20.11,
+        "measured_peak_dbfs": -5.74,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 181804
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_room_tour_v1/brt_corner_result/1.0.0/audio.wav",
+      "audioId": "brt_corner_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "513c45c05e13ab0e884b7ee0a8ca9719c551a5020c0889c8d4c6ff859f185833",
+        "durationSeconds": 5.92,
+        "activeRmsDbfs": -20.05,
+        "peakDbfs": -6.1
+      },
+      "measured": {
+        "sha256": "513c45c05e13ab0e884b7ee0a8ca9719c551a5020c0889c8d4c6ff859f185833",
+        "duration_seconds": 5.92,
+        "measured_active_rms_dbfs": -20.05,
+        "measured_peak_dbfs": -6.1,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 189484
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_room_tour_v1/brt_pause_line/1.0.0/audio.wav",
+      "audioId": "brt_pause_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "d837c8c244dd7ed5a37dfdbfc682ea932a6af1cb35b3c2e6cc6edaea0ff6bc81",
+        "durationSeconds": 5.76,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -7.04
+      },
+      "measured": {
+        "sha256": "d837c8c244dd7ed5a37dfdbfc682ea932a6af1cb35b3c2e6cc6edaea0ff6bc81",
+        "duration_seconds": 5.76,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -7.04,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 184364
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_name_objects_v1/bno_open_line/1.0.0/audio.wav",
+      "audioId": "bno_open_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "5e1a21223d364276a34684d8026650435991cabc7abf220bc5145b0c89330c20",
+        "durationSeconds": 5.28,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -5.4
+      },
+      "measured": {
+        "sha256": "5e1a21223d364276a34684d8026650435991cabc7abf220bc5145b0c89330c20",
+        "duration_seconds": 5.28,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -5.4,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 169004
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_name_objects_v1/bno_prompt_line/1.0.0/audio.wav",
+      "audioId": "bno_prompt_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "a21b948aecf128b94c0a082ebb3fd9f79d92eb3fc76342e33c989e436d6e6c48",
+        "durationSeconds": 5.76,
+        "activeRmsDbfs": -20.05,
+        "peakDbfs": -6.4
+      },
+      "measured": {
+        "sha256": "a21b948aecf128b94c0a082ebb3fd9f79d92eb3fc76342e33c989e436d6e6c48",
+        "duration_seconds": 5.76,
+        "measured_active_rms_dbfs": -20.05,
+        "measured_peak_dbfs": -6.4,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 184364
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_name_objects_v1/bno_shelf_result/1.0.0/audio.wav",
+      "audioId": "bno_shelf_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "3d5aa5c75d8b922da217ea62f8b594e098d3fe8046e72c7a68071655e4e5114f",
+        "durationSeconds": 6.0,
+        "activeRmsDbfs": -20.17,
+        "peakDbfs": -5.16
+      },
+      "measured": {
+        "sha256": "3d5aa5c75d8b922da217ea62f8b594e098d3fe8046e72c7a68071655e4e5114f",
+        "duration_seconds": 6.0,
+        "measured_active_rms_dbfs": -20.17,
+        "measured_peak_dbfs": -5.16,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 192044
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_name_objects_v1/bno_cup_result/1.0.0/audio.wav",
+      "audioId": "bno_cup_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "b74a489253c9508261d987e179d3e05e2df97be9d4bfa751b24020058202047b",
+        "durationSeconds": 6.64,
+        "activeRmsDbfs": -20.15,
+        "peakDbfs": -3.51
+      },
+      "measured": {
+        "sha256": "b74a489253c9508261d987e179d3e05e2df97be9d4bfa751b24020058202047b",
+        "duration_seconds": 6.64,
+        "measured_active_rms_dbfs": -20.15,
+        "measured_peak_dbfs": -3.51,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 212524
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_name_objects_v1/bno_cushion_result/1.0.0/audio.wav",
+      "audioId": "bno_cushion_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "e23cd0b3bc69a01fd1cc019ad9a3388ce94ec6cd3535eb8c37e1aaf143ca33c8",
+        "durationSeconds": 5.2,
+        "activeRmsDbfs": -20.12,
+        "peakDbfs": -4.33
+      },
+      "measured": {
+        "sha256": "e23cd0b3bc69a01fd1cc019ad9a3388ce94ec6cd3535eb8c37e1aaf143ca33c8",
+        "duration_seconds": 5.2,
+        "measured_active_rms_dbfs": -20.12,
+        "measured_peak_dbfs": -4.33,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 166444
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_name_objects_v1/bno_pause_line/1.0.0/audio.wav",
+      "audioId": "bno_pause_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "c34663dac1f816209227f25ab5a5365c9159c86d0b9ea6a308853fcc379dd866",
+        "durationSeconds": 4.96,
+        "activeRmsDbfs": -20.12,
+        "peakDbfs": -7.83
+      },
+      "measured": {
+        "sha256": "c34663dac1f816209227f25ab5a5365c9159c86d0b9ea6a308853fcc379dd866",
+        "duration_seconds": 4.96,
+        "measured_active_rms_dbfs": -20.12,
+        "measured_peak_dbfs": -7.83,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 158764
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_colors_v1/bcl_open_line/1.0.0/audio.wav",
+      "audioId": "bcl_open_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "6116b49cf5195ab602683f22af5b9a8a1a0f1e5f951719cfba5f2db931251668",
+        "durationSeconds": 5.2,
+        "activeRmsDbfs": -20.06,
+        "peakDbfs": -5.85
+      },
+      "measured": {
+        "sha256": "6116b49cf5195ab602683f22af5b9a8a1a0f1e5f951719cfba5f2db931251668",
+        "duration_seconds": 5.2,
+        "measured_active_rms_dbfs": -20.06,
+        "measured_peak_dbfs": -5.85,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 166444
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_colors_v1/bcl_prompt_line/1.0.0/audio.wav",
+      "audioId": "bcl_prompt_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "739ebecb9e179ab2f1886a533e49e74c1e04545f82698f012d603f970e3565be",
+        "durationSeconds": 5.12,
+        "activeRmsDbfs": -20.06,
+        "peakDbfs": -4.92
+      },
+      "measured": {
+        "sha256": "739ebecb9e179ab2f1886a533e49e74c1e04545f82698f012d603f970e3565be",
+        "duration_seconds": 5.12,
+        "measured_active_rms_dbfs": -20.06,
+        "measured_peak_dbfs": -4.92,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 163884
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_colors_v1/bcl_blue_result/1.0.0/audio.wav",
+      "audioId": "bcl_blue_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "75effe89a0d8c8430284b13b10e0ad818774d406583e1c9f3042784f85461c1f",
+        "durationSeconds": 5.44,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -4.17
+      },
+      "measured": {
+        "sha256": "75effe89a0d8c8430284b13b10e0ad818774d406583e1c9f3042784f85461c1f",
+        "duration_seconds": 5.44,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -4.17,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 174124
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_colors_v1/bcl_green_result/1.0.0/audio.wav",
+      "audioId": "bcl_green_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "e9156e17ae3ccf83cbd3b370712a12d055a14728d4295d6e19aa59ff2a7ac284",
+        "durationSeconds": 5.6,
+        "activeRmsDbfs": -20.13,
+        "peakDbfs": -3.98
+      },
+      "measured": {
+        "sha256": "e9156e17ae3ccf83cbd3b370712a12d055a14728d4295d6e19aa59ff2a7ac284",
+        "duration_seconds": 5.6,
+        "measured_active_rms_dbfs": -20.13,
+        "measured_peak_dbfs": -3.98,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 179244
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_colors_v1/bcl_yellow_result/1.0.0/audio.wav",
+      "audioId": "bcl_yellow_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "e165605d0c2b099f111570f350de8fe7cff23258618391afe80bc344cbf5e340",
+        "durationSeconds": 4.4,
+        "activeRmsDbfs": -20.07,
+        "peakDbfs": -5.08
+      },
+      "measured": {
+        "sha256": "e165605d0c2b099f111570f350de8fe7cff23258618391afe80bc344cbf5e340",
+        "duration_seconds": 4.4,
+        "measured_active_rms_dbfs": -20.07,
+        "measured_peak_dbfs": -5.08,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 140844
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_colors_v1/bcl_pause_line/1.0.0/audio.wav",
+      "audioId": "bcl_pause_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "26b273f0782914b0306e9575dae251fe33fac2137511e25b7920b4266fb7accb",
+        "durationSeconds": 5.12,
+        "activeRmsDbfs": -20.06,
+        "peakDbfs": -6.46
+      },
+      "measured": {
+        "sha256": "26b273f0782914b0306e9575dae251fe33fac2137511e25b7920b4266fb7accb",
+        "duration_seconds": 5.12,
+        "measured_active_rms_dbfs": -20.06,
+        "measured_peak_dbfs": -6.46,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 163884
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_outside_road_v1/bor_open_line/1.0.0/audio.wav",
+      "audioId": "bor_open_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "082d0b49ec8436375bda95507e81342a6cee42073e294a59d0ac6e16234ba508",
+        "durationSeconds": 4.96,
+        "activeRmsDbfs": -20.06,
+        "peakDbfs": -5.28
+      },
+      "measured": {
+        "sha256": "082d0b49ec8436375bda95507e81342a6cee42073e294a59d0ac6e16234ba508",
+        "duration_seconds": 4.96,
+        "measured_active_rms_dbfs": -20.06,
+        "measured_peak_dbfs": -5.28,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 158764
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_outside_road_v1/bor_prompt_line/1.0.0/audio.wav",
+      "audioId": "bor_prompt_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "b7360734c76111d18fc4b2142082f00a556a4befda7d15959dd029f8732ddccd",
+        "durationSeconds": 4.96,
+        "activeRmsDbfs": -20.06,
+        "peakDbfs": -6.57
+      },
+      "measured": {
+        "sha256": "b7360734c76111d18fc4b2142082f00a556a4befda7d15959dd029f8732ddccd",
+        "duration_seconds": 4.96,
+        "measured_active_rms_dbfs": -20.06,
+        "measured_peak_dbfs": -6.57,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 158764
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_outside_road_v1/bor_village_result/1.0.0/audio.wav",
+      "audioId": "bor_village_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "c62e883951638b45833e85d9bd21f3cc3a156dbec6ae88969994e9ba60680d1f",
+        "durationSeconds": 5.28,
+        "activeRmsDbfs": -20.18,
+        "peakDbfs": -4.52
+      },
+      "measured": {
+        "sha256": "c62e883951638b45833e85d9bd21f3cc3a156dbec6ae88969994e9ba60680d1f",
+        "duration_seconds": 5.28,
+        "measured_active_rms_dbfs": -20.18,
+        "measured_peak_dbfs": -4.52,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 169004
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_outside_road_v1/bor_trees_result/1.0.0/audio.wav",
+      "audioId": "bor_trees_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "64af49f5acde8b47ca3568446d7bc3cb0c0c218dbe06def6a738edc317641fb1",
+        "durationSeconds": 5.84,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -5.85
+      },
+      "measured": {
+        "sha256": "64af49f5acde8b47ca3568446d7bc3cb0c0c218dbe06def6a738edc317641fb1",
+        "duration_seconds": 5.84,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -5.85,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 186924
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_outside_road_v1/bor_unknown_result/1.0.0/audio.wav",
+      "audioId": "bor_unknown_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "f477219127c95a507767e0eadcfb9826427f31580650dc7ff7fa7b1ecd687081",
+        "durationSeconds": 4.48,
+        "activeRmsDbfs": -20.19,
+        "peakDbfs": -4.97
+      },
+      "measured": {
+        "sha256": "f477219127c95a507767e0eadcfb9826427f31580650dc7ff7fa7b1ecd687081",
+        "duration_seconds": 4.48,
+        "measured_active_rms_dbfs": -20.19,
+        "measured_peak_dbfs": -4.97,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 143404
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_outside_road_v1/bor_pause_line/1.0.0/audio.wav",
+      "audioId": "bor_pause_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "74f1188a328175784ced72f153a497c42fbb003be0abd291c1b2657793a8d264",
+        "durationSeconds": 4.96,
+        "activeRmsDbfs": -20.07,
+        "peakDbfs": -3.87
+      },
+      "measured": {
+        "sha256": "74f1188a328175784ced72f153a497c42fbb003be0abd291c1b2657793a8d264",
+        "duration_seconds": 4.96,
+        "measured_active_rms_dbfs": -20.07,
+        "measured_peak_dbfs": -3.87,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 158764
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_today_you_v1/bty_open_line/1.0.0/audio.wav",
+      "audioId": "bty_open_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "e584baebd69d27ac8b51a390e63646b1783a3a1ec861617862ad46fc1bc3b022",
+        "durationSeconds": 4.96,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -4.62
+      },
+      "measured": {
+        "sha256": "e584baebd69d27ac8b51a390e63646b1783a3a1ec861617862ad46fc1bc3b022",
+        "duration_seconds": 4.96,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -4.62,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 158764
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_today_you_v1/bty_prompt_line/1.0.0/audio.wav",
+      "audioId": "bty_prompt_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "e4c4902dcf6be881dba77174a8e54cc31797bcb8d354d8499fda63ef578258da",
+        "durationSeconds": 4.8,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -6.3
+      },
+      "measured": {
+        "sha256": "e4c4902dcf6be881dba77174a8e54cc31797bcb8d354d8499fda63ef578258da",
+        "duration_seconds": 4.8,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -6.3,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 153644
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_today_you_v1/bty_quiet_result/1.0.0/audio.wav",
+      "audioId": "bty_quiet_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "8f4c0b4e6bcd1ee4071fd5de961f08b7f9833a61f16184bc5f24feef8e8b4819",
+        "durationSeconds": 4.72,
+        "activeRmsDbfs": -20.15,
+        "peakDbfs": -5.93
+      },
+      "measured": {
+        "sha256": "8f4c0b4e6bcd1ee4071fd5de961f08b7f9833a61f16184bc5f24feef8e8b4819",
+        "duration_seconds": 4.72,
+        "measured_active_rms_dbfs": -20.15,
+        "measured_peak_dbfs": -5.93,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 151084
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_today_you_v1/bty_busy_result/1.0.0/audio.wav",
+      "audioId": "bty_busy_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "2412996841239f999e1f0dc83e06d5874b408f4c27f9039386c3f437c0dfb467",
+        "durationSeconds": 4.32,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -5.65
+      },
+      "measured": {
+        "sha256": "2412996841239f999e1f0dc83e06d5874b408f4c27f9039386c3f437c0dfb467",
+        "duration_seconds": 4.32,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -5.65,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 138284
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_today_you_v1/bty_something_result/1.0.0/audio.wav",
+      "audioId": "bty_something_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "90399f30ac159821c47f5115033366728da3096a76f87679e3e7559bc1a588fb",
+        "durationSeconds": 3.28,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -6.0
+      },
+      "measured": {
+        "sha256": "90399f30ac159821c47f5115033366728da3096a76f87679e3e7559bc1a588fb",
+        "duration_seconds": 3.28,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -6.0,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 105004
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_today_you_v1/bty_pause_line/1.0.0/audio.wav",
+      "audioId": "bty_pause_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "19a5f74910e2c266a936b263666a5d60fe33788cb0bd05630282bae51eae9111",
+        "durationSeconds": 5.12,
+        "activeRmsDbfs": -20.06,
+        "peakDbfs": -7.79
+      },
+      "measured": {
+        "sha256": "19a5f74910e2c266a936b263666a5d60fe33788cb0bd05630282bae51eae9111",
+        "duration_seconds": 5.12,
+        "measured_active_rms_dbfs": -20.06,
+        "measured_peak_dbfs": -7.79,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 163884
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_my_likes_v1/blk_open_line/1.0.0/audio.wav",
+      "audioId": "blk_open_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "b47f0dcd7f182d7ea8e6205ecdc92fa2943800ef4919f38d7c9f58d36e722552",
+        "durationSeconds": 5.6,
+        "activeRmsDbfs": -20.05,
+        "peakDbfs": -6.23
+      },
+      "measured": {
+        "sha256": "b47f0dcd7f182d7ea8e6205ecdc92fa2943800ef4919f38d7c9f58d36e722552",
+        "duration_seconds": 5.6,
+        "measured_active_rms_dbfs": -20.05,
+        "measured_peak_dbfs": -6.23,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 179244
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_my_likes_v1/blk_prompt_line/1.0.0/audio.wav",
+      "audioId": "blk_prompt_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "84b0e130d5e40c056ec1423b8c8cae548ce47c84733fe9a6cb3794d45267a879",
+        "durationSeconds": 4.56,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -6.05
+      },
+      "measured": {
+        "sha256": "84b0e130d5e40c056ec1423b8c8cae548ce47c84733fe9a6cb3794d45267a879",
+        "duration_seconds": 4.56,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -6.05,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 145964
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_my_likes_v1/blk_light_result/1.0.0/audio.wav",
+      "audioId": "blk_light_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "c8afae69f72b8caa3c5a22ccad4de2d928fe85fd6dee2ec4d5582bbd78534815",
+        "durationSeconds": 5.04,
+        "activeRmsDbfs": -20.08,
+        "peakDbfs": -5.89
+      },
+      "measured": {
+        "sha256": "c8afae69f72b8caa3c5a22ccad4de2d928fe85fd6dee2ec4d5582bbd78534815",
+        "duration_seconds": 5.04,
+        "measured_active_rms_dbfs": -20.08,
+        "measured_peak_dbfs": -5.89,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 161324
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_my_likes_v1/blk_quiet_result/1.0.0/audio.wav",
+      "audioId": "blk_quiet_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "4c532c50ef403c36b78244191706e14d97ccbeed99f1549e6d1d2b1b3ce91581",
+        "durationSeconds": 6.0,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -4.24
+      },
+      "measured": {
+        "sha256": "4c532c50ef403c36b78244191706e14d97ccbeed99f1549e6d1d2b1b3ce91581",
+        "duration_seconds": 6.0,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -4.24,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 192044
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_my_likes_v1/blk_bell_result/1.0.0/audio.wav",
+      "audioId": "blk_bell_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "81ce735abd070ca7d623a0e53428c53511d5f7d64f0c5e1fd53ec74929212e1d",
+        "durationSeconds": 7.28,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -5.61
+      },
+      "measured": {
+        "sha256": "81ce735abd070ca7d623a0e53428c53511d5f7d64f0c5e1fd53ec74929212e1d",
+        "duration_seconds": 7.28,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -5.61,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 233004
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_my_likes_v1/blk_pause_line/1.0.0/audio.wav",
+      "audioId": "blk_pause_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "ea788bfac414e1dd927b06249a213b46ac85769d05227eb2b1c952edb18b4d5c",
+        "durationSeconds": 5.36,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -7.53
+      },
+      "measured": {
+        "sha256": "ea788bfac414e1dd927b06249a213b46ac85769d05227eb2b1c952edb18b4d5c",
+        "duration_seconds": 5.36,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -7.53,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 171564
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_mistake_v1/bmi_open_line/1.0.0/audio.wav",
+      "audioId": "bmi_open_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "fdf8e9b4353bb24ecd23ce2a5da6e368b2688c9ca6fe0ae336a260707e19f3c1",
+        "durationSeconds": 5.6,
+        "activeRmsDbfs": -20.06,
+        "peakDbfs": -4.53
+      },
+      "measured": {
+        "sha256": "fdf8e9b4353bb24ecd23ce2a5da6e368b2688c9ca6fe0ae336a260707e19f3c1",
+        "duration_seconds": 5.6,
+        "measured_active_rms_dbfs": -20.06,
+        "measured_peak_dbfs": -4.53,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 179244
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_mistake_v1/bmi_prompt_line/1.0.0/audio.wav",
+      "audioId": "bmi_prompt_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "50a1ad0ec835bf2f55fcd1e730df73b96cfa5db71ca18d19d25e5f59071e557b",
+        "durationSeconds": 4.56,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -7.46
+      },
+      "measured": {
+        "sha256": "50a1ad0ec835bf2f55fcd1e730df73b96cfa5db71ca18d19d25e5f59071e557b",
+        "duration_seconds": 4.56,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -7.46,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 145964
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_mistake_v1/bmi_clarify_result/1.0.0/audio.wav",
+      "audioId": "bmi_clarify_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "de01130a94d78ff24031127f94e163f6c0aee770aa8e489fc4c7c01bde4ebc3a",
+        "durationSeconds": 6.72,
+        "activeRmsDbfs": -20.1,
+        "peakDbfs": -3.49
+      },
+      "measured": {
+        "sha256": "de01130a94d78ff24031127f94e163f6c0aee770aa8e489fc4c7c01bde4ebc3a",
+        "duration_seconds": 6.72,
+        "measured_active_rms_dbfs": -20.1,
+        "measured_peak_dbfs": -3.49,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 215084
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_mistake_v1/bmi_skip_result/1.0.0/audio.wav",
+      "audioId": "bmi_skip_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "d79c1f40446c519da2ea372ae805bae44f8dbe07342077610402c578f801f1d8",
+        "durationSeconds": 4.56,
+        "activeRmsDbfs": -20.07,
+        "peakDbfs": -5.34
+      },
+      "measured": {
+        "sha256": "d79c1f40446c519da2ea372ae805bae44f8dbe07342077610402c578f801f1d8",
+        "duration_seconds": 4.56,
+        "measured_active_rms_dbfs": -20.07,
+        "measured_peak_dbfs": -5.34,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 145964
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_mistake_v1/bmi_pause_line/1.0.0/audio.wav",
+      "audioId": "bmi_pause_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "a0d13f34e553e683e437ef6db928efa5cfd7952f48c7dd18c4c44aa2d11207e9",
+        "durationSeconds": 4.56,
+        "activeRmsDbfs": -20.06,
+        "peakDbfs": -5.7
+      },
+      "measured": {
+        "sha256": "a0d13f34e553e683e437ef6db928efa5cfd7952f48c7dd18c4c44aa2d11207e9",
+        "duration_seconds": 4.56,
+        "measured_active_rms_dbfs": -20.06,
+        "measured_peak_dbfs": -5.7,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 145964
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_small_task_v1/bst_open_line/1.0.0/audio.wav",
+      "audioId": "bst_open_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "675a0aeb34c6c1ccb029526ad1714da4de0ad2d65a6e4ad301b25400137254ca",
+        "durationSeconds": 6.4,
+        "activeRmsDbfs": -20.05,
+        "peakDbfs": -4.52
+      },
+      "measured": {
+        "sha256": "675a0aeb34c6c1ccb029526ad1714da4de0ad2d65a6e4ad301b25400137254ca",
+        "duration_seconds": 6.4,
+        "measured_active_rms_dbfs": -20.05,
+        "measured_peak_dbfs": -4.52,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 204844
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_small_task_v1/bst_prompt_line/1.0.0/audio.wav",
+      "audioId": "bst_prompt_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "0a63ba51a485f25f574509a87c2b5dd42205c9f916099c6f6810a6838226c879",
+        "durationSeconds": 3.6,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -8.05
+      },
+      "measured": {
+        "sha256": "0a63ba51a485f25f574509a87c2b5dd42205c9f916099c6f6810a6838226c879",
+        "duration_seconds": 3.6,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -8.05,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 115244
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_small_task_v1/bst_shelf_result/1.0.0/audio.wav",
+      "audioId": "bst_shelf_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "8c1523d710dcc15c4f863e1ed4a6a7f3853fd13ccc6f9e4554a2eda2b173b221",
+        "durationSeconds": 4.96,
+        "activeRmsDbfs": -20.08,
+        "peakDbfs": -5.08
+      },
+      "measured": {
+        "sha256": "8c1523d710dcc15c4f863e1ed4a6a7f3853fd13ccc6f9e4554a2eda2b173b221",
+        "duration_seconds": 4.96,
+        "measured_active_rms_dbfs": -20.08,
+        "measured_peak_dbfs": -5.08,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 158764
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_small_task_v1/bst_window_result/1.0.0/audio.wav",
+      "audioId": "bst_window_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "84be1f1b02b98e104486bac486fd6480e100bd6de7ddb5684970b6a59d4576ae",
+        "durationSeconds": 4.64,
+        "activeRmsDbfs": -20.07,
+        "peakDbfs": -4.8
+      },
+      "measured": {
+        "sha256": "84be1f1b02b98e104486bac486fd6480e100bd6de7ddb5684970b6a59d4576ae",
+        "duration_seconds": 4.64,
+        "measured_active_rms_dbfs": -20.07,
+        "measured_peak_dbfs": -4.8,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 148524
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_small_task_v1/bst_plant_result/1.0.0/audio.wav",
+      "audioId": "bst_plant_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "7a427a01766d3973fe43ca0efe3553deb554f55083404549b2fedaa206ec7818",
+        "durationSeconds": 4.16,
+        "activeRmsDbfs": -20.17,
+        "peakDbfs": -4.42
+      },
+      "measured": {
+        "sha256": "7a427a01766d3973fe43ca0efe3553deb554f55083404549b2fedaa206ec7818",
+        "duration_seconds": 4.16,
+        "measured_active_rms_dbfs": -20.17,
+        "measured_peak_dbfs": -4.42,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 133164
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_small_task_v1/bst_pause_line/1.0.0/audio.wav",
+      "audioId": "bst_pause_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "a0864b36940d47e130948b1a6959cd12d75bedf00bd933095bde60ce27425043",
+        "durationSeconds": 6.72,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -6.3
+      },
+      "measured": {
+        "sha256": "a0864b36940d47e130948b1a6959cd12d75bedf00bd933095bde60ce27425043",
+        "duration_seconds": 6.72,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -6.3,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 215084
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_feeling_check_v1/bfc_open_line/1.0.0/audio.wav",
+      "audioId": "bfc_open_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "e1e5aacc990113958fe85f5e9f3ba9929d6f439d14a97f402d8aff46d988ec43",
+        "durationSeconds": 4.72,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -6.64
+      },
+      "measured": {
+        "sha256": "e1e5aacc990113958fe85f5e9f3ba9929d6f439d14a97f402d8aff46d988ec43",
+        "duration_seconds": 4.72,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -6.64,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 151084
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_feeling_check_v1/bfc_prompt_line/1.0.0/audio.wav",
+      "audioId": "bfc_prompt_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "e86b59c77c660761bbfa168ad62fce3f17f61fb5abf3fd367f8848c6254b809b",
+        "durationSeconds": 4.64,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -5.26
+      },
+      "measured": {
+        "sha256": "e86b59c77c660761bbfa168ad62fce3f17f61fb5abf3fd367f8848c6254b809b",
+        "duration_seconds": 4.64,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -5.26,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 148524
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_feeling_check_v1/bfc_tired_result/1.0.0/audio.wav",
+      "audioId": "bfc_tired_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "be019c8435e8b563f9eda52da00deea0492efb76fdbcbcf4dc71b4daf0764e62",
+        "durationSeconds": 5.68,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -4.12
+      },
+      "measured": {
+        "sha256": "be019c8435e8b563f9eda52da00deea0492efb76fdbcbcf4dc71b4daf0764e62",
+        "duration_seconds": 5.68,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -4.12,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 181804
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_feeling_check_v1/bfc_okay_result/1.0.0/audio.wav",
+      "audioId": "bfc_okay_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "8561a33cfe72ef46b02f5209490ba8cf7c30ab842f36c192f9a973c0eb15439f",
+        "durationSeconds": 4.16,
+        "activeRmsDbfs": -20.09,
+        "peakDbfs": -5.35
+      },
+      "measured": {
+        "sha256": "8561a33cfe72ef46b02f5209490ba8cf7c30ab842f36c192f9a973c0eb15439f",
+        "duration_seconds": 4.16,
+        "measured_active_rms_dbfs": -20.09,
+        "measured_peak_dbfs": -5.35,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 133164
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_feeling_check_v1/bfc_better_result/1.0.0/audio.wav",
+      "audioId": "bfc_better_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "79d67025010b1e7d26726cd4d208309a9a7ceb7b2487294fc4f79a5633cae3a0",
+        "durationSeconds": 6.64,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -4.97
+      },
+      "measured": {
+        "sha256": "79d67025010b1e7d26726cd4d208309a9a7ceb7b2487294fc4f79a5633cae3a0",
+        "duration_seconds": 6.64,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -4.97,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 212524
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_feeling_check_v1/bfc_pause_line/1.0.0/audio.wav",
+      "audioId": "bfc_pause_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "0fc8b062cd50aeb730acd2622016982b60e60c2cc5210ea9a0e9edb7ae07aea1",
+        "durationSeconds": 4.32,
+        "activeRmsDbfs": -20.07,
+        "peakDbfs": -7.94
+      },
+      "measured": {
+        "sha256": "0fc8b062cd50aeb730acd2622016982b60e60c2cc5210ea9a0e9edb7ae07aea1",
+        "duration_seconds": 4.32,
+        "measured_active_rms_dbfs": -20.07,
+        "measured_peak_dbfs": -7.94,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 138284
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_sound_comes_back_v1/bsb_open_line/1.0.0/audio.wav",
+      "audioId": "bsb_open_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "15eaf343678fa8c167a6de215e45cf25403be129f184658a4964ab976511e2a2",
+        "durationSeconds": 5.84,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -6.36
+      },
+      "measured": {
+        "sha256": "15eaf343678fa8c167a6de215e45cf25403be129f184658a4964ab976511e2a2",
+        "duration_seconds": 5.84,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -6.36,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 186924
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_sound_comes_back_v1/bsb_prompt_line/1.0.0/audio.wav",
+      "audioId": "bsb_prompt_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "7927cbeb1eefb563a726bcaa5227c89d1fe1897b27b5d7ce0db1eff66076d89f",
+        "durationSeconds": 5.84,
+        "activeRmsDbfs": -20.05,
+        "peakDbfs": -4.42
+      },
+      "measured": {
+        "sha256": "7927cbeb1eefb563a726bcaa5227c89d1fe1897b27b5d7ce0db1eff66076d89f",
+        "duration_seconds": 5.84,
+        "measured_active_rms_dbfs": -20.05,
+        "measured_peak_dbfs": -4.42,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 186924
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_sound_comes_back_v1/bsb_wind_result/1.0.0/audio.wav",
+      "audioId": "bsb_wind_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "71c36e8c3b2e7633a118544f00d7469d27ebd49dc7ce1be8edc8ba1cc9fa85d0",
+        "durationSeconds": 5.68,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -4.86
+      },
+      "measured": {
+        "sha256": "71c36e8c3b2e7633a118544f00d7469d27ebd49dc7ce1be8edc8ba1cc9fa85d0",
+        "duration_seconds": 5.68,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -4.86,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 181804
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_sound_comes_back_v1/bsb_voice_result/1.0.0/audio.wav",
+      "audioId": "bsb_voice_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "26040a292e2840ad3744f12ffc15e0640ac2be8329ede8fadab406534b0e8577",
+        "durationSeconds": 5.68,
+        "activeRmsDbfs": -20.13,
+        "peakDbfs": -3.78
+      },
+      "measured": {
+        "sha256": "26040a292e2840ad3744f12ffc15e0640ac2be8329ede8fadab406534b0e8577",
+        "duration_seconds": 5.68,
+        "measured_active_rms_dbfs": -20.13,
+        "measured_peak_dbfs": -3.78,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 181804
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_sound_comes_back_v1/bsb_quiet_result/1.0.0/audio.wav",
+      "audioId": "bsb_quiet_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "96d10a07c4e9dcaa2df4182f3d62ff147dd3f2198362bb097466c0cf6b384e8b",
+        "durationSeconds": 4.56,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -5.2
+      },
+      "measured": {
+        "sha256": "96d10a07c4e9dcaa2df4182f3d62ff147dd3f2198362bb097466c0cf6b384e8b",
+        "duration_seconds": 4.56,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -5.2,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 145964
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_sound_comes_back_v1/bsb_pause_line/1.0.0/audio.wav",
+      "audioId": "bsb_pause_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "68be5b5140ebe12933ce18c1ef1dfdb2cc4d480e022635d17b51172eddd47b77",
+        "durationSeconds": 4.8,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -6.61
+      },
+      "measured": {
+        "sha256": "68be5b5140ebe12933ce18c1ef1dfdb2cc4d480e022635d17b51172eddd47b77",
+        "duration_seconds": 4.8,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -6.61,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 153644
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_recall_room_v1/brc_open_line/1.0.0/audio.wav",
+      "audioId": "brc_open_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "221218dd148dca028d2e544106639a6ee549785c10de65f8aaa68a92544c121b",
+        "durationSeconds": 6.4,
+        "activeRmsDbfs": -20.13,
+        "peakDbfs": -3.99
+      },
+      "measured": {
+        "sha256": "221218dd148dca028d2e544106639a6ee549785c10de65f8aaa68a92544c121b",
+        "duration_seconds": 6.4,
+        "measured_active_rms_dbfs": -20.13,
+        "measured_peak_dbfs": -3.99,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 204844
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_recall_room_v1/brc_remember_result/1.0.0/audio.wav",
+      "audioId": "brc_remember_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "d903fdeb7265b7c0928a94fa7274d60b5cd9ad90a4b66f1866b3f50ad9efaefb",
+        "durationSeconds": 6.4,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -6.0
+      },
+      "measured": {
+        "sha256": "d903fdeb7265b7c0928a94fa7274d60b5cd9ad90a4b66f1866b3f50ad9efaefb",
+        "duration_seconds": 6.4,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -6.0,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 204844
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_recall_room_v1/brc_tell_more_result/1.0.0/audio.wav",
+      "audioId": "brc_tell_more_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "f0032507ffa0565ede4db7c2e5db0604304a342fedd197e09478a96d076921fe",
+        "durationSeconds": 9.2,
+        "activeRmsDbfs": -20.15,
+        "peakDbfs": -4.9
+      },
+      "measured": {
+        "sha256": "f0032507ffa0565ede4db7c2e5db0604304a342fedd197e09478a96d076921fe",
+        "duration_seconds": 9.2,
+        "measured_active_rms_dbfs": -20.15,
+        "measured_peak_dbfs": -4.9,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 294444
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_recall_room_v1/brc_long_ago_result/1.0.0/audio.wav",
+      "audioId": "brc_long_ago_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "751ce9d1347732574c83cd1b819c31f43a3ab0dec377ed15f142d11d6908bf36",
+        "durationSeconds": 7.6,
+        "activeRmsDbfs": -20.16,
+        "peakDbfs": -6.05
+      },
+      "measured": {
+        "sha256": "751ce9d1347732574c83cd1b819c31f43a3ab0dec377ed15f142d11d6908bf36",
+        "duration_seconds": 7.6,
+        "measured_active_rms_dbfs": -20.16,
+        "measured_peak_dbfs": -6.05,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 243244
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_recall_room_v1/brc_pause_line/1.0.0/audio.wav",
+      "audioId": "brc_pause_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "8a01a24bd1a1db1222d7160893ee19539ae77b14b930db0c89a69370a69c6bd9",
+        "durationSeconds": 5.36,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -8.81
+      },
+      "measured": {
+        "sha256": "8a01a24bd1a1db1222d7160893ee19539ae77b14b930db0c89a69370a69c6bd9",
+        "duration_seconds": 5.36,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -8.81,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 171564
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_ready_for_school_v1/brs_open_line/1.0.0/audio.wav",
+      "audioId": "brs_open_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "d7e0bde1927584802a9f5f139f1ffeec3e4dae186e7959e5c5543443ecf257c1",
+        "durationSeconds": 6.88,
+        "activeRmsDbfs": -20.05,
+        "peakDbfs": -6.1
+      },
+      "measured": {
+        "sha256": "d7e0bde1927584802a9f5f139f1ffeec3e4dae186e7959e5c5543443ecf257c1",
+        "duration_seconds": 6.88,
+        "measured_active_rms_dbfs": -20.05,
+        "measured_peak_dbfs": -6.1,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 220204
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_ready_for_school_v1/brs_prompt_line/1.0.0/audio.wav",
+      "audioId": "brs_prompt_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "e0c0d8684762e711c162d8f8ad98469b8d2c4354467847c38c3b2c4c7e78c54c",
+        "durationSeconds": 5.04,
+        "activeRmsDbfs": -20.07,
+        "peakDbfs": -5.51
+      },
+      "measured": {
+        "sha256": "e0c0d8684762e711c162d8f8ad98469b8d2c4354467847c38c3b2c4c7e78c54c",
+        "duration_seconds": 5.04,
+        "measured_active_rms_dbfs": -20.07,
+        "measured_peak_dbfs": -5.51,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 161324
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_ready_for_school_v1/brs_school_result/1.0.0/audio.wav",
+      "audioId": "brs_school_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "1be680e97c0619c829a718eb952a9039bfed8978f62501a8e6e28d6ae2641257",
+        "durationSeconds": 6.64,
+        "activeRmsDbfs": -20.15,
+        "peakDbfs": -6.15
+      },
+      "measured": {
+        "sha256": "1be680e97c0619c829a718eb952a9039bfed8978f62501a8e6e28d6ae2641257",
+        "duration_seconds": 6.64,
+        "measured_active_rms_dbfs": -20.15,
+        "measured_peak_dbfs": -6.15,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 212524
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_ready_for_school_v1/brs_listen_result/1.0.0/audio.wav",
+      "audioId": "brs_listen_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "c7c6dae3b11552ca8c6970ba142dd0b306e99d7590d6ac960439ac755a69a2ba",
+        "durationSeconds": 6.0,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -5.11
+      },
+      "measured": {
+        "sha256": "c7c6dae3b11552ca8c6970ba142dd0b306e99d7590d6ac960439ac755a69a2ba",
+        "duration_seconds": 6.0,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -5.11,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 192044
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_ready_for_school_v1/brs_new_place_result/1.0.0/audio.wav",
+      "audioId": "brs_new_place_result_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "151c0b805a26aa23ea27bd3de217af79e5e127148c14836629478fe685473777",
+        "durationSeconds": 6.4,
+        "activeRmsDbfs": -20.06,
+        "peakDbfs": -4.29
+      },
+      "measured": {
+        "sha256": "151c0b805a26aa23ea27bd3de217af79e5e127148c14836629478fe685473777",
+        "duration_seconds": 6.4,
+        "measured_active_rms_dbfs": -20.06,
+        "measured_peak_dbfs": -4.29,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 204844
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    },
+    {
+      "fileRef": "tts/chapter_02_childhood/b2_ready_for_school_v1/brs_pause_line/1.0.0/audio.wav",
+      "audioId": "brs_pause_line_audio",
+      "status": "ready",
+      "expected": {
+        "checksumSha256": "0a3ec9d85e8d34b17096cefc5620b2a36fb1d44116c1b6830cc17e664826af74",
+        "durationSeconds": 6.08,
+        "activeRmsDbfs": -20.0,
+        "peakDbfs": -7.27
+      },
+      "measured": {
+        "sha256": "0a3ec9d85e8d34b17096cefc5620b2a36fb1d44116c1b6830cc17e664826af74",
+        "duration_seconds": 6.08,
+        "measured_active_rms_dbfs": -20.0,
+        "measured_peak_dbfs": -7.27,
+        "sample_rate_hz": 16000,
+        "channels": 1,
+        "bits_per_sample": 16,
+        "file_size_bytes": 194604
+      },
+      "checks": {
+        "riff_magic_ok": true,
+        "wave_magic_ok": true,
+        "riff_length_ok": true,
+        "data_length_ok": true,
+        "sample_rate_ok": true,
+        "channels_ok": true,
+        "bits_ok": true,
+        "pcm_uncompressed_ok": true,
+        "peak_in_band": true,
+        "active_rms_in_band": true,
+        "duration_vs_manifest": true
+      },
+      "errors": []
+    }
+  ]
+}

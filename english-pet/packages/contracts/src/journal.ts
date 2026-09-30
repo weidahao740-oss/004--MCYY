@@ -20,11 +20,13 @@ export const journalEntrySchema = z.object({
   version: z.number().int().positive(),
   createdAt: z.string().datetime(),
   updatedAt: z.string().datetime(),
+  textVersion: z.string().nullable(),
+  translationVersion: z.string().nullable(),
 })
 
 export const journalListResponseSchema = z.object({
   entries: z.array(journalEntrySchema),
-  persistence: z.literal('memory'),
+  persistence: z.enum(['memory', 'sqlite', 'postgresql']),
 })
 
 export const journalEditPatchSchema = z.object({

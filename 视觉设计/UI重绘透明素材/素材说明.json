@@ -1,0 +1,104 @@
+{
+  "source_reference": "仅参考用户图片的布局、尺寸、文案与视觉风格",
+  "background_pixels": "未使用原图像素；所有形状、颜色、文字、图标均重新绘制",
+  "items": [
+    {
+      "name": "01_顶部系统状态栏_重绘",
+      "png": "01_顶部系统状态栏_重绘.png",
+      "svg": "01_顶部系统状态栏_重绘.svg",
+      "size": [
+        1395,
+        77
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "source_pixels_used": false
+    },
+    {
+      "name": "02_正在聆听标签_重绘",
+      "png": "02_正在聆听标签_重绘.png",
+      "svg": "02_正在聆听标签_重绘.svg",
+      "size": [
+        459,
+        131
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "source_pixels_used": false
+    },
+    {
+      "name": "03_右上角功能图标_重绘",
+      "png": "03_右上角功能图标_重绘.png",
+      "svg": "03_右上角功能图标_重绘.svg",
+      "size": [
+        125,
+        120
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "source_pixels_used": false
+    },
+    {
+      "name": "04_中央对话气泡_重绘",
+      "png": "04_中央对话气泡_重绘.png",
+      "svg": "04_中央对话气泡_重绘.svg",
+      "size": [
+        899,
+        578
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "source_pixels_used": false
+    },
+    {
+      "name": "05_和我一起听听按钮_重绘",
+      "png": "05_和我一起听听按钮_重绘.png",
+      "svg": "05_和我一起听听按钮_重绘.svg",
+      "size": [
+        550,
+        164
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "source_pixels_used": false
+    },
+    {
+      "name": "06_稍后再说按钮_重绘",
+      "png": "06_稍后再说按钮_重绘.png",
+      "svg": "06_稍后再说按钮_重绘.svg",
+      "size": [
+        503,
+        164
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "source_pixels_used": false
+    },
+    {
+      "name": "07_底部导航栏_重绘",
+      "png": "07_底部导航栏_重绘.png",
+      "svg": "07_底部导航栏_重绘.svg",
+      "size": [
+        1536,
+        272
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "source_pixels_used": false
+    }
+  ]
+}

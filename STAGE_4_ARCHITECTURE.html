@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Morrow 阶段 4 架构图</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='%2324597a' d='M12 46V18h8l12 15 12-15h8v28h-9V31L32 44 21 31v15z'/%3E%3C/svg%3E" />
+  <style>
+    :root {
+      --paper: #f4f7f8;
+      --ink: #17252e;
+      --muted: #5e707b;
+      --line: #9bb1bc;
+      --blue: #24597a;
+      --blue-soft: #dcebf2;
+      --teal: #1d776c;
+      --teal-soft: #dcefeb;
+      --amber: #ad6a20;
+      --amber-soft: #f4e7d4;
+      --red: #a54242;
+      --red-soft: #f4dddd;
+      --white: #ffffff;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--paper); color: var(--ink); }
+    body { margin: 0; font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+    main { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 48px 0 64px; }
+    header { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 28px; align-items: end; padding-bottom: 22px; border-bottom: 2px solid var(--ink); }
+    h1 { margin: 0; max-width: 760px; font-size: clamp(30px, 4.5vw, 58px); line-height: 1.08; letter-spacing: -0.035em; }
+    header p { margin: 0; max-width: 330px; color: var(--muted); line-height: 1.7; font-size: 15px; }
+    .decision { display: grid; grid-template-columns: 1fr 60px 1fr; align-items: stretch; gap: 0; margin: 38px 0; }
+    .choice { padding: 24px; border: 1px solid var(--line); background: var(--white); }
+    .choice:first-child { border-top: 5px solid var(--teal); }
+    .choice:last-child { border-top: 5px solid var(--blue); }
+    .choice strong { display: block; font-size: 22px; margin-bottom: 8px; }
+    .choice span { color: var(--muted); line-height: 1.65; }
+    .arrow { display: grid; place-items: center; color: var(--blue); font-size: 30px; font-weight: 700; }
+    .architecture { border: 1px solid var(--line); background: var(--white); padding: 28px; }
+    .architecture h2, .notes h2 { margin: 0 0 22px; font-size: 22px; }
+    .flow { display: grid; grid-template-columns: minmax(150px, .8fr) 52px minmax(190px, 1fr) 52px minmax(260px, 1.35fr); gap: 0; align-items: stretch; }
+    .node { min-height: 178px; padding: 20px; border: 1px solid var(--line); display: flex; flex-direction: column; justify-content: space-between; background: var(--paper); }
+    .node.client { border-top: 5px solid var(--teal); background: var(--teal-soft); }
+    .node.api { border-top: 5px solid var(--blue); background: var(--blue-soft); }
+    .node.cloud { border-top: 5px solid var(--amber); background: var(--amber-soft); }
+    .node h3 { margin: 0 0 12px; font-size: 20px; }
+    .node ul { padding-left: 18px; margin: 0; color: var(--muted); line-height: 1.65; font-size: 14px; }
+    .connector { display: grid; place-items: center; position: relative; }
+    .connector::before { content: ""; width: 100%; height: 2px; background: var(--blue); }
+    .connector::after { content: ""; position: absolute; right: 0; border-left: 9px solid var(--blue); border-top: 6px solid transparent; border-bottom: 6px solid transparent; }
+    .cloud-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .cloud-grid div { padding: 12px; background: rgba(255,255,255,.68); border: 1px solid rgba(173,106,32,.35); font-size: 14px; line-height: 1.5; }
+    .lane { display: grid; grid-template-columns: 120px 1fr; gap: 20px; align-items: start; padding-top: 25px; margin-top: 25px; border-top: 1px solid var(--line); }
+    .lane b { color: var(--blue); }
+    .lane p { margin: 0; color: var(--muted); line-height: 1.7; }
+    .notes { margin-top: 28px; }
+    .gates { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .gate { min-height: 142px; padding: 18px; background: var(--white); border-top: 4px solid var(--blue); }
+    .gate:nth-child(2) { border-color: var(--teal); }
+    .gate:nth-child(3) { border-color: var(--amber); }
+    .gate:nth-child(4) { border-color: var(--red); }
+    .gate small { display: block; color: var(--muted); margin-bottom: 8px; }
+    .gate strong { display: block; font-size: 17px; line-height: 1.45; }
+    footer { margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; line-height: 1.7; }
+    @media (max-width: 820px) {
+      main { width: min(100% - 22px, 680px); padding-top: 26px; }
+      header { grid-template-columns: 1fr; }
+      .decision { grid-template-columns: 1fr; gap: 10px; }
+      .arrow { min-height: 44px; width: 100%; transform: none; font-size: 0; line-height: 1; }
+      .arrow::before { content: "↓"; font-size: 30px; }
+      .flow { grid-template-columns: 1fr; gap: 10px; }
+      .connector { height: 36px; transform: rotate(90deg); width: 44px; justify-self: center; }
+      .node { min-height: 0; }
+      .gates { grid-template-columns: 1fr 1fr; }
+      .lane { grid-template-columns: 1fr; gap: 8px; }
+    }
+    @media (max-width: 480px) {
+      .architecture { padding: 18px; }
+      .cloud-grid, .gates { grid-template-columns: 1fr; }
+      h1 { font-size: 34px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>微信小程序先行，统一后端承载后续 App</h1>
+      <p>阶段 4 的目标不是同时铺开多端，而是先把持久化、素材、隐私和部署底座做成平台无关能力。</p>
+    </header>
+
+    <section class="decision" aria-label="客户端顺序">
+      <div class="choice">
+        <strong>首个正式端：微信小程序</strong>
+        <span>优先验证录音、转写确认、固定事件、预制音频与共同记忆闭环。</span>
+      </div>
+      <div class="arrow" aria-hidden="true">→</div>
+      <div class="choice">
+        <strong>第二正式端：App</strong>
+        <span>核心闭环稳定后复用 contracts、domain、API 与客户端适配边界。</span>
+      </div>
+    </section>
+
+    <section class="architecture">
+      <h2>正式链路</h2>
+      <div class="flow">
+        <article class="node client">
+          <div>
+            <h3>微信小程序</h3>
+            <ul>
+              <li>中文界面与固定内容交互</li>
+              <li>录音、播放、缓存、三档变速</li>
+              <li>仅持有短时凭证</li>
+            </ul>
+          </div>
+        </article>
+        <div class="connector" aria-hidden="true"></div>
+        <article class="node api">
+          <div>
+            <h3>统一 HTTPS API</h3>
+            <ul>
+              <li>Node.js 22 + Hono</li>
+              <li>身份映射、事件与记忆规则</li>
+              <li>ASR 编排与文件签名</li>
+              <li>CloudBase 云托管</li>
+            </ul>
+          </div>
+        </article>
+        <div class="connector" aria-hidden="true"></div>
+        <article class="node cloud">
+          <div>
+            <h3>CloudBase 上海 PostgreSQL 模式</h3>
+            <div class="cloud-grid">
+              <div><b>PostgreSQL</b><br />账号、状态、记忆、学习数据</div>
+              <div><b>固定素材 + CDN</b><br />版本化 WAV 与静态资源</div>
+              <div><b>私有临时桶</b><br />录音 1 小时默认过期</div>
+              <div><b>日志与监控</b><br />脱敏、告警、版本回滚</div>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class="lane">
+        <b>域名边界</b>
+        <p><code>api.morrowpet.cn</code> 只承载 API；<code>assets.morrowpet.cn</code> 只承载审核通过的版本化素材。临时录音不进入 CDN。</p>
+      </div>
+      <div class="lane">
+        <b>环境边界</b>
+        <p>本地 development、独立 staging、独立 production；数据库、桶、密钥和微信配置互不复用。</p>
+      </div>
+    </section>
+
+    <section class="notes">
+      <h2>进入正式发布前的四道门</h2>
+      <div class="gates">
+        <div class="gate"><small>01 持久化</small><strong>重启与多实例运行后，用户状态不丢失</strong></div>
+        <div class="gate"><small>02 素材</small><strong>145 条正式音频可由 fileRef 稳定解析与播放</strong></div>
+        <div class="gate"><small>03 隐私</small><strong>临时录音私有、无身份路径、24 小时内清理</strong></div>
+        <div class="gate"><small>04 恢复</small><strong>迁移、备份、恢复、回滚和账号删除均通过</strong></div>
+      </div>
+    </section>
+
+    <footer>
+      决策日期：2026-09-20。月度云基础设施预算门为 ¥300；70% / 90% / 100% 分级告警。域名购买前仍需核验可用性、商标风险与备案条件。
+    </footer>
+  </main>
+</body>
+</html>

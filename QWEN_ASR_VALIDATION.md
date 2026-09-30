@@ -57,9 +57,10 @@
 - 新增 `english-pet/packages/ai/src/asr/qwen.ts`：千问专用适配器；
 - 新增 `english-pet/packages/ai/src/examples/validate-qwen-asr.ts`：10 条批测与 WER 计算；
 - 新增命令：`npm run validate:qwen-asr --workspace @english-pet/ai`；
-- API 服务检测到 `DASHSCOPE_API_KEY` 时使用真实千问，未配置时保留 Mock 开发模式；
-- 前端显示实际 ASR 供应商；无置信度时显示“请人工确认”；
+- API 服务**显式**由 `AI_ASR_PROVIDER=qwen` 才使用真实千问，否则一律 MockASR（不再因存在 `DASHSCOPE_API_KEY` 隐式联网）；未取到 key 时 `requireEnv` 抛 `config_missing`；TTS 保持 Mock；
+- 前端显示实际 ASR 供应商；无置信度时显示"请人工确认"；
 - 原始机器结果：`voice-test/qwen-asr-results.json`。
+- 2026-09-21 补记：对同一 key + 端点 + 模型做了一次独立连通性冒烟（单条正式 TTS WAV，0.553s，`confidence=null`），证明当前仍可用；未重跑 10 条口音批量，沿用本文件上述记录。原 10 条真实录音音频现已删除（`voice-test/samples/` 为空），不要求重录；本文件与 `qwen-asr-results.json` 作为 2026-09-19 真实调用的有效历史证据继续保留。
 
 ## 6. 判定与下一步
 

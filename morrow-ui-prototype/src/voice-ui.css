@@ -1,0 +1,40 @@
+/* Shared dialogue and voice controls: keep the existing room, palette and bubble placement. */
+:root { --voice-glass: rgba(193,218,234,.32); --voice-line: rgba(240,247,251,.78); }
+.scene-label { padding:5px 9px; min-height:25px; border-radius:999px; background:var(--glass); max-width:calc(100% - 36px); }
+.scene-label span { display:block; white-space:nowrap; font-weight:600; }
+.scene-label svg { color:var(--text); width:13px; height:13px; }
+.touch-choices { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+.touch-choices button { width:100%; min-width:0; min-height:48px; padding:0 5px; white-space:nowrap; font-size:14px; }
+.dialogue-tools { display:grid; grid-template-columns:auto auto auto; gap:6px; align-items:center; width:100%; }
+.dialogue-tools button { min-width:0; min-height:44px; font-size:12px; }
+.dialogue-tools .replay-button { gap:4px; }
+.dialogue-tools .play-disc { width:26px; height:26px; }
+.morrow-dialogue { z-index:6; }
+.dialogue-tools .translation-button,
+.dialogue-tools .speed-button { min-height:32px; height:32px; padding:0 8px; border:1px solid rgba(255,255,255,.3)!important; border-radius:999px!important; background:rgba(238,245,248,.44)!important; color:var(--dark); }
+.speed-control { position:relative; width:68px; }
+.speed-button { width:100%; display:flex; align-items:center; justify-content:center; gap:2px; white-space:nowrap; font-size:12px; }
+.speed-options { position:absolute; top:calc(100% + 5px); left:0; z-index:20; box-sizing:border-box; width:100%; min-width:100%; padding:4px; border-radius:16px; border:1px solid rgba(255,255,255,.3); background:rgba(238,245,248,.92); box-shadow:0 6px 20px rgba(0,0,0,.15); color:var(--dark); backdrop-filter:blur(7px); }
+.speed-options-portal { position:fixed; z-index:100; min-width:0; }
+.speed-options button { display:flex; align-items:center; justify-content:center; width:100%; min-height:32px; padding:0 4px; border:0; border-radius:999px; background:transparent; color:var(--dark); }
+.speed-options button.selected { background:rgba(238,245,248,.7); box-shadow:inset 0 0 0 1px rgba(255,255,255,.42); }
+.dialogue-tools .speed-button.is-pressing { background:rgba(242,211,137,.28)!important; color:#8a6a20!important; }
+.speed-options button.is-pressing { background:rgba(242,211,137,.28)!important; color:#8a6a20!important; }
+button:disabled { cursor:default; opacity:.45; }
+.learning-content-card { border-color:var(--voice-line)!important; background:var(--voice-glass)!important; }
+.repeat-gate { display:flex; flex-direction:column; align-items:center; gap:9px; width:100%; border:0; padding:0; background:transparent; }
+.record-caption { font-size:14px; line-height:1.4; color:var(--text); text-shadow:0 1px 5px rgba(8,27,40,.65); }
+.voice-orb { display:grid; place-items:center; width:72px; height:72px; min-width:72px; padding:0; border-radius:50%; border:1.5px solid var(--voice-line); background:var(--voice-glass); color:var(--text); backdrop-filter:blur(7px); box-shadow:inset 0 1px rgba(255,255,255,.25); touch-action:none; user-select:none; -webkit-user-select:none; -webkit-touch-callout:none; }
+.voice-orb svg { width:29px; height:29px; pointer-events:none; }
+.voice-orb.is-recording { background:rgba(242,211,137,.24); border-color:var(--gold); color:var(--gold); transform:scale(.98); box-shadow:0 0 0 5px rgba(242,211,137,.06); }
+.voice-orb.is-cancelling { background:var(--glass); border-style:dashed; color:var(--text); box-shadow:none; }
+.voice-orb:focus-visible { outline:2px solid var(--gold); outline-offset:4px; }
+.record-label { font-size:14px; color:var(--text); text-shadow:0 1px 5px rgba(8,27,40,.65); }
+.record-hint { max-width:290px; margin:0; font-size:12px; line-height:1.5; text-align:center; color:var(--muted); text-shadow:0 1px 4px rgba(8,27,40,.9); }
+.postpone-speech { padding:0 12px; font-size:12px; min-height:44px; }
+.setting-row .speed-control { color:var(--text); }
+@media (max-width:380px) {
+  .morrow-dialogue { min-width:0; width:74%; max-width:74%; }
+  .touch-choices { gap:6px; }
+  .welcome-content h1 { white-space:normal; font-size:20px; }
+}

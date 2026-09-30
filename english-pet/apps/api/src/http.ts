@@ -23,6 +23,9 @@ export type ApiErrorCode =
   | 'first_day_memory_review_incomplete'
   | 'audio_not_found'
   | 'audio_not_ready'
+  | 'fixed_event_not_found'
+  | 'fixed_event_locked'
+  | 'fixed_no_active_event'
   | 'internal_error'
 
 const messages: Record<ApiErrorCode, string> = {
@@ -48,6 +51,9 @@ const messages: Record<ApiErrorCode, string> = {
   first_day_memory_review_incomplete: '继续前请审核每一条首日记忆提案。',
   audio_not_found: '未找到该音频绑定。',
   audio_not_ready: '这条语音尚未准备好，你可以先看文字和译文继续。',
+  fixed_event_not_found: '未找到进行中的固定内容事件实例。',
+  fixed_event_locked: '该事件暂不可用，或已有进行中的事件。',
+  fixed_no_active_event: '当前没有进行中的固定内容事件。',
   internal_error: '服务暂时无法完成请求。',
 }
 

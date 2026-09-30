@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto'
-import type { EventDefinition, JournalActionRequest, JournalEntry } from '@english-pet/contracts'
+import type { EventDefinition, FixedEvent, JournalActionRequest, JournalEntry } from '@english-pet/contracts'
 import { getEventDefinition } from '@english-pet/domain'
 import { MemoryMemoryStore } from './memory-memory-store.js'
 
@@ -83,6 +83,8 @@ export class MemoryJournalStore {
       worldChange: `first_restored_object: ${input.restoredObject} · first_day_status: completed`,
       visibility: 'visible', version: 1, createdAt: stamp, updatedAt: stamp,
       baseMorrowMemory: `You and Morrow restored the ${input.restoredObject} on your first night.`,
+      textVersion: null,
+      translationVersion: null,
     }
     recordsFor(input.userId).set(record.id, record)
     journalIdByEventInstance.set(input.eventInstanceId, record.id)
@@ -110,9 +112,49 @@ export class MemoryJournalStore {
       worldChange: worldChange(definition, outcome.id),
       visibility: 'visible', version: 1, createdAt: stamp, updatedAt: stamp,
       baseMorrowMemory: baseRelationshipMemory(definition, outcome.id),
+      textVersion: null,
+      translationVersion: null,
     }
     recordsFor(input.userId).set(record.id, record)
     journalIdByEventInstance.set(input.eventInstanceId, record.id)
+    return publicEntry(record, this.memoryStore)
+  }
+
+  /** 固定内容事件完成时写一条可见日记。按 eventInstanceId 去重（沿用 journalIdByEventInstance）。 */
+  createFromFixedEvent(input: {
+    userId: string
+    instanceId: string
+    event: FixedEvent
+    outcomeId: string
+    userExpression: string | null
+    textVersion: string
+    translationVersion: string
+  }): JournalEntry {
+    const existingId = journalIdByEventInstance.get(input.instanceId)
+    const existing = existingId ? recordsFor(input.userId).get(existingId) : undefined
+    if (existing) return publicEntry(existing, this.memoryStore)
+    const outcome = input.event.outcomes.find((item) => item.id === input.outcomeId)
+    if (!outcome) throw new Error('journal_event_invalid')
+    const stamp = new Date().toISOString()
+    const worldChangeText = outcome.worldStateWrites.map((item) => `${item.key}: ${String(item.value)}`).join(' · ')
+    const record: IJournalRecord = {
+      id: randomUUID(), userId: input.userId, eventInstanceId: input.instanceId,
+      eventKey: input.event.id, title: input.event.titleZh, titleZh: input.event.titleZh,
+      whatHappened: outcome.labelZh,
+      whatUserSaid: input.userExpression,
+      naturalExpression: input.userExpression,
+      pronunciationNote: null,
+      whatMorrowRemembers: null,
+      linkedMemoryId: null,
+      linkedMemoryVersion: null,
+      worldChange: worldChangeText || outcome.labelZh,
+      visibility: 'visible', version: 1, createdAt: stamp, updatedAt: stamp,
+      baseMorrowMemory: null,
+      textVersion: input.textVersion,
+      translationVersion: input.translationVersion,
+    }
+    recordsFor(input.userId).set(record.id, record)
+    journalIdByEventInstance.set(input.instanceId, record.id)
     return publicEntry(record, this.memoryStore)
   }
 

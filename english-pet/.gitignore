@@ -9,3 +9,9 @@ coverage/
 Thumbs.db
 .vscode/
 .idea/
+
+# 本地 SQLite 持久化
+.data/
+*.db
+*.sqlite
+*.sqlite-*

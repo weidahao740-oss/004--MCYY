@@ -31,7 +31,7 @@ export const memoryListResponseSchema = z.object({
   proposed: z.array(memorySchema),
   saved: z.array(memorySchema),
   restrictedProposalCount: z.number().int().nonnegative(),
-  persistence: z.literal('memory'),
+  persistence: z.enum(['memory', 'sqlite', 'postgresql']),
 })
 
 export const memoryActionRequestSchema = z.object({

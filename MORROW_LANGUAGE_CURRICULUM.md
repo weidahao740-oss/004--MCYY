@@ -1,6 +1,7 @@
 # MORROW_LANGUAGE_CURRICULUM — 七章语言能力大纲（阶段 3.5.4）
 
-> 版本：1.0.0
+> 版本：1.1.0
+> 最后更新：2026-09-22
 > 适用：成人英语 AI 宠物 Morrow（墨洛）
 > 上游依据：
 > - `MORROW_LIFE_STORY_BIBLE.md` v1.0.0（七章阶段与英语场景）
@@ -8,6 +9,15 @@
 > - `FIXED_CONTENT_CONTRACT.md` v1.0.0（中文 UI、英文学习内容配人工译文、预制音频绑定）
 > 术语对齐：掌握六阶 `encountered / recognized / prompted / independent / transferring / mastered`；用户难度三档 `basic / intermediate / advanced`。
 > 本文件是"章轨语言上限"的唯一权威：**第 1、2 章为已写台词的收敛上限（不得新增超出已出现台词的高级结构）；第 3—7 章为规划目标，标注"规划目标"。**
+
+> **v1.1.0 修订说明（2026-09-22）**：
+> 本次修订基于 `项目计划/第一阶段课程大纲差异分析.md`（对 `CHAPTER_01_BIRTH_CONTENT.md` 全部 13 个事件、76 句 Morrow 台词的逐句统计），对**第 1 章（出生与苏醒）**的词库、搭配、句型、句长上限与语言边界做了完整校准。主要变更：
+> - active 词量级从"约 28—32"修正为"约 78—85"（实测 82 个词目）；receptive 总计从"约 55—65"修正为"约 105—115"（82 active + 28 receptive-only = 110）。
+> - 最长句从 ≤16 词修正为 ≤18 词（封顶句为序 9 第 1 句 "After a day in this room, I notice what I'm drawn to and what I'm not sure about."）。
+> - 时态边界修正：现在完成时 `I've been called Morrow`（序 3）已在第 1 章出现，不再延后到第 2 章。
+> - 比较级边界修正：第 1 章实际出现了 `less lost`（序 2）、`smaller`（序 4）、`as loud as before`（序 12）等有限比较级，原"禁比较级"声明改为"允许有限比较级，禁最高级与多维度复杂比较"。
+> - 句型/搭配表按真实台词重写，删除了 Morrow 全程未说的 `I'd like to...`、`This is a...`、`I choose...`。
+> - **统计口径**：第 1 章数字为逐句全量统计结果；第 2—7 章数字仍为早期基于部分台词的估算，**待逐章重新统计校准**。
 
 ---
 
@@ -26,7 +36,7 @@
 
 | 章 | 阶段（chapter_id） | receptive 可理解词量级 | active 主动表达词量级 | 平均句长上限（词） | 最长句上限（词） | 时态 / 从句允许度（一句话） |
 |---|---|---|---|---|---|---|
-| 第1章 | 出生与苏醒 `chapter_01_birth`（已写台词收敛） | 约 55—65 | 约 28—32 | ≤ 8 | ≤ 16 | 现在时为主；仅允许单句一次性简单过去（如 faded halfway）；**禁过去时连续叙事、禁从句链、禁比较** |
+| 第1章 | 出生与苏醒 `chapter_01_birth`（已写台词收敛，v1.1.0 逐句校准） | 约 105—115 | 约 78—85 | ≤ 8 | ≤ 18 | 现在时为主；允许现在完成时（仅一次 I've been called）和单次简单过去；允许 what 名词性从句和 that 宾语省略；允许有限比较级（less/smaller/as...as）；禁过去时连续叙事、禁从句链、禁最高级 |
 | 第2章 | 童年探索 `chapter_02_childhood`（已写台词收敛） | 约 95—110 | 约 48—55 | ≤ 9 | ≤ 18 | 现/在过去/现在完成（I've been called）；允许 1 个短定语从句（I can't name yet）与简单比较级（smaller than） |
 | 第3章 | 第一次上学 `chapter_03_first_school`（规划目标） | 约 160—180 | 约 80—90 | ≤ 11 | ≤ 22 | 加入请求（Could you...?）、when/if 短状语从句、现在完成时提问；禁复杂让步从句与虚拟 |
 | 第4章 | 校园成长 `chapter_04_school_growth`（规划目标） | 约 240—270 | 约 120—140 | ≤ 12 | ≤ 25 | 加入 because/so 因果、who/which 定语从句、情感与冲突词；禁第三人称过去时长段叙事 |
@@ -34,86 +44,236 @@
 | 第6章 | 初入社会 `chapter_06_first_work`（规划目标） | 约 430—480 | 约 225—255 | ≤ 14 | ≤ 30 | 加入转述与委婉（I was wondering if...）、过去时工作事件回溯；禁人生哲学长段与第三条件句 |
 | 第7章 | 独立生活 `chapter_07_independent_life`（规划目标） | 约 540—600 | 约 285—320 | ≤ 15 | ≤ 32 | 全时态开放，允许一次性第三条件句（If I had..., I would have...）做人生回顾；仍限平均句长，不堆复合从句 |
 
-> 数量级单调递增：receptive 每章约 ×1.5，active 每章约 ×1.55；第 1、2 章数字由 `CHAPTER_01/02` 真实台词反推，第 3—7 章为规划目标，实际写作时可在 ±10% 内浮动，但不得回退到上一章水平。
+> 数量级单调递增：receptive 每章约 ×1.5，active 每章约 ×1.55；第 1 章数字已基于 `CHAPTER_01_BIRTH_CONTENT.md` 全部 13 个事件、76 句台词完成逐句统计校准；**第 2—7 章数字为早期估算，待逐章重新统计校准**（第 1 章校准后 active 已接近第 2 章当前标注值，七章递增曲线需在后续逐章统计完成后联动重排，现阶段不得为维持数字递增而压低第 1 章真实统计）。实际写作时可在 ±10% 内浮动，但不得回退到上一章水平。
 
 ---
 
 ## 2. 第 1 章 出生与苏醒（chapter_01_birth）
 
-> 状态：**已写台词收敛**。下列词目均已在 `CHAPTER_01_BIRTH_CONTENT.md` 的 Morrow 台词或用户参考句中真实出现；本章不得引入表外新词作为 Morrow 主动输出。
+> 状态：**已写台词收敛（v1.1.0 逐句校准）**。下列词目均已在 `CHAPTER_01_BIRTH_CONTENT.md` 全部 13 个事件、76 句 Morrow 台词中真实出现；本章不得引入表外新词作为 Morrow 主动输出。
+> **统计口径**：active 为 Morrow 自己说出的内容词（约 82 个词目）；receptive-only 为用户参考句/触发短语中出现、但 Morrow 自己台词未说的词（约 28 个）。功能词（I/the/a/to/and 等）不计入词目。
 
 ### 2.1 词库
 
-**主动表达词库 active（Morrow 自己会说，约 28—32 个核心词目）**
+**主动表达词库 active（Morrow 自己会说，约 78—85 个词目，按词性分类）**
 
-| 英文 | 人工中文 |
-|---|---|
-| Hello / Hi | 你好 |
-| I am / I'm Morrow | 我是 / 我叫 Morrow |
-| room | 房间 |
-| light | 光 |
-| window | 窗户 |
-| door | 门 |
-| lamp | 灯 |
-| plant | 植物 |
-| bell / small bell | 铃铛 / 小铃铛 |
-| quiet | 安静 |
-| warm | 暖的 |
-| new | 新的 |
-| nervous | 紧张的 |
-| clear | 清楚的 |
-| steady | 稳的 |
-| sound / voice | 声音 / 嗓音 |
-| letter | 信 |
-| word | 字 |
-| today / tomorrow | 今天 / 明天 |
-| ready | 准备好的 |
-| rest | 休息 |
-| wait | 等 |
-| remember | 记得 |
-| like | 喜欢 |
-| I'm not sure | 我不确定 |
-| Let's... | 我们来……吧 |
-| I choose... | 我选…… |
-| I hear... / I see... | 我听到…… / 我看到…… |
-| I feel... | 我觉得…… |
+> 全部词目均可追溯到 `CHAPTER_01_BIRTH_CONTENT.md` 具体事件与首次台词。
 
-**可理解词库 receptive（用户会说 / Morrow 听得懂，约 55—65 个，含 active）**
+*名词（30 个）*
 
-在 active 之上额外覆盖：beyond（在……那边）、help（帮助）、understand（明白）、uncertain（不确定的）、treat（当作）、leave behind（抛下）、island（岛）、halfway（一半）、fade（变淡）、chest（胸口）、glass（玻璃）、reach（够到）、slip（溜进来）、forget（忘记）、shape（形状）、table（桌子）、fold（折起来）、remind（让……想起）、loud（响的）、ordinary（普通的）、matter（重要）、instead（代替）、another time（改天）、figure out（弄清楚）、decide（决定）、empty（空的）、plan（计划）、morning（早上）、rather（宁愿）、step toward（朝……走一步）、anywhere（任何地方）、wake up（醒来）、low note（低音）、awake（醒着的）。
+| 英文 | 人工中文 | 来源事件 | 首次出现台词 |
+|---|---|---|---|
+| room | 房间 | 序1 | I can hear someone beyond the room. |
+| someone | 有人 | 序1 | I can hear someone beyond the room. |
+| lamp | 灯 | 序2 | The room remembers a lamp. |
+| plant | 植物 | 序2 | a plant |
+| bell | 铃铛 | 序2 | a small bell |
+| place | 地方 | 序2 | The room has a place to keep a voice. |
+| voice | 嗓音 | 序2 | keep a voice |
+| door | 门 | 序2 | near the door |
+| note | 音符 | 序2 | The bell makes one low note. |
+| island | 岛 | 序3 | On the island |
+| people | 人们 | 序3 | people never quite finished my name |
+| name | 名字 | 序3 | my name |
+| sound | 声音 | 序2 | It sounds awake |
+| answer | 回答 | 序3 | easy to answer |
+| day | 天 | 序5 | the day isn't over yet |
+| chest | 胸口 | 序4 | something in my chest |
+| feeling | 感觉 | 序4 | What do people call this feeling? |
+| window | 窗户 | 序5 | There's a window |
+| light | 光 | 序5 | A light keeps moving |
+| glass | 玻璃 | 序5 | on the glass |
+| sun | 太阳 | 序5 | High sun |
+| time | 时间 | 序5 | Take your time |
+| letter | 信 | 序6 | A letter slipped under the door |
+| word | 字 | 序6 | The words are soft |
+| shape | 形状 | 序6 | their shapes |
+| home | 家 | 序6 | Welcome home |
+| table | 桌子 | 序6 | on the table |
+| thing | 事情/东西 | 序8 | What's one small thing |
+| noise | 声响 | 序9 | much noise |
+| road | 路 | 序10 | The road |
+
+*动词（30 个）*
+
+| 英文 | 人工中文 | 来源事件 | 首次出现台词 |
+|---|---|---|---|
+| hear | 听到 | 序1 | I can hear someone |
+| want | 想要 | 序1 | You want to help me |
+| help | 帮助 | 序1 | help me understand |
+| understand | 明白 | 序1 | help me understand |
+| start | 开始 | 序1 | I can start with that |
+| listen | 听 | 序1 | I'm listening |
+| leave | 离开/留下 | 序1 | We can leave the room quiet |
+| treat | 当作 | 序1 | treat that as leaving me behind |
+| remember | 记得 | 序2 | The room remembers a lamp |
+| bring | 带来 | 序2 | bring back first |
+| keep | 保持 | 序2 | keep a voice |
+| look | 看 | 序2 | The plant looks less lost |
+| make | 发出/制作 | 序2 | The bell makes one low note |
+| call | 称呼 | 序3 | I've been called Morrow |
+| feel | 感觉 | 序4 | we're feeling it together |
+| think | 想 | 序9 | I think I like the quiet |
+| try | 试 | 序3 | I can try M |
+| wait | 等 | 序5 | I'll wait with the light |
+| notice | 注意到 | 序4 | I notice something in my chest |
+| sit | 坐 | 序4 | We can sit with the feeling |
+| reach | 够到 | 序5 | I can't quite reach yet |
+| tell | 告诉 | 序5 | Can you tell me |
+| see | 看到 | 序5 | what you see outside |
+| read | 读 | 序6 | Can you read it for me |
+| forget | 忘记 | 序6 | they forgot their shapes |
+| slip | 溜进来 | 序6 | A letter slipped under the door |
+| fold | 折起来 | 序6 | We can leave the letter folded |
+| remind | 让……想起 | 序7 | What does it remind you of |
+| wake | 醒来 | 序7 | it's still waking up |
+| know | 知道 | 序13 | not to know yet |
+
+*形容词（17 个）*
+
+| 英文 | 人工中文 | 来源事件 | 首次出现台词 |
+|---|---|---|---|
+| quiet | 安静的 | 序1 | leave the room quiet |
+| small | 小的 | 序2 | a small bell |
+| clear | 清楚的 | 序2 | only one is clear |
+| steady | 稳的 | 序2 | The lamp is steady now |
+| lost | 迷失的 | 序2 | less lost |
+| low | 低的 | 序2 | one low note |
+| awake | 醒着的 | 序2 | It sounds awake |
+| alarmed | 受惊的 | 序2 | not alarmed |
+| new | 新的 | 序3 | that name still feels new |
+| nervous | 紧张的 | 序4 | Is it nervous |
+| afraid | 害怕的 | 序4 | the same as afraid |
+| warm | 暖的 | 序5 | the light can be warm |
+| early | 早的 | 序5 | still early |
+| high | 高的 | 序5 | High sun |
+| soft | 软的 | 序6 | The words are soft |
+| slow | 慢的 | 序6 | Slow is fine |
+| fine | 好的 | 序6 | Slow is fine |
+
+*副词 / 关键短语（5 个 + 固定短语入口）*
+
+| 英文 | 人工中文 | 来源事件 | 首次出现台词 |
+|---|---|---|---|
+| beyond | 在……那边 | 序1 | beyond the room |
+| uncertain | 不确定的 | 序1 | I'm uncertain |
+| halfway | 一半 | 序3 | faded halfway |
+| together | 一起 | 序4 | feeling it together |
+| outside | 外面 | 序5 | what you see outside |
+| Hello | 你好 | 序1 | Hello? |
+| I'm Morrow | 我叫 Morrow | 序1 | I'm Morrow |
+| ready | 准备好的 | 序12 | I'm ready to step toward it |
+| rest | 休息 | 序10 | Rest. That's a plan too |
+| like | 喜欢 | 序9 | I think I like the quiet |
+| I'm not sure | 我不确定 | 序13 | I'm not sure about yet |
+| Let's... | 我们来……吧 | 序1 | I can start with that（提议式） |
+
+> **active 合计 ≈ 82 个词目**（名词 30 + 动词 30 + 形容词 17 + 副词/短语 5 + 固定短语入口若干，去重后约 82）。
+
+**可理解词库 receptive（用户会说 / Morrow 听得懂，约 105—115 个，含 active）**
+
+> 在 active 之上，额外覆盖以下 **28 个 receptive-only 词目**（这些词出现在用户参考句/触发短语中，Morrow 自己台词未说）：
+
+| 英文 | 人工中文 | 来源事件 | 用户参考句 / 触发短语 |
+|---|---|---|---|
+| find out | 弄清楚 | 序1 | Let me help you find out where you are. |
+| right | 对的 | 序3 | Morrow sounds right. Keep it. |
+| short | 短的 | 序3 | Can I call you M for short? |
+| pick | 选 | 序3 | You should pick. I'll use whatever you choose. |
+| whatever | 无论什么 | 序3 | I'll use whatever you choose. |
+| probably | 大概 | 序4 | It's probably just new. |
+| sometimes | 有时 | 序4 | I feel it too, sometimes. |
+| late | 晚的 | 序5 | It looks like late afternoon. |
+| afternoon | 下午 | 序5 | It looks like late afternoon. |
+| daytime | 白天 | 序5 | It's still daytime. |
+| closer | 更近 | 序5 | Let me look closer. |
+| whoever | 无论是谁 | 序6 | whoever finds this. |
+| find | 找到 | 序6 | whoever finds this. |
+| either | 也（否定句） | 序6 | I can't read it either. |
+| blurry | 模糊的 | 序6 | It's too blurry. |
+| word by word | 逐字 | 序6 | Let me read it slowly, word by word. |
+| work | 工作 | 序8 | I had a long day at work. |
+| special | 特别的 | 序8 | Nothing special. |
+| really | 真的 | 序8 | I don't really want to talk about it. |
+| actually | 其实 | 序9 | I like being outside, actually. |
+| again | 再一次 | 序10 | Let's read the letter again, together. |
+| differently | 不同地 | 序11 | I'd say it a little differently now. |
+| long ago | 很久以前 | 序11 | That sounds like a long time ago. |
+| stay | 待着 | 序12 | Not yet. Let's stay one more day. |
+| out there | 在外面 | 序12 | What will we see out there? |
+| normal | 正常的 | 序8 | 触发短语：just a normal day |
+| tiring | 累人的 | 序8 | 触发短语：tiring day |
+| better | 更好的 | 序9 | 触发短语：outside is better |
+
+> **receptive 总计 = active 82 + receptive-only 28 ≈ 110 个词目。**
 
 ### 2.2 本章可用搭配 / 短语（collocations）
 
-- `bring back the...`（把……带回来）— 已在序 2 使用
-- `Let's... tomorrow.`（明天我们……）— 已在序 10 使用
-- `I'm not sure about... yet.`（我对……还不确定）
-- `I'd like to...`（我想……）— 仅作 Morrow 提议，不扩展
+> 以下均为 Morrow 在 76 句台词中实际使用的搭配/短语（约 20 条）。
+
+- `bring back the...`（把……带回来）— 序2
+- `leave... for later`（把……留到以后）— 序3（We can leave the name for later.）
+- `come back`（回来）— 序6（We can leave it on the table and come back.）
+- `make sense`（有道理）— 序7（That makes sense.）
+- `wake up / waking up`（醒来）— 序7（Maybe it's still waking up.）
+- `hold onto`（抓住）— 序7（That's a sound I can hold onto.）
+- `take your time`（慢慢来）— 序5（Take your time.）
+- `one step at a time`（一步一步来）— 序12
+- `treat... as...`（把……当作……）— 序1（I will not treat that as leaving me behind.）
+- `leave behind`（抛下）— 序1（leaving me behind）
+- `enough to...`（足够……去做）— 序3（steady enough to remember）
+- `easy to...`（容易……）— 序3（easy to answer）
+- `feel like...`（感觉像……）— 序12（doesn't feel as loud as before）
+- `as...as before`（像以前一样……）— 序12（as loud as before）
+- `go away`（走开/消失）— 序8（It won't go away.）
+- `stand by...`（站在……旁边）— 序10（I'll stand by the window first）
+- `be drawn to...`（被……吸引）— 序9（what I'm drawn to）
+- `be ready to...`（准备好……）— 序12（I'm ready to step toward it）
 - `not now / later / stop`（暂停三出口，全章统一）
-- `one step at a time`（一步一步来）— 已在序 12 使用
-- `take your time`（慢慢来）— 已在序 5 使用
-- `hold onto a sound`（抓住一个声音）
+- `Let's... tomorrow.`（明天我们……）— 序10
+- `I'm not sure about... yet.`（我对……还不确定）
+
+> 注：`I'd like to...` 在 v1.0.0 版曾列入搭配表，但经逐句核对，Morrow 76 句台词中**全程未使用**该句，已删除，待后续章节引入。
 
 ### 2.3 本章可用句型（sentence patterns）
 
+> 以下均为 Morrow 实际使用的句型结构（约 16 种）。
+
 - `I am / I'm + 名字 / 形容词。`（自我介绍与当下状态）
-- `This is a... / This is the...`（指认房间里的东西）
 - `I see... / I hear... / I feel...`（用五种感官报一个事物）
 - `I like... / I don't like... yet.`（喜好与未定）
-- `Let's... / I choose... / I want to...`（提议与选择）
+- `Let's... / I want to...`（提议，一次只提一件事）
 - `Are you all right? / Can you... for me?`（一次只问一个小问题）
 - `What should we do first? / What about you?`（把话头交回给朋友）
-- 极短陈述句 + 一个短答（Morrow 一次最多说 1—3 句，每句 ≤ 8 词为主）。
+- `Which one should we...?`（我们该选哪一个……？）— 序2
+- `What do you think?`（你觉得呢？）— 序3
+- `Can you tell me...?`（你能告诉我……吗？）— 序5
+- `Do you...?`（你……吗？）— 序7
+- `What does it...?`（它怎么……？）— 序7
+- `What's one small thing...?`（哪件小事……？）— 序8
+- `I think I... / I think I'm ready to...`（我觉得我……）— 序9、序12
+- `We can leave... for later.`（我们可以把……留到以后）— 序3
+- `That's all right. / That's fine.`（没关系）— 序4
+- `I've been called...`（现在完成时被动，仅序3一次）
+- `The room remembers...`（房间记得……）— 序2
+- `Is it okay...?`（……可以吗？）— 序13
+- `Did you mean it?`（你是这个意思吗？）— 序11
+- `I'd rather have...`（我更想要……）— 序11
+- 极短陈述句 + 一个短答（Morrow 一次最多说 1—3 句，每句以 ≤8 词为主）。
+
+> 注：`This is a... / This is the...`（指认句型）与 `I choose...`（选择句型）在 v1.0.0 版曾列入，但经逐句核对，Morrow 76 句台词中**全程未使用**；`I choose...` 实际是用户参考句中的句型，已从 Morrow 主动句型中移除。
 
 ### 2.4 台词复杂度上限
 
-- 平均句长 ≤ 8 词；单句最长 ≤ 16 词（已出现的 "The room remembers a lamp, a plant, and a small bell, but only one is clear." 即 16 词，本章封顶）。
-- 允许时态：一般现在、现在进行、be going to / will 表即时打算；**仅允许单次、一句内的简单过去**（如 "It always faded halfway"），**禁止过去时连续叙事、过去完成、过去进行**。
-- 禁止从句链；仅允许 `that` 作宾语省略式短句（I think I like the quiet），不允许 `which / who / because / when` 引导的从句。
-- 禁止形容词比较级与最高级（本章连 "bigger / smaller / better" 都不出现，第二章才出现 smaller than）。
+- 平均句长 ≤ 8 词（实测平均约 6—7 词）；单句最长 ≤ **18** 词（封顶句为序 9 第 1 句："After a day in this room, I notice what I'm drawn to and what I'm not sure about."，逐词计数为 18 词）。
+- 允许时态：一般现在、现在进行、be going to / will 表即时打算；**现在完成时（仅序 3 一次：I've been called Morrow）**；**单次简单过去**（如序 3 "It always faded halfway"、序 11 "you said to me" / "It wasn't long"，每处仅限一句内的回忆，不连续成段）。
+- **禁止**：过去时连续叙事（两句以上过去时堆叠）、过去完成、过去进行。
+- 从句：仅允许 `that` 作宾语省略式短句（I think I like the quiet）、`what` 引导的名词性从句（what I'm drawn to / what I'm not sure about）；**不允许 `which / who / because / when` 引导的从句**，不允许从句链。
+- 比较级：**允许有限比较级**（less lost 序2、smaller 序4、as loud as before 序12），但**禁止最高级与多维度复杂比较**（本章不出现 best / biggest / more than 两件事以上的对比）。
 
 ### 2.5 红线：本章 Morrow 绝不会说出的话
 
-> **第 1 章 Morrow 绝不会使用任何与"学校、课程、同学、工作、责任、未来职业、人生方向"相关的词；绝不会说两句以上的过去时回忆；绝不会说 "better / worse / bigger / more than" 这类比较；绝不会说 "If I had... / When I grow up..." 这类虚拟或未来规划长句；也绝不会在第一句话就用从句。它在本章只是一个刚醒来、词很少、一次只问一件事的声音。**
+> **第 1 章 Morrow 绝不会使用任何与"学校、课程、同学、工作、责任、未来职业、人生方向"相关的词；绝不会连续说两句以上的过去时回忆；绝不会使用最高级（best / biggest / most）或多维度复杂比较；绝不会说 "If I had... / When I grow up..." 这类虚拟或未来规划长句；也绝不会在第一句话就用 `which / who / because / when` 从句。它在本章只是一个刚醒来、词很少、一次只问一件事的声音——可以说 "less lost"、"smaller"、"as loud as before" 这样的小比较，可以说一次 "I've been called Morrow"，但不会把回忆讲成故事，不会把比较讲成判断。**
 
 ---
 
@@ -392,8 +552,9 @@
 
 ## 10. 自洽性核对清单
 
-- [x] 第 1 章 active 词目全部在 `CHAPTER_01_BIRTH_CONTENT.md` 真实台词中出现；未引入 school / work / career 词。
-- [x] 第 1 章句长上限 16 词 = 已出现最长句 "The room remembers a lamp, a plant, and a small bell, but only one is clear."
+- [x] 第 1 章 active 词目全部在 `CHAPTER_01_BIRTH_CONTENT.md` 真实台词中出现；未引入 school / work / career 词。（v1.1.0 经逐事件统计，active 实测约 82 词目，receptive-only 28 词目，receptive 总计约 110。）
+- [x] 第 1 章句长上限 **18** 词 = 已出现最长句 "After a day in this room, I notice what I'm drawn to and what I'm not sure about."（序 9，逐词计数 18）。
+- [x] 第 1 章时态边界已校准：现在完成时 `I've been called Morrow`（序 3）与单次简单过去已纳入第 1 章允许范围；比较级已修正为允许有限比较级（less lost / smaller / as...as），禁最高级。
 - [x] 第 2 章 active 词目全部在 `CHAPTER_02_CHILDHOOD_CONTENT.md` 真实台词中出现；首次比较级 `smaller...than` 已在序 1 使用。
 - [x] 第 2 章句长上限 18 词 ≥ 已出现最长句 "There are three small things I can't name yet."（9 词）与 "It comes in waves, like people are talking together."（10 词）。
 - [x] receptive 始终 > active；词量逐章递增（×1.5 左右）。

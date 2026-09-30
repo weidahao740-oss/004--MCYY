@@ -377,3 +377,95 @@ export const fixedContentRulesetSchema = z
     }
   })
 export type FixedContentRuleset = z.infer<typeof fixedContentRulesetSchema>
+
+export type MatchingPolicy = FixedContentRuleset['matchingPolicy']
+
+// N2 确定性意图预览：纯预览请求体。为支持无状态按 eligibleStateIds 过滤，
+// 在原契约 { text?, inputMode, choiceId?, idempotencyKey } 上额外允许可选 stateId。
+export const fixedContentIntentPreviewRequestSchema = z.object({
+  inputMode: fixedContentInputModeSchema,
+  text: z.string().min(1).max(1200).optional(),
+  choiceId: idSchema.optional(),
+  stateId: idSchema.optional(),
+  idempotencyKey: z.string().min(1).max(200).optional(),
+})
+export type FixedContentIntentPreviewRequest = z.infer<typeof fixedContentIntentPreviewRequestSchema>
+
+export const fixedContentIntentCandidateSchema = z.object({
+  intentId: idSchema,
+  labelZh: z.string().min(1).max(120),
+})
+export type FixedContentIntentCandidate = z.infer<typeof fixedContentIntentCandidateSchema>
+
+export const fixedContentIntentPreviewResponseSchema = z.object({
+  resolvedIntentId: idSchema.optional(),
+  candidates: z.array(fixedContentIntentCandidateSchema).max(3),
+  fallbackKind: z.literal('no_match').optional(),
+  messageZh: z.string().min(1).max(500),
+})
+export type FixedContentIntentPreviewResponse = z.infer<typeof fixedContentIntentPreviewResponseSchema>
+
+// ── 固定内容事件引擎（状态推进 + SQLite 落库）契约 ─────────────────────────────
+// 以下为增量契约，不改动上方既有 schema。
+
+export const fixedEventStartRequestSchema = z.object({
+  eventId: idSchema,
+  idempotencyKey: z.string().min(1).max(200),
+})
+export type FixedEventStartRequest = z.infer<typeof fixedEventStartRequestSchema>
+
+export const fixedEventAdvanceRequestSchema = z.object({
+  inputMode: fixedContentInputModeSchema,
+  text: z.string().min(1).max(1200).optional(),
+  choiceId: idSchema.optional(),
+  idempotencyKey: z.string().min(1).max(200),
+})
+export type FixedEventAdvanceRequest = z.infer<typeof fixedEventAdvanceRequestSchema>
+
+/** 目录项：事件1 完成后事件2 才 available；已完成标 completed；其余 locked。
+ * 日常对话主题（chapterId === 'chapter_daily_talk'）可重复，永不标 completed；
+ * recommendedNext 标出本轮轮换后推荐的下一个日常主题（至多一个）。 */
+export interface FixedEventCatalogItem {
+  eventId: string
+  version: string
+  chapterId: string
+  sequence: number
+  titleZh: string
+  status: 'available' | 'completed' | 'locked'
+  recommendedNext?: boolean
+}
+
+/** 当前状态渲染视图：lineIds 已解析为完整台词对象。 */
+export interface FixedEventStateView {
+  id: string
+  phase: FixedContentState['phase']
+  uiTitleZh: string
+  userTaskZh: string
+  lines: FixedContentLine[]
+  choices: FixedChoice[]
+  acceptedInputModes: FixedContentInputMode[]
+  referenceReplyLines: FixedContentLine[]
+}
+
+export interface FixedEventOutcomeView {
+  id: string
+  labelZh: string
+}
+
+/** 事件引擎返回的当前实例视图。无推进时额外带 advanced/messageZh/candidates。 */
+export interface FixedEventInstanceView {
+  eventId: string
+  eventVersion: string
+  chapterId: string
+  sequence: number
+  titleZh: string
+  instanceId: string
+  status: 'active' | 'completed' | 'paused'
+  currentState: FixedEventStateView
+  resultLines: FixedContentLine[]
+  outcome: FixedEventOutcomeView | null
+  worldState: Record<string, string | number | boolean | null>
+  advanced: boolean
+  messageZh?: string
+  candidates?: FixedContentIntentCandidate[]
+}
