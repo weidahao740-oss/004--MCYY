@@ -20,8 +20,8 @@ function acceptable(transcript: string, target: string) {
   return rows[expected.length][heard.length] >= Math.ceil(expected.length * .8)
 }
 
-export default function RepeatGate({ id, target, onPassed, onPostpone, onBusyChange }: {
-  id: string; target: string; onPassed: () => void; onPostpone: () => void; onBusyChange: (value: boolean) => void
+export default function RepeatGate({ id, target, onPassed, onPreviewSkip, onPostpone, onBusyChange, onFailed, disabled = false }: {
+  id: string; target: string; onPassed: () => void; onPreviewSkip: () => void; onPostpone: () => void; onBusyChange: (value: boolean) => void; onFailed?: () => void; disabled?: boolean
 }) {
   const [status, setStatus] = useState<Status>('idle')
   const [cancelHint, setCancelHint] = useState(false)
@@ -52,10 +52,10 @@ export default function RepeatGate({ id, target, onPassed, onPostpone, onBusyCha
     const heard = s.transcripts[0]
     dispose(s)
     if (passed) { setStatus('passed'); setMessage('已经听清楚了'); latest.current.onPassed() }
-    else { setStatus('failed'); setMessage(heard ? `听到的是“${heard}”。重听后，再试一次。` : '没有听清，重听后再试一次。') }
+    else { setStatus('failed'); onFailed?.(); setMessage(heard ? `听到的是“${heard}”。重听后，再试一次。` : '没有听清，重听后再试一次。') }
   }
   function start(pointer: number, startY: number) {
-    if (session.current || status === 'passed') return
+    if (disabled || session.current || status === 'passed') return
     const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition
     if (!Recognition) { setStatus('failed'); setMessage('当前浏览器不支持语音识别，可暂时离开并保留待完成。'); return }
     let engine: ISpeechRecognition
@@ -149,7 +149,7 @@ export default function RepeatGate({ id, target, onPassed, onPostpone, onBusyCha
   const holding = status === 'starting' || status === 'recording'
   return <div className="repeat-gate" data-speech-id={id}>
     <div className="record-caption">{cancelHint ? '松开取消' : status === 'recording' ? '正在听你说…' : status === 'starting' ? '正在准备麦克风…' : status === 'processing' ? '正在识别…' : '开口跟读'}</div>
-    <button type="button" data-voice-control="true" className={`voice-orb ${holding ? 'is-recording' : ''} ${cancelHint ? 'is-cancelling' : ''}`} aria-label="按住说话" aria-describedby={`voice-help-${id}`} disabled={status === 'processing' || status === 'passed'}
+    <button type="button" data-voice-control="true" className={`voice-orb ${holding ? 'is-recording' : ''} ${cancelHint ? 'is-cancelling' : ''}`} aria-label="按住说话" aria-describedby={`voice-help-${id}`} disabled={disabled || status === 'processing' || status === 'passed'}
       onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={() => cancel()}
       onLostPointerCapture={() => { if (session.current && !session.current.released) cancel() }}
       onContextMenu={e => e.preventDefault()} onClick={e => { e.preventDefault(); e.stopPropagation() }}
@@ -158,6 +158,7 @@ export default function RepeatGate({ id, target, onPassed, onPostpone, onBusyCha
     </button>
     <span className="record-label">{cancelHint ? '松开取消' : holding ? '松开结束' : status === 'processing' ? '请稍等' : '按住说话'}</span>
     <p id={`voice-help-${id}`} className="record-hint" role="status">{message}</p>
+    <button className="prototype-skip-speech" onClick={onPreviewSkip} disabled={holding || status === 'processing' || status === 'passed'}>仅原型测试：跳过跟读</button>
     <button className="text-button postpone-speech" onClick={onPostpone} disabled={holding || status === 'processing'}>稍后继续</button>
   </div>
 }

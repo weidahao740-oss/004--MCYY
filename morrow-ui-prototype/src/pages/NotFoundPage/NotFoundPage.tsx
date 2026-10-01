@@ -1,11 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom'
 
 export default function NotFoundPage() {
   return (
-    <div className="flex flex-col items-center justify-center py-24">
-      <h1 className="text-6xl font-bold mb-4">404</h1>
-      <p className="text-lg text-muted-foreground mb-8">页面不存在</p>
-      <Link to="/" className="text-primary hover:underline">返回首页</Link>
-    </div>
-  );
+    <main className="system-page-shell">
+      <section className="system-page-card">
+        <p className="system-page-eyebrow">404</p>
+        <h1>这里没有这个页面</h1>
+        <p>回到 Morrow 的房间，可以继续当前的原型体验。</p>
+        <Link to="/" className="system-page-link">回到房间</Link>
+      </section>
+    </main>
+  )
 }

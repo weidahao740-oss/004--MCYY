@@ -1,19 +1,18 @@
-import type { FallbackProps } from 'react-error-boundary';
+import type { FallbackProps } from 'react-error-boundary'
 
 export function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-4 p-8 text-center">
-      <h1 className="text-xl font-semibold">页面出错了</h1>
-      <pre className="max-w-full overflow-auto rounded-md bg-muted p-4 text-left text-sm text-muted-foreground">
-        {error instanceof Error ? error.message : String(error)}
-      </pre>
-      <button
-        type="button"
-        className="rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground"
-        onClick={resetErrorBoundary}
-      >
-        重试
-      </button>
-    </div>
-  );
+    <main className="system-page-shell">
+      <section className="system-page-card" role="alert">
+        <p className="system-page-eyebrow">Morrow 暂时停了一下</p>
+        <h1>页面没有正常打开</h1>
+        <p>请重试一次。已经确认的原型进度仍保存在当前浏览器中。</p>
+        <details>
+          <summary>查看错误信息</summary>
+          <pre>{error instanceof Error ? error.message : String(error)}</pre>
+        </details>
+        <button type="button" className="primary" onClick={resetErrorBoundary}>重新打开</button>
+      </section>
+    </main>
+  )
 }
