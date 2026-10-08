@@ -4,7 +4,7 @@
 > 状态：数据库 Schema 初稿已落地，可进入 AI/语音验证与隐私策略  
 > 数据库：CloudBase PostgreSQL  
 > ORM / 迁移：Drizzle ORM + Drizzle Kit  
-> 关联文件：`EVENTS_V1.md`、`FIRST_DAY_FLOW.md`、`PET_SYSTEM_PROMPT.md`、`english-pet/packages/database/src/schema.ts`、`english-pet/packages/database/migrations/0000_initial.sql`
+> 关联文件：`EVENTS_V1.md`、`FIRST_DAY_FLOW.md`（已 superseded，仅 FD 骨架历史参考，不作现行实现依据）、`PET_SYSTEM_PROMPT.md`、`english-pet/packages/database/src/schema.ts`、`english-pet/packages/database/migrations/0000_initial.sql`
 
 ## 1. 设计目标
 
@@ -148,7 +148,7 @@ event_definitions ──1:N── event_instances
 
 每个用户一行：
 
-- 内部语言级别 `L1`—`L4`；
+- 内部语言级别 `L1`—`L4`（旧 LLM 适配器时代枚举，保留不动；2026-10-07 起**不再**为用户难度三档 basic/intermediate/advanced 新增 `difficulty_tier/tier_source/tier_updated_at` 等任何并列档位列——帮助量改为按词/语块/句子上的六阶掌握证据动态展开，见 `LEARNING_SYSTEM_DESIGN.md` §1、§10）；
 - 回复长度、语速、字幕、纠错偏好；
 - 时区和界面语言；
 - `memory_enabled`：全局暂停长期记忆调用；
@@ -643,7 +643,8 @@ packages/database/
 阶段 3.5.3 把现有“LLM 适配器 + 事件配置”骨架迁移为“版本化固定内容 + 确定性意图匹配 + 白名单状态迁移”。本次迁移**只向前追加**，不重写本节及以上既有内容：
 
 - 现有 23 张表中 19 张保留不动，4 张仅追加可空列：`user_settings.llm_assist_enabled`（默认 false）、`event_definitions`/`event_instances` 各加 `chapter_id` 与 `event_type`、`memories` 加 `memory_rule_id` 与 `proposal_source`；
-- 拟新增 5 张表：规则集登记 `fixed_rulesets`、学习内容与译文版本 `learning_contents`、预制音频绑定 `audio_bindings`（单一正常语速音频，planned/ready/retired）、章节成长进度 `user_chapter_progress`、意图解析留痕 `intent_resolution_records`（只存 `rulesetVersion+eventVersion+stateId+inputHash+resolvedIntentId` 哈希，不存原始录音）；
+- **3.5.3 批次拟新增 5 张表**（本批，与下面 3.5.4 学习系统表是两批，勿混）：规则集登记 `fixed_rulesets`、学习内容与译文版本 `learning_contents`、预制音频绑定 `audio_bindings`（单一正常语速音频，planned/ready/retired）、章节成长进度 `user_chapter_progress`、意图解析留痕 `intent_resolution_records`（只存 `rulesetVersion+eventVersion+stateId+inputHash+resolvedIntentId` 哈希，不存原始录音）；
+- **3.5.4 学习系统批次另新增 4 张表**（完整设计见同目录 [`LEARNING_DATA_MIGRATION.md`](./LEARNING_DATA_MIGRATION.md)）：全局学习对象 `learning_objects`、用户×对象六阶掌握 `mastery_records`、提示使用留痕 `hint_usage`、间隔复现计划 `review_schedule`。原拟的水平测试结果表 `assessment_results` **已取消不建**；`user_settings` **不加** `difficulty_tier` 类列。两批合计新增 = 5（3.5.3）+ 4（3.5.4）= 9 张，数量口径以本条与迁移文档 §3、§7 为准。
 - 记忆确认状态机整体沿用现有 `memories.status`（`proposed→confirmed/paused/rejected/deleted/expired`）与既有 `requires_user_confirmation=true` 约束，仅补充白名单来源字段；
 - 世界状态继续由 `user_world_state` key-value 承载，章节门控另立专用表；未确认 ASR 不入库、原始录音不落库只存临时文件标识、敏感记忆 restricted、账号删除级联均沿用 PRIVACY_DESIGN 约束。
 

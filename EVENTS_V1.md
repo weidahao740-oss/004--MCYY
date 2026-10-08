@@ -4,7 +4,7 @@
 > 状态：可进入数据模型与事件引擎设计  
 > 规则集：`events-v1.0.0`  
 > 适用范围：完成首日体验后的 Web/PWA MVP；后续小程序与 App 共用同一服务端配置。  
-> 关联文件：`FIRST_DAY_FLOW.md`、`PET_PERSONA.md`、`PET_SYSTEM_PROMPT.md`、`english-pet/packages/contracts/src/events.ts`、`english-pet/packages/domain/src/events-v1.ts`
+> 关联文件：`FIRST_DAY_FLOW.md`（已 superseded，仅 FD 骨架历史参考，不作现行实现依据）、`PET_PERSONA.md`、`PET_SYSTEM_PROMPT.md`、`english-pet/packages/contracts/src/events.ts`、`english-pet/packages/domain/src/events-v1.ts`
 
 ## 1. 这批事件要证明什么
 

@@ -1,12 +1,20 @@
 # FIRST_ASSESSMENT_FLOW — 首日轻量水平校准流程（阶段 3.5.4）
 
-> 版本：1.0.0
-> 状态：阶段 3.5.4 设计稿；包装在首日剧情里的约 3 分钟轻量校准，不是独立考试页
+> ⚠️ **本文件已被新规则替代（superseded，2026-10-07），不再作为现行有效的首次分级/三档规则。**
+> 现行口径：**取消用户难度三档 `basic/intermediate/advanced`，不做首次分级测试，不写 `user_settings.difficulty_tier`**。新用户所有学习对象从 `encountered` 起步，第一条表达走保底教学，后续按预设规则与逐对象六阶掌握证据动态分流，不调用实时大模型判断难度。
+> 现行权威见：
+> - `LEARNING_DATA_MIGRATION.md` §2（首测取消、不建 FD08、不建 assessment_results）；
+> - `LEARNING_SYSTEM_DESIGN.md` §1、§7（章轨唯一 + 逐对象证据驱动帮助、第一条保底）；
+> - `MORROW_LIFE_STORY_BIBLE.md` §2 硬规则第 6 条（教学展开规则）。
+> 本文以下正文保留为历史设计记录，不再据此开发或验收；其中"初始难度档/AS00–AS09/三档合成"等内容均已失效。
+
+> 版本：1.0.0（superseded）
+> 状态：**已废止**——阶段 3.5.4 旧设计稿，包装在首日剧情里的约 3 分钟轻量校准；2026-10-07 起随三档一并取消
 > 上游依据：
 > - `FIRST_DAY_FLOW.md` v1.0（首日 FD00–FD07 状态机）
 > - `FIXED_CONTENT_CONTRACT.md` v1.0.0（中文 UI、人工译文、查看中文不影响结果、三种输入平权）
 > - `MORROW_LIFE_STORY_BIBLE.md` v1.0.0（用户身份=朋友、暂停不惩罚）
-> - `LEARNING_SYSTEM_DESIGN.md` v1.0.0（双轨模型、六阶掌握、难度三档）
+> - ~~`LEARNING_SYSTEM_DESIGN.md` v1.0.0（双轨模型、六阶掌握、难度三档）~~ → 已升 v1.1.0，取消双轨与三档
 
 ---
 

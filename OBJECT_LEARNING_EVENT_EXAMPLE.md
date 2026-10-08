@@ -3,7 +3,7 @@
 > **声明（开头必读）**：本文只是 `LEARNING_SCENARIO_LIBRARY.md` 情景库中的**一个完整样板案例**，演示"一个新物品从指认到迁移"的完整教学链路长什么样。它**不替代**完整的 `LEARNING_SCENARIO_LIBRARY.md`，也不新增事件 ID；苹果只是拿来讲清楚这条链路的道具，真实上线时可替换成任意物品。
 >
 > 项目：成人英语 AI 宠物 Morrow（墨洛）｜阶段 3.5.4
-> 术语沿用情景库：掌握六阶 encountered / recognized / prompted / independent / transferring / mastered；三档 basic / intermediate / advanced；六能力与 12 交互结构同前。
+> 术语沿用情景库：掌握六阶 encountered / recognized / prompted / independent / transferring / mastered；**不再有用户难度三档 basic/intermediate/advanced**——同一物品给多少脚手架，由该词/语块/句子在当前用户身上处于哪一阶证据动态决定；六能力与 12 交互结构同前。
 > 界面/功能说明用中文；Morrow 台词与用户例句为简单地道英文，每句配人工中文。
 
 ---
@@ -14,7 +14,7 @@
 
 **指向 pointing → 命名 naming（apple / red...）→ 完整句 It is an apple. → 特征描述 It is red and round. → 误认纠正（把苹果错认成西红柿/球，用户纠正）→ 生活任务（放进篮子/递给我）→ 偏好表达 I like apples. → 跨场景迁移（几天后早餐场景自然复现 apple）。**
 
-每一步都给：① 中文界面任务；② Morrow 英文台词 + 人工中文；③ 基础/中等/进阶三档用户分别怎么回答；④ 掌握证据如何从一阶升到下一阶。
+每一步都给：① 中文界面任务；② Morrow 英文台词 + 人工中文；③ 按该对象当前证据给的三档脚手架（认识候选→语块搭建→独立扩展，不是用户档位）；④ 掌握证据如何从一阶升到下一阶。
 
 ---
 
@@ -24,10 +24,10 @@
 - **Morrow 台词**：
   - `What is this? It is on the table.`（译文：这是什么？它在桌上。）
   - `I can point at it, but I don't know the word.`（译文：我能指着它，但不知道这个词。）
-- **三档用户回答**：
-  - 基础 basic：点中文候选"这是一个苹果"（提交预设意图，自己不打英文）。
-  - 中等 intermediate：输入/选择参考句 `This is an apple.`（译文：这是一个苹果。）
-  - 进阶 advanced：自己说 `That red thing on the table is an apple.`（译文：桌上那个红色的东西是苹果。）
+- **按当前证据给脚手架**（不是用户档位；对象刚到哪阶就给哪层帮助）：
+  - 该对象刚 `encountered/recognized`：给中文候选点选"这是一个苹果"（提交预设意图，最高只算 recognized）。
+  - 已 `recognized`、想推进：给参考句 `This is an apple.`（译文：这是一个苹果。）让用户确认或跟读（最高 prompted）。
+  - 已 `prompted` 及以上：只给任务，用户自己说 `That red thing on the table is an apple.`（译文：桌上那个红色的东西是苹果。）（冲 independent）。
 - **掌握证据升级**：用户首次接触 apple 一词，停在 **encountered**；只要能把"红色圆形物"和 apple 对上，即进入 **recognized**。此步只要求认识，不要求独立造句。
 
 ---
@@ -38,10 +38,10 @@
 - **Morrow 台词**：
   - `Apple. Is that the word?`（译文：Apple。是这个词吗？）
   - `And it is red, right?`（译文：而且它是红色的，对吧？）
-- **三档用户回答**：
-  - 基础 basic：点选"apple / red"两个词卡。
-  - 中等 intermediate：说 `It is an apple, and it is red.`（译文：这是一个苹果，它是红色的。）
-  - 进阶 advanced：说 `It's an apple. Apples can be red or green.`（译文：这是一个苹果。苹果可以是红的或绿的。）
+- **按当前证据给脚手架**：
+  - apple/red 仍只 `recognized`：点选"apple / red"两个词卡（最高 prompted）。
+  - 已会用词卡：搭句 `It is an apple, and it is red.`（译文：这是一个苹果，它是红色的。）。
+  - 已 `independent`：自己扩展 `It's an apple. Apples can be red or green.`（译文：这是一个苹果。苹果可以是红的或绿的。）。
 - **掌握证据升级**：能跟着说出 apple 这个名词 + 颜色形容词 = **prompted（提示下会用）**。Morrow 此时仍依赖用户提示词卡。
 
 ---
@@ -52,10 +52,10 @@
 - **Morrow 台词**：
   - `I will try: It is an apple.`（译文：我试试：这是一个苹果。）
   - `Did I say it right?`（译文：我说对了吗？）
-- **三档用户回答**：
-  - 基础 basic：点选"对/不对"。
-  - 中等 intermediate：说 `Yes, it is an apple.`（译文：对，这是一个苹果。）
-  - 进阶 advanced：说 `Yes. "It is an apple." That sounds right.`（译文：对。"It is an apple."听起来是对的。）
+- **按当前证据给脚手架**：
+  - 句型还没站稳：点选"对/不对"（只做理解确认，最高 recognized）。
+  - 已 `prompted`：说 `Yes, it is an apple.`（译文：对，这是一个苹果。）。
+  - 已 `independent`：自己扩展 `Yes. "It is an apple." That sounds right.`（译文：对。"It is an apple."听起来是对的。）。
 - **掌握证据升级**：Morrow 能在无词卡时用完整 `It is an apple.`；用户确认后，该句型进入 **independent（独立会用）** 的候选——但还需用户自己也独立说一次才算站稳。
 
 ---
@@ -66,10 +66,10 @@
 - **Morrow 台词**：
   - `It is not just a name. What does it look like?`（译文：它不只是一个名字。它看起来什么样？）
   - `Is it big? Is it smooth?`（译文：它大吗？它光滑吗？）
-- **三档用户回答**：
-  - 基础 basic：点选"红色/圆的"两个特征。
-  - 中等 intermediate：说 `It is red and round.`（译文：它又红又圆。）
-  - 进阶 advanced：说 `It is red, round, and smooth. It is a little sweet.`（译文：它又红又圆又光滑。它有点甜。）
+- **按当前证据给脚手架**：
+  - 特征词还只 `recognized`：点选"红色/圆的"两个特征（最高 prompted）。
+  - 已会串两个特征：说 `It is red and round.`（译文：它又红又圆。）。
+  - 已 `independent`：自己加特征 `It is red, round, and smooth. It is a little sweet.`（译文：它又红又圆又光滑。它有点甜。）。
 - **掌握证据升级**：用户能用 `It is ... and ...` 把多个特征串成一句，即从"只会说名词"升级到**描述世界 describing**能力，apple 相关表达进入 **independent**。
 
 ---
@@ -80,10 +80,10 @@
 - **Morrow 台词**：
   - `Is this a tomato? Or a ball? It is red and round.`（译文：这是西红柿吗？还是球？它又红又圆。）
   - `Did I get it wrong?`（译文：我认错了吗？）
-- **三档用户回答**：
-  - 基础 basic：点选"不是，这是苹果"。
-  - 中等 intermediate：说 `No. It is not a tomato. It is an apple.`（译文：不，这不是西红柿。这是苹果。）
-  - 进阶 advanced：说 `I thought it looked like a ball too, but it's an apple. We eat apples.`（译文：我也觉得它像个球，但这是苹果，我们吃苹果。）
+- **按当前证据给脚手架**：
+  - 否定/纠正句型还没独立用过：点选"不是，这是苹果"（最高 prompted）。
+  - 已会用否定句：说 `No. It is not a tomato. It is an apple.`（译文：不，这不是西红柿。这是苹果。）。
+  - 已 `independent`：自己补理由 `I thought it looked like a ball too, but it's an apple. We eat apples.`（译文：我也觉得它像个球，但这是苹果，我们吃苹果。）。
 - **掌握证据升级**：用户用否定 + 纠正句把"苹果 ≠ 西红柿 ≠ 球"区分开，触发 **纠正误认** 交互结构；apple 的识别从"孤立名词"升级为"在混淆项中仍能认出"，迈向 **transferring**。
 
 ---
@@ -94,10 +94,10 @@
 - **Morrow 台词**：
   - `Can you help me? Put the apple in the basket, please.`（译文：你能帮我吗？请把苹果放进篮子里。）
   - `Or give it to me?`（译文：或者递给我？）
-- **三档用户回答**：
-  - 基础 basic：点选"放进篮子 / 递给我"。
-  - 中等 intermediate：说 `Here you are. I put the apple in the basket.`（译文：给你。我把苹果放进篮子里了。）
-  - 进阶 advanced：说 `I'll give it to you. Catch! It's an apple, not a ball.`（译文：我递给你。接好！这是苹果，不是球。）
+- **按当前证据给脚手架**：
+  - 任务指令还只 `recognized`：点选"放进篮子 / 递给我"（最高 prompted）。
+  - 已会执行句：说 `Here you are. I put the apple in the basket.`（译文：给你。我把苹果放进篮子里了。）。
+  - 已 `independent`：自己加互动 `I'll give it to you. Catch! It's an apple, not a ball.`（译文：我递给你。接好！这是苹果，不是球。）。
 - **掌握证据升级**：用户把 apple 用到一个真实小任务里（执行动作 doing + 社会沟通 social），语言从"认东西"变成"做事"，掌握证据巩固 **independent**，并为下一步偏好表达铺路。
 
 ---
@@ -108,10 +108,10 @@
 - **Morrow 台词**：
   - `Do you like apples?`（译文：你喜欢苹果吗？）
   - `I think I like them. They are sweet.`（译文：我觉得我喜欢。它们甜甜的。）
-- **三档用户回答**：
-  - 基础 basic：点选"喜欢 / 一般 / 不确定"。
-  - 中等 intermediate：说 `Yes, I like apples.`（译文：是的，我喜欢苹果。）
-  - 进阶 advanced：说 `I like apples, but I like bananas too.`（译文：我喜欢苹果，但我也喜欢香蕉。）
+- **按当前证据给脚手架**：
+  - 偏好表达还没独立用过：点选"喜欢 / 一般 / 不确定"（最高 prompted）。
+  - 已会偏好句：说 `Yes, I like apples.`（译文：是的，我喜欢苹果。）。
+  - 已 `independent`：自己加对比 `I like apples, but I like bananas too.`（译文：我喜欢苹果，但我也喜欢香蕉。）。
 - **掌握证据升级**：用户用 `I like apples.` 独立表达偏好（表达自己 expressing），apple 从"物品名"进入"有情感色彩的词"，此时已具备 **independent** 稳定输出；最后一步测试迁移。
 
 ---
@@ -122,10 +122,10 @@
 - **Morrow 台词**：
   - `Good morning. There is an apple with breakfast today.`（译文：早上好。今天早餐有一个苹果。）
   - `Do you want the apple or the bread?`（译文：你要苹果还是面包？）
-- **三档用户回答**：
-  - 基础 basic：点选"苹果 / 面包"。
-  - 中等 intermediate：说 `I want the apple, please.`（译文：请给我苹果。）
-  - 进阶 advanced：说 `I'll have the apple. Remember? It is red and round.`（译文：我要苹果。还记得吗？它又红又圆。）
+- **按当前证据给脚手架**：
+  - 还没到 `transferring`：点选"苹果 / 面包"（理解确认，最高 recognized）。
+  - 已会点餐句：说 `I want the apple, please.`（译文：请给我苹果。）。
+  - 已 `transferring`：自己带复现 `I'll have the apple. Remember? It is red and round.`（译文：我要苹果。还记得吗？它又红又圆。）。
 - **掌握证据升级**：在**没有任何"命名提示词卡"的新场景**里，用户仍能听懂 apple 并主动用它点餐 = **transferring（迁移中）**；若一周内又在购物/野餐等场景无提示复现一次，即判 **mastered（稳定掌握）**。这一步正是"防退化"关键：同一个词被反复考"这是什么"只会停在 recognized，跨场景自然复现才能升到 mastered。
 
 ---

@@ -1,0 +1,147 @@
+{
+  "report_date": "2026-10-02",
+  "scope": "只读复核 C:\\004-MCYY 主计划 + 任务看板 67 文件",
+  "task_file_breakdown": {
+    "task_type_archives": 64,
+    "breakdown": {
+      "T_event_files": 25,
+      "T_stage_task_files": 25,
+      "stage_archives": 9,
+      "chapter_archives": 5,
+      "index_files": 3,
+      "total": 67
+    }
+  },
+  "verifier_hub_assertions": [
+    {
+      "id": "V1",
+      "tool": "rubric.check-file-format",
+      "target": "成人英语AI宠物-项目执行计划.md",
+      "passed": true,
+      "evidence": "text size=8599"
+    },
+    {
+      "id": "V2",
+      "tool": "text.must-contain",
+      "target": "主计划",
+      "terms": ["阶段-00-概念设计", "阶段-04-平台无关", "阶段-06-个人长期", "P35-T04", "P4.5-T04"],
+      "passed": true,
+      "evidence": "all required: matched 5/5"
+    },
+    {
+      "id": "V3",
+      "tool": "text.count-matches",
+      "target": "T-P4-06-08-E01-02剧情重写.md",
+      "regex": "T-P4-T06",
+      "count": 0,
+      "passed": true
+    }
+  ],
+  "custom_script_assertions": [
+    {
+      "id": "C1",
+      "description": "64 任务类档案 11 字段完整性",
+      "files_checked": 50,
+      "missing_fields": 0,
+      "passed": true
+    },
+    {
+      "id": "C2",
+      "description": "七状态合法值",
+      "files_checked": 50,
+      "invalid_status": 0,
+      "allowed": ["completed","partial","reopened","superseded","blocked","not-started","in-progress"],
+      "passed": true
+    },
+    {
+      "id": "C3",
+      "description": "25 事件 ID 覆盖及重复",
+      "event_files": 25,
+      "ids_extracted": 25,
+      "duplicate_ids": 0,
+      "passed": true
+    },
+    {
+      "id": "C4",
+      "description": "后章（3-7）只有章节级",
+      "T_E03_to_E07_event_files": 0,
+      "chapter_archives": 5,
+      "passed": true
+    },
+    {
+      "id": "C5",
+      "description": "快照 25 阶段任务 ID 在当前主计划保留",
+      "snapshot_tasks": 25,
+      "found_in_current": 25,
+      "missing": 0,
+      "passed": true
+    },
+    {
+      "id": "C6",
+      "description": "主计划链接及锚点",
+      "total_links": 42,
+      "broken_files": 0,
+      "readme_anchors_verified": 3,
+      "anchor_note": "3 个 README 锚点目标文本实际存在（第一章 出生与苏醒 / 第二章 童年探索 / 第三至七章）",
+      "passed": true
+    },
+    {
+      "id": "C7",
+      "description": "历史阶段 completed 引用文件存在性",
+      "referenced_files_checked": 14,
+      "all_exist": true,
+      "files": ["PROJECT_BASELINE.md","PET_PERSONA.md","TECH_STACK.md","DATA_MODEL.md","SEVEN_DAY_SELF_TEST.md","FIXED_CONTENT_CONTRACT.md","MORROW_LIFE_STORY_BIBLE.md","CHAPTER_01_BIRTH_CONTENT.md","CHAPTER_02_CHILDHOOD_CONTENT.md","MIGRATION_PLAN_WEB_TO_FIXED_CONTENT.md","SELF_TEST_CHECKLIST.md","BUGS.md","FIRST_DAY_FLOW.md","LEARNING_SYSTEM_DESIGN.md"],
+      "baseline_section_2_exists": true,
+      "passed": true
+    },
+    {
+      "id": "C8",
+      "description": "F1 markdown 死链接",
+      "count": 0,
+      "passed": true
+    },
+    {
+      "id": "C9",
+      "description": "F2 错误 ID T-P4-T06-XX 残留",
+      "count": 0,
+      "passed": true
+    },
+    {
+      "id": "C10",
+      "description": "F3 daily/recall 依赖 P4.5-04",
+      "total": 12,
+      "covered": 12,
+      "missing": 0,
+      "passed": true
+    },
+    {
+      "id": "C11",
+      "description": "主计划零表格",
+      "table_lines": 0,
+      "passed": true
+    },
+    {
+      "id": "C12",
+      "description": "阶段档案链接数",
+      "count": 9,
+      "locations": ["L43","L47","L51","L55","L59","L63","L90","L98","L103"],
+      "passed": true
+    },
+    {
+      "id": "C13",
+      "description": "复选框行全部带状态括号",
+      "total": 34,
+      "missing_paren": 0,
+      "passed": true
+    },
+    {
+      "id": "C14",
+      "description": "P35-T04 位于阶段4下",
+      "location": "L64",
+      "stage_header": "L61",
+      "passed": true
+    }
+  ],
+  "defects": [],
+  "verdict": "PASS"
+}
