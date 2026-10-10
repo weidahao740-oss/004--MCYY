@@ -1,6 +1,6 @@
-# LEARNING_SCENARIO_LIBRARY — Morrow 成长学习情景库（阶段 3.5.4，2026-10-07 修订）
+# LEARNING_SCENARIO_LIBRARY — Morrow 成长学习情景库（阶段 3.5.4，2026-10-10 修订）
 
-> 版本：1.1.0
+> 版本：1.1.1
 > 项目：成人英语 AI 宠物 Morrow（墨洛）
 > 依据：`MORROW_LIFE_STORY_BIBLE.md` v1.0.0（七章主线、三类事件）、`FIXED_CONTENT_CONTRACT.md` v1.0.0、`CHAPTER_01_BIRTH_CONTENT.md` v1.0.0（13 事件）、`CHAPTER_02_CHILDHOOD_CONTENT.md` v1.0.0（12 事件）、`MORROW_LANGUAGE_CURRICULUM.md` §0.4（12 类成人生活领域 D1–D12）。
 > 本库只做"学习情景"一层的编排：把已存在/规划中的成长事件映射到成人生活领域、真实沟通任务、英语学习能力、交互结构与掌握证据。它不改写事件 ID、世界状态与分支逻辑；事件正文仍以两章内容文件为准。
@@ -8,7 +8,7 @@
 
 ## 0. 口径与术语（全库逐字使用，不得替换同义词）
 
-**事件数量口径（重要）**：计划文档口头称"首两章 24 个事件"，但实际内容文件为 **25 个（第一章 13 / 第二章 12）**，本库已按实际 25 个全量映射，一个不漏。第一章 13 个：`birth_first_voice_v1`、`birth_restore_object_v1`、`b1_remember_name_v1`、`b1_first_feeling_v1`、`b1_window_light_v1`、`b1_first_letter_v1`、`b1_bell_sound_v1`、`b1_ask_about_you_v1`、`b1_what_i_like_v1`、`b1_tomorrow_plan_v1`、`b1_return_first_words_v1`、`b1_ready_for_outside_v1`、`b1_not_sure_v1`。第二章 12 个：`b2_room_tour_v1`、`b2_name_objects_v1`、`b2_colors_v1`、`b2_outside_road_v1`、`b2_today_you_v1`、`b2_my_likes_v1`、`b2_mistake_v1`、`b2_small_task_v1`、`b2_feeling_check_v1`、`b2_sound_comes_back_v1`、`b2_recall_room_v1`、`b2_ready_for_school_v1`。
+**事件数量口径（重要）**：计划文档口头称“首两章 24 个事件”，但实际内容文件为 **25 个（第一章 13 / 第二章 12）**，本库已按实际 25 个全量映射，一个不漏。第一章 13 个：`birth_first_voice_v1`、`b1_first_room_object_v1`、`b1_remember_name_v1`、`b1_first_feeling_v1`、`b1_window_light_v1`、`b1_first_letter_v1`、`b1_bell_sound_v1`、`b1_ask_about_you_v1`、`b1_what_i_like_v1`、`b1_tomorrow_plan_v1`、`b1_return_first_words_v1`、`b1_ready_for_outside_v1`、`b1_not_sure_v1`。第二章 12 个：`b2_room_tour_v1`、`b2_name_objects_v1`、`b2_colors_v1`、`b2_outside_road_v1`、`b2_today_you_v1`、`b2_my_likes_v1`、`b2_mistake_v1`、`b2_small_task_v1`、`b2_feeling_check_v1`、`b2_sound_comes_back_v1`、`b2_recall_room_v1`、`b2_ready_for_school_v1`。旧 `birth_restore_object_v1` 已 `retired`，只作历史映射，不计入现行 25 事件。
 
 **掌握六阶（逐字）**：初次接触 encountered / 能识别 recognized / 提示下会用 prompted / 独立会用 independent / 迁移中 transferring / 稳定掌握 mastered。
 
@@ -30,8 +30,8 @@
 
 | 事件ID | 中文名 | 生活领域 | 真实沟通任务 | 学习能力/交互结构 | 核心表达（1—2） | 必要新词 | 旧表达复现 | 最终真实输出（掌握证据） |
 |---|---|---|---|---|---|---|---|---|
-| `birth_first_voice_v1` | 苏醒后的第一句话 | D1 自我与基本信息 | 初次打招呼、问对方好不好 | social / 图片声音选择 | `Let me help you.`；`Are you all right?` | help / all right / okay | 无（首事件） | 无提示说出 `Are you all right?` 或 `Let me help you.` 并推动 first_response_style 结算（prompted→independent） |
-| `birth_restore_object_v1` | 让第一件东西清晰起来 | D1 自我与基本信息 | 在房间里认领一件物品并带回 | recognizing / 指向命名 | `Let's bring back the...` | lamp / plant / small bell；bring back | 无 | 独立说出物品名 + bring back 搭配（lamp/plant/bell 其一），结算 first_restored_object（recognized→independent） |
+| `birth_first_voice_v1` | 苏醒后的第一句话 | D1 自我与基本信息 | 第一次回应、问对方身份 | social / 中文意图选择 + 真实录音确认 | `Yes, I’m here.`；`Hi. I can hear you.`；`Who are you?`（三选一，只学所选） | 所选路线的自然语块 | 无（首事件） | 所选完整句完成真实录音、ASR 与用户确认后，结算 `first_response_style = reassuring_presence / friendly_greeting / identity_check`；只给所选路线记证据 |
+| `b1_first_room_object_v1` | 陪 Morrow 认识房间第一件物品 | D1 自我与基本信息 | 告诉新朋友自己先注意到哪件物品 | identifying / 中文物品选择 + 语块搭建 + 真实录音确认 | `I noticed the [object] first.` | 所选 `the lamp / the plant / the small bell` + `I noticed...first` | E01-01 只作关系回声，不紧邻重考 | 所选完整句完成必需教学、真实录音、ASR 与确认后结算 `first_shared_object`；系统按既有证据裁剪重复教学，用户不可跳过当前必需步骤 |
 | `b1_remember_name_v1` | 给自己起一个称呼 | D1 自我与基本信息 | 征求对方意见、定一个称呼 | expressing / 比较方案 | `What do you think?`；`I'll keep...` | name / keep / short / decide | 无 | 用 `What do you think?` 向 Morrow 征求意见，而非只点选（独立用征求意见句型） |
 | `b1_first_feeling_v1` | 说出现在的感觉 | D1 自我与基本信息 | 命名一种当下感觉 | expressing / 描述特征 | `I feel...`；`It's just...` | new / nervous / soft；feel | 无 | 用 `I feel...` 或 `It's just new.` 命名一种感觉（recognized→prompted） |
 | `b1_window_light_v1` | 看窗外的光 | D1 自我与基本信息 | 描述看到的景象 | describing / 描述特征 | `The light is...`；`It's warm outside.` | warm / high / light | 无 | 用形容词独立描述光的冷暖（independent） |
@@ -40,7 +40,7 @@
 | `b1_ask_about_you_v1` | Morrow 反过来问你 | D1 自我与基本信息 | 分享自己一天的一件事 | social / 描述特征 | `What happened today?`；`I had a... day.` | day / long / ordinary / tired | 无 | 用 `I had a ... day.` 独立分享自己的一天（independent） |
 | `b1_what_i_like_v1` | 我喜欢和还不确定的事 | D1 自我与基本信息 | 说喜欢/还不确定 | expressing / 表达偏好 | `I like...`；`I'm not sure about... yet.` | like / quiet / outside / sure | 无 | 用 `I like...` 或 `I'm not sure about... yet.` 独立表达喜好（independent） |
 | `b1_tomorrow_plan_v1` | 一起定一个明天的小计划 | D1 自我与基本信息 | 约定一件明天的小事 | social / 协作完成 | `Let's... tomorrow.`；`What shall we do tomorrow?` | tomorrow / plan / rest / read | 无 | 用 `Let's... tomorrow.` 独立提出并约定一件小事（independent） |
-| `b1_return_first_words_v1` | 记住你说过的第一句 | D1 自我与基本信息 | 确认或更新一句旧话 | social / 记忆回访 | `Did you mean it?`；`Yes, that's what I meant.` | meant / right / differently / ago | `Let me help you.`（序1） | 对旧记忆句做确认或更新（prompted→transferring） |
+| `b1_return_first_words_v1` | 记住你说过的第一句 | D1 自我与基本信息 | 确认或更新一句旧话 | social / 记忆回访 | `Did you mean it?`；`Yes, that's what I meant.` | meant / right / differently / ago | E01-01 用户已确认的所选完整表达 | 对旧记忆句做确认或更新（prompted→transferring） |
 | `b1_ready_for_outside_v1` | 准备好走出门 | D1 自我与基本信息 | 表达是否准备好出门 | expressing / 比较方案 | `I'm ready to...`；`Let's go.`；`Not yet.` | ready / go / not yet / curious | 无 | 用 `I'm ready to...` / `Not yet.` 独立表达准备程度（independent） |
 | `b1_not_sure_v1` | 一件还拿不准的小事 | D1 自我与基本信息 | 接纳不确定、不急着给答案 | expressing / 解释原因 | `I'm not sure about...`；`It's okay not to know yet.` | sure / okay / think / later | `I'm not sure...`（序9 喜好） | 用 `I'm not sure about...` 接纳不确定（independent） |
 | `b2_room_tour_v1` | 第一次把房间走一遍 | D3 居家与生活用品 | 决定行走顺序并说目的地 | doing / 排列顺序 | `This is where...`；`Let's go to the...` | window / door / corner；walk to | 无 | 用 `Let's go to the...` 独立决定行走顺序（independent） |

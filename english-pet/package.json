@@ -7,9 +7,11 @@
     "packages/*"
   ],
   "scripts": {
+    "workspace:materialize": "node scripts/materialize-workspace-packages.mjs",
+    "postinstall": "npm run workspace:materialize",
     "dev:web": "npm run dev --workspace @english-pet/web",
     "dev:api": "npm run dev --workspace @english-pet/api",
-    "typecheck": "npm run typecheck --workspaces --if-present"
+    "typecheck": "npm run workspace:materialize && npm run typecheck --workspaces --if-present"
   },
   "engines": {
     "node": ">=22"

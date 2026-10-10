@@ -1,6 +1,7 @@
 # 第一章 出生与苏醒（chapter\_01\_birth）完整事件内容
 
-> 版本：1.0.0
+> 版本：1.2.3（E01-01／E01-02 内容、语言与具体教学校准均于 2026-10-10 经用户确认）
+> 正文唯一权威来源：本文件是第一章全部事件正文的唯一正式内容文件；任务卡只记录状态、依赖、验收与证据，不另存事件完整正文。
 > 依据：
 >
 > MORROW_LIFE_STORY_BIBLE.md
@@ -14,28 +15,29 @@
 > PET_PERSONA.md
 >
 >  v1.0
-> 已种子事件：序 1 
+> 已种子／现行事件：序 1
 >
 > `birth_first_voice_v1`
 >
-> 、序 2 
+> 、序 2
 >
-> `birth_restore_object_v1`
+> `b1_first_room_object_v1`
 >
-> （忠实展开自 
+> （E01-01 忠实展开自
 >
-> `fixed-content-v1.ts`
+> `fixed-content-v1.ts`；E01-02 已按 P4-T06-08 重写并由用户确认，旧工程配置只作只读历史证据；本轮不修改工程
 >
 > ）
 > 本章共 13 个事件：主线 7 个（序 1、2、3、5、9、10、12），日常 5 个（序 4、6、7、8、13），回访 1 个（序 11）
 
 ## 0. 最新实现覆盖（2026-09-30）
 
-第一章当前先按 `项目计划/P4-T06-07-Morrow中文化台词自然翻译与双语语音流.md` 实现黄金路径：苏醒 → 观察窗边 → 选择小铃铛 → 跟读恢复句 → 小铃铛恢复。
+第一章旧原型曾按 `项目计划/P4-T06-07-Morrow中文化台词自然翻译与双语语音流.md` 实现恢复物品黄金路径；该路径已被 E01-02 新剧情取代，不再作为现行内容依据。
 
-- 黄金路径英文、自然中文理解和 Morrow 中文行动提示以 P4-T06-07 第 5 节为准。
-- E01-01、E01-02 下方旧英文台词、开放表达、可编辑参考句和意图匹配内容仅为历史内容蓝图，不进入当前原型。
-- 当前产品不提供开放聊天、开放文字输入或课程外自由表达；明确标记的必修跟读必须真实录音并识别通过。
+- E01-01 现行内容、语言与具体教学校准已于 2026-10-10 完成并经用户确认；最终生产台词版本、结果句 ID 与工程世界状态绑定仍留给 S06／P4-T06-09，本轮不修改工程或语音。
+- E01-02 现行正文只以本文件对应条目为准，状态为 completed；剧情重写于 2026-10-09 经用户确认，语言 v1.0.1 与具体教学校准于 2026-10-10 完成并经用户确认。
+- 旧 `birth_restore_object_v1` 已在内容层正式登记为 `retired`，只作旧原型与历史映射的只读证据，保留不删除；本轮不修改 `english-pet` 旧工程配置。
+- 当前产品不提供开放聊天、开放文字输入或课程外自由表达；所有事件中的必需教学不允许用户跳过，明确标记的必修跟读必须真实录音并识别通过。
 - 其他 11 个事件的英文和中文尚未完成 P4-T06-07 逐条校准，不得直接迁入正式工程。
 
 ## 本章说明
@@ -44,11 +46,11 @@
 
 * **进入条件**：新用户首次进入即自动触发序 1（苏醒后的第一句话）。
 
-* **完成条件**：完成本章全部主线事件（序 1、2、3、5、9、10、12），且至少产生 1 条经用户确认的关系记忆（第一次互相理解）。日常事件（4、6、7、8、13）从轮换池选取，不阻塞章节完成；回访事件（11）由已确认记忆触发。
+* **完成条件**：完成本章全部主线事件（序 1、2、3、5、9、10、12）、必要剧情／关系／世界状态和章末主线结算；“第一次互相理解”关系状态成立。系统可提出关系记忆提案，但用户是否保存不作为毕业硬门。日常事件（4、6、7、8、13）从轮换池选取，不阻塞章节完成；回访事件（11）由后台在当前情境与已确认且未暂停的共同记忆或待迁移旧表达语义匹配时自然触发，是否触发不阻塞章节完成。
 
 * **事件类型分布**：主线 7 个、日常 5 个、回访 1 个，合计 13 个，落在蓝图 10—15 区间。
 
-* **世界起点**：一间正在恢复声音的房间，三幅模糊轮廓（灯 / 植物 / 小铃铛），一扇还走不到的窗，一扇通往外面小路的门。用户是 Morrow 平等的朋友，可陪伴、可给建议，但不替 Morrow 作人生决定。
+* **世界起点**：一间安静、清晰的房间，窗边的灯、门边的植物和矮柜上的小铃铛都已经存在；一扇还走不到的窗，一扇通往外面小路的门。用户是 Morrow 平等的朋友，可陪伴、表达自己的注意点与给建议，但不替 Morrow 认识世界或作人生决定。
 
 * **语言难度**：全章以 L1 为主（句长 5—10 词、高频词），少量 L2（句长 8—16 词）。Morrow 用 they/them 中性指代，每条英文均配人工中文译文。
 
@@ -60,360 +62,314 @@
 
 ### E01-01 苏醒后的第一句话
 
+- 事件 ID：`birth_first_voice_v1`
+- 内容校准版本：1.1.0 ｜ 章节：`chapter_01_birth` ｜ sequence：1
+- 类型：`mainline` ｜ 时长：2—4 分钟
+- 关联主题：`topic_today` / `topic_feelings`
+- 生活领域：D1 `domain_self_info`
+- 沟通任务：C1 `identifying`——在第一次听见陌生声音时，让用户用一句真实英文表明“我在／我听见你／我想先知道你是谁”。
+- 进入条件：新用户首次进入，自动触发（章节序 1，无前序主线）。
+- 完成条件：用户完成所选完整表达的真实录音、ASR 识别与用户确认，系统写入 `first_response_style` 并播放对应分支反馈。随后出现共同收束与按钮，进入 E01-02。计入章节完成。
+- 暂停条件：用户选择 `稍后继续`，只保存临时中文意图和教学进度；不结算事件、不播放正式分支反馈、不写 `first_response_style`。
+- 内容状态：S01 内容、语言与具体教学校准 `completed`（2026-10-10 用户确认）；最终生产台词版本、结果句 ID 和工程世界状态绑定仍由 S06／P4-T06-09 完成。
 
+#### 剧情与角色动机
 
-* 事件 ID：`birth_first_voice_v1`
+房间清晰而安静，光线偏暗。Morrow 刚刚醒来，不知道房间外是否有人，于是试探着问出第一句话。用户不是在做问候题，而是在真实回应一个刚醒来、尚未确认有人陪伴的朋友。Morrow 得到回应后才自我介绍，再邀请用户一起看看这个对它来说全新的房间。
 
-* 版本：1.0.0 ｜ 章节：`chapter_01_birth` ｜ sequence：1
+#### Morrow 开场台词
 
-* 类型：mainline ｜ 时长：2—4 分钟
+1. `Hello? Is someone there?`
+   - 人工中文译文：你好？有人在吗？
+   - 台词 ID：`bfv_wake_line`
+   - 音频需求：`bfv_wake_line_audio`（沿用需求标识；正式语音本轮不制作）
 
-* 关联主题：`topic_today` / `topic_feelings`
+#### 中文意图选择与三条真实表达
 
-* 进入条件：新用户首次进入，自动触发（章节序 1，无前序主线）。
+Morrow 说完首句后，先在底部上浮选项层显示三条中文意图。用户选择一条后，只进入该路线的英语教学；未选路线不展示成需要学习的内容，也不产生学习证据。
 
-* 完成条件：结算 `first_response_style` 世界状态写入；可提议第一条关系记忆（需用户确认）。计入章节完成。
+##### 分支 A：回应“我在这里”
 
-#### 英语学习目标
+- 意图 ID：`bfv_intent_reassuring_presence`
+- 中文意图：`告诉墨洛：我在这里`
+- 用户完整表达：`Yes, I’m here.`
+- 人工中文理解：`对，我在这里。`
+- Morrow 分支反馈：`Oh, good. I’m Morrow. I wasn’t sure anyone was there.`
+- 人工中文译文：`太好了。我叫墨洛。刚才我还不确定这里有没有人。`
+- `first_response_style = reassuring_presence`
 
+##### 分支 B：友好回应
 
+- 意图 ID：`bfv_intent_friendly_greeting`
+- 中文意图：`友好地回应墨洛`
+- 用户完整表达：`Hi. I can hear you.`
+- 人工中文理解：`你好，我能听见你。`
+- Morrow 分支反馈：`Hi. I’m Morrow. I’m glad you answered.`
+- 人工中文译文：`你好，我叫墨洛。很高兴你回应了我。`
+- `first_response_style = friendly_greeting`
 
-* 目标句型 / 词汇：`Let me help you...`（主动提供帮助）；`Are you all right?`（关心询问）。
+##### 分支 C：先确认身份
 
-* 难度档：L1 基础。
+- 意图 ID：`bfv_intent_identity_check`
+- 中文意图：`先问问对方是谁`
+- 用户完整表达：`Who are you?`
+- 人工中文理解：`你是谁？`
+- Morrow 分支反馈：`I’m Morrow. I just woke up. That’s about all I know for now.`
+- 人工中文译文：`我叫墨洛。我刚醒来。现在我知道的差不多就这些。`
+- `first_response_style = identity_check`
+
+`first_response_style` 只记录这次经过确认的回应方式，不解释为用户性格；禁止使用 `cautious` 或其他标签给用户定性。
+
+#### 共同收束与 E01-02 承接
+
+三条分支反馈后统一播放：
+
+- Morrow：`Everything here feels new. Will you look around with me?`
+- 人工中文译文：`这里的一切对我来说都很陌生。你愿意陪我看看周围吗？`
+- 中文行动按钮：`陪墨洛看看房间`
+
+点击按钮后进入 E01-02 `b1_first_room_object_v1`。该按钮只承担事件间转场，不替代 E01-01 的必修表达，也不额外写学习证据。
+
+#### 首次产品真实表达教学（完整保底，仅一次）
+
+共同开头固定为：Morrow 说 `Hello? Is someone there?` → 用动作、房间氛围和自然中文让用户明白“刚醒来的 Morrow 正在确认有没有人回应” → 用户选择一条中文意图。中文意图只决定剧情路线，不产生任何英语学习证据；选择后只进入所选路线，未选路线不作为干扰或教学内容出现。
+
+##### 分支 A `Yes, I’m here.` 的实际交互
+
+1. 先播放完整表达 `Yes, I’m here.`，同时用自然中文建立“对，我在这里”的意思。
+2. 分别教学自然语块 `Yes`、`I’m here`；两个语块都要完成真实录音跟读并识别通过，才能进入句子搭建。
+3. 使用点击式语块排序。底部候选只包含两个已经学过的语块，不放无关干扰项；初始顺序固定反向为 `I’m here` / `Yes,`。
+4. 用户按点击顺序把语块送入上方搭建区，先点的排在前面；上方语块可点击撤回后重新排列。逗号和句号由语块／系统处理，不单独作为学习项。
+5. 排成 `Yes,` / `I’m here.` 后，播放完整句，再进入完整句真实录音。
+
+##### 分支 B `Hi. I can hear you.` 的实际交互
+
+1. 先播放完整表达 `Hi. I can hear you.`，同时用自然中文建立“你好，我能听见你”的意思。
+2. 分别教学自然语块 `Hi`、`I can hear you`；两个语块都要完成真实录音跟读并识别通过。`I can hear you` 保持完整自然语块，不拆成 `I` / `can` / `hear` / `you`。
+3. 使用点击式语块排序。底部候选只包含两个已经学过的语块，初始顺序固定反向为 `I can hear you` / `Hi.`，不放无关干扰项。
+4. 点击、上方撤回重排和标点处理规则与分支 A 相同；排成 `Hi.` / `I can hear you.` 后播放完整句，再进入完整句真实录音。
+
+##### 分支 C `Who are you?` 的实际交互
+
+1. 先播放完整表达 `Who are you?`，同时用自然中文建立“你是谁”的意思。
+2. 先教学并完成 `Who` 的真实录音跟读，再教学并完成完整表达 `Who are you?` 的真实录音跟读；两项都必须识别通过。
+3. 本分支不强行做语块排序。改用听音选情境图确认理解：正确图表达“询问陌生对象的身份”，另一图表达“告诉对方自己在这里”。图中不得出现未选路线英文，也不得把 `Yes, I’m here.` 等未选表达作为文字干扰。
+4. 理解确认后进入完整句真实录音。
+
+三条路线的最后一步一致：完整句真实录音 → ASR 转写与确定性匹配 → 用户确认系统听到的内容与自己的意思一致 → 写入对应 `first_response_style` → 播放 Morrow 分支反馈与共同收束。看参考句完成的完整句跟读最高只记 `prompted`，不能因为完成了本次事件就记为 `independent`。
+
+排序错误反馈保持非羞辱：首次错误提示“再听一次，看看哪一句先说”；连续错误时可给自然中文顺序提示，但不提供跳过。
+
+#### 必修、暂停与异常规则
+
+- E01-01 是首次产品真实表达，完整保底教学不能由既有学习证据裁剪，也不能由用户跳过。
+- 所有界面均无“跳过”按钮。`稍后继续`是暂停出口，不是教学跳过。
+- 点击 `稍后继续`只保存临时意图和最近教学检查点；下次回到同一路线继续，不结算事件、不触发正式反馈、不写 `first_response_style`。
+- 麦克风、网络或 ASR 异常时，只能重试或稍后继续；不得以点击、文字确认、选项或系统默认值绕过必修跟读／完整句真实录音。
+- 无可靠 ASR 唯一匹配或用户否认转写时，停留当前步骤，清除错误临时理解，允许重录或稍后继续。
+
+#### 世界状态与学习证据分离
+
+- 临时事件数据：所选中文意图、当前教学步骤、录音／ASR／确认进度；未完成事件只保存这些临时数据。
+- 正式剧情状态：仅在完整表达完成真实录音、识别和用户确认后写入 `first_response_style = reassuring_presence | friendly_greeting | identity_check`。
+- 学习证据：中文意图选择不产生英语证据；只对所选路线中实际完成的词、自然语块、必修跟读、搭建／理解确认和完整句分别记录；未选路线不产生证据。
+- 单词／自然语块提示跟读、语块排序搭建、听音选情境图理解确认、看参考句完成的完整句跟读，最高均按各自行为记为 `prompted` 或更低，不得记为 `independent`。
+- 只有在无译文、无参考句、无积木／选项提示下，由用户自己组织完整句并被确定性匹配接受，才可形成 `independent` 候选证据；E01-01 的首次保底流程本身不可按既有证据裁剪。 
+- 剧情状态与学习证据分开存储；不能用 `first_response_style` 反推用户已掌握该句，也不能因某句尚未达到 `independent / transferring / mastered` 改写章节进度规则。
+
+#### 可选记忆机会
+
+- 记忆规则 ID：`bfv_relationship_memory`
+- 类型：`relationship`
+- 内容模板：`你和墨洛完成了第一次相互理解。`
+- 需用户确认：是；拒绝保存不影响事件或章节推进。
+- 禁止把分支选择写成用户性格、风险偏好或其他长期画像。
+
+#### 素材需求与冻结边界
+
+- 内容需求：开场 1 条、分支反馈 3 条、共同收束 1 条、平静暂停与异常系统提示；正式 line ID、textVersion、translationVersion 与世界状态工程绑定由 S06／P4-T06-09 冻结。
+- 图片：复用清晰房间底图，光线安静偏暗；不制作模糊版。
+- 动画：Morrow 呼吸、睁眼、耳朵或视线转向声音来源、额头微光缓慢变化。
+- 正式语音、代码、UI 与语音资产：本轮均不制作、不修改。
+
+### E01-02 陪 Morrow 认识房间第一件物品
+
+#### 已确认设计边界
+
+- 本事件从 E01-01 的“第一次听见并回应”自然进入：Morrow 已确认房间外有一位愿意回应自己的朋友，接着主动观察自己所在的房间。
+- 房间底图从一开始就是清晰的；灯、植物、小铃铛都已经在房间里，三者不是等待用户处理的异常物。
+- Morrow 自己看见、辨认并说出三件物品的名字；用户不替 Morrow 命名，也不替 Morrow 决定重大事项。
+- 用户真正决定的是“自己第一眼留意到哪一件”。这个表达会改变 Morrow 当下靠近、观察或准备倾听的对象，并写入后续可承接的共同世界状态。
+- 本事件只承载第一章 D1“建立联系”范围内的 C1 识别：用户把自己的注意点告诉新朋友。它不提前承担第二章 D3 居家用品教学。
+- 本事件不是新用户首次产品第一条真实英文表达。现行 E01-01 已确认三条真实表达：`Yes, I’m here.` / `Hi. I can hear you.` / `Who are you?`；用户只学习所选路线，并在完整句真实录音、ASR 与用户确认后结算 `first_response_style`。因此，首次产品完整保底梯属于 E01-01；E01-02 不重置保底，只按词／语块／句子证据裁剪不需要的步骤，但当前保留的必需教学全部必须完成。
+
+- 事件 ID：`b1_first_room_object_v1`
+- 旧事件 ID：`birth_restore_object_v1` 已于 2026-10-09 在内容层正式登记为 `retired`，只保留为旧原型与历史映射的只读证据；不删除历史，不得复用旧 ID 承载新语义。本轮不修改 `english-pet` 旧工程配置。
+- 版本：1.0.1 ｜ 文本版本：1.0.1 ｜ 人工译文版本：1.0.1
+- 章节：`chapter_01_birth` ｜ sequence：2
+- 类型：`mainline` ｜ 时长：3—5 分钟
+- 关联主题：`topic_room`
+- 生活领域：D1 `domain_self_info`（第一章唯一领域）
+- 沟通任务：C1 `identifying`——把自己先注意到的房间物品告诉刚认识的朋友。
+- 进入条件：E01-01 主线完成，`first_response_style = reassuring_presence | friendly_greeting | identity_check` 已结算。
+- 常规完成条件：用户在独立选项层选定一件自己先注意到的物品，完成对应表达所需的全部必修教学、真实录音、ASR 识别与用户确认；Morrow 按分支作出自己的观察与行动，写入 `first_shared_object`。计入第一章主线完成。
+- 技术异常条件：若麦克风、网络或识别服务异常，只能重试或选择 `稍后继续`；保存当前物品选择与教学检查点，不结算事件、不写 `first_shared_object`、不触发正式分支结果。
+- 恢复条件：暂停后从最近确认的检查点继续；尚未选物品时回到三项选择，已选物品但尚未完成表达时直接回到该分支的必修教学／录音步骤，不重复已经完成且有可靠证据的步骤。
+
+#### 与 E01-01 / E01-03 的因果承接
+
+- E01-01 已用共同收束 `Everything here feels new. Will you look around with me?` 和按钮 `陪墨洛看看房间` 完成直接转场，E01-02 无需再按 `first_response_style` 重复解释上一句。
+- `first_response_style` 的三种值只保留为后续关系回声：`reassuring_presence` / `friendly_greeting` / `identity_check`；它们不改变 E01-02 三条物品分支的权利、教学要求与结果强度，也不给用户贴性格标签。
+- E01-03 的进入条件为本事件完成并写入 `first_shared_object`。Morrow 因为已经和用户共享了第一处注意点，才自然转向“我们已经一起认出了一样东西，但我该怎样称呼自己”的称呼问题。
 
 #### 场景（中文）
 
-房间里光线昏暗，只有一团模糊的轮廓在慢慢成形。一个安静的声音从房间深处传来，像是很久没被人听过。声音先确认房间外有人，然后自我介绍，问用户想先做什么。这是用户和 Morrow 的第一次对话。
+房间安静而清晰。窗边有一盏灯，门边有一株植物，小铃铛放在矮柜上。Morrow 慢慢环视房间，先自己说出三件物品的名字，说完后又有点拿不准，像是在确认自己有没有叫对。它没有请用户修好什么，也没有让用户替自己认识世界；它只是想知道，这位刚回应自己的朋友第一眼注意到了什么。
+
+场景物品全部不可点击。Morrow 用视线和轻微转身自然引导，三个剧情选项在独立底部上浮选项层出现。场景内仍只有 Morrow 可点；点击 Morrow 只播放当前阶段的预设短回应，并遵守冷却与录音期间静音规则。
 
 #### Morrow 主要台词（英文 + 人工中文译文）
 
+1. `I can see three things: a lamp, a plant, and a small bell.`
+   - 人工中文译文：我看见三样东西：一盏灯、一株植物，还有一只小铃铛。
+   - 台词 ID：`bfo_object_line`
+   - 音频需求：`bfo_object_line_audio`（仅登记需求，本任务不制作正式语音）
+2. `I think that's what they're called. What did you notice first?`
+   - 人工中文译文：我想，它们应该就是这么叫的。你第一眼注意到的是哪一个？
+   - 台词 ID：`bfo_prompt_line`
+   - 音频需求：`bfo_prompt_line_audio`
 
+#### 用户真实行动与预设输入
 
-1. `Hello? I can hear someone beyond the room.`
+1. 用户在底部上浮选项层选择“窗边的灯”“门边的植物”或“矮柜上的小铃铛”。三个选项表达用户自己的注意点，不是替 Morrow 决定喜好、名字或人生方向。
+2. 选择后，系统锁定对应物品块，不要求用户再次寻找或点击场景物品。
+3. 三项中文图片／剧情选项只决定用户实际想表达的物品和剧情路线，不产生任何英语学习证据。选择后只进入所选物品路线。
+4. 系统先播放所选完整句并用自然中文建立整体意思，再按学习证据处理 `I noticed`、所选物品语块和 `first`；当前被保留的新成分必须先建立意思并完成必要真实跟读。
+5. 用户完成一次预设候选选词填空和完整句真实录音；不提供开放键盘输入，不调用实时大模型判断。使用中文、参考句、慢速、分块或跟读仍可正常结算剧情，学习证据只按实际行为记录。
+6. 用户只有在无译文、无参考句、无积木／选项提示下自己组织完整句，并被确定性匹配接受，句子才可成为 `independent` 候选；中文物品选择、跟读、填空和看参考句输出均不得冒充独立掌握。 
 
-* 译文：你好？我能听见房间外有人。
+#### 有效分支 A：窗边的灯
 
-* 音频：`bfv_wake_line_audio`（voiceProfileId=morrow\_voice\_v1）
+- 意图 ID：`bfo_intent_lamp` ｜ 中文名：第一眼注意到窗边的灯
+- 预设剧情选项：`窗边的灯`
+- 用户目标句：`I noticed the lamp first.`
+  - 人工中文译文：我第一眼注意到的是那盏灯。
+- 可接受确定性短语：`i noticed the lamp first` / `i noticed the lamp`
+- 排除条件：含 `not the lamp`、同时明确说出两个以上候选物，或 ASR 结果未达到唯一匹配条件。
+- Morrow 结果台词：`You noticed the lamp first. I think I'll sit near it for a while.`
+  - 人工中文译文：你先注意到了那盏灯。我想去它旁边坐一会儿。
+  - 台词 ID：`bfo_lamp_result`
+  - 音频需求：`bfo_lamp_result_audio`
+- Morrow 自主行动：走到能看见灯光的位置坐下；这是 Morrow 自己的行动，不由用户替它决定。
+- 世界状态写入：`first_shared_object = lamp`
+- futureHook：E01-05 可把“我们先注意过窗边的灯”作为关系回声，但不把灯写成用户处理过的对象；第二章房间探索可再次自然提到灯的位置。
 
-1. `I'm Morrow. What should we do first?`
+#### 有效分支 B：门边的植物
 
-* 译文：我是 Morrow。我们先做什么？
+- 意图 ID：`bfo_intent_plant` ｜ 中文名：第一眼注意到门边的植物
+- 预设剧情选项：`门边的植物`
+- 用户目标句：`I noticed the plant first.`
+  - 人工中文译文：我第一眼注意到的是那株植物。
+- 可接受确定性短语：`i noticed the plant first` / `i noticed the plant`
+- 排除条件：含 `not the plant`、同时明确说出两个以上候选物，或 ASR 结果未达到唯一匹配条件。
+- Morrow 结果台词：`You noticed the plant first. I think I'll take a closer look at its leaves.`
+  - 人工中文译文：你先注意到了那株植物。我想凑近看看它的叶子。
+  - 台词 ID：`bfo_plant_result`
+  - 音频需求：`bfo_plant_result_audio`
+- Morrow 自主行动：靠近但不触碰植物，观察叶片；它保留自己的好奇方式。
+- 世界状态写入：`first_shared_object = plant`
+- futureHook：第二章房间探索与物品命名可承接“门边的植物”，但不从单次选择推断用户喜欢植物。
 
-* 音频：`bfv_prompt_line_audio`（voiceProfileId=morrow\_voice\_v1）
+#### 有效分支 C：矮柜上的小铃铛
 
-#### 有效分支
+- 意图 ID：`bfo_intent_bell` ｜ 中文名：第一眼注意到小铃铛
+- 预设剧情选项：`矮柜上的小铃铛`
+- 用户目标句：`I noticed the small bell first.`
+  - 人工中文译文：我第一眼注意到的是那只小铃铛。
+- 可接受确定性短语：`i noticed the small bell first` / `i noticed the small bell` / `i noticed the bell first`
+- 排除条件：含 `not the bell`、同时明确说出两个以上候选物，或 ASR 结果未达到唯一匹配条件。
+- Morrow 结果台词：`You noticed the small bell first. I wonder what it sounds like.`
+  - 人工中文译文：你先注意到了那只小铃铛。我有点好奇，它响起来会是什么声音。
+  - 台词 ID：`bfo_bell_result`
+  - 音频需求：`bfo_bell_result_audio`
+- Morrow 自主行动：看向铃铛并停下来听片刻；本事件不让铃铛发声，也不预设它是否能响。
+- 世界状态写入：`first_shared_object = small_bell`
+- futureHook：后续声音事件可承接“见过但还没有听过的小铃铛”，不提前结算声音结果。
 
-分支 A：
+#### 暂停分支（必备）
 
-
-
-* 意图 ID：`bfv_intent_help` ｜ 中文名：主动帮助 Morrow
-
-* 触发短语（英文）：`let me help you` / `i can help you` / `i will help you`
-
-* 关键词组：`allOf: [help]`，`anyOf: [you, room, find, understand]`，`noneOf: [can't, cannot, won't]`，权重 90；排除短语 `i can't help` / `i cannot help` / `i won't help`。
-
-* 用户参考句（可编辑英文）：`Let me help you find out where you are.`
-
-
-  * 译文：让我帮你弄清楚你在哪里。
-
-* 结果：Morrow 回复 `You want to help me understand this room. I can start with that.`
-
-
-  * 译文：你想帮我弄清这个房间。那我们就从这里开始。
-
-  * 音频：`bfv_confirm_help_audio`
-
-  * 世界状态写入：`first_response_style = help`
-
-  * futureHook：下一事件（序 2）可承接用户主动帮助探索的交流方式。
-
-分支 B：
-
-
-
-* 意图 ID：`bfv_intent_check` ｜ 中文名：先确认 Morrow 的状态
-
-* 触发短语（英文）：`are you all right` / `are you okay` / `how are you`
-
-* 关键词组：`anyOf: [okay, alright, all right, how are you]`，权重 90；无排除短语。
-
-* 用户参考句（可编辑英文）：`Are you all right?`
-
-
-  * 译文：你还好吗？
-
-* 结果：Morrow 回复 `You asked whether I'm all right. I'm uncertain, but I'm listening.`
-
-
-  * 译文：你问我是否还好。我还不确定，但我在听。
-
-  * 音频：`bfv_confirm_question_audio`
-
-  * 世界状态写入：`first_response_style = check_in`
-
-  * futureHook：下一事件可承接用户先确认情况的交流方式。
-
-暂停出口：
-
-
-
-* 意图：`bfv_intent_pause`（稍后再来）
-
-* 触发短语（英文）：`not now` / `later` / `stop`
-
-* 结果：Morrow 回复 `We can leave the room quiet for now. I will not treat that as leaving me behind.`
-
-
-  * 译文：我们可以先让房间安静一会儿。我不会把这理解成你抛下了我。
-
-  * 音频：`bfv_pause_line_audio`
-
-  * 世界状态写入：`birth_first_voice_status = paused_once`
-
-  * 无任何惩罚；下次从最近确认状态继续。
+- 意图 ID：`bfo_intent_pause` ｜ 中文名：稍后继续
+- 中文行动按钮：`稍后继续`
+- 可接受短语：`later` / `not now` / `pause` / `stop for now`
+- Morrow 台词：`We can stop here. The room will still be here when you come back.`
+  - 人工中文译文：我们先停在这里吧。等你回来，房间还在。
+  - 台词 ID：`bfo_pause_line`
+  - 音频需求：`bfo_pause_line_audio`
+- 状态写入：`b1_first_room_object_status = paused_once`
+- 结果：不写 `first_shared_object`，不写负向关系状态，不扣减预算，不重复催促；下次从最近检查点继续。
 
 #### 误解 / 兜底
 
+- 无可靠匹配时不推进、不写世界状态、不生成记忆提案。
+- 中文兜底：`我还没听清你先注意到的是哪一个。灯、植物，还是小铃铛？你可以从下面选一个，也可以稍后继续。`
+- 独立选项层最多显示四项：`窗边的灯`、`门边的植物`、`矮柜上的小铃铛`、`稍后继续`。
+- 用户同时提到两件物品时，Morrow 不替用户猜：`I heard two of them. Which one did you notice first?`
+  - 人工中文译文：我听见你说了两个。你最先注意到的是哪一个？
+- 用户只说 `this one`、`that one` 等无法与预设分支唯一对应的表达时，回到带中文位置说明的三项选择。
+- 用户否定某项但没有肯定另一项时，仅排除被否定项，不自动选择剩余项。
+- 用户点错后可在结果确认前返回重选；只有最终确认的一项写入 `first_shared_object`。
 
+#### 世界状态与学习证据分离
 
-* 无可靠匹配时：停留当前状态，显示中文兜底 "我还不能可靠判断你的意思。你可以换一种说法，或选择下面的参考意图。"，并显示最多 3 个候选意图与可编辑英文参考句。
+- 剧情／世界状态：`first_shared_object = lamp | plant | small_bell`。
+- 暂停状态：`b1_first_room_object_status = paused_once`；恢复后可被完成态覆盖或保留为历史事件标记，但不得解释为关系降级。
+- 临时物品选择与教学进度：未完成表达时只保存为事件内检查点，不进入 `first_shared_object`。
+- 学习证据单独写入，不进入 `first_shared_object`：
+  - 三项中文图片／剧情选择只决定所选物品和剧情路线，不产生任何英语学习证据；未选的两个物品也不产生证据。
+  - 单词／自然语块提示跟读、预设候选选词填空、看参考句完成的完整句跟读，最高记 `prompted`。
+  - 只有无译文、无参考句、无积木／选项提示，由用户自己组织并被确定性匹配接受的完整句，才可成为 `independent` 候选。
+  - 技术异常不产生完成证据；只保存临时检查点，等待重试或稍后继续。 
+- 章节推进只看事件剧情是否按规则结算，不要求该句达到 `independent / transferring / mastered`。
 
-* 典型误解设计：用户输入含 help 但带否定（如 "I can't help"），触发排除短语，不推进帮助分支，引导用户重新表达。帮助意图与关心询问意图分数接近时不猜测，按无匹配处理。
+#### 可选记忆机会
 
-#### 记忆机会
+- 记忆规则 ID：`bfo_relationship_memory`
+- 类型：`relationship`
+- 来源意图：`bfo_intent_lamp`、`bfo_intent_plant`、`bfo_intent_bell`
+- 内容生成规则：按 `first_shared_object` 的枚举值确定中文物品名后，生成“你和 Morrow 第一次一起留意房间时，先说起了窗边的灯／门边的植物／矮柜上的小铃铛。”三条预设中文文本之一。
+- 需用户确认：是；保存前展示可编辑中文文本。
+- 用户拒绝保存时，事件和章节照常推进。
+- 禁止推断：选择某件物品不等于喜欢它，不形成性格、偏好或敏感信息推断。
 
+#### 教学展开
 
-
-* 记忆规则 ID：`bfv_relationship_memory`
-
-* 类型：relationship
-
-* 来源意图：`bfv_intent_help`、`bfv_intent_check`
-
-* 内容模板：`你和 Morrow 完成了第一次相互理解。`
-
-* 需用户确认：是（保存前展示可编辑文本；拒绝敏感推断）。
+- 主要核心表达：`I noticed the selected object first.`；实际呈现时只使用三条已列明的分支目标句，不把 `selected object` 作为用户可见占位符。
+- 最终输出目标：按所选分支说出 `I noticed the lamp first.` / `I noticed the plant first.` / `I noticed the small bell first.` 之一。
+- 角色输入：Morrow 自然使用 `I can see three things: a lamp, a plant, and a small bell.`、`What did you notice first?`；不要求用户在本事件掌握全部角色台词。
+- 本次学习对象：`I noticed`、所选物品语块 `the lamp` / `the plant` / `the small bell`、`first`，共 3 个自然成分。不得把所选分支改成 `I noticed` + `the lamp first`、`the plant first` 或 `the small bell first` 两段教学；物品语块与 `first` 必须分开建立意思。
+- 旧表达复现：E01-01 的英语不在本事件紧邻重考；`first_response_style` 只作为后续可选关系回声，不改变本事件教学路线。
+- 首次产品保底表达：否。E01-02 可依据已有可靠证据由系统不呈现不需要的教学步骤；这是系统裁剪，不是用户跳过。当前仍保留的步骤全部必修，最终完整句真实输出必须完成。
+- 已有学习证据：运行时分别读取 `I noticed`、所选物品语块、`first` 与完整句证据；无证据不得默认会。E01-01 完成不能自动证明用户已会其中任一成分。
+- 选择物品：用户从三项中文图片／剧情选项中选择自己第一眼注意到的对象。该选择只确定剧情路线，不产生 `recognized` 或其他英语学习证据；未选物品不产生证据。
+- 听懂完整句：选择后先播放对应完整句，并显示自然中文意思，让用户明白自己将向 Morrow 表达什么。
+- 新成分教学：对没有可靠证据的 `I noticed`、所选物品语块、`first` 分别建立意思并完成必要真实跟读；所选物品的冠词跟随自然语块，不拆成孤立关卡。所有要进入填空的成分，在填空前都必须已经建立意思并完成当前所需跟读。
+- 唯一句子搭建：只做一次预设候选选词填空，不做语块排序，也不叠加第二道填空。三条路线分别为：
+  - 灯：`I noticed the lamp ___.`，候选 `first` / `here` / `now`；
+  - 植物：`I noticed the plant ___.`，候选 `first` / `here` / `now`；
+  - 铃铛：`I noticed the small bell ___.`，候选 `first` / `here` / `now`。
+- `here`、`now` 是预先编排且有意义的少量干扰项；选词填空允许这类合理干扰项。语块排序则只能使用已学目标语块，不加入无关干扰项，两类操作不得混用。
+- 禁止紧邻重复考：刚选择的物品不得再次作为填空答案；它直接写入句框，只挖空 `first`。
+- 填空完成后固定进入：播放完整句 → 用户完整句真实录音 → ASR 转写与确定性匹配 → 用户确认 → Morrow 播放对应分支反馈并执行自主行动 → 写入 `first_shared_object`。
+- 学习未达 `independent` 不阻塞剧情；使用帮助无惩罚，但看参考句、跟读或填空所得证据最高只记 `prompted`。
 
 #### 素材需求
 
-
-
-* 预制音频（5 条需语音台词 = 5 条音频）：
-
-
-  * `bfv_wake_line_audio`
-
-  * `bfv_prompt_line_audio`
-
-  * `bfv_confirm_help_audio`
-
-  * `bfv_confirm_question_audio`
-
-  * `bfv_pause_line_audio`
-
-  * 参考句 `bfv_help_reply`、`bfv_question_reply` 为系统例句，无音频。
-
-* 图片：1 张（昏暗房间、模糊轮廓初现的全景图，占位说明）。
-
-* 动画：1 个（轮廓微光缓慢闪烁，占位说明）。
-
-* 音效：1 个（低频环境嗡鸣，渐入，占位说明）。
-
-
-
-***
-
-### E01-02 让第一件东西清晰起来
-
-
-
-* 事件 ID：`birth_restore_object_v1`
-
-* 版本：1.0.0 ｜ 章节：`chapter_01_birth` ｜ sequence：2
-
-* 类型：mainline ｜ 时长：3—5 分钟
-
-* 关联主题：`topic_room`
-
-* 进入条件：序 1 主线完成（已结算 `first_response_style`）。
-
-* 完成条件：结算 `first_restored_object` 世界状态写入；可产生语言与关系记忆提案（均需用户确认）。计入章节完成。
-
-#### 英语学习目标
-
-
-
-* 目标句型 / 词汇：`Let's bring back the...`（提议恢复某物）；`I choose...`（做出选择）；物品名词 lamp /plant/small bell。
-
-* 难度档：L1 基础。
-
-#### 场景（中文）
-
-房间记得三样东西：窗边一盏灯、门边一株植物、一只小铃铛，但现在都只是模糊轮廓。Morrow 请用户选一件先让它清晰回来。这是用户和 Morrow 一起改变房间的第一步。
-
-#### Morrow 主要台词（英文 + 人工中文译文）
-
-
-
-1. `The room remembers a lamp, a plant, and a small bell, but only one is clear.`
-
-* 译文：房间记得一盏灯、一株植物和一只小铃铛，但现在只有模糊轮廓。
-
-* 音频：`bro_open_line_audio`（voiceProfileId=morrow\_voice\_v1）
-
-1. `Which one should we bring back first?`
-
-* 译文：我们应该先让哪一件回来？
-
-* 音频：`bro_prompt_line_audio`（voiceProfileId=morrow\_voice\_v1）
-
-#### 有效分支
-
-分支 A：
-
-
-
-* 意图 ID：`bro_intent_lamp` ｜ 中文名：选择窗边的灯
-
-* 触发短语（英文）：`lamp` / `the lamp` / `bring back the lamp`
-
-* 关键词组：`allOf: [lamp]`，`anyOf: [choose, bring, window, want]`，`noneOf: [don't, not]`，权重 90；排除短语 `don't choose the lamp` / `not the lamp`。
-
-* 用户参考句（可编辑英文）：`Let's bring back the lamp by the window.`
-
-
-  * 译文：让我们把窗边的灯带回来。
-
-* 结果：Morrow 回复 `The lamp is steady now. The room has a place to keep a voice.`
-
-
-  * 译文：灯光现在稳定了。房间有了一个可以留住声音的地方。
-
-  * 音频：`bro_lamp_result_audio`
-
-  * 世界状态写入：`first_restored_object = lamp`
-
-  * futureHook：后续房间与来信事件可承接窗边灯。
-
-分支 B：
-
-
-
-* 意图 ID：`bro_intent_plant` ｜ 中文名：选择门边的植物
-
-* 触发短语（英文）：`plant` / `the plant` / `bring back the plant`
-
-* 关键词组：`allOf: [plant]`，`anyOf: [choose, bring, door, want]`，`noneOf: [don't, not]`，权重 90；排除短语 `don't choose the plant` / `not the plant`。
-
-* 用户参考句（可编辑英文）：`I choose the plant near the door.`
-
-
-  * 译文：我选择门边的植物。
-
-* 结果：Morrow 回复 `The plant looks less lost near the door.`
-
-
-  * 译文：门边的植物看起来不再那么迷失了。
-
-  * 音频：`bro_plant_result_audio`
-
-  * 世界状态写入：`first_restored_object = plant`
-
-  * futureHook：后续房间事件可承接门边植物。
-
-分支 C：
-
-
-
-* 意图 ID：`bro_intent_bell` ｜ 中文名：选择小铃铛
-
-* 触发短语（英文）：`bell` / `the bell` / `small bell` / `bring back the bell`
-
-* 关键词组：`allOf: [bell]`，`anyOf: [choose, bring, small, want]`，`noneOf: [don't, not]`，权重 90；排除短语 `don't choose the bell` / `not the bell`。
-
-* 用户参考句（可编辑英文）：`Let's bring back the small bell.`
-
-
-  * 译文：让我们把小铃铛带回来。
-
-* 结果：Morrow 回复 `The bell makes one low note. It sounds awake, not alarmed.`
-
-
-  * 译文：铃铛发出一声低鸣。听起来像醒来了，而不是在报警。
-
-  * 音频：`bro_bell_result_audio`
-
-  * 世界状态写入：`first_restored_object = small_bell`
-
-  * futureHook：后续声音与听力事件可承接铃声。
-
-暂停出口：
-
-
-
-* 当前种子 v1 未在 `fixed-content-v1.ts` 中定义独立 `bro_intent_pause` 意图；本事件所有状态均标记 `recoverable: true`、`checkpoint: true`，用户可随时离开，下次从最近确认状态继续。按蓝图规范，后续次版本应补充一个平静暂停意图与对应台词，不产生缺席惩罚。
-
-#### 误解 / 兜底
-
-
-
-* 无可靠匹配时：停留当前状态，显示中文兜底与最多 3 个候选意图（窗边的灯 / 门边的植物 / 小铃铛），不猜测、不自动选最常见项。
-
-* 典型误解设计：用户同时提到两个对象（如 "the lamp and the bell"）或出现否定冲突（如 "not the plant"）时不推进，引导用户只选一个。三个选项权重相同，分数接近时按冲突处理。
-
-#### 记忆机会
-
-
-
-* 记忆规则 ID：`bro_language_memory`
-
-* 类型：language
-
-* 来源意图：`bro_intent_lamp`、`bro_intent_plant`、`bro_intent_bell`
-
-* 内容模板：`{{confirmed_user_sentence}}`（用户已确认的英文原句）
-
-* 需用户确认：是。
-
-* 记忆规则 ID：`bro_relationship_memory`
-
-* 类型：relationship
-
-* 来源意图：`bro_intent_lamp`、`bro_intent_plant`、`bro_intent_bell`
-
-* 内容模板：`你和 Morrow 一起让 {{first_restored_object}} 回到了房间。`
-
-* 需用户确认：是。
-
-#### 素材需求
-
-
-
-* 预制音频（5 条需语音台词 = 5 条音频）：
-
-
-  * `bro_open_line_audio`
-
-  * `bro_prompt_line_audio`
-
-  * `bro_lamp_result_audio`
-
-  * `bro_plant_result_audio`
-
-  * `bro_bell_result_audio`
-
-  * 参考句 `bro_lamp_reply`、`bro_plant_reply`、`bro_bell_reply` 为系统例句，无音频。
-
-* 图片：3 张（灯 / 植物 / 铃铛三幅模糊轮廓图；选定后各配一张清晰版，占位说明）。
-
-* 动画：1 个（选定物品从模糊到清晰渐亮，占位说明）。
-
-* 音效：1 个（物品激活时一声轻响，占位说明）。
-
-
+- 房间底图：复用现有清晰房间底图，不修改像素内容，不制作任何物品的替换前后版本。
+- 独立选项层：三项既有物品裁切图或清晰缩略图 + 中文位置标签；不得把它们做成场景热点。
+- Morrow 动作：开场环视；三个结果分别为看向灯并坐近光、靠近植物观察叶片、看向铃铛安静倾听。动作只需预设轻量状态，不改变房间物品。
+- 预制音频需求：两条主台词、三条分支结果、一条暂停、一条双物品澄清，共 7 条；全部仅登记，正式语音由后续任务制作。E01-01 共同收束已在上游播放，不在本事件重复制作条件承接台词。
+- 环境音：沿用房间安静底噪；本事件不新增物品触发音，不让铃铛在本事件发声。
+- 正式语音、视觉资产和工程配置：本任务均不制作、不修改。
 
 ***
 
@@ -429,7 +385,7 @@
 
 * 关联主题：`topic_today` / `topic_feelings`
 
-* 进入条件：序 2 主线完成（已结算 `first_restored_object`）。
+* 进入条件：序 2 主线完成（已结算 `first_shared_object`）。
 
 * 完成条件：结算 `morrow_self_address` 世界状态写入。计入章节完成。
 
@@ -2557,8 +2513,8 @@ Morrow 安静了一会儿，说自己一直在想用户在这间房间里说的�
 
 | 序      | 事件 ID                      | 中文名          | 类型                              | 需语音台词条数 | 音频文件数   | 图片项数   | 动画项数   | 音效项数  |
 | ------ | -------------------------- | ------------ | ------------------------------- | ------- | ------- | ------ | ------ | ----- |
-| 1      | `birth_first_voice_v1`     | 苏醒后的第一句话     | mainline                        | 5       | 10      | 1      | 1      | 1     |
-| 2      | `birth_restore_object_v1`  | 让第一件东西清晰起来   | mainline                        | 5       | 10      | 3      | 1      | 1     |
+| 1      | `birth_first_voice_v1`     | 苏醒后的第一句话     | mainline                        | 5（内容需求，正式 ID 待 S06）       | 5（待重制）      | 1      | 1      | 1     |
+| 2      | `b1_first_room_object_v1` | 陪 Morrow 认识房间第一件物品 | mainline                     | 7       | 7       | 0（复用底图；选项层 3 个缩略图） | 3      | 0     |
 | 3      | `b1_remember_name_v1`      | 给自己起一个称呼     | mainline                        | 6       | 12      | 1      | 1      | 0     |
 | 4      | `b1_first_feeling_v1`      | 说出现在的感觉      | daily                           | 6       | 12      | 1      | 1      | 0     |
 | 5      | `b1_window_light_v1`       | 看窗外的光        | mainline                        | 6       | 12      | 2      | 1      | 1     |
@@ -2570,6 +2526,6 @@ Morrow 安静了一会儿，说自己一直在想用户在这间房间里说的�
 | 11     | `b1_return_first_words_v1` | 记住你说过的第一句    | recall                          | 6       | 12      | 1      | 1      | 0     |
 | 12     | `b1_ready_for_outside_v1`  | 准备好走出门       | mainline                        | 6       | 12      | 2      | 1      | 1     |
 | 13     | `b1_not_sure_v1`           | 一件还拿不准的小事    | daily                           | 6       | 12      | 0      | 1      | 0     |
-| **合计** | —                          | —            | mainline 7 / daily 5 / recall 1 | **76**  | **152** | **15** | **13** | **5** |
+| **合计** | —                          | —            | mainline 7 / daily 5 / recall 1 | **78（E01-01 正式 ID 待 S06）**  | **144（按表内现行需求计）** | **12 + 3 个选项缩略图** | **15** | **4** |
 
-> 注：所有音频 `voiceProfileId=morrow_voice_v1`，每条仅一份正常语速音频（播放端实时变速，不另存慢速文件），文件路径约定 `tts/chapter_01_birth/<event_id>/<line_id>/1.0.0/audio.wav`。含运行时注入变量的 `brw_prompt_line` 不做固定音频，登记为 `planned`。图片 / 动画 / 音效均为占位说明，正式制作前需由视觉与音效设计确认。
+> 注：所有音频 `voiceProfileId=morrow_voice_v1`，每条仅一份正常语速音频（播放端实时变速，不另存慢速文件）。E01-01 的正式 line ID、textVersion、translationVersion 与最终文件数由 S06／P4-T06-09 和后续语音任务确认，因此本表只登记当前内容需求，不声称正式资产已冻结。其余文件路径约定 `tts/chapter_01_birth/<event_id>/<line_id>/1.0.0/audio.wav`。含运行时注入变量的 `brw_prompt_line` 不做固定音频，登记为 `planned`。图片 / 动画 / 音效均为占位说明，正式制作前需由视觉与音效设计确认。
