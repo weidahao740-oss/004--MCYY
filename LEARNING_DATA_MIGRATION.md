@@ -1,9 +1,9 @@
 # LEARNING_DATA_MIGRATION — 阶段 3.5.4 学习系统数据迁移清单（2026-10-07 修订）
 
-> 版本：1.1.0（纯设计稿，不改任何工程代码）
+> 版本：1.1.1（纯设计稿；2026-10-11 同步 E01-10 现行 ID 迁移，不改任何工程代码）
 > 阶段：3.5.4（掌握状态、提示退出、间隔复现落到现有工程；**用户难度三档已取消**）
 > 上游已冻结/已对齐契约：
-> - `FIXED_CONTENT_CONTRACT.md` v1.0.0（`FixedEvent` 结构、确定性意图匹配、人工译文、预制音频、记忆确认白名单）
+> - `FIXED_CONTENT_CONTRACT.md` v1.0.2（现行预设目标 + 真实录音 + ASR 唯一匹配、人工译文、预制音频、记忆确认白名单）
 > - `DATA_MODEL.md` v1.0.0 / `DATA_MODEL_MIGRATION.md` v1.0.0（23 张表现状 + 3.5.3 已规划 5 张新表）
 > - `english-pet/packages/database/src/schema.ts`（逐表逐枚举核对）
 > - `API_MIGRATION.md` v1.0.0（既有 27 端点 + N1/N2/N3，本清单不动其既定结论）
@@ -16,7 +16,7 @@
 ## 0. 口径说明（必读）
 
 1. **事件数量口径**：计划口头称首两章"24 个事件"，实际内容文件为 **25 个**。本迁移**按 25 个计**：
-   - 第一章 13 个：`birth_first_voice_v1`、`birth_restore_object_v1`、`b1_remember_name_v1`、`b1_first_feeling_v1`、`b1_window_light_v1`、`b1_first_letter_v1`、`b1_bell_sound_v1`、`b1_ask_about_you_v1`、`b1_what_i_like_v1`、`b1_tomorrow_plan_v1`、`b1_return_first_words_v1`、`b1_ready_for_outside_v1`、`b1_not_sure_v1`。
+   - 第一章 13 个现行 ID：`birth_first_voice_v1`、`b1_first_room_object_v1`、`b1_remember_name_v1`、`b1_first_feeling_v1`、`b1_window_light_v1`、`b1_first_letter_v1`、`b1_bell_sound_v1`、`b1_ask_about_you_v1`、`b1_what_i_like_v1`、`b1_next_small_plan_v1`、`b1_return_first_words_v1`、`b1_ready_for_outside_v1`、`b1_not_sure_v1`。旧 `birth_restore_object_v1` 与 `b1_tomorrow_plan_v1` 均已 `retired`，仅用于旧数据迁移识别。
    - 第二章 12 个：`b2_room_tour_v1`、`b2_name_objects_v1`、`b2_colors_v1`、`b2_outside_road_v1`、`b2_today_you_v1`、`b2_my_likes_v1`、`b2_mistake_v1`、`b2_small_task_v1`、`b2_feeling_check_v1`、`b2_sound_comes_back_v1`、`b2_recall_room_v1`、`b2_ready_for_school_v1`。
 2. **术语对齐（全项目唯一口径）**：
    - 掌握六阶：`encountered / recognized / prompted / independent / transferring / mastered`。

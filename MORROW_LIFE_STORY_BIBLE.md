@@ -1,8 +1,8 @@
 # MORROW_LIFE_STORY_BIBLE — Morrow 一生内容蓝图
 
-> 版本：1.1.1
-> 状态：阶段 3.5.2 定稿；2026-10-10 同步 E01-01 首次产品表达与必需教学不可跳过规则
-> 上游契约：`FIXED_CONTENT_CONTRACT.md`（v1.0.0）；角色：`PET_PERSONA.md`（v1.0）
+> 版本：1.1.5
+> 状态：阶段 3.5.2 定稿；2026-10-10 同步 E01-01 首次产品表达、必需教学不可跳过规则及 E01-03／E01-05／E01-06 现行名称
+> 上游契约：`FIXED_CONTENT_CONTRACT.md`（v1.0.2）；角色：`PET_PERSONA.md`（v1.0）
 > 已种子／现行示例：`english-pet/packages/domain/src/fixed-content-v1.ts` 中 `birth_first_voice_v1`（第一章序 1）仍是旧工程种子；E01-02 现行内容 ID 为 `b1_first_room_object_v1`。旧工程 `birth_restore_object_v1` 已于 2026-10-09 在内容层登记为 `retired`，只读保留历史，本轮不修改工程配置
 > 本文档是内容层的唯一权威：身份、章节门、事件分类、话题库、条目模板、ID/版本/分支/记忆/素材约定都以本文为准。
 
@@ -96,14 +96,16 @@
 | 6 | `topic_unsure` | 害怕或困惑的事 | I'm not sure about this / It feels confusing |
 | 7 | `topic_tomorrow` | 明天想做什么 | What shall we try tomorrow / A small plan |
 | 8 | `topic_feelings` | 身体和感觉 | How it feels / What I need right now |
-| 9 | `topic_sounds` | 声音和光 | A sound came back / The light is steady now |
+| 9 | `topic_sounds` | 声音和光 | A sound was noticed / We do not need to identify it yet |
 | 10 | `topic_advice` | 给我一个建议 | What would you suggest / If you were me（朋友身份用，结果仍由 Morrow 固定走向承担） |
 
 > 另加一个低频主题 `topic_mistake`（一件小事做错了，用于误解—澄清结构），合计 11 个，落在 8—12 区间内。
 
 ---
 
-## 5. 事件条目模板（所有事件必须逐条遵守）
+## 5. 事件条目模板（现行行为以项目基线与教学规则为准）
+
+> 本节只保留内容结构骨架。输入、匹配、暂停和证据行为若与 `PROJECT_BASELINE.md` 或 `TEACHING_FLOW_AND_HELP_RULES.md` v1.4.1 冲突，以后两者为准；现行首版无课程自由英文输入、无开放关键词权重匹配，暂停只存临时检查点且不写正式状态。
 
 每个事件在章节文件中按以下结构书写。这是内容层对 `FixedEvent` 的可读展开；工程化时由 3.5.3 转为 `fixed-content-v1.ts` 同款 Schema。
 
@@ -129,7 +131,7 @@
 #### 教学展开（存在用户英文输出时必填，2026-10-07 口径）
 - 最终输出目标：<用户最后需要说出的完整单词／短语／句子>
 - 首次产品保底表达：<仅 E01-01 的所选首条真实表达走完整保底；写明中文意图、所选完整句、词／语块必需跟读、真实录音、ASR 与确认路径。其他事件写“否”，再按证据自动裁剪；不得写“用户跳过”>
-- 已有学习证据：<目标中哪些词和语块已达到 recognized / prompted / independent；无证据不得视为已学>
+- 已有学习证据：<只列该用户实际选择并完成相应理解、教学或录音后形成的 recognized / prompted / independent 证据；未选路线与角色听力输入不得视为可靠用户产出证据>
 - 本次新增成分：<列出目标中全部新词、新语块和必要功能成分，不得漏列冠词、代词、助动结构或固定开头>
 - 意思建立：<用什么情境、画面、动作和自然中文让用户先理解>
 - 三段式（默认可裁剪）：<默认一个理解练习（最高 recognized）→ 至多一个句子搭建（只填新成分，最高 prompted）→ 一个最终真实输出（冲 independent）；只认词事件可不做句子搭建，已有可靠证据时由系统自动不呈现不需要的步骤，禁止为套模板硬塞练习；当前实际呈现的步骤全部必修、无跳过按钮；填空与排序不叠加；禁止紧邻重复考（刚识别出的同一答案不紧接着再作填空答案，直接带入语块/句子；若紧接填空只练新成分；原内容在间隔后的新场景复测）>
@@ -180,6 +182,8 @@
 
 - 所有要求用户说出的英文必须先按“E01-01 首次产品保底 + 后续证据裁剪”完成教学展开。完整保底仅 E01-01 所选真实表达走一次；其后含每个新事件第一条核心表达在内，均按词／语块／句子证据由系统决定呈现哪些必需教学，不按事件重置保底。证据充分而不呈现重复步骤不等于用户跳过；所有实际呈现步骤必须完成。无法证明目标中的新成分已教学或可即时展开时，不得把该输出步骤标为可开发、可验收或已完成。
 - 每个事件技术异常只能重试或稍后继续；稍后继续只保存临时选择与教学检查点，不结算事件、不触发正式结果、不写正式世界状态。
+- 首版无课程自由英文输入与开放关键词权重匹配；要求用户输出时必须真实录音、ASR 唯一匹配、展示识别文本并由用户确认。手工修正转写只用于记录确认，不得替代识别通过、重录或口语证据。
+- 学习证据必须来自该用户实际选择并完成的行为；未选路线不产证据，角色台词／自然听力输入最高只记 `encountered`。
 - 在对应章节台词正式冻结前，按钮文字、Morrow 中英文台词、中文理解与行动提示、目标句、新词／语块、分支结果、声音和物品状态都必须服从已确认的七章主线、章节承接和逐事件剧情，可在逐事件校准中替换或删除；对应批次冻结后再改英文，必须同步更新 `text_version`、人工译文版本、预制语音、词库统计、学习对象配置和测试，禁止只改文字不改绑定资产。
 - 所有**功能 UI、按钮、状态、提示、记忆说明用中文**；英文只出现在"Morrow 台词、用户参考句、学习句型"里，且每条英文必须配**人工中文译文**。
 - 英文台词控制在 1—3 句、日常词（首章短词短句为主）；Morrow 用 `they/them` 中性指代，不用幼儿化拟声、不堆感叹号、不喊 "Great job/Perfect"。
@@ -204,20 +208,20 @@
 
 ## 7. 首两章事件总览（详细条目见章节文件）
 
-### 第一章 出生与苏醒（`chapter_01_birth`），目标 12 个事件
+### 第一章 出生与苏醒（`chapter_01_birth`），目标 13 个事件
 
 | 序 | 事件 ID | 中文名 | 类型 |
 |---|---|---|---|
 | 1 | `birth_first_voice_v1` | 苏醒后的第一句话（已种子） | mainline |
 | 2 | `b1_first_room_object_v1` | 陪 Morrow 认识房间第一件物品（completed，2026-10-09 用户确认） | mainline |
-| 3 | `b1_remember_name_v1` | 给自己起一个称呼 | mainline |
+| 3 | `b1_remember_name_v1` | 把称呼定下来（completed，2026-10-10 用户确认） | mainline |
 | 4 | `b1_first_feeling_v1` | 说出现在的感觉 | daily |
-| 5 | `b1_window_light_v1` | 看窗外的光 | mainline |
-| 6 | `b1_first_letter_v1` | 一封看不懂的信 | daily |
-| 7 | `b1_bell_sound_v1` | 找回一个声音 | daily |
+| 5 | `b1_window_light_v1` | 一起看看窗边的光（completed，2026-10-10 用户确认） | mainline |
+| 6 | `b1_first_letter_v1` | 第一次一起看桌上的旧信（completed，2026-10-10 用户确认） | daily |
+| 7 | `b1_bell_sound_v1` | 听见房间里的一声轻响（completed，2026-10-11 用户确认） | daily |
 | 8 | `b1_ask_about_you_v1` | Morrow 反过来问你 | daily |
-| 9 | `b1_what_i_like_v1` | 我喜欢和还不确定的事 | mainline |
-| 10 | `b1_tomorrow_plan_v1` | 一起定一个明天的小计划 | mainline |
+| 9 | `b1_what_i_like_v1` | 我喜欢和还不确定的事（completed，2026-10-11 用户确认） | mainline |
+| 10 | `b1_next_small_plan_v1` | 一起定下接下来的一件小事（completed，2026-10-11 用户确认；旧 `b1_tomorrow_plan_v1` retired） | mainline |
 | 11 | `b1_return_first_words_v1` | 记住你说过的第一句 | recall |
 | 12 | `b1_ready_for_outside_v1` | 准备好走出门（章末主线） | mainline |
 | 13 | `b1_not_sure_v1` | 一件还拿不准的小事 | daily |
