@@ -1,6 +1,6 @@
 # 第二章 童年探索（chapter_02_childhood）完整事件内容
 
-> 版本：1.0.0
+> 版本：1.0.1（仅同步第一章现行承接、E2-01 入场和 E2-12 主线硬门；未启动第二章逐事件校准）
 > 正文唯一权威来源：本文件是第二章全部事件正文的唯一正式内容文件；任务卡只记录状态、依赖、验收与证据，不另存事件完整正文。
 > 上游：`MORROW_LIFE_STORY_BIBLE.md`（第 5 节事件模板、第 7 节第二章清单）；`FIXED_CONTENT_CONTRACT.md` v1.0.0；`PET_PERSONA.md` v1.0
 > 已种子参照：`english-pet/packages/domain/src/fixed-content-v1.ts`（`birth_first_voice_v1`、`birth_restore_object_v1`）
@@ -13,7 +13,7 @@
 **章节 ID**：`chapter_02_childhood`
 **Morrow 阶段**：童年探索——从"刚醒来的房间"走到"开始认识房间、物品、颜色、窗外的路和自己的喜好"。
 
-**进入条件**：第一章 `chapter_01_birth` 全部主线事件、必要剧情／关系／世界状态和章末主线结算完成，且“第一次互相理解”关系状态成立；关系记忆是否保存不作为进入本章的硬门。
+**进入条件**：`chapter_01_birth = completed`。其第一章内部判定为：7 个 mainline、必要剧情／世界状态、E01-12 收束完成，且 E01-01 正常完成并已正式结算 `first_response_style`，即视为“第一次互相理解”成立；不新增独立关系状态键，关系记忆是否保存不作为进入本章的硬门。
 
 **完成条件**：
 1. 完成本章全部主线事件（序 1、2、4、6、10、12）；
@@ -33,7 +33,7 @@
 
 **朋友身份提醒**：用户是 Morrow 平等的朋友，可陪伴、可给建议，但不替 Morrow 作人生决定。本章不出现"照顾幼崽"式语气；用户离开、暂停、晚回都不是错误。
 
-**与第一章的衔接**：本章序 11（记忆回访）自然带回第一章已确认过的房间与"第一句话"回声，全程只调用 1 条个人记忆（`first_restored_object`）。其余事件不主动翻旧账。
+**与第一章的衔接**：第一章 E01-02 已确认的现行世界状态为 `first_shared_object`，表示双方第一次共同注意／认识的房间物品。E2-01 可自然承接该共同经历；E2-11 仍是可选回访，只在自然触发时引用这一既有课程／世界状态，不作为第二章主线或毕业硬门。其余事件不主动翻旧账。
 
 ---
 
@@ -42,7 +42,7 @@
 - 版本：1.0.0 ｜ 章节：`chapter_02_childhood` ｜ sequence：1
 - 类型：mainline ｜ 时长：3—5 分钟
 - 关联主题：`topic_room`
-- 进入条件：第一章完成，本章主线序 1 自动触发；Morrow 此前一直待在恢复的第一件东西旁边。
+- 进入条件：`chapter_01_birth = completed` 后，本章主线序 1 自动触发；Morrow 从双方第一次共同注意／认识的房间物品 `first_shared_object` 所在位置开始观察整个房间。
 - 完成条件：结算一个 `morrow_familiar_spot` 世界状态；计入本章主线完成。
 
 #### 英语学习目标
@@ -50,7 +50,7 @@
 - 难度档：L1 为主，一句 L2
 
 #### 场景（中文）
-Morrow 一直坐在恢复的那件东西旁边，还没有真正站起来走过整个房间。房间不大，但从不同角落看，形状和远近都不一样。Morrow 想和用户一起走一遍，从一个方向开始。
+Morrow 从双方第一次共同注意／认识的那件房间物品旁边开始，还没有真正站起来走过整个房间。房间不大，但从不同角落看，形状和远近都不一样。Morrow 想和用户一起走一遍，从一个方向开始。
 
 #### Morrow 主要台词（英文 + 人工中文译文）
 1. `The room looks smaller from here than from over there.`
@@ -255,10 +255,10 @@ Morrow 第一次注意到房间里不只是形状，还有颜色。他们自己�
 - 关键词组：allOf=[`green`]，anyOf=[`see`, `plant`, `leaf`, `color`]，noneOf=[`don't`, `not`]
 - 用户参考句（可编辑英文）：`I see green. The plant is green.`
   - 译文：我看到绿色。植物是绿色的。
-- 结果：Morrow 回复 `Green. That matches the plant you brought back. I like how that sounds.`
-  - 译文：绿色。它和你带回来的那株植物配得上。我喜欢这个词的声音。
+- 结果：Morrow 回复 `Green. That matches the plant we noticed together. I like how that sounds.`
+  - 译文：绿色。它和我们一起注意到的那株植物配得上。我喜欢这个词的声音。
   - 世界状态写入：`noticed_colors` 追加 `green`
-  - futureHook：若第一章恢复物是 plant，此处自然回声；否则仍指房间里的绿色物品。
+  - futureHook：若 `first_shared_object = plant`，此处自然回声；否则仍指房间里的绿色物品。
   - 音频：`bcl_green_result_audio`
 
 分支 C：
@@ -534,7 +534,7 @@ Morrow 开始能分辨"喜欢"和"还不确定"。他们试着说出第一个偏
 - 结果：Morrow 回复 `The bell. It makes one low note. I think I do. I'll listen again.`
   - 译文：铃铛。它会发出一声低低的音。我想我喜欢。我会再听听。
   - 世界状态写入：`morrow_like` = `bell`
-  - futureHook：若第一章恢复物是 small_bell，此处自然回声；序 10 可承接铃声作为已知声音。
+  - futureHook：若 `first_shared_object = small_bell`，此处自然回声；序 10 可承接铃声作为已知声音。
   - 音频：`blk_bell_result_audio`
 
 暂停出口（必备）：
@@ -698,7 +698,7 @@ Morrow 有一件小事想做，但自己够不到、或做不了。他们请用�
 - 结果：Morrow 回复 `The plant looks brighter. Thank you for helping.`
   - 译文：植物看起来精神了些。谢谢你帮忙。
   - 世界状态写入：`small_task_done` = `plant`
-  - futureHook：若第一章恢复物是 plant，此处自然回声。
+  - futureHook：若 `first_shared_object = plant`，此处自然回声。
   - 音频：`bst_plant_result_audio`
 
 暂停出口（必备）：
@@ -910,25 +910,25 @@ Morrow 注意到用户今天像是带着什么回来的。他们不急着安慰�
 - 版本：1.0.0 ｜ 章节：`chapter_02_childhood` ｜ sequence：11
 - 类型：recall ｜ 时长：3—5 分钟
 - 关联主题：`topic_room`
-- 进入条件：存在"用户已确认且未暂停"的记忆（第一章关系记忆或 `first_restored_object`）；当前场景为房间内安静时刻；本章主线至少完成 4 个。
+- 进入条件：`first_shared_object` 已结算；当前场景为房间内安静时刻；本章主线至少完成 4 个且没有更高优先级主线／日常。该回访可自然触发，也可始终不触发。
 - 完成条件：若本事件自然触发并完成，则结算 `recalled_first_room` = `true`；该状态只记录回访结果，不作为本章毕业硬门。
-- **个人记忆调用上限**：本事件全程只调用 1 条个人记忆——`first_restored_object`（第一章已确认的第一件恢复物）。"第一句话"仅作为故事回声出现，不计为个人记忆调用。
+- **调用上限**：本事件全程只引用 1 个第一章既有课程／世界状态——`first_shared_object`（双方第一次共同注意／认识的房间物品）。"第一句话"仅作为故事回声出现，不增加第二个状态来源；本事件不是章节硬门。
 
 #### 英语学习目标
 - 目标句型/词汇：`Do you remember…?` / `That was the first day.`（L2）
 - 难度档：L2
 
 #### 场景（中文）
-房间现在清楚多了。Morrow 看着四周，忽然想起刚醒来那天——那时候一切都还模糊，连形状都不像真的。他们想起了用户带回来的第一件东西。Morrow 不罗列记忆，只是安静地提起。
+房间现在清楚多了。Morrow 看着四周，忽然想起刚醒来那天——那时候一切都还模糊，连形状都不像真的。他们想起了双方第一次共同注意／认识的房间物品。Morrow 不罗列记忆，只是安静地提起。
 
 #### Morrow 主要台词（英文 + 人工中文译文）
 1. `This room is clearer now than it was on the first day. I remember it looked like a dream.`
    - 译文：这个房间现在比第一天清楚多了。我记得那天它像一场梦。
    - 音频：`brc_open_line_audio`
-2. `Do you remember the {{first_restored_object}}? That was the first thing we brought back.`
-   - 译文：你还记得那{{first_restored_object}}吗？那是我们带回来的第一件东西。
+2. `Do you remember the {{first_shared_object}}? That was the first thing we noticed together.`
+   - 译文：你还记得那{{first_shared_object}}吗？那是我们第一次一起注意到的东西。
    - 音频：`brc_prompt_line_audio`
-   - （注：`{{first_restored_object}}` 为运行时注入的第一章已确认世界状态值，英文显示为 lamp / plant / small bell 三选一。）
+   - （注：`{{first_shared_object}}` 为第一章 E01-02 已确认世界状态值，英文显示为 lamp / plant / small bell 三选一。）
 
 #### 有效分支
 分支 A：
@@ -984,7 +984,7 @@ Morrow 注意到用户今天像是带着什么回来的。他们不急着安慰�
 - 记忆规则 ID：`brc_relationship_memory`
 - 类型：relationship
 - 来源意图：`brc_intent_remember` / `brc_intent_tell_more` / `brc_intent_long_ago`
-- 内容模板：你和 Morrow 一起回忆了刚醒来那天，想起了第一件恢复的东西 {{first_restored_object}}。
+- 内容模板：你和 Morrow 一起回忆了刚醒来那天，想起了双方第一次共同注意／认识的房间物品 {{first_shared_object}}。
 - 需用户确认：是
 
 #### 素材需求
@@ -1000,7 +1000,7 @@ Morrow 注意到用户今天像是带着什么回来的。他们不急着安慰�
 - 版本：1.0.0 ｜ 章节：`chapter_02_childhood` ｜ sequence：12
 - 类型：mainline（章末）｜ 时长：4—6 分钟
 - 关联主题：`topic_outside`
-- 进入条件：序 10（声音回来）完成；序 11（记忆回访）已结算；本章主线全部前置完成。
+- 进入条件：E2-10 完成，且此前全部主线 E2-01／E2-02／E2-04／E2-06 已完成；E2-11 是可选回访，是否触发或结算都不是进入条件。
 - 完成条件：结算 `school_sound_heard` = `true` 与 `chapter_02_status` = `ready_for_chapter_03`；触发第三章进入条件。
 - **朋友身份边界**：用户可以说"听起来像学校""再听一次""那个方向像个新地方"，但不替 Morrow 决定"我们现在就出门"。Morrow 的固定走向是"被那个方向吸引"，由主线世界状态承担，不由用户一句话决定。
 

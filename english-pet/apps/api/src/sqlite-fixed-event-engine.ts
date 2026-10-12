@@ -6,12 +6,14 @@ import {
   type IntentMatcherCandidate,
 } from '@english-pet/domain'
 import type {
-  FixedChoice,
   FixedContentInputMode,
   FixedContentLine,
   FixedEvent,
   FixedEventCatalogItem,
+  FixedEventDailyBudgetView,
   FixedEventInstanceView,
+  FixedEventRecommendationView,
+  Memory,
 } from '@english-pet/contracts'
 import { fromJson, openDatabase, toJson } from './sqlite-db.js'
 import type { MemoryProposalInput, SqliteMemoryStore } from './sqlite-memory-store.js'
@@ -22,35 +24,14 @@ import type { MemoryJournalStore } from './memory-journal-store.js'
 type MemoryStoreDeps = MemoryMemoryStore | SqliteMemoryStore
 type JournalStoreDeps = MemoryJournalStore | SqliteJournalStore
 
-/**
- * 日常对话主题（P4-T04）：与主线章节事件区分开的可重复轮换内容。
- * - 章节 ID 为 chapter_daily_talk 的事件属于日常主题。
- * - 解锁：首个主线事件 birth_first_voice_v1 完成后全部日常主题解锁（不再按 sequence 互相前置）。
- * - 完成后永不写入 completedEventIds，因此在目录里始终是 available，可重复进入。
- * - dailyTopicCursor 记录上一次完成的日常主题，目录据此循环标出"推荐下一个"，保证连续使用不重复同一主题。
- */
-const DAILY_TOPIC_CHAPTER = 'chapter_daily_talk'
-const DAILY_TOPIC_UNLOCK_EVENT = 'birth_first_voice_v1'
+type WorldStateValue = string | number | boolean | null
+type WorldState = Record<string, WorldStateValue>
 
 interface FixedEventEngineDeps {
   memoryStore?: MemoryStoreDeps
   journalStore?: JournalStoreDeps
+  now?: () => Date
 }
-
-/**
- * 固定内容事件引擎（fixed-content-v1.0.0）——把纯函数确定性意图匹配器接入真实状态推进并落 SQLite。
- *
- * 设计要点：
- * - 进程内无状态：每次方法调用都从 fixed_event_state 行读 record、改完写回；新 new 出来的实例即等于"重启"。
- * - 状态迁移由 onIntentIds 驱动：previewFixedContentIntent 解析出 resolvedIntentId 后，
- *   仅在 event.transitions 中找 fromStateId===当前状态 且 onIntentIds 包含该意图的迁移；
- *   未唯一解析或无对应迁移时保持当前状态不变（advanced:false）。
- * - worldState 写入时机：仅当命中带 outcomeId 的迁移时，立即把该 outcome 的 worldStateWrites 写进用户世界状态。
- * - 幂等：每个用户 record 内维护 responseByIdempotencyKey，start/advance 命中即原样返回缓存视图，不重复推进。
- */
-
-type WorldStateValue = string | number | boolean | null
-type WorldState = Record<string, WorldStateValue>
 
 interface FixedEventInstanceRecord {
   eventId: string
@@ -60,30 +41,97 @@ interface FixedEventInstanceRecord {
   selectedOutcomeId: string | null
   resultLineIds: string[]
   confirmedExpressions: string[]
-  /** 累计本次实例命中过的 resolvedIntentId（用于按 memoryRules.sourceIntentIds 过滤）。 */
   resolvedIntentIds: string[]
-  /** completed 后是否已向记忆/日记 store 结算过（幂等兜底）。 */
   memoryProposed: boolean
   completedAt: string | null
+  recallSourceMemoryId: string | null
+  recallSourceType: 'shared_memory' | 'legacy_expression' | null
+}
+
+interface DailyBudgetRecord {
+  localDate: string
+  timeZone: string
+  newMainlineUsed: number
+  newDailyUsed: number
+  newLearningObjectsUsed: number
+  newCoreExpressionsUsed: number
+  recallUsed: number
+  extraEventUsed: number
+  extraEventGranted: boolean
 }
 
 interface FixedEventUserRecord {
   userId: string
   worldState: WorldState
   completedEventIds: string[]
-  /** 上一次完成的日常对话主题 id（用于轮换去重）；非空表示最近用过的主题。 */
+  startedEventIds: string[]
+  dailyCompletionByEventId: Record<string, string>
   dailyTopicCursor: string | null
+  budget: DailyBudgetRecord | null
   active: FixedEventInstanceRecord | null
   responseByIdempotencyKey: Record<string, FixedEventInstanceView>
+  commandByIdempotencyKey: Record<string, unknown>
 }
 
-/** 全事件台词表：契约保证台词 id 全局唯一。 */
 const lineById = new Map<string, FixedContentLine>(
   fixedContentV1.events.flatMap((event) => event.lines).map((line) => [line.id, line] as const),
 )
 
+const LIMITS = {
+  newMainline: 2,
+  newDaily: 1,
+  newLearningObjects: 10,
+  newCoreExpressions: 3,
+  recall: 1,
+  extraEvent: 1,
+} as const
+
 function resolveLines(ids: string[]): FixedContentLine[] {
   return ids.map((id) => lineById.get(id)!).filter(Boolean)
+}
+
+function localDate(now: Date, timeZone: string): string {
+  try {
+    const parts = new Intl.DateTimeFormat('en-CA', {
+      timeZone,
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }).formatToParts(now)
+    const values = Object.fromEntries(parts.map((part) => [part.type, part.value]))
+    return `${values.year}-${values.month}-${values.day}`
+  } catch {
+    throw new Error('fixed_invalid_time_zone')
+  }
+}
+
+function recallSourceType(memory: Memory): 'shared_memory' | 'legacy_expression' {
+  return memory.kind === 'language' ? 'legacy_expression' : 'shared_memory'
+}
+
+export function selectRecallCandidate(
+  event: FixedEvent,
+  memories: Memory[],
+): { memory: Memory; sourceType: 'shared_memory' | 'legacy_expression' } | null {
+  if (event.eventType !== 'recall') return null
+  const eventTags = new Set(event.recallSemanticTags)
+  const ranked = memories
+    .map((memory) => {
+      const sourceType = recallSourceType(memory)
+      if (!event.recallSourceTypes.includes(sourceType)) return null
+      const matchedTags = memory.semanticTags.filter((tag) => eventTags.has(tag))
+      if (matchedTags.length === 0) return null
+      const exactEventMatch = memory.semanticTags.includes(event.id) ? 1 : 0
+      return { memory, sourceType, score: matchedTags.length, exactEventMatch }
+    })
+    .filter((candidate): candidate is NonNullable<typeof candidate> => candidate !== null)
+    .sort((left, right) =>
+      right.exactEventMatch - left.exactEventMatch
+      || right.score - left.score
+      || left.memory.id.localeCompare(right.memory.id),
+    )
+  const selected = ranked[0]
+  return selected ? { memory: selected.memory, sourceType: selected.sourceType } : null
 }
 
 export class SqliteFixedEventEngine {
@@ -94,27 +142,41 @@ export class SqliteFixedEventEngine {
     this.deps = deps ?? {}
   }
 
+  private now(): Date {
+    return this.deps.now?.() ?? new Date()
+  }
+
   private loadRecord(userId: string): FixedEventUserRecord {
     const row = openDatabase()
       .prepare('SELECT record FROM fixed_event_state WHERE user_id = ?')
       .get(userId) as { record: string } | undefined
     if (row) {
       const parsed = fromJson<FixedEventUserRecord>(row.record)!
-      // 旧 record 可能缺新字段，读取时补齐默认值，避免运行时 undefined 报错。
+      parsed.completedEventIds ??= []
+      parsed.startedEventIds ??= [...parsed.completedEventIds]
+      parsed.dailyCompletionByEventId ??= {}
+      parsed.dailyTopicCursor ??= null
+      parsed.budget ??= null
+      parsed.commandByIdempotencyKey ??= {}
       if (parsed.active) {
         parsed.active.resolvedIntentIds ??= []
         parsed.active.memoryProposed ??= false
+        parsed.active.recallSourceMemoryId ??= null
+        parsed.active.recallSourceType ??= null
       }
-      parsed.dailyTopicCursor ??= null
       return parsed
     }
     return {
       userId,
       worldState: {},
       completedEventIds: [],
+      startedEventIds: [],
+      dailyCompletionByEventId: {},
       dailyTopicCursor: null,
+      budget: null,
       active: null,
       responseByIdempotencyKey: {},
+      commandByIdempotencyKey: {},
     }
   }
 
@@ -127,45 +189,127 @@ export class SqliteFixedEventEngine {
       .run(record.userId, toJson(record))
   }
 
-  private eventStatus(record: FixedEventUserRecord, event: FixedEvent): 'available' | 'completed' | 'locked' {
-    // 日常对话主题：首个主线事件完成即解锁；可重复，永不标 completed。
-    if (event.chapterId === DAILY_TOPIC_CHAPTER) {
-      return record.completedEventIds.includes(DAILY_TOPIC_UNLOCK_EVENT) ? 'available' : 'locked'
+  private ensureBudget(record: FixedEventUserRecord, timeZone: string): DailyBudgetRecord {
+    const date = localDate(this.now(), timeZone)
+    if (!record.budget || record.budget.localDate !== date || record.budget.timeZone !== timeZone) {
+      record.budget = {
+        localDate: date,
+        timeZone,
+        newMainlineUsed: 0,
+        newDailyUsed: 0,
+        newLearningObjectsUsed: 0,
+        newCoreExpressionsUsed: 0,
+        recallUsed: 0,
+        extraEventUsed: 0,
+        extraEventGranted: false,
+      }
     }
-    if (record.completedEventIds.includes(event.id)) return 'completed'
-    // 可用条件：所有排在自己之前（sequence 更小）的事件都已完成。
-    const prerequisitesDone = fixedContentV1.events
-      .filter((other) => other.sequence < event.sequence)
-      .every((prior) => record.completedEventIds.includes(prior.id))
-    return prerequisitesDone ? 'available' : 'locked'
+    return record.budget
   }
 
-  catalog(userId: string): FixedEventCatalogItem[] {
+  private budgetView(record: FixedEventUserRecord, timeZone: string): FixedEventDailyBudgetView {
+    const budget = this.ensureBudget(record, timeZone)
+    return {
+      localDate: budget.localDate,
+      timeZone: budget.timeZone,
+      newMainlineUsed: budget.newMainlineUsed,
+      newDailyUsed: budget.newDailyUsed,
+      newLearningObjectsUsed: budget.newLearningObjectsUsed,
+      newCoreExpressionsUsed: budget.newCoreExpressionsUsed,
+      recallUsed: budget.recallUsed,
+      extraEventUsed: budget.extraEventUsed,
+      limits: LIMITS,
+    }
+  }
+
+  private prerequisitesDone(record: FixedEventUserRecord, event: FixedEvent): boolean {
+    return event.prerequisiteEventIds.every((id) => record.completedEventIds.includes(id))
+  }
+
+  private cooldownUntil(record: FixedEventUserRecord, event: FixedEvent): string | null {
+    if (event.eventType !== 'daily' || event.dailyCooldownHours === null) return null
+    const completedAt = record.dailyCompletionByEventId[event.id]
+    if (!completedAt) return null
+    const until = new Date(Date.parse(completedAt) + event.dailyCooldownHours * 60 * 60 * 1000)
+    return until.getTime() > this.now().getTime() ? until.toISOString() : null
+  }
+
+  private isFirstNewContentStart(record: FixedEventUserRecord, event: FixedEvent): boolean {
+    return event.newContentBudget.introducesNewContent && !record.startedEventIds.includes(event.id)
+  }
+
+  private budgetAllows(record: FixedEventUserRecord, event: FixedEvent, timeZone: string): boolean {
+    const budget = this.ensureBudget(record, timeZone)
+    if (event.eventType === 'recall') return budget.recallUsed < LIMITS.recall
+    if (!this.isFirstNewContentStart(record, event)) return true
+    const nextObjects = budget.newLearningObjectsUsed + event.newContentBudget.newLearningObjectCount
+    const nextExpressions = budget.newCoreExpressionsUsed + event.newContentBudget.newCoreExpressionCount
+    if (nextObjects > LIMITS.newLearningObjects || nextExpressions > LIMITS.newCoreExpressions) return false
+    if (event.eventType === 'daily') return budget.newDailyUsed < LIMITS.newDaily
+    if (event.eventType === 'mainline') {
+      const mainlineLimit = LIMITS.newMainline + (budget.extraEventGranted ? 1 : 0)
+      return budget.newMainlineUsed < mainlineLimit
+    }
+    return true
+  }
+
+  private eventStatus(
+    record: FixedEventUserRecord,
+    event: FixedEvent,
+    timeZone: string,
+  ): 'available' | 'completed' | 'locked' | 'cooldown' {
+    if (event.eventType === 'recall') return 'locked'
+    if (event.eventType === 'mainline' && record.completedEventIds.includes(event.id)) return 'completed'
+    if (!this.prerequisitesDone(record, event)) return 'locked'
+    if (this.cooldownUntil(record, event)) return 'cooldown'
+    return this.budgetAllows(record, event, timeZone) ? 'available' : 'locked'
+  }
+
+  catalog(userId: string, timeZone = 'Asia/Shanghai'): FixedEventCatalogItem[] {
     const record = this.loadRecord(userId)
-    const items = fixedContentV1.events.map((event) => ({
-      eventId: event.id,
-      version: event.version,
-      chapterId: event.chapterId,
-      sequence: event.sequence,
-      titleZh: event.titleZh,
-      status: this.eventStatus(record, event),
-    }))
-    // 日常主题轮换：在已解锁的主题里，按 sequence 循环标出"推荐下一个"，紧跟上一次完成的那个之后。
-    const availableDaily = items.filter((item) => item.chapterId === DAILY_TOPIC_CHAPTER && item.status === 'available')
-    if (availableDaily.length === 0) return items
+    const items = fixedContentV1.events
+      .filter((event) => event.eventType !== 'recall')
+      .map((event) => {
+        const cooldownUntil = this.cooldownUntil(record, event)
+        return {
+          eventId: event.id,
+          version: event.version,
+          chapterId: event.chapterId,
+          sequence: event.sequence,
+          titleZh: event.titleZh,
+          eventType: event.eventType,
+          triggerMode: event.triggerMode,
+          triggerStrength: event.triggerStrength,
+          status: this.eventStatus(record, event, timeZone),
+          ...(cooldownUntil ? { cooldownUntil } : {}),
+        } satisfies FixedEventCatalogItem
+      })
+
+    const availableDaily = items
+      .filter((item) => item.eventType === 'daily' && item.status === 'available')
+      .sort((a, b) => a.sequence - b.sequence)
+    if (availableDaily.length === 0) {
+      this.saveRecord(record)
+      return items
+    }
     const order = availableDaily.map((item) => item.eventId)
-    const cursor = record.dailyTopicCursor
-    const cursorIndex = cursor ? order.indexOf(cursor) : -1
-    const recommendedIndex = (cursorIndex + 1 + availableDaily.length) % availableDaily.length
-    const recommendedId = availableDaily[recommendedIndex].eventId
-    return items.map((item) => (item.eventId === recommendedId ? { ...item, recommendedNext: true } : item))
+    const cursorIndex = record.dailyTopicCursor ? order.indexOf(record.dailyTopicCursor) : -1
+    const recommendedId = order[(cursorIndex + 1 + order.length) % order.length]
+    this.saveRecord(record)
+    return items.map((item) => item.eventId === recommendedId ? { ...item, recommendedNext: true } : item)
+  }
+
+  private recallCandidate(
+    userId: string,
+    event: FixedEvent,
+  ): { memory: Memory; sourceType: 'shared_memory' | 'legacy_expression' } | null {
+    return selectRecallCandidate(event, this.deps.memoryStore?.recallCandidates(userId) ?? [])
   }
 
   private render(
     record: FixedEventUserRecord,
     instance: FixedEventInstanceRecord,
     extra?: { advanced: boolean; messageZh?: string; candidates?: IntentMatcherCandidate[] },
-    /** 到达 completed 时用迁移来源状态渲染最后一屏（completed 不是 states 成员）。 */
     renderStateId?: string,
   ): FixedEventInstanceView {
     const event = getFixedContentEvent(instance.eventId)!
@@ -200,20 +344,31 @@ export class SqliteFixedEventEngine {
     }
   }
 
-  start(userId: string, input: { eventId: string; idempotencyKey: string }): FixedEventInstanceView {
-    const cacheKey = `start:${input.eventId}:${input.idempotencyKey}`
-    const record = this.loadRecord(userId)
-    const cached = record.responseByIdempotencyKey[cacheKey]
-    if (cached) return cached
-
-    if (record.active && record.active.status !== 'completed') {
-      throw new Error('fixed_event_locked')
+  private consumeBudget(record: FixedEventUserRecord, event: FixedEvent, timeZone: string): void {
+    const budget = this.ensureBudget(record, timeZone)
+    if (event.eventType === 'recall') {
+      budget.recallUsed += 1
+      return
     }
-    const event = getFixedContentEvent(input.eventId)
-    if (!event || this.eventStatus(record, event) !== 'available') {
-      throw new Error('fixed_event_locked')
+    if (!this.isFirstNewContentStart(record, event)) return
+    if (event.eventType === 'mainline') {
+      budget.newMainlineUsed += 1
+      if (budget.newMainlineUsed > LIMITS.newMainline) budget.extraEventUsed = 1
+    } else if (event.eventType === 'daily') {
+      budget.newDailyUsed += 1
     }
+    budget.newLearningObjectsUsed += event.newContentBudget.newLearningObjectCount
+    budget.newCoreExpressionsUsed += event.newContentBudget.newCoreExpressionCount
+  }
 
+  private createInstance(
+    record: FixedEventUserRecord,
+    event: FixedEvent,
+    timeZone: string,
+    recall?: { memory: Memory; sourceType: 'shared_memory' | 'legacy_expression' },
+  ): FixedEventInstanceView {
+    this.consumeBudget(record, event, timeZone)
+    if (!record.startedEventIds.includes(event.id)) record.startedEventIds.push(event.id)
     const instance: FixedEventInstanceRecord = {
       eventId: event.id,
       instanceId: randomUUID(),
@@ -225,18 +380,152 @@ export class SqliteFixedEventEngine {
       resolvedIntentIds: [],
       memoryProposed: false,
       completedAt: null,
+      recallSourceMemoryId: recall?.memory.id ?? null,
+      recallSourceType: recall?.sourceType ?? null,
     }
     record.active = instance
     const view = this.render(record, instance, { advanced: true })
+    this.saveRecord(record)
+    return view
+  }
+
+  start(
+    userId: string,
+    input: { eventId: string; idempotencyKey: string; timeZone?: string },
+  ): FixedEventInstanceView {
+    const timeZone = input.timeZone ?? 'Asia/Shanghai'
+    const cacheKey = `start:${input.eventId}:${input.idempotencyKey}`
+    const record = this.loadRecord(userId)
+    const cached = record.responseByIdempotencyKey[cacheKey]
+    if (cached) return cached
+    if (record.active && record.active.status !== 'completed') throw new Error('fixed_event_locked')
+    const event = getFixedContentEvent(input.eventId)
+    if (!event || event.eventType === 'recall' || this.eventStatus(record, event, timeZone) !== 'available') {
+      throw new Error('fixed_event_locked')
+    }
+    const view = this.createInstance(record, event, timeZone)
     record.responseByIdempotencyKey[cacheKey] = view
+    this.saveRecord(record)
+    return view
+  }
+
+  private eligibleRecall(
+    userId: string,
+    record: FixedEventUserRecord,
+    timeZone: string,
+  ): { event: FixedEvent; memory: Memory; sourceType: 'shared_memory' | 'legacy_expression' } | null {
+    const recallEvents = fixedContentV1.events
+      .filter((event) => event.eventType === 'recall' && this.prerequisitesDone(record, event))
+      .sort((left, right) => left.sequence - right.sequence || left.id.localeCompare(right.id))
+    for (const event of recallEvents) {
+      if (!this.budgetAllows(record, event, timeZone)) continue
+      const recall = this.recallCandidate(userId, event)
+      if (recall) return { event, ...recall }
+    }
+    return null
+  }
+
+  private recallPrompt(
+    recall: { event: FixedEvent; memory: Memory; sourceType: 'shared_memory' | 'legacy_expression' } | null,
+  ): FixedEventRecommendationView['recallPrompt'] {
+    return recall ? {
+      eventId: recall.event.id,
+      titleZh: recall.event.titleZh,
+      triggerMode: 'recall_background',
+      triggerStrength: 'background_gentle',
+      sourceType: recall.sourceType,
+    } : null
+  }
+
+  recommendation(userId: string, timeZone = 'Asia/Shanghai'): FixedEventRecommendationView {
+    const record = this.loadRecord(userId)
+    const budget = this.budgetView(record, timeZone)
+    if (record.active) {
+      const event = getFixedContentEvent(record.active.eventId)!
+      return {
+        kind: 'event',
+        dispatchType: event.eventType,
+        triggerMode: event.triggerMode,
+        triggerStrength: event.triggerStrength,
+        event: null,
+        activeInstance: this.render(record, record.active, { advanced: false }),
+        recallPrompt: null,
+        reason: 'resume',
+        canRequestExtraEvent: false,
+        budget,
+      }
+    }
+
+    const catalog = this.catalog(userId, timeZone)
+    const recall = this.eligibleRecall(userId, record, timeZone)
+    const mainline = catalog.find((item) => item.eventType === 'mainline' && item.status === 'available')
+    if (mainline) {
+      return {
+        kind: 'event', dispatchType: 'mainline', triggerMode: mainline.triggerMode,
+        triggerStrength: mainline.triggerStrength, event: mainline, activeInstance: null,
+        recallPrompt: this.recallPrompt(recall),
+        reason: 'mainline', canRequestExtraEvent: false, budget: this.budgetView(record, timeZone),
+      }
+    }
+
+    if (recall) {
+      const activeInstance = this.createInstance(record, recall.event, timeZone, recall)
+      return {
+        kind: 'event', dispatchType: 'recall', triggerMode: recall.event.triggerMode,
+        triggerStrength: recall.event.triggerStrength, event: null, activeInstance,
+        recallPrompt: null,
+        reason: 'recall', canRequestExtraEvent: false, budget: this.budgetView(record, timeZone),
+      }
+    }
+
+    const daily = catalog.find((item) => item.eventType === 'daily' && item.status === 'available' && item.recommendedNext)
+    if (daily) {
+      return {
+        kind: 'event', dispatchType: 'daily', triggerMode: daily.triggerMode,
+        triggerStrength: daily.triggerStrength, event: daily, activeInstance: null,
+        recallPrompt: null,
+        reason: 'daily', canRequestExtraEvent: false, budget: this.budgetView(record, timeZone),
+      }
+    }
+    const latestBudget = this.ensureBudget(record, timeZone)
+    const budgetReached = latestBudget.newMainlineUsed >= LIMITS.newMainline
+      || latestBudget.newDailyUsed >= LIMITS.newDaily
+      || latestBudget.newLearningObjectsUsed >= LIMITS.newLearningObjects
+      || latestBudget.newCoreExpressionsUsed >= LIMITS.newCoreExpressions
+    this.saveRecord(record)
+    return {
+      kind: 'companion', dispatchType: 'companion', triggerMode: 'ordinary_companion',
+      triggerStrength: 'none', event: null, activeInstance: null,
+      recallPrompt: null,
+      reason: budgetReached ? 'budget_reached' : 'nothing_suitable',
+      canRequestExtraEvent: latestBudget.newMainlineUsed >= LIMITS.newMainline
+        && latestBudget.extraEventUsed === 0
+        && !latestBudget.extraEventGranted,
+      budget: this.budgetView(record, timeZone),
+    }
+  }
+
+  requestExtraEvent(userId: string, idempotencyKey: string, timeZone = 'Asia/Shanghai'): FixedEventDailyBudgetView {
+    const record = this.loadRecord(userId)
+    const cacheKey = `extra:${idempotencyKey}`
+    const cached = record.commandByIdempotencyKey[cacheKey] as FixedEventDailyBudgetView | undefined
+    if (cached) return cached
+    const budget = this.ensureBudget(record, timeZone)
+    if (
+      budget.newMainlineUsed < LIMITS.newMainline
+      || budget.extraEventGranted
+      || budget.extraEventUsed >= LIMITS.extraEvent
+    ) throw new Error('fixed_extra_event_unavailable')
+    budget.extraEventGranted = true
+    const view = this.budgetView(record, timeZone)
+    record.commandByIdempotencyKey[cacheKey] = view
     this.saveRecord(record)
     return view
   }
 
   current(userId: string): FixedEventInstanceView | null {
     const record = this.loadRecord(userId)
-    if (!record.active) return null
-    return this.render(record, record.active, { advanced: false })
+    return record.active ? this.render(record, record.active, { advanced: false }) : null
   }
 
   advance(
@@ -246,23 +535,14 @@ export class SqliteFixedEventEngine {
   ): FixedEventInstanceView {
     const cacheKey = `advance:${instanceId}:${input.idempotencyKey}`
     const record = this.loadRecord(userId)
-
-    // 幂等缓存优先：完成步（active 已置空）用同一 idempotencyKey 重放时直接返回缓存视图，
-    // 不重复推进、不重复提案。
     const cached = record.responseByIdempotencyKey[cacheKey]
     if (cached) return cached
-
-    if (!record.active) {
-      throw new Error('fixed_no_active_event')
-    }
-    if (record.active.instanceId !== instanceId) {
-      throw new Error('fixed_event_not_found')
-    }
+    if (!record.active) throw new Error('fixed_no_active_event')
+    if (record.active.instanceId !== instanceId) throw new Error('fixed_event_not_found')
+    if (record.active.status === 'paused') throw new Error('fixed_event_paused')
 
     const instance = record.active
     const event = getFixedContentEvent(instance.eventId)!
-
-    // a. 纯函数确定性意图预览（不推进）。
     const preview = previewFixedContentIntent({
       event,
       stateId: instance.currentStateId,
@@ -270,14 +550,9 @@ export class SqliteFixedEventEngine {
       policy: fixedContentV1.matchingPolicy,
       fallbacks: fixedContentV1.fallbacks,
     })
-
-    // b/c. 未唯一解析，或没有对应迁移：保持当前状态，返回候选。
-    let transition = null
-    if (preview.resolvedIntentId) {
-      transition = event.transitions.find(
-        (entry) => entry.fromStateId === instance.currentStateId && entry.onIntentIds.includes(preview.resolvedIntentId!),
-      ) ?? null
-    }
+    const transition = preview.resolvedIntentId
+      ? event.transitions.find((entry) => entry.fromStateId === instance.currentStateId && entry.onIntentIds.includes(preview.resolvedIntentId!)) ?? null
+      : null
 
     if (!transition) {
       const view = this.render(record, instance, {
@@ -290,42 +565,43 @@ export class SqliteFixedEventEngine {
       return view
     }
 
-    // 命中迁移：累计 resolvedIntentId；文本/确认 ASR 输入命中迁移时记录确认句。
-    instance.resolvedIntentIds.push(preview.resolvedIntentId!)
-    if ((input.inputMode === 'text' || input.inputMode === 'confirmed_asr_text') && input.text && input.text.trim().length > 0) {
-      instance.confirmedExpressions.push(input.text)
+    // E01-02 的“稍后继续”是平静暂停：保留最近检查点，不写 outcome、世界状态或完成结果。
+    if (event.id === 'birth_restore_object_v1' && preview.resolvedIntentId?.endsWith('_pause')) {
+      instance.status = 'paused'
+      const view = this.render(record, instance, { advanced: false, messageZh: '已经停在最近确认的位置，下次可以继续。' })
+      record.responseByIdempotencyKey[cacheKey] = view
+      this.saveRecord(record)
+      return view
     }
 
-    // d. 命中带 outcome 的迁移：立即写世界状态并记录结果。
+    instance.resolvedIntentIds.push(preview.resolvedIntentId!)
+    if ((input.inputMode === 'text' || input.inputMode === 'confirmed_asr_text') && input.text?.trim()) {
+      instance.confirmedExpressions.push(input.text)
+    }
     if (transition.outcomeId) {
-      const outcome = event.outcomes.find((entry) => entry.id === transition!.outcomeId)!
-      for (const write of outcome.worldStateWrites) {
-        record.worldState[write.key] = write.value
-      }
+      const outcome = event.outcomes.find((entry) => entry.id === transition.outcomeId)!
+      for (const write of outcome.worldStateWrites) record.worldState[write.key] = write.value
       instance.selectedOutcomeId = outcome.id
       instance.resultLineIds = outcome.resultLineIds
     }
 
-    // e. 推进；到达 completed 则收尾。
     instance.currentStateId = transition.toStateId
     const completed = transition.toStateId === 'completed'
     if (completed) {
       instance.status = 'completed'
-      instance.completedAt = new Date().toISOString()
-      const completedEvent = getFixedContentEvent(instance.eventId)!
-      if (completedEvent.chapterId === DAILY_TOPIC_CHAPTER) {
-        // 日常主题：不写入 completedEventIds（保持可重复），只推进轮换游标。
-        record.dailyTopicCursor = instance.eventId
-      } else if (!record.completedEventIds.includes(instance.eventId)) {
-        record.completedEventIds.push(instance.eventId)
+      instance.completedAt = this.now().toISOString()
+      if (event.eventType === 'mainline' && !record.completedEventIds.includes(event.id)) {
+        record.completedEventIds.push(event.id)
       }
-      record.active = null
-
-      // 幂等结算：仅在本实例尚未结算过时向记忆/日记 store 写入一次。
+      if (event.eventType === 'daily') {
+        record.dailyTopicCursor = event.id
+        record.dailyCompletionByEventId[event.id] = instance.completedAt
+      }
       if (instance.memoryProposed !== true) {
         this.proposeOnCompletion(record, instance, event, userId)
         instance.memoryProposed = true
       }
+      record.active = null
     }
 
     const view = this.render(record, instance, { advanced: true }, completed ? transition.fromStateId : undefined)
@@ -336,44 +612,33 @@ export class SqliteFixedEventEngine {
 
   pause(userId: string, instanceId: string, idempotencyKey: string): FixedEventInstanceView {
     const record = this.loadRecord(userId)
-    if (!record.active || record.active.instanceId !== instanceId) {
-      throw new Error('fixed_event_not_found')
-    }
+    const cacheKey = `pause:${instanceId}:${idempotencyKey}`
+    const cached = record.responseByIdempotencyKey[cacheKey]
+    if (cached) return cached
+    if (!record.active || record.active.instanceId !== instanceId) throw new Error('fixed_event_not_found')
     record.active.status = 'paused'
     const view = this.render(record, record.active, { advanced: false })
-    record.responseByIdempotencyKey[`pause:${instanceId}:${idempotencyKey}`] = view
+    record.responseByIdempotencyKey[cacheKey] = view
     this.saveRecord(record)
     return view
   }
 
   resume(userId: string, instanceId: string, idempotencyKey: string): FixedEventInstanceView {
     const record = this.loadRecord(userId)
-    if (!record.active || record.active.instanceId !== instanceId) {
-      throw new Error('fixed_event_not_found')
-    }
+    const cacheKey = `resume:${instanceId}:${idempotencyKey}`
+    const cached = record.responseByIdempotencyKey[cacheKey]
+    if (cached) return cached
+    if (!record.active || record.active.instanceId !== instanceId) throw new Error('fixed_event_not_found')
     record.active.status = 'active'
     const view = this.render(record, record.active, { advanced: true })
-    record.responseByIdempotencyKey[`resume:${instanceId}:${idempotencyKey}`] = view
+    record.responseByIdempotencyKey[cacheKey] = view
     this.saveRecord(record)
     return view
   }
 
-  /**
-   * 事件完成时按 memoryRules 向记忆 store 提"待确认"提案，并写一条日记。
-   * - 只保留 sourceIntentIds 与本实例 resolvedIntentIds 有交集的规则。
-   * - 渲染 {{confirmed_user_sentence}} 为最后一条确认句；其余 {{xxx}} 取 worldState。
-   * - language 规则在确认句为空时整条跳过；relationship 规则照常渲染。
-   * 幂等由调用方 memoryProposed 标志 + store 层去重 + 幂等键缓存共同保证。
-   */
-  private proposeOnCompletion(
-    record: FixedEventUserRecord,
-    instance: FixedEventInstanceRecord,
-    event: FixedEvent,
-    userId: string,
-  ): void {
+  private proposeOnCompletion(record: FixedEventUserRecord, instance: FixedEventInstanceRecord, event: FixedEvent, userId: string): void {
     const confirmedSentence = instance.confirmedExpressions[instance.confirmedExpressions.length - 1] ?? ''
     const outcomeId = instance.selectedOutcomeId ?? ''
-
     const proposals: MemoryProposalInput[] = []
     for (const rule of event.memoryRules) {
       if (!rule.sourceIntentIds.some((id) => instance.resolvedIntentIds.includes(id))) continue
@@ -381,22 +646,18 @@ export class SqliteFixedEventEngine {
         .replace(/\{\{confirmed_user_sentence\}\}/g, confirmedSentence)
         .replace(/\{\{([a-z0-9_]+)\}\}/g, (_, key: string) => String(record.worldState[key] ?? ''))
         .trim()
-      if (!rendered) continue
-      if (rule.kind === 'language' && !confirmedSentence) continue
+      if (!rendered || (rule.kind === 'language' && !confirmedSentence)) continue
       proposals.push({
         kind: rule.kind,
         content: rendered,
         confidence: 'high',
         semanticTags: [event.id, outcomeId],
-        ...(rule.kind === 'language'
-          ? { expression: confirmedSentence, naturalExpression: confirmedSentence }
-          : {}),
+        ...(rule.kind === 'language' ? { expression: confirmedSentence, naturalExpression: confirmedSentence } : {}),
       })
     }
     if (this.deps.memoryStore && proposals.length > 0) {
       this.deps.memoryStore.proposeFromFixedEvent(userId, instance.instanceId, proposals)
     }
-
     if (this.deps.journalStore && instance.selectedOutcomeId) {
       const outcome = event.outcomes.find((entry) => entry.id === instance.selectedOutcomeId)
       if (outcome) {

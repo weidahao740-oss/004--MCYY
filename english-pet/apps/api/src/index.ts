@@ -9,6 +9,8 @@ import {
   firstDayActionRequestSchema,
   fixedContentIntentPreviewRequestSchema,
   fixedEventAdvanceRequestSchema,
+  fixedEventCommandRequestSchema,
+  fixedEventExtraRequestSchema,
   fixedEventStartRequestSchema,
   journalActionRequestSchema,
   loginRequestSchema,
@@ -417,16 +419,23 @@ app.post('/v1/events/:id/intents', async (context) => {
   return context.json(result)
 })
 
-// ── 固定内容事件引擎（状态推进 + SQLite 落库）──
-// 目录：返回两个出生事件的可用/已完成/锁定状态。
+// ── 固定内容公共调度（状态推进 + SQLite 落库）──
+// 目录仅暴露 mainline/daily；recall 只允许后台推荐器自然触发。
 app.get('/v1/fixed-content/events', (context) => {
   const token = getBearerToken(context.req.header('Authorization'))
   const me = token ? accountStore.me(token) : null
   if (!me) return errorResponse(context, 'unauthorized', 401)
-  return context.json({ events: fixedEventEngine.catalog(me.user.id) })
+  return context.json({ events: fixedEventEngine.catalog(me.user.id, me.settings.timeZone) })
 })
 
-// 当前活动实例：无进行中事件时返回 { instance: null }。
+// 统一返回当前活动事件、推荐事件或普通陪伴状态；后台 recall 每次最多触发一条。
+app.get('/v1/fixed-content/recommendation', (context) => {
+  const token = getBearerToken(context.req.header('Authorization'))
+  const me = token ? accountStore.me(token) : null
+  if (!me) return errorResponse(context, 'unauthorized', 401)
+  return context.json(fixedEventEngine.recommendation(me.user.id, me.settings.timeZone))
+})
+
 app.get('/v1/fixed-content/events/current', (context) => {
   const token = getBearerToken(context.req.header('Authorization'))
   const me = token ? accountStore.me(token) : null
@@ -445,10 +454,56 @@ app.post('/v1/fixed-content/events/:eventId/start', async (context) => {
     return context.json(fixedEventEngine.start(me.user.id, {
       eventId: context.req.param('eventId'),
       idempotencyKey: parsed.data.idempotencyKey,
+      timeZone: me.settings.timeZone,
     }), 201)
   } catch (error) {
     if (!(error instanceof Error)) throw error
     if (error.message === 'fixed_event_locked') return errorResponse(context, 'fixed_event_locked', 409)
+    throw error
+  }
+})
+
+app.post('/v1/fixed-content/events/extra', async (context) => {
+  const token = getBearerToken(context.req.header('Authorization'))
+  const me = token ? accountStore.me(token) : null
+  if (!me) return errorResponse(context, 'unauthorized', 401)
+  const body = await context.req.json().catch(() => null)
+  const parsed = fixedEventExtraRequestSchema.safeParse(body)
+  if (!parsed.success) return errorResponse(context, 'bad_request', 400, parsed.error.flatten())
+  try {
+    return context.json({ budget: fixedEventEngine.requestExtraEvent(me.user.id, parsed.data.idempotencyKey, me.settings.timeZone) })
+  } catch (error) {
+    if (error instanceof Error && error.message === 'fixed_extra_event_unavailable') return errorResponse(context, 'fixed_extra_event_unavailable', 409)
+    throw error
+  }
+})
+
+app.post('/v1/fixed-content/events/:instanceId/pause', async (context) => {
+  const token = getBearerToken(context.req.header('Authorization'))
+  const me = token ? accountStore.me(token) : null
+  if (!me) return errorResponse(context, 'unauthorized', 401)
+  const body = await context.req.json().catch(() => null)
+  const parsed = fixedEventCommandRequestSchema.safeParse(body)
+  if (!parsed.success) return errorResponse(context, 'bad_request', 400, parsed.error.flatten())
+  try {
+    return context.json(fixedEventEngine.pause(me.user.id, context.req.param('instanceId'), parsed.data.idempotencyKey))
+  } catch (error) {
+    if (error instanceof Error && error.message === 'fixed_event_not_found') return errorResponse(context, 'fixed_event_not_found', 404)
+    throw error
+  }
+})
+
+app.post('/v1/fixed-content/events/:instanceId/resume', async (context) => {
+  const token = getBearerToken(context.req.header('Authorization'))
+  const me = token ? accountStore.me(token) : null
+  if (!me) return errorResponse(context, 'unauthorized', 401)
+  const body = await context.req.json().catch(() => null)
+  const parsed = fixedEventCommandRequestSchema.safeParse(body)
+  if (!parsed.success) return errorResponse(context, 'bad_request', 400, parsed.error.flatten())
+  try {
+    return context.json(fixedEventEngine.resume(me.user.id, context.req.param('instanceId'), parsed.data.idempotencyKey))
+  } catch (error) {
+    if (error instanceof Error && error.message === 'fixed_event_not_found') return errorResponse(context, 'fixed_event_not_found', 404)
     throw error
   }
 })
@@ -471,6 +526,7 @@ app.post('/v1/fixed-content/events/:instanceId/advance', async (context) => {
     if (!(error instanceof Error)) throw error
     if (error.message === 'fixed_event_not_found') return errorResponse(context, 'fixed_event_not_found', 404)
     if (error.message === 'fixed_no_active_event') return errorResponse(context, 'fixed_no_active_event', 409)
+    if (error.message === 'fixed_event_paused') return errorResponse(context, 'fixed_event_paused', 409)
     throw error
   }
 })
@@ -655,5 +711,9 @@ app.onError((error, context) => {
 })
 
 const port = Number(process.env.PORT ?? 8787)
-serve({ fetch: app.fetch, port })
-logger.info({ port }, 'API listening')
+if (process.env.API_NO_LISTEN !== '1') {
+  serve({ fetch: app.fetch, port })
+  logger.info({ port }, 'API listening')
+}
+
+export { app }

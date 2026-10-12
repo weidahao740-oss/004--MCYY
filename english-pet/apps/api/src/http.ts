@@ -25,6 +25,8 @@ export type ApiErrorCode =
   | 'audio_not_ready'
   | 'fixed_event_not_found'
   | 'fixed_event_locked'
+  | 'fixed_event_paused'
+  | 'fixed_extra_event_unavailable'
   | 'fixed_no_active_event'
   | 'internal_error'
 
@@ -53,6 +55,8 @@ const messages: Record<ApiErrorCode, string> = {
   audio_not_ready: '这条语音尚未准备好，你可以先看文字和译文继续。',
   fixed_event_not_found: '未找到进行中的固定内容事件实例。',
   fixed_event_locked: '该事件暂不可用，或已有进行中的事件。',
+  fixed_event_paused: '事件已经暂停，请先恢复后再继续。',
+  fixed_extra_event_unavailable: '今天的额外事件机会已经使用或尚不可用。',
   fixed_no_active_event: '当前没有进行中的固定内容事件。',
   internal_error: '服务暂时无法完成请求。',
 }

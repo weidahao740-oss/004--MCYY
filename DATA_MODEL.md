@@ -255,7 +255,7 @@ event_definitions ──1:N── event_instances
 
 | 键 | 合法值来源 |
 |---|---|
-| `first_restored_object` | `lamp` / `plant` / `small_bell` |
+| `first_shared_object` | `lamp` / `plant` / `small_bell`（E01-02 双方第一次共同注意／认识的房间物品；旧 `first_restored_object` 仅作迁移识别） |
 | `first_day_status` | `completed` |
 | `letter_response` | `reply_now` / `observe_first` |
 | `room_added_object` | `low_chair` / `narrow_shelf` / `small_kettle` |

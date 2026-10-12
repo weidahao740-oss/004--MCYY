@@ -38,8 +38,8 @@
 
 **completed / PASS（环境层）。** `english-pet` 在当前 Windows RedirectionGuard 环境下不再依赖不可穿越的非管理员 Junction：标准 `npm install` 通过根 `postinstall` 确定性物化四个内部包，根 `typecheck` 也会先刷新物化目录。Node、tsx、TypeScript 解析、两个既有 smoke 与全 workspace typecheck 均已通过。详见 [workspace测试环境修复报告-20261009.md](../workspace测试环境修复报告-20261009.md)。
 
-本结论只表示 F-10 环境阻塞解除，不表示 T04-I、T04-EC、T04-E1、T04-E2 或任何剧情／内容任务已完成。
+本结论只表示 F-10 环境阻塞解除。现行状态中 T04-I 为 `completed`；T04-EC 为 `completed`（2026-10-12；修复后技术复验通过并经用户重新确认）；T04-E1、T04-E2 仍未通过，本卡不替代其验收结论。
 
 ## 下一步
 
-T04-X 已为 [T-P4.5-04EC 公共调度验收门](./T-P4.5-04EC-公共调度验收门.md) 提供可运行测试前置；T04-EC 仍等待 T04-I 完成后再执行，第一章／第二章验收门继续等待各自既定前置。
+T04-X 已为 [T-P4.5-04EC 公共调度验收门](./T-P4.5-04EC-公共调度验收门.md) 提供可运行测试前置；T04-I 已 `completed`；T04-EC 为 `completed`（2026-10-12；修复后技术复验通过并经用户重新确认）。S04／T04-E1 为 `not-started`，下一步排队等待，前置已满足但未启动；T04-E2 仍等待 T06 第2批。

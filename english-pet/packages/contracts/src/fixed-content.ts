@@ -154,12 +154,47 @@ export const fixedMemoryRuleSchema = z.object({
 })
 export type FixedMemoryRule = z.infer<typeof fixedMemoryRuleSchema>
 
+export const fixedEventTypeSchema = z.enum(['mainline', 'daily', 'recall'])
+export type FixedEventType = z.infer<typeof fixedEventTypeSchema>
+
+export const fixedEventTriggerModeSchema = z.enum([
+  'mainline_invitation',
+  'daily_environment',
+  'recall_background',
+])
+export type FixedEventTriggerMode = z.infer<typeof fixedEventTriggerModeSchema>
+
+export const fixedEventTriggerStrengthSchema = z.enum([
+  'direct_invitation',
+  'ambient_hint',
+  'background_gentle',
+])
+export type FixedEventTriggerStrength = z.infer<typeof fixedEventTriggerStrengthSchema>
+
+export const fixedRecallSourceTypeSchema = z.enum(['shared_memory', 'legacy_expression'])
+export type FixedRecallSourceType = z.infer<typeof fixedRecallSourceTypeSchema>
+
+export const fixedEventNewContentBudgetSchema = z.object({
+  introducesNewContent: z.boolean(),
+  newLearningObjectCount: z.number().int().min(0).max(10),
+  newCoreExpressionCount: z.number().int().min(0).max(3),
+})
+export type FixedEventNewContentBudget = z.infer<typeof fixedEventNewContentBudgetSchema>
+
 export const fixedEventSchema = z
   .object({
     id: idSchema,
     version: semanticVersionSchema,
     chapterId: idSchema,
     sequence: z.number().int().positive(),
+    eventType: fixedEventTypeSchema,
+    prerequisiteEventIds: z.array(idSchema),
+    triggerMode: fixedEventTriggerModeSchema,
+    triggerStrength: fixedEventTriggerStrengthSchema,
+    dailyCooldownHours: z.number().int().min(1).max(24 * 30).nullable(),
+    newContentBudget: fixedEventNewContentBudgetSchema,
+    recallSourceTypes: z.array(fixedRecallSourceTypeSchema),
+    recallSemanticTags: z.array(idSchema).max(12),
     titleZh: z.string().min(1).max(160),
     estimatedMinutes: z.object({
       min: z.number().int().min(1),
@@ -177,6 +212,40 @@ export const fixedEventSchema = z
   .superRefine((event, context) => {
     if (event.estimatedMinutes.min > event.estimatedMinutes.max) {
       context.addIssue({ code: 'custom', path: ['estimatedMinutes'], message: 'min 不能大于 max' })
+    }
+
+    const expectedTrigger = {
+      mainline: ['mainline_invitation', 'direct_invitation'],
+      daily: ['daily_environment', 'ambient_hint'],
+      recall: ['recall_background', 'background_gentle'],
+    } as const
+    const [expectedMode, expectedStrength] = expectedTrigger[event.eventType]
+    if (event.triggerMode !== expectedMode || event.triggerStrength !== expectedStrength) {
+      context.addIssue({ code: 'custom', path: ['triggerMode'], message: '事件类型、触发方式和触发强度必须匹配' })
+    }
+    if (event.eventType === 'daily' && event.dailyCooldownHours === null) {
+      context.addIssue({ code: 'custom', path: ['dailyCooldownHours'], message: '日常事件必须声明真实冷却时长' })
+    }
+    if (event.eventType !== 'daily' && event.dailyCooldownHours !== null) {
+      context.addIssue({ code: 'custom', path: ['dailyCooldownHours'], message: '非日常事件不能声明日常冷却' })
+    }
+    if (event.eventType === 'recall' && event.recallSourceTypes.length === 0) {
+      context.addIssue({ code: 'custom', path: ['recallSourceTypes'], message: '回访事件必须声明至少一种来源' })
+    }
+    if (event.eventType === 'recall' && event.recallSemanticTags.length === 0) {
+      context.addIssue({ code: 'custom', path: ['recallSemanticTags'], message: '回访事件必须声明至少一个确定性语义匹配标签' })
+    }
+    if (event.eventType !== 'recall' && event.recallSourceTypes.length > 0) {
+      context.addIssue({ code: 'custom', path: ['recallSourceTypes'], message: '非回访事件不能声明回访来源' })
+    }
+    if (event.eventType !== 'recall' && event.recallSemanticTags.length > 0) {
+      context.addIssue({ code: 'custom', path: ['recallSemanticTags'], message: '非回访事件不能声明回访语义标签' })
+    }
+    if (new Set(event.recallSourceTypes).size !== event.recallSourceTypes.length) {
+      context.addIssue({ code: 'custom', path: ['recallSourceTypes'], message: '回访来源类型不得重复' })
+    }
+    if (new Set(event.recallSemanticTags).size !== event.recallSemanticTags.length) {
+      context.addIssue({ code: 'custom', path: ['recallSemanticTags'], message: '回访语义标签不得重复' })
     }
 
     const unique = (values: string[]) => new Set(values).size === values.length
@@ -333,6 +402,14 @@ export const fixedContentRulesetSchema = z
     if (new Set(eventIds).size !== eventIds.length) {
       context.addIssue({ code: 'custom', path: ['events'], message: '规则集内事件 ID 必须唯一' })
     }
+    const eventIdSet = new Set(eventIds)
+    for (const event of ruleset.events) {
+      for (const prerequisiteEventId of event.prerequisiteEventIds) {
+        if (prerequisiteEventId === event.id || !eventIdSet.has(prerequisiteEventId)) {
+          context.addIssue({ code: 'custom', path: ['events', event.id, 'prerequisiteEventIds'], message: `事件依赖无效 ${prerequisiteEventId}` })
+        }
+      }
+    }
 
     const lineById = new Map(
       ruleset.events.flatMap((event) => event.lines).map((line) => [line.id, line] as const),
@@ -411,8 +488,20 @@ export type FixedContentIntentPreviewResponse = z.infer<typeof fixedContentInten
 export const fixedEventStartRequestSchema = z.object({
   eventId: idSchema,
   idempotencyKey: z.string().min(1).max(200),
+  timeZone: z.string().min(1).max(64).optional(),
 })
 export type FixedEventStartRequest = z.infer<typeof fixedEventStartRequestSchema>
+
+export const fixedEventExtraRequestSchema = z.object({
+  idempotencyKey: z.string().min(1).max(200),
+  timeZone: z.string().min(1).max(64).optional(),
+})
+export type FixedEventExtraRequest = z.infer<typeof fixedEventExtraRequestSchema>
+
+export const fixedEventCommandRequestSchema = z.object({
+  idempotencyKey: z.string().min(1).max(200),
+})
+export type FixedEventCommandRequest = z.infer<typeof fixedEventCommandRequestSchema>
 
 export const fixedEventAdvanceRequestSchema = z.object({
   inputMode: fixedContentInputModeSchema,
@@ -431,8 +520,52 @@ export interface FixedEventCatalogItem {
   chapterId: string
   sequence: number
   titleZh: string
-  status: 'available' | 'completed' | 'locked'
+  eventType: FixedEventType
+  triggerMode: FixedEventTriggerMode
+  triggerStrength: FixedEventTriggerStrength
+  status: 'available' | 'completed' | 'locked' | 'cooldown'
   recommendedNext?: boolean
+  cooldownUntil?: string
+}
+
+export interface FixedEventDailyBudgetView {
+  localDate: string
+  timeZone: string
+  newMainlineUsed: number
+  newDailyUsed: number
+  newLearningObjectsUsed: number
+  newCoreExpressionsUsed: number
+  recallUsed: number
+  extraEventUsed: number
+  limits: {
+    newMainline: 2
+    newDaily: 1
+    newLearningObjects: 10
+    newCoreExpressions: 3
+    recall: 1
+    extraEvent: 1
+  }
+}
+
+export interface FixedEventRecallPromptView {
+  eventId: string
+  titleZh: string
+  triggerMode: 'recall_background'
+  triggerStrength: 'background_gentle'
+  sourceType: FixedRecallSourceType
+}
+
+export interface FixedEventRecommendationView {
+  kind: 'event' | 'companion'
+  dispatchType: FixedEventType | 'companion'
+  triggerMode: FixedEventTriggerMode | 'ordinary_companion'
+  triggerStrength: FixedEventTriggerStrength | 'none'
+  event: FixedEventCatalogItem | null
+  activeInstance: FixedEventInstanceView | null
+  recallPrompt: FixedEventRecallPromptView | null
+  reason: 'resume' | 'recall' | 'mainline' | 'daily' | 'budget_reached' | 'nothing_suitable'
+  canRequestExtraEvent: boolean
+  budget: FixedEventDailyBudgetView
 }
 
 /** 当前状态渲染视图：lineIds 已解析为完整台词对象。 */

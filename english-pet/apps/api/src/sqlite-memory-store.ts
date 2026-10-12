@@ -350,6 +350,16 @@ export class SqliteMemoryStore {
       .map(publicMemory)
   }
 
+  recallCandidates(userId: string): Memory[] {
+    const state = this.loadState(userId)
+    this.expireProposals(state)
+    this.saveState(userId, state, 0)
+    return [...state.records.values()]
+      .filter((record) => record.status === 'confirmed' && record.pausedAt === null)
+      .filter((record) => record.kind === 'life' || record.kind === 'relationship' || record.kind === 'language')
+      .map(publicMemory)
+  }
+
   isConfirmedLanguageMemory(userId: string, memoryId: string) {
     const state = this.loadState(userId)
     const record = state.records.get(memoryId)

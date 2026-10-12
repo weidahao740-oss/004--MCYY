@@ -280,6 +280,14 @@ export class MemoryMemoryStore {
       .map(publicMemory)
   }
 
+  recallCandidates(userId: string): Memory[] {
+    expireProposals(userId)
+    return [...userMemories(userId).values()]
+      .filter((record) => record.status === 'confirmed' && record.pausedAt === null)
+      .filter((record) => record.kind === 'life' || record.kind === 'relationship' || record.kind === 'language')
+      .map(publicMemory)
+  }
+
   isConfirmedLanguageMemory(userId: string, memoryId: string) {
     const record = userMemories(userId).get(memoryId)
     return Boolean(record && record.kind === 'language' && record.status === 'confirmed' && record.pausedAt === null)

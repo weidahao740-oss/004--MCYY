@@ -42,7 +42,7 @@
 | 9 | `messages` | `conversation_id`、`role`、`content_text`、`input_mode text/voice/reference_reply/choice/system`、`asr_confidence`、`event_state_id`、`client_message_id`、`model_output_json` | 保留 | 既有 `input_mode` 枚举已覆盖契约五类可匹配输入（文字/确认后 ASR/参考句/选项/系统）；未确认 ASR 不写 `content_text` 的既有约束继续生效。确定性匹配结果不落本表，落 §2.6 新表 |
 | 10 | `event_transition_logs` | `event_instance_id`、`from_state_id`、`to_state_id`、`trigger`、`guard_result`、`idempotency_key`、`payload` | 保留 | 状态迁移审计继续用；意图解析五元组另立新表，避免把迁移日志表语义撑大 |
 | 11 | `event_outcomes` | `event_instance_id` 唯一、`outcome_id`、`world_state_writes jsonb`、`effect_summary`、`committed_at` | 保留 | 与契约“只有 outcomes 可写世界状态”完全一致，不改 |
-| 12 | `user_world_state` | `user_id + pet_id + state_key` 唯一、`state_value jsonb`、`source_event_instance_id`、`version` | 保留 | 通用 key-value 世界状态继续承载 `first_restored_object`、`paused_once` 等；章节进度因有门控/完成条件，另立专用表（§2.4），不塞进通用 kv |
+| 12 | `user_world_state` | `user_id + pet_id + state_key` 唯一、`state_value jsonb`、`source_event_instance_id`、`version` | 保留 | 通用 key-value 世界状态现行承载 `first_shared_object` 等；旧 `first_restored_object` 仅作迁移识别，暂停只存事件内临时检查点、不写 `paused_once` 正式状态；章节进度因有门控/完成条件，另立专用表（§2.4），不塞进通用 kv |
 | 13 | `idempotency_records` | `user_id + scope + idempotency_key` 唯一、`request_hash`、`status`、`response_body`、`expires_at` | 保留 | 契约“重复提交只返回既有结算”继续靠它 |
 | 14 | `memories` | `kind`、`status proposed/confirmed/paused/rejected/deleted/expired`、`content`、`confidence`、`sensitivity normal/restricted`、`requires_user_confirmation`（check 恒 true）、`source_event_instance_id`、`version` | 加字段 | 状态机整体沿用。【拟新增】`memory_rule_id varchar(96)`、`proposal_source`（拟新增枚举 `declared_event_rule/explicit_user_request`），对齐契约记忆来源白名单；既有 check（`requires_user_confirmation = true`、`confirmed` 必有 `confirmed_at`）继续强制 |
 | 15 | `memory_sources` | `memory_id + message_id` 主键 | 保留 | 只关联已确认消息，不改 |
@@ -202,9 +202,9 @@
 
 1. 新建 `user_chapter_progress`；
 2. 为存量/新用户初始化 `chapter_01_birth = in_progress`，其余六章 `locked`；
-3. 约定世界状态 key 白名单仍由结果声明：`user_world_state` 承接 `first_restored_object`、`paused_once` 等；章节完成条件（如“至少 1 条已确认关系记忆”）写入 `user_chapter_progress.completion_checks`；
+3. 约定世界状态 key 白名单仍由结果声明：`user_world_state` 现行承接 `first_shared_object` 等；旧 `first_restored_object` 仅作迁移识别，暂停不写正式世界状态。第一章 `completion_checks` 使用 7 个 mainline、必要剧情／世界状态、E01-12 收束，以及 E01-01 正常完成且 `first_response_style` 已正式结算这一唯一关系判定；不依赖已确认关系记忆；
 4. 衔接说明：原内存中的“当前章/进度”改为读 `user_chapter_progress`；世界状态读写服务仍只接受 outcome 白名单 key。
-   独立验证：新用户首次进入自动激活第一章；完成两个种子事件且确认 1 条关系记忆后，第一章可判定 completed 并解锁第二章。
+   独立验证：新用户首次进入自动激活第一章；第一章 7 个 mainline、必要剧情／世界状态、E01-12 收束完成，且 E01-01 正常完成并已结算 `first_response_style` 后，第一章可判定 completed 并解锁第二章；可选关系记忆未保存也不阻塞。
 
 ### 步骤 4：事件实例迁移与意图解析留痕
 

@@ -224,7 +224,7 @@
 |---|---|---|---|
 | 理解 | 听音选图：从 lamp/plant/bell 三个轮廓里选出 Morrow 说的那个 | "Do you hear the small bell?" | recognized（选图仅算 recognized） |
 | 搭建 | 语块组合：`Let's | bring back | the small bell`，新成分 `bring back` 给提示，已认出的 `the small bell` 直接给出不挖空 | （无新 Morrow 台词） | prompted（提示下跟读仅算 prompted） |
-| 输出 | 用户在剧情里独立说出带回铃铛这一行动 | "Which should we bring back first?" | independent（推动 first_restored_object 结算） |
+| 输出（历史示例，已退役） | 用户在旧恢复剧情里独立说出带回铃铛这一行动 | "Which should we bring back first?" | 仅作旧 `first_restored_object` 迁移识别；现行 E01-02 使用 `first_shared_object`，以正式正文为准 |
 
 > 即使用户对这个事件的词都很熟，Morrow 也不会说出第七章才有的复杂句子；"多说一层"来自最终真实输出这一剧情行动，而不是抬高 Morrow 的台词天花板。
 

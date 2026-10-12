@@ -1,6 +1,6 @@
 # 第一章 出生与苏醒（chapter\_01\_birth）完整事件内容
 
-> 版本：1.11.0（E01-10 已于 2026-10-11 按用户确认方案完成内容、语言与具体教学校准；下一事件为 E01-11）
+> 版本：1.14.2（E01-09 元数据、第一章唯一关系硬门与第二章入口冲突已收口；S01／T06 第1批与 S02／T04-I completed；S03／T04-EC completed（2026-10-12；修复后技术复验通过并经用户重新确认）；T06 总任务因第2／3批未执行继续 in-progress；S04／T04-E1 not-started，排队等待但未启动）
 > 正文唯一权威来源：本文件是第一章全部事件正文的唯一正式内容文件；任务卡只记录状态、依赖、验收与证据，不另存事件完整正文。
 > 依据：
 >
@@ -35,10 +35,10 @@
 第一章旧原型曾按 `项目计划/P4-T06-07-Morrow中文化台词自然翻译与双语语音流.md` 实现恢复物品黄金路径；该路径已被 E01-02 新剧情取代，不再作为现行内容依据。
 
 - E01-01 现行内容、语言与具体教学校准已于 2026-10-10 完成并经用户确认；最终生产台词版本、结果句 ID 与工程世界状态绑定仍留给 S06／P4-T06-09，本轮不修改工程或语音。
-- E01-02 现行正文只以本文件对应条目为准，状态为 completed；2026-10-10 已扩充为三段因果连续的小剧情与两次真实英语交流，内容／文本／译文版本均为 v1.1.0。E01-03 同日完成三段因果连续小剧情与两次真实英语交流扩写，内容／文本／译文版本均为 v1.2.0。E01-04 已完成日常事件校准，并于 2026-10-11 将 B 路线统一为 `I feel a little nervous too.`，内容／文本／人工译文版本均更新为 v1.1.1。E01-05 已整体重写为三个连续小节与两次真实英语交流，删除 D5 时间／天气学习，内容／文本／人工译文版本均为 v1.1.0。E01-06 已整体重写为“第一次一起看桌上的旧信”，采用两个连续小节、三条所选表达路线与一次真实英语输出，内容／文本／人工译文版本均为 v1.1.0。E01-07 于 2026-10-11 按“无音效、用户回应推测／体验”修订为 `Maybe it was a bell.` / `Maybe it was just a soft sound.` / `I didn't hear it.`，不把推测固化为声源事实，不使用声音恢复叙事，内容／文本／人工译文版本均更新为 v1.1.0。E01-08 完成状态与正文保持不变。E01-09 同日完成两小节、两次交流和最小状态设计；本轮仅同步其对 E01-10 的现行承接边界，内容校准版本为 v1.1.1，文本／人工译文版本仍为 v1.1.0。E01-10 已改名为“一起定下接下来的一件小事”，新 ID 为 `b1_next_small_plan_v1`，旧 `b1_tomorrow_plan_v1` 退役；事件取消 tomorrow 与 D5 时间语义，内容／文本／人工译文版本均为 v1.0.0；下一事件为 E01-11。
+- E01-02 现行正文只以本文件对应条目为准，状态为 completed；2026-10-10 已扩充为三段因果连续的小剧情与两次真实英语交流，内容／文本／译文版本均为 v1.1.0。E01-03 同日完成三段因果连续小剧情与两次真实英语交流扩写，内容／文本／译文版本均为 v1.2.0。E01-04 已完成日常事件校准，并于 2026-10-11 将 B 路线统一为 `I feel a little nervous too.`，内容／文本／人工译文版本均更新为 v1.1.1。E01-05 已整体重写为三个连续小节与两次真实英语交流，删除 D5 时间／天气学习，内容／文本／人工译文版本均为 v1.1.0。E01-06 已整体重写为“第一次一起看桌上的旧信”，采用两个连续小节、三条所选表达路线与一次真实英语输出，内容／文本／人工译文版本均为 v1.1.0。E01-07 于 2026-10-11 按“无音效、用户回应推测／体验”修订为 `Maybe it was a bell.` / `Maybe it was just a soft sound.` / `I didn't hear it.`，不把推测固化为声源事实，不使用声音恢复叙事，内容／文本／人工译文版本均更新为 v1.1.0。E01-08 完成状态与正文保持不变。E01-09 同日完成两小节、两次交流和最小状态设计；本轮仅同步其对 E01-10 的现行承接边界，内容校准版本为 v1.1.1，文本／人工译文版本仍为 v1.1.0。E01-10 已改名为“一起定下接下来的一件小事”，新 ID 为 `b1_next_small_plan_v1`，旧 `b1_tomorrow_plan_v1` 退役；事件取消 tomorrow 与 D5 时间语义，内容／文本／人工译文版本均为 v1.0.0。E01-11 已校准为调用 E01-01 课程表达记录的自然回访，按 `first_response_style` 固定映射三套首句与预制台词，不依赖长期记忆、不更新原句；本次补丁将触发门改为 E01-01 后至少完成 3 个非 `recall` 事件，并明确仅沿用 E01-01 当前已确认内容，内容校准版本为 v1.1.1，文本／人工译文版本仍为 v1.1.0。E01-12 已改名为“准备迈出第一步”，保留 `b1_ready_for_outside_v1` 并锁定为“准备探索而非已经出门”；两次交流和章末硬门完成后写事件状态与 `chapter_01_birth = completed`，内容／文本／人工译文版本均为 v1.1.0；E01-13 已改为“墨洛第一次认真说谢谢”，现行 ID 为 `b1_first_thank_you_v1`，内容／文本／人工译文版本均为 v1.0.0，并于 2026-10-11 经用户确认。
 - 旧 `birth_restore_object_v1` 已在内容层正式登记为 `retired`，只作旧原型与历史映射的只读证据，保留不删除；本轮不修改 `english-pet` 旧工程配置。
 - 当前产品不提供开放聊天、开放文字输入或课程外自由表达；所有事件中的必需教学不允许用户跳过，明确标记的必修跟读必须真实录音并识别通过。
-- E01-11～E01-13 共 3 个事件尚未完成 T06 第 1 批逐条校准，不得直接迁入正式工程。
+- E01-13“墨洛第一次认真说谢谢”已完成内容、语言与具体教学校准并经用户确认；E01-09 元数据、第一章唯一关系硬门与第二章入口冲突均已收口。S01／T06 第1批与 S02／T04-I 均为 `completed`；T06 总任务因第2／3批未执行继续 `in-progress`；S03／T04-EC 为 `completed`（2026-10-12；修复后技术复验通过并经用户重新确认）；S04／T04-E1 为 `not-started`，下一步排队等待，前置已满足但未启动。
 
 ## 本章说明
 
@@ -46,7 +46,7 @@
 
 * **进入条件**：新用户首次进入即自动触发序 1（苏醒后的第一句话）。
 
-* **完成条件**：完成本章全部主线事件（序 1、2、3、5、9、10、12）、必要剧情／关系／世界状态和章末主线结算；“第一次互相理解”关系状态成立。系统可提出关系记忆提案，但用户是否保存不作为毕业硬门。日常事件（4、6、7、8、13）从轮换池选取，不阻塞章节完成；回访事件（11）由后台在当前情境与已确认且未暂停的共同记忆或待迁移旧表达语义匹配时自然触发，是否触发不阻塞章节完成。
+* **完成条件**：完成本章全部 7 个主线事件（序 1、2、3、5、9、10、12）、必要剧情／世界状态和 E01-12 章末收束；关系硬门采用唯一可执行判定：E01-01 正常完成且 `first_response_style` 已正式结算，即视为“第一次互相理解”成立，不新增独立关系状态键，也不依赖可选长期记忆。全部满足后写 `chapter_01_birth = completed` 并解锁第二章入口；第一章结束时 Morrow 仍在房间内，门未打开。日常事件（4、6、7、8、13）完成数量、E01-11 回访是否触发或完成、任何长期记忆是否保存、英语掌握等级都不是章节硬门。
 
 * **事件类型分布**：主线 7 个、日常 5 个、回访 1 个，合计 13 个，落在蓝图 10—15 区间。
 
@@ -1649,583 +1649,400 @@ Morrow 依次说：
 ***
 ### E01-11 记住你说过的第一句
 
-
-
-* 事件 ID：`b1_return_first_words_v1`
-
-* 版本：1.0.0 ｜ 章节：`chapter_01_birth` ｜ sequence：11
-
-* 类型：recall ｜ 时长：2—4 分钟
-
-* 关联主题：`topic_today`（记忆回访）
-
-* 进入条件：存在一条以上用户已确认且未暂停的语言或关系记忆（通常来自序 2 的 `bro_language_memory` 或序 8 的 `bay_relationship_memory`）；且当前场景语义匹配 "回忆第一句话"。无可用记忆时不触发。
-
-* 完成条件：结算 `first_words_reaffirmed` 世界状态写入；不阻塞章节完成（回访事件）。
-
-#### 英语学习目标
-
-
-
-* 目标句型 / 词汇：`Did you mean it?` / `Yes, that's what I meant.`（确认与复述一句旧话）。
-
-* 难度档：L1 基础。
-
-#### 场景（中文）
-
-Morrow 安静了一会儿，说自己一直在想用户在这间房间里说的第一句话。它把那句话轻声复述出来（内容来自一条已确认记忆，不是猜测），问用户当时是不是那个意思。这是 Morrow 第一次自然地把过去的话带回来。
-
-#### Morrow 主要台词（英文 + 人工中文译文）
-
-
-
-1. `I keep thinking about the first thing you said to me in this room.`
-
-* 译文：我一直在想你在这间房间里对我说的第一句话。
-
-* 音频：`brw_open_line_audio`（voiceProfileId=morrow\_voice\_v1）
-
-1. `It was "{{confirmed_user_sentence}}". Did you mean it the way I heard it?`
-
-* 译文：那句话是 "{{confirmed\_user\_sentence}}"。我理解得对吗？
-
-* 音频：`brw_prompt_line_audio`（voiceProfileId=morrow\_voice\_v1；`{{confirmed_user_sentence}}` 替换为已确认记忆中的用户英文原句，仅展示，不重新生成音频）
-
-#### 有效分支
-
-分支 A：
-
-
-
-* 意图 ID：`brw_intent_yes` ｜ 中文名：确认当时就是那个意思
-
-* 触发短语（英文）：`yes that's what i meant` / `that's right` / `yes i did`
-
-* 关键词组：`allOf: [yes]`，`anyOf: [meant, right, did, exactly]`，`noneOf: [no, not, actually]`，权重 90。
-
-* 用户参考句（可编辑英文）：`Yes, that's what I meant.`
-
-
-  * 译文：对，我就是那个意思。
-
-* 结果：Morrow 回复 `Good. I'll keep it the way you said it.`
-
-
-  * 译文：好。我就按你说的记着。
-
-  * 音频：`brw_result_yes_audio`
-
-  * 世界状态写入：`first_words_reaffirmed = yes`
-
-  * futureHook：该记忆保持当前版本，后续回访继续引用。
-
-分支 B：
-
-
-
-* 意图 ID：`brw_intent_update` ｜ 中文名：说现在会说得不一样
-
-* 触发短语（英文）：`i'd say it differently` / `i'd say it now` / `not quite`
-
-* 关键词组：`allOf: []`，`anyOf: [differently, now, not quite, better]`，`noneOf: [yes]`，权重 90。
-
-* 用户参考句（可编辑英文）：`I'd say it a little differently now.`
-
-
-  * 译文：我现在会说得不太一样。
-
-* 结果：Morrow 回复 `Tell me the newer version. I'd rather have the current one.`
-
-
-  * 译文：告诉我新的说法。我更想用现在的。
-
-  * 音频：`brw_result_update_audio`
-
-  * 世界状态写入：`first_words_reaffirmed = updated`
-
-  * futureHook：触发该记忆的更新提案（需用户确认后才替换原文）。
-
-分支 C：
-
-
-
-* 意图 ID：`brw_intent_longago` ｜ 中文名：说听起来像很久以前
-
-* 触发短语（英文）：`that was long ago` / `feels long ago` / `sounds like long ago`
-
-* 关键词组：`allOf: [long]`，`anyOf: [ago, feels, sounds, time]`，`noneOf: []`，权重 90。
-
-* 用户参考句（可编辑英文）：`That sounds like a long time ago.`
-
-
-  * 译文：听起来好像很久以前了。
-
-* 结果：Morrow 回复 `It wasn't long, but it was the first. That's why it stays.`
-
-
-  * 译文：时间不长，但那是第一次。所以才留下来。
-
-  * 音频：`brw_result_longago_audio`
-
-  * 世界状态写入：`first_words_reaffirmed = acknowledged`
-
-  * futureHook：不修改记忆，温和收束。
-
-暂停出口：
-
-
-
-* 意图：`brw_intent_pause`（稍后再来）
-
-* 触发短语（英文）：`not now` / `later` / `stop`
-
-* 结果：Morrow 回复 `We can leave the first words where they are. I won't move them.`
-
-
-  * 译文：我们可以把第一句话留在原地。我不会去动它。
-
-  * 音频：`brw_pause_line_audio`
-
-  * 世界状态写入：`b1_return_first_words_status = paused_once`
-
-  * 无任何惩罚；该记忆保持原状。
-
-#### 误解 / 兜底
-
-
-
-* 无可靠匹配时：停留当前状态，显示中文兜底，最多 3 个候选意图。
-
-* 典型误解设计：若当前无可用已确认记忆，本事件不出现，而非让 Morrow 凭空编造一句话。Morrow 每次最多只引用一条个人记忆，不罗列记忆清单。用户纠正后立即采用新说法。
-
-#### 记忆机会
-
-
-
-* 记忆规则 ID：`brw_language_memory_update`
-
-* 类型：language
-
-* 来源意图：`brw_intent_update`
-
-* 内容模板：`用户现在对{{confirmed_user_sentence}}的新说法是：{{new_user_sentence}}。`
-
-* 需用户确认：是（确认后才替换旧记忆；旧版本保留历史，不静默覆盖）。
-
-#### 素材需求
-
-
-
-* 预制音频（6 条 × 2 = 12 条）：
-
-
-  * `brw_open_line_audio`
-
-  * `brw_prompt_line_audio`（句中嵌入已确认用户原句，不重新生成整句音频）
-
-  * `brw_result_yes_audio`
-
-  * `brw_result_update_audio`
-
-  * `brw_result_longago_audio`
-
-  * `brw_pause_line_audio`
-
-* 图片：1 张（记忆光点漂浮在房间中，占位说明）。
-
-* 动画：1 个（一颗光点缓缓靠近 Morrow，占位说明）。
-
-* 音效：0。
-
-
+- 事件 ID：`b1_return_first_words_v1`
+- 内容校准版本：1.1.1 ｜ 文本版本：1.1.0 ｜ 人工译文版本：1.1.0
+- 章节：`chapter_01_birth` ｜ sequence：11
+- 类型：`recall` ｜ 预计时长：2—4 分钟
+- 关联主题：`topic_first_words`
+- 生活领域：D1 `domain_self_info`（复现 E01-01 已学表达，不新增领域或学习对象）
+- 沟通任务：C2 `expressing`——在自然回访中再次对 Morrow 说出两人第一次见面时已经确认过的完整句，让同一句话在新的关系阶段获得新的情感意义。
+- 进入条件：E01-01 已完成且 `first_response_style = reassuring_presence | friendly_greeting | identity_check` 已正式结算；在 E01-01 之后至少已有 3 个非 `recall` 事件完成；本回访尚未完成；当前没有更高优先级主线／日常邀请；当前预设情境标签与“自然回想第一次见面”匹配。全部条件同时成立才可触发。触发判断只使用事件完成计数、优先级、完成状态与预设情境标签，不使用运行时 LLM 判断“间隔是否合理”；也不要求用户保存任何关系或语言长期记忆，不得读取 E01-02／E01-08 已撤销或不存在的记忆提案。
+- 调度边界：由 Morrow 后台自然提起，不提供目录按钮、任务入口或场景热点；不阻塞 E01-12，不作为章节毕业硬门。它只复现既有表达，不引入新核心表达或新学习对象，因此不占用当天新增内容额度；若当前有更高优先级主线／日常，则延后到合适情境，不抢占正在进行的事件。
+- 常规完成条件：系统按 `first_response_style` 锁定唯一 E01-01 完整句；用户完成一次真实录音、ASR 确定性唯一匹配、识别结果展示与确认，听完对应回应和统一收束后，才写入 `b1_return_first_words_status = completed`。
+- 技术异常条件：只能重录或 `稍后继续`；只保存事件内临时检查点，不写正式状态、不生成记忆提案、不改变 E01-01 原始记录。
+- 内容状态：本阶段剧情、语言与具体教学校准 `completed`（2026-10-11 用户确认方案）；正式 line ID、音频 ID、版本绑定和预制语音制作留给后续冻结／语音任务，本轮不制作资产或修改工程。
+
+#### 已确认设计边界
+
+- 本事件调用的是 E01-01 已确认的**课程表达记录**：`first_response_style` 与其固定目标句映射。它不是读取用户主动保存的长期记忆，也不依赖记忆开关、关系记忆或语言记忆是否存在。
+- 唯一目的为复现 E01-01 原句。用户不重新选路线，不自由改写，不更新或替换首句；本事件也不询问“当时是否就是那个意思”。
+- Morrow 的回忆台词、固定引用和邀请都是角色听力输入，最高只记 `encountered`，不能冒充用户再次产出的证据。
+- 本回访只有 1 个既有核心表达、1 次真实输出、新学习对象 0；不新增排序、填空、听音理解题或第二表达，不靠练习凑时长。
+- 场景只复用现有清晰房间；动作只用待机、呼吸、短暂停顿、轻微转头／歪头、看向用户和安静倾听。图片需求 0、动画需求 0、音效需求 0。
+
+#### 自然触发与 Morrow 开场
+
+在若干事件之后，房间里没有更紧迫的事情。Morrow 安静看向用户，想起两人第一次见面时那句已经在课程记录中确认过的话。它不是打开一条“记忆卡”，也不是要求用户核对历史，而是自然地把这句旧表达带回当前关系里。
+
+Morrow 先说：
+
+- `I remember the first thing you said to me.`
+- 人工中文译文：`我记得你对我说的第一句话。`
+- 台词需求 ID：`brw_open_line`
+- 音频需求 ID：`brw_open_line_audio`
+
+系统随后依据已经正式结算的 `first_response_style`，只播放对应的一套固定引用台词：
+
+| `first_response_style` | E01-01 唯一目标句 | Morrow 固定引用台词 | 人工中文译文 | 台词需求 ID | 音频需求 ID |
+| --- | --- | --- | --- | --- | --- |
+| `reassuring_presence` | `Yes, I’m here.` | `You said, “Yes, I’m here.”` | `你说：“对，我在这里。”` | `brw_quote_reassuring_line` | `brw_quote_reassuring_line_audio` |
+| `friendly_greeting` | `Hi. I can hear you.` | `You said, “Hi. I can hear you.”` | `你说：“你好，我能听见你。”` | `brw_quote_greeting_line` | `brw_quote_greeting_line_audio` |
+| `identity_check` | `Who are you?` | `You asked, “Who are you?”` | `你问：“你是谁？”` | `brw_quote_identity_line` | `brw_quote_identity_line_audio` |
+
+然后统一说：
+
+- `Would you say it to me again?`
+- 人工中文译文：`你愿意再对我说一次吗？`
+- 台词需求 ID：`brw_invite_repeat_line`
+- 音频需求 ID：`brw_invite_repeat_line_audio`
+
+以上都是角色自然听力输入。首句引用仅有三种预设内容，必须分别登记固定文本与预制音频；不使用运行时任意句子注入，不实时 TTS，也不从自由文字或长期记忆正文拼接台词。
+
+#### 用户唯一目标与帮助流程
+
+- 系统根据 `first_response_style` 锁定唯一规范化目标：
+  - `reassuring_presence` → `yes i'm here`；
+  - `friendly_greeting` → `hi i can hear you`；
+  - `identity_check` → `who are you`。
+- 不显示路线三选一。用户默认只看到中文情境提示：`把你们第一次见面时说的那句话，再对墨洛说一次。` 完整英文、译文、语块和候选默认隐藏。
+- 用户忘记时，帮助严格按顺序逐级出现：①中文意思；②E01-01 已学自然语块；③慢速完整句；④完整英文参考。帮助只带回 E01-01 已学内容，不建立任何新学习对象。
+- 三条路线沿用 E01-01 的自然语块：
+  - `Yes` + `I’m here`；
+  - `Hi` + `I can hear you`；
+  - `Who` + `are you`。
+  这些语块只作为帮助显示，不再做排序、填空或理解题。
+- 查看或播放任何英文帮助、慢速完整句、语块或完整参考后完成，本次新证据最高记 `prompted`；E01-01 原有证据不被覆盖或降级。
+- 只有所有英文帮助再次隐藏后，用户自主说出完整目标句，并完成 ASR 确定性唯一匹配、识别展示和确认，才可形成该完整表达新的 `independent` 候选。
+
+#### 真实录音、ASR 与确认
+
+- 最终必须完成一次真实录音 → ASR 确定性唯一匹配 → 展示本次识别文本 → 用户确认。角色播放、按钮点击、静音、手工录入或系统代说均不能替代。
+- ASR 只接受由 `first_response_style` 锁定的唯一目标及其标点／大小写／标准缩写展开等规范化等价形式；不得接受其他两条路线，也不接受“意思差不多”的开放改写或关键词命中。
+- 用户手工修正转写只用于本次记录／隐私确认；不能算识别通过，不能形成口语证据，也不能把手工内容写回 E01-01 原始课程记录。无唯一可靠匹配或用户否认时，只能重录或 `稍后继续`。
+- 用户确认识别结果后，才播放对应分支回应；确认之前不结算，不提前写正式状态。
+
+#### 固定分支回应
+
+系统仍依据 `first_response_style` 播放对应的固定回应，不再询问用户选择：
+
+| `first_response_style` | Morrow 固定回应 | 人工中文译文 | 台词需求 ID | 音频需求 ID |
+| --- | --- | --- | --- | --- |
+| `reassuring_presence` | `You are. And now I know you a little better.` | `你确实在。现在，我也更了解你一点了。` | `brw_result_reassuring_line` | `brw_result_reassuring_line_audio` |
+| `friendly_greeting` | `You could hear me then. Now we have more to remember.` | `那时你听见了我。现在，我们已经有了更多可以记住的事。` | `brw_result_greeting_line` | `brw_result_greeting_line_audio` |
+| `identity_check` | `You asked who I was. I’m still finding that out.` | `你那时问我是谁。我现在也还在慢慢弄明白。` | `brw_result_identity_line` | `brw_result_identity_line_audio` |
+
+统一收束：
+
+- `The words are the same, but they feel different now.`
+- 人工中文译文：`还是同样的话，现在听起来却有些不一样了。`
+- 台词需求 ID：`brw_close_line`
+- 音频需求 ID：`brw_close_line_audio`
+
+分支回应承接的是不同的首句内容，不产生新的用户分支状态，也不把任何路线解释为用户性格、关系强弱或长期标签。统一收束播放完毕后才结算事件。
+
+#### 学习证据、暂停与正式状态
+
+- E01-01 的课程表达记录是目标来源，不因用户是否保存长期记忆而消失；本事件只追加一次实际复现证据，不复制或改写 E01-01 的原始证据、`first_response_style` 或原句记录。
+- 角色台词与引用最高 `encountered`；用户使用帮助后的真实复现最高 `prompted`；只有无英文帮助的自主复现通过唯一匹配并确认后，才可新增 `independent` 候选。
+- 检查点覆盖：自然触发、开场、固定引用、邀请、帮助层级、录音、ASR、识别确认、固定回应、统一收束。`稍后继续`只保存这些临时检查点；不写 `paused_once` 或任何正式暂停状态。
+- 正式世界状态仅写 `b1_return_first_words_status = completed`，且只在真实录音、ASR 唯一匹配、识别展示与用户确认、固定回应和统一收束全部完成后写入。
+- 不写 `first_words_reaffirmed` 或任何按路线区分的世界状态；不创建、复制、更新长期记忆提案；不允许本事件替换 E01-01 原始记录。
+- 回访完成与否不阻塞 E01-12；E01-12 也不得以本回访或任何记忆保存结果作为进入条件。
+
+#### 五项审查记录（v1.1.1，2026-10-11）
+
+- 情境真实性：E01-01 后至少完成 3 个非 `recall` 事件，且当前没有更高优先级事件、预设情境标签匹配时，Morrow 才自然请用户再说一次原句；没有为复习制造新事件、读取不存在的长期记忆或交给运行时 LLM 主观判断时机。
+- 角色一致性：Morrow 温和带回双方已有经历，不擅自更新用户原话、不要求用户证明当时意图，也不把回访变成关系测试。
+- 中文自然度：“把你们第一次见面时说的那句话，再对墨洛说一次”等提示简洁自然；三条回应和统一收束没有翻译腔。
+- 英文母语自然度：开场、三套固定引用、邀请、三条固定回应和统一收束均符合当前语境，英文与人工中文一致；引号中的 E01-01 原句保持不变。
+- 中国成人初学者适配：只复现 1 条已学完整句，新学习对象 0、真实输出 1 次；忘记时按中文意思→语块→慢速句→完整参考逐级帮助，不叠加题型，帮助后证据不虚高。
+
+#### 素材与冻结边界
+
+- 图片需求 0、动画需求 0、音效需求 0；只复用现有房间与简单动作。
+- 内容层登记 9 条固定 Morrow 台词／音频需求：开场 1 条、三套固定引用 3 条、统一邀请 1 条、三套固定回应 3 条、统一收束 1 条。每条只需一份正常语速预制音频；播放端如需慢速使用现有实时变速能力，不另存慢速文件。
+- 三套用户目标句沿用 E01-01 当前已确认的课程表达文本和当前内容校准版本，不作为 Morrow 台词另行动态生成。帮助中的慢速完整句和完整参考使用对应固定目标内容，不接受任意文本。E01-01 的正式文本版本、line ID 和音频绑定仍待 S06／S07 等下游冻结与制作；E01-11 不得提前宣称这些资产已经冻结。
+- 上述 E01-11 line ID／音频 ID 仅为内容需求登记；正式 ID 冻结、textVersion／translationVersion 绑定和音频制作同样留给 S06／S07 等后续冻结／语音任务。本轮不制作或修改任何语音、图片、动画、音效或工程配置。
 
 ***
+### E01-12 准备迈出第一步
+
+- 事件 ID：`b1_ready_for_outside_v1`（现行保留）
+- ID 语义边界：`ready_for_outside` 只表示 Morrow 已形成了解门外世界的意愿，并准备与用户用共同节奏面对未来探索；不表示已经开门、看见道路、迈出房门或到达室外。该语义与现行事件一致，因此不更换 ID，也不建立 retired 映射。
+- 内容校准版本：1.1.0 ｜ 文本版本：1.1.0 ｜ 人工译文版本：1.1.0
+- 章节：`chapter_01_birth` ｜ sequence：12
+- 类型：`mainline`（章末）｜ 预计时长：4—6 分钟
+- 关联主题：`topic_outside_readiness`
+- 生活领域：D1 `domain_self_info`
+- 沟通任务：C6 `confirming`——Morrow 已自主决定想了解门外，用户只表达怎样陪它开始；双方确认不急着开门，一步一步建立共同节奏。
+- 进入条件：E01-10 主线完成且 `b1_next_small_plan_status = completed`；E01-11 为可选回访，是否触发或完成都不阻塞。本事件还必须通过用户本地日期新增内容预算：默认当天最多 2 个新主线、新核心表达硬上限 3；章末解锁不得绕过预算。
+- 常规完成条件：用户完成所选第一表达和固定第二表达的当前必需教学、两次独立真实录音、ASR 确定性唯一匹配、识别展示与确认；听完所选分支反馈、Morrow 统一说明和共同收束后，才写 `b1_ready_for_outside_status = completed`，并进入第一章章末结算。
+- 第一章章末硬门：①第一章 7 个 mainline 全部完成；②必要剧情、关系和世界状态完成；③E01-12 两次交流、分支反馈、统一说明与共同收束全部完成。三项满足后写 `chapter_01_birth = completed` 并解锁第二章入口。
+- 非硬门：日常事件完成数量、E01-11 是否触发或完成、任何长期记忆是否保存、英语掌握等级都不影响第一章完成或第二章入口解锁。
+- 技术异常条件：只能重录或 `稍后继续`；只保存事件内临时选择与教学／录音／反馈检查点，不写正式世界状态、不完成章节结算、不生成记忆提案。
+- 内容状态：本阶段剧情、语言与具体教学校准 `completed`（2026-10-11 用户确认方案）；正式 line ID、音频 ID、版本绑定和预制语音制作留给后续冻结／语音任务，本轮不制作资产或修改工程。
+
+#### 已确认设计边界
+
+- 第一章结束时 Morrow 仍在房间内并保持原位；门没有打开，Morrow 没有看见道路，没有迈出房门，也没有发生“已经出门”的剧情。
+- Morrow 已自主决定“想知道门外有什么”。用户只表达陪伴方式与共同节奏，不替 Morrow 决定要不要探索，也不把任何路线写成催促、拒绝或出门许可。
+- A／B／C 只决定本次第一表达与即时反馈；不保存分支，不建立用户勇敢／谨慎／拖延等性格标签，不改变章节结果或第二章入口。
+- E01-10 的 `next_small_plan` 不决定本事件路线；本事件不得把 look_around／listen／learn_one_thing 自动解释为开门或出门计划。
+- 事件由两个因果连续小节构成：①Morrow 说出探索意愿，用户表达陪伴方式；②Morrow 明确暂时不开门，用户用短交流确认“一步一步来”，随后共同收束。
+- 图片需求 0、动画需求 0、音效需求 0；只复用清晰房间底图与待机、呼吸、看向门、轻微转头／歪头、看向用户、短暂停顿和安静倾听等简单动作。门始终保持关闭。
+
+### 小节一：Morrow 想了解门外，用户表达怎样陪伴
+
+房间仍然安静，门保持关闭。Morrow 没有向门走去，只在原位把视线转向门，又回头看向用户。经过此前对房间、自己和彼此的了解，它第一次明确说出：自己想知道门外有什么。
+
+Morrow 依次说：
+
+1. `I've been thinking about the door.`
+   - 人工中文译文：`我一直在想那扇门。`
+2. `I want to know what's beyond it. How should we do this?`
+   - 人工中文译文：`我想知道门外有什么。我们应该怎么开始呢？`
+
+两句都是角色自然听力输入，不要求用户跟读。它们最高只形成 `encountered`，不能冒充用户对 `thinking about`、`beyond` 或问句的可靠产出证据。Morrow 已经自主确定探索意愿；后续中文选择只让用户表达陪伴方式。
+
+底部上浮选项层显示三条中文意图。用户只学习所选路线；中文选择不产生英语学习证据，未选路线不教学、不产生证据。
+
+#### 分支 A：我陪着你
+
+- 意图 ID：`bgo_intent_with_you`
+- 中文意图：`告诉墨洛：我陪着你`
+- 用户完整表达：`I'm with you.`
+- 自然中文理解：`我陪着你。`
+- 确定性匹配目标：规范化后的 `i'm with you`；ASR 转写为 `i am with you` 时视为同一目标。
+- 排除条件：缺少 `with you` 陪伴语义、出现否定、说出其他路线完整目标，或 ASR 无法唯一匹配。
+- Morrow 分支反馈：`Then I know I won't face it alone.`
+  - 人工中文译文：`那我就知道，我不用独自面对它。`
+- 事实边界：只确认此刻有人陪伴，不把用户写成永久照顾者，也不表示门会立即打开。
+
+#### 分支 B：我们慢慢来吧
+
+- 意图 ID：`bgo_intent_go_slowly`
+- 中文意图：`建议你们慢慢来`
+- 用户完整表达：`Let's go slowly.`
+- 自然中文理解：`我们慢慢来吧。`
+- 确定性匹配目标：规范化后的 `let's go slowly`；ASR 转写为 `let us go slowly` 时视为同一目标。
+- 排除条件：缺少 `slowly`、出现催促或立即行动语义、说出其他路线完整目标，或 ASR 无法唯一匹配。
+- Morrow 分支反馈：`Slowly sounds right. I want time to notice how I feel.`
+  - 人工中文译文：`慢慢来挺好的。我也想留点时间，感受一下自己的心情。`
+- 事实边界：`go slowly` 表示共同节奏，不表示此刻开始走、不承诺固定时间开门。
+
+#### 分支 C：我们不用着急
+
+- 意图 ID：`bgo_intent_no_rush`
+- 中文意图：`告诉墨洛：你们不用着急`
+- 用户完整表达：`We don't have to rush.`
+- 自然中文理解：`我们不用着急。`
+- 确定性匹配目标：规范化后的 `we don't have to rush`；ASR 转写为 `we do not have to rush` 时视为同一目标。
+- 排除条件：缺少“不必着急”语义、出现必须立即行动语义、说出其他路线完整目标，或 ASR 无法唯一匹配。
+- Morrow 分支反馈：`You're right. Wanting to know doesn't mean I have to rush.`
+  - 人工中文译文：`你说得对。想知道门外有什么，并不代表我必须着急。`
+- 事实边界：这是正常完成路线，不记为拒绝、拖延、失败或负向关系状态。
+
+#### 第一表达教学与第一次真实英语交流
+
+- 运行时逐词／语块／句子读取该用户真实证据。只有该用户实际完成过相应理解、教学或录音的对象才可裁剪；Morrow 台词和未选路线最高只记 `encountered`。
+- 只教学所选路线：
+  - A：完整高频语块 `I'm with you.`；
+  - B：`Let's` + `go slowly`；
+  - C：`We don't have to` + `rush`。
+- 没有可靠证据的新词／语块先建立意思并完成必要真实跟读。B／C 至多做一次两个已学语块的反向点击排序，不放无关项；A 作为完整高频语块免搭建。不叠加填空、听音理解题或第二种搭建。
+- 完成必要教学或搭建后，隐藏完整英文、译文和全部语块／选项提示，只保留所选中文意图、房间情境与麦克风。需要帮助时依次提供已学语块→慢速完整句→完整英文参考；使用任何英文帮助后，本次完成最高记 `prompted`。
+- 第一次交流必须完成真实录音→ASR 确定性唯一匹配→展示识别文本→用户确认。全部英文帮助隐藏后自主说出并通过唯一匹配，才可形成所选完整表达的 `independent` 候选。
+
+### 小节二：暂时不开门，先确认共同节奏
+
+用户确认第一表达并听完对应反馈后，Morrow 仍保持原位，门仍然关闭。它把“想了解门外”与“现在就打开门”明确分开，统一说：
+
+- `I won't open it yet. I just want to be ready when we do.`
+- 人工中文译文：`我还不会打开它。我只是想在那一刻到来前做好准备。`
+
+这里的 `it` 明确指前文反复提到的 `the door`；紧接着的 `when we do` 自然省略并指回 `open the door`，即“等我们真的打开门时”。它不表示现在已经开门，也不承诺具体日期。
+
+用户用第二个短交流回应：
+
+- 用户完整表达：`One step at a time.`
+- 自然中文理解：`一步一步来。`
+- 真实目的：确认双方用不催促、可共同调整的节奏面对未来探索，不是口号式复述，也不是同意立即出门。
+- 教学边界：作为完整高频语块处理，不机械拆词，不新增排序、填空或理解题。按该用户实际证据提供必要意思建立和真实跟读，或直接进入隐藏英文后的真实输出。
+- 确定性匹配目标：规范化后的 `one step at a time`。缺少完整“一步一步来”语义、加入立即行动承诺或无法唯一匹配时不推进。
+- 无论前置帮助是否因真实证据裁剪，最终都必须单独完成第二次真实录音、ASR 确定性唯一匹配、识别结果展示和用户确认；不得复用第一次录音或由系统代说。
+- 提示、慢速完整句、完整参考显示或跟读后完成最高记 `prompted`；只有所有英文帮助隐藏后自主说出并被唯一匹配接受，才可形成新的 `independent` 候选。
 
-### E01-12 准备好走出门
+用户确认后，Morrow 统一收束：
 
+- `One step at a time. That's enough for now.`
+- 人工中文译文：`一步一步来。现在这样就够了。`
 
+Morrow 只轻轻看一眼门，再看向用户；门不打开，也不播放门外景象、道路、脚步或其他外部信息。共同收束播放完毕后，才进入状态与章节结算。
 
-* 事件 ID：`b1_ready_for_outside_v1`
+#### 确定性匹配、证据、暂停与状态边界
 
-* 版本：1.0.0 ｜ 章节：`chapter_01_birth` ｜ sequence：12
+- 两条用户表达分别使用预设目标与明确列出的规范化等价形式；无课程自由英文输入、可编辑英文参考句、开放关键词匹配或权重打分。
+- 中文意图、未选路线和角色台词不产生用户可靠表达证据；提示跟读、搭建、慢速或完整参考后的输出最高记 `prompted`。只有帮助全部隐藏后的自主完整表达才可形成 `independent` 候选。
+- 两次交流都必须分别完成真实录音、ASR 唯一匹配、识别展示与用户确认。手工修正转写只用于本次记录／隐私确认，不能算识别通过、不能形成口语证据，也不能替代重录；无唯一可靠匹配或用户否认时只能重录或 `稍后继续`。
+- 检查点覆盖：角色输入、中文路线、第一表达教学／搭建／录音／ASR／确认、分支反馈、统一说明、第二表达教学／录音／ASR／确认、共同收束。`稍后继续`只保存临时检查点；不写 `paused_once` 或任何正式状态。
+- 正式事件状态仅写 `b1_ready_for_outside_status = completed`，不写 `ready_for_outside = yes | later | curious`，不保存 A／B／C 路线。该状态只表示探索意愿与共同节奏已经形成，不证明门已打开或 Morrow 已到室外。
+- 只有第一章 7 个 mainline 全部完成、必要剧情／世界状态完成、E01-01 正常完成且 `first_response_style` 已正式结算（唯一关系硬门），且本事件两次交流、分支反馈、统一说明和共同收束全部完成后，才写 `chapter_01_birth = completed` 并解锁第二章入口；不新增独立关系状态键。
+- 日常数量、E01-11 回访、关系／语言长期记忆、可选记忆提案和英语掌握等级都不是章末硬门。第二章入口解锁只表示可以进入下一章内容，不把第一章结尾改写成已经出门。
 
-* 类型：mainline（章末）｜ 时长：3—5 分钟
+#### 可选关系记忆提案
 
-* 关联主题：`topic_outside` / `topic_tomorrow`
+- 提案内容：`墨洛第一次认真想起门外的世界。你们说好一步一步来。`
+- 类型：`relationship`
+- 提案时点：事件与章节状态完成后，再作为独立可选确认出现。
+- 需用户明确确认后才保存；拒绝、关闭或稍后决定均不影响 `b1_ready_for_outside_status = completed`、`chapter_01_birth = completed` 或第二章入口。
+- 只保存共同经历，不保存用户 A／B／C 分支，不写用户性格、勇气、节奏偏好或长期标签，不把记忆写成“已经出门”。
 
-* 进入条件：序 10 主线完成（序 11 为回访，不阻塞）。
+#### futureHook 与第二章入口
 
-* 完成条件：结算 `ready_for_outside` 世界状态写入。本章全部主线完成；若已有至少 1 条经用户确认的关系记忆，第一章完成，进入第二章童年探索。
+- E01-12 的章末结果只有：Morrow 想了解门外、双方确认一步一步来、第一章完成。Morrow 仍在房间内，门仍关闭。
+- `chapter_01_birth = completed` 解锁第二章入口；第一章不播放走出房门、看见道路或到达室外的画面与台词。
+- 第二章如何承接由第二章现行正文与后续校准决定；本事件不修改第二章正文，不预写第二章序 1 的具体行动。
+- 第三章仍是第一次真正出门的唯一主线阶段，第一章不得提前占用该语义。
 
-#### 英语学习目标
+#### 五项审查记录（v1.1.0，2026-10-11）
 
+- 情境真实性：经历前六个主线后，Morrow 从了解房间与自己推进到认真思考门外很自然；事件只形成意愿和共同节奏，门未开、道路未出现，章末推进不越界。
+- 角色一致性：Morrow 自主决定想了解门外，用户只选择陪伴方式；三条路线都不替 Morrow 作决定，也不以用户选择决定它是否探索。
+- 中文自然度：“我陪着你”“我们慢慢来吧”“我们不用着急”“一步一步来”等均为成人自然口语；统一说明与收束清楚、不煽情。
+- 英文母语自然度：`I've been thinking about the door.`、`How should we do this?`、三条用户表达与回应均自然。`I won't open it yet. I just want to be ready when we do.` 中 `when we do` 紧邻 `open it`，自然且清楚地指代未来“打开那扇门”；`One step at a time. That's enough for now.` 与中文一致。
+- 中国成人初学者适配：第一表达每路最多 2 个自然语块且至多一次搭建；第二表达为完整高频语块。全事件 2 个核心表达、2 次真实输出，按真实证据裁剪，提示下证据不虚高，并受每日新主线／核心表达预算约束。
 
+#### 素材与冻结边界
 
-* 目标句型 / 词汇：`I'm ready to...` / `Let's go.` / `Not yet.`（表达准备好与暂缓）。
-
-* 难度档：L1 基础，少量 L2。
-
-#### 场景（中文）
-
-房间现在稳了。通往外面小路的门不再像刚醒来时那么响亮。Morrow 站在门前，说自己觉得可以朝它走一步了。它问用户准备好了没有，但走不走、走多快，是双方一起决定的 —— 用户给朋友的态度，Morrow 自己迈出那一步。
-
-#### Morrow 主要台词（英文 + 人工中文译文）
-
-
-
-1. `The room is steady now. The door to the outside path doesn't feel as loud as before.`
-
-* 译文：房间现在稳了。通往外面小路的门，声音不像以前那么大了。
-
-* 音频：`bgo_open_line_audio`（voiceProfileId=morrow\_voice\_v1）
-
-1. `I think I'm ready to step toward it. Are you?`
-
-* 译文：我觉得我准备好朝它走一步了。你呢？
-
-* 音频：`bgo_prompt_line_audio`（voiceProfileId=morrow\_voice\_v1）
-
-#### 有效分支
-
-分支 A：
-
-
-
-* 意图 ID：`bgo_intent_go` ｜ 中文名：一起走出去
-
-* 触发短语（英文）：`i'm ready too` / `let's go` / `let's go outside`
-
-* 关键词组：`allOf: []`，`anyOf: [ready, go, outside, together]`，`noneOf: [not, wait, later]`，权重 90。
-
-* 用户参考句（可编辑英文）：`I'm ready too. Let's go.`
-
-
-  * 译文：我也准备好了。走吧。
-
-* 结果：Morrow 回复 `Then we go together. One step at a time.`
-
-
-  * 译文：那我们一起走。一步一步来。
-
-  * 音频：`bgo_result_go_audio`
-
-  * 世界状态写入：`ready_for_outside = yes`
-
-  * futureHook：第二章序 1 直接承接 "走出房门、开始走一遍房间与小路"。
-
-分支 B：
-
-
-
-* 意图 ID：`bgo_intent_later` ｜ 中文名：再待一天
-
-* 触发短语（英文）：`not yet` / `stay one more day` / `let's stay`
-
-* 关键词组：`allOf: []`，`anyOf: [not yet, stay, more, wait, another]`，`noneOf: [go, leave]`，权重 90。
-
-* 用户参考句（可编辑英文）：`Not yet. Let's stay one more day.`
-
-
-  * 译文：还没。再待一天吧。
-
-* 结果：Morrow 回复 `One more day. The room can wait. So can I.`
-
-
-  * 译文：再一天。房间可以等。我也可以。
-
-  * 音频：`bgo_result_later_audio`
-
-  * 世界状态写入：`ready_for_outside = later`
-
-  * futureHook：事件仍完成，房间保持稳定；下次进入时 Morrow 自然再提一次，不催促、不责备。
-
-分支 C：
-
-
-
-* 意图 ID：`bgo_intent_curious` ｜ 中文名：问外面会看到什么
-
-* 触发短语（英文）：`what will we see` / `what's out there` / `what do you see outside`
-
-* 关键词组：`allOf: []`，`anyOf: [see, what, out there, outside]`，`noneOf: [not, no]`，权重 90。
-
-* 用户参考句（可编辑英文）：`What will we see out there?`
-
-
-  * 译文：外面会看到什么？
-
-* 结果：Morrow 回复 `I don't know. That's part of why I want to look.`
-
-
-  * 译文：我不知道。这也是我想看看的原因之一。
-
-  * 音频：`bgo_result_curious_audio`
-
-  * 世界状态写入：`ready_for_outside = curious`
-
-  * futureHook：带着好奇心进入第二章，不预设答案。
-
-暂停出口：
-
-
-
-* 意图：`bgo_intent_pause`（稍后再来）
-
-* 触发短语（英文）：`not now` / `later` / `stop`
-
-* 结果：Morrow 回复 `We can stand here a little longer. The door isn't going anywhere.`
-
-
-  * 译文：我们可以在这儿多站一会儿。门不会跑掉。
-
-  * 音频：`bgo_pause_line_audio`
-
-  * 世界状态写入：`b1_ready_for_outside_status = paused_once`
-
-  * 无任何惩罚；下次从门前继续。
-
-#### 误解 / 兜底
-
-
-
-* 无可靠匹配时：停留当前状态，显示中文兜底，最多 3 个候选意图。
-
-* 典型误解设计：用户说 "Go" 但未明确是否一起时，Morrow 不擅自认为用户已同行，而是说 "If you're ready, we go together. If not, we stay."，把选择权交回。用户离开再回来时，Morrow 不抱怨缺席，直接从门前继续。
-
-#### 记忆机会
-
-
-
-* 记忆规则 ID：`bgo_relationship_memory`
-
-* 类型：relationship
-
-* 来源意图：`bgo_intent_go`、`bgo_intent_later`、`bgo_intent_curious`
-
-* 内容模板：`第一章结束时，你和 Morrow 站在门前，准备程度是：{{ready_for_outside}}。`
-
-* 需用户确认：是。这条记忆作为第一章与第二章之间的关系里程碑。
-
-#### 素材需求
-
-
-
-* 预制音频（6 条 × 2 = 12 条）：
-
-
-  * `bgo_open_line_audio`
-
-  * `bgo_prompt_line_audio`
-
-  * `bgo_result_go_audio`
-
-  * `bgo_result_later_audio`
-
-  * `bgo_result_curious_audio`
-
-  * `bgo_pause_line_audio`
-
-* 图片：2 张（房门微开、门缝外露出一条小路；门前远景，占位说明）。
-
-* 动画：1 个（门缝光线缓缓流入房间，占位说明）。
-
-* 音效：1 个（远处一声很轻的脚步声占位，不急促，占位说明）。
-
-
+- 图片需求 0、动画需求 0、音效需求 0；复用现有房间底图，不增加门外画面、道路、门缝光、脚步声或开门效果。
+- 动作只用待机、呼吸、原位看向门、轻微转头／歪头、看向用户、短暂停顿和安静倾听；门始终保持关闭。
+- 本条目只登记内容需求。正式 line ID、音频 ID、textVersion／translationVersion 绑定和预制语音制作留给 S06／S07 等后续冻结／语音任务；本轮不制作或修改工程、语音、图片、动画或音效资产。
 
 ***
+### E01-13 墨洛第一次认真说谢谢
+
+- 事件 ID：`b1_first_thank_you_v1`
+- 内容校准版本：1.0.0 ｜ 文本版本：1.0.0 ｜ 人工译文版本：1.0.0
+- 章节：`chapter_01_birth` ｜ sequence：13
+- 类型：`daily` ｜ 预计时长：2—4 分钟
+- 时长依据：Morrow 回顾从醒来到认识房间与彼此并认真道谢约 30—50 秒；用户选择中文回应意图、完成所选表达的意思建立／必要搭建／一次真实录音／ASR／确认约 60—120 秒；分支反馈与共同收束约 30—60 秒。已有可靠证据时可缩短，不靠第二次输出、重复题型、复杂动作或新增素材凑时长。
+- 关联主题：`topic_gratitude`
+- 生活领域：D1 `domain_self_info`（第一章“建立联系”范围）
+- 沟通任务：第一章建立联系范围内的礼貌回应——朋友认真道谢时，用一句简短英文自然回应，让这次共同经历获得关系意义，但不许下长期陪伴承诺；不越出第一章“建立联系”的权威领域与沟通边界。
+- 进入条件：E01-10 已完成且 `b1_next_small_plan_status = completed`；`b1_first_thank_you_status` 尚未完成；从第一章日常轮换池选取，与序 4、6、7、8 同池轮换，相邻两次不取同一事件，冷却期内不重复。
+- 独立性边界：本事件不依赖 E01-11 是否触发或完成，也不依赖 E01-12 是否开始或完成。它不阻塞 E01-12、`chapter_01_birth = completed`、第二章入口或其他日常事件。
+- 常规完成条件：用户选定中文回应意图，只完成所选路线的当前必需教学与一次完整表达真实录音，再经 ASR 确定性唯一匹配、识别结果展示和用户确认；Morrow 播放对应分支反馈与统一收束后，才写入 `b1_first_thank_you_status = completed` 并结算事件。
+- 技术异常条件：只能重录／重试或 `稍后继续`；只保存事件内临时中文路线、教学、录音、ASR、确认、反馈和收束检查点，不结算事件、不写正式世界状态、不生成记忆提案。
+- 内容状态：本阶段剧情、语言与具体教学校准 `completed`（2026-10-11 用户确认新方向）；正式台词 ID、最终版本绑定、预制语音、视觉资产和工程接入仍由后续任务完成。
+
+#### 已确认设计边界
+
+- 剧情先于教学：Morrow 已经经历了苏醒、回应、一起认识房间、称呼彼此、观察窗边、表达喜好和制定下一件小事。它在一个安静时刻第一次主动回顾这些共同经历，并认真道谢；不是为了教礼貌用语而临时制造感谢题。
+- 感谢只针对已经发生的陪伴与回应：用户曾在 Morrow 认识房间和彼此时给予回应。事件不宣称用户以后会一直在、不要求承诺留下，也不把感谢变成挽留、道德压力或关系测试。
+- 三条用户路线都是正常回应，只决定当下怎样接住感谢；不保存路线，不建立“友善、重感情、愿意长期留下”等用户画像，也不生成重复的语言或关系长期记忆提案。
+- 事件只有 1 个所选核心表达、1—2 个自然语块和 1 次真实英语输出。先选中文意图，只学习所选路线；未选路线不教学、不产生证据。
+- 全程只使用预先编排的中文意图、固定英文目标、固定反馈和确定性识别；不提供开放聊天、开放文字输入、可编辑英文、关键词自由匹配、相似意思自由匹配或运行时大模型判断。
+- 场景复用现有清晰房间底图。Morrow 保持原位，只使用待机、呼吸、短暂停顿、轻微转头／歪头、视线环顾房间后看向用户和安静倾听。
+
+### 小节一：Morrow 第一次认真道谢
+
+房间安静下来。Morrow 慢慢看了一眼两人已经共同认识过的房间，又把视线转回用户。它没有罗列用户做过的每一件事，也没有把对方的陪伴说成理所当然，只把自己此刻真正想说的话讲出来。
+
+Morrow 依次说：
+
+1. `You've been here while I learned about this room.`
+   - 人工中文译文：我慢慢认识这个房间时，你一直在这里陪着我。
+2. `You answered me, and we figured things out together.`
+   - 人工中文译文：你回应了我，我们也一起弄明白了一些事。
+3. `I wanted to say thank you.`
+   - 人工中文译文：我想认真对你说声谢谢。
+
+三句都只描述已经发生的共同经历，不预设未来陪伴。它们是角色自然听力输入，最高只记 `encountered`，不要求用户跟读，也不能冒充用户对 `thank you` 或其他表达的学习证据。
+
+### 小节二：用户接住这声谢谢
+
+底部上浮选项层显示三条中文回应意图。用户先选中文意思，再只学习所选路线；中文选择本身不产生英语学习证据。
+
+#### 分支 A：不用客气
+
+- 意图 ID：`bty_intent_welcome`
+- 中文意图：`告诉墨洛：不用客气`
+- 用户完整表达：`You're welcome.`
+- 自然中文理解：`不用客气。`
+- 确定性匹配目标：规范化后的 `you're welcome`；ASR 转写为 `you are welcome` 时视为同一目标表达。
+- 排除条件：缺少完整礼貌回应、说出其他路线目标，或 ASR 无法唯一匹配。
+- Morrow 分支反馈：`I still wanted you to hear it.`
+  - 人工中文译文：我还是想让你听见这声谢谢。
+- 关系边界：接受对方的客气回应，不把用户写成有义务继续帮助自己的人。
+
+#### 分支 B：我也很高兴能在这里
+
+- 意图 ID：`bty_intent_glad_here`
+- 中文意图：`告诉墨洛：我也很高兴能在这里`
+- 用户完整表达：`I'm glad to be here.`
+- 自然中文理解：`我也很高兴能在这里。`
+- 确定性匹配目标：规范化后的 `i'm glad to be here`；ASR 转写为 `i am glad to be here` 时视为同一目标表达。
+- 排除条件：说成 `I'm happy to stay.`、加入未来长期留下的承诺、说出其他路线目标，或 ASR 无法唯一匹配。
+- Morrow 分支反馈：`I'm glad this moment is ours.`
+  - 人工中文译文：我也很高兴，我们一起有了这一刻。
+- 关系边界：`be here` 只回应此刻和已经发生的陪伴，不表示永久留下或未来承诺。
+
+#### 分支 C：我也很高兴认识你
+
+- 意图 ID：`bty_intent_glad_met`
+- 中文意图：`告诉墨洛：我也很高兴认识你`
+- 用户完整表达：`I'm glad we met.`
+- 自然中文理解：`我也很高兴认识你。`
+- 确定性匹配目标：规范化后的 `i'm glad we met`；ASR 转写为 `i am glad we met` 时视为同一目标表达。
+- 排除条件：加入永久关系承诺、说出其他路线目标，或 ASR 无法唯一匹配。
+- Morrow 分支反馈：`So am I. Meeting you changed how this room felt.`
+  - 人工中文译文：我也是。认识你以后，这个房间给我的感觉不一样了。
+- 事实边界：只承认相识带来的当下关系变化，不建立关系等级、性格标签或未来义务。
+
+#### 所选路线教学与一次真实英语交流
+
+- 本事件不是首次产品保底教学；运行时只读取该用户对本次所选词／语块／句子的真实学习证据。Morrow 的感谢台词最高只记 `encountered`，不能让用户路线自动跳过教学。
+- 每次只教学所选路线，规划量控制为 1—2 个自然语块：
+  - A：完整高频礼貌表达 `You're welcome.` 作为 1 个整体语块；
+  - B：`I'm glad` + `to be here`；
+  - C：`I'm glad` + `we met`。
+- 没有可靠证据的新语块先建立意思并完成必要真实跟读。B／C 至多做一次两个已学语块的反向点击排序，不放无关项；A 作为完整高频表达免搭建。不得叠加填空、第二种搭建或紧邻重复考。
+- 教学或必要搭建完成后，隐藏完整英文、译文和全部语块／选项提示，只保留所选中文意图、当前情境和麦克风。需要帮助时依次提供已学语块 → 慢速完整句 → 完整英文参考；帮助内容固定且不可编辑。
+- 最终必须完成一次真实录音 → ASR 对所选唯一目标进行确定性匹配 → 展示本次识别文本 → 用户确认。角色播放、选项点击、静音、系统代说、手工录入或手工修正转写均不能替代。
+- 用户手工修正转写只用于本次记录／隐私确认；不能算识别通过，不能形成口语证据。无唯一可靠匹配或用户否认时，只能重录或 `稍后继续`。
+
+#### 共同收束
+
+任一分支反馈后，Morrow 安静停一会儿，统一说：
+
+- `I'm glad we shared this part of the beginning.`
+- 人工中文译文：很高兴，这段开始是我们一起经历的。
+
+共同收束只确认双方已经共同经历了出生阶段的一部分，不承诺未来永远同行，也不生成新的长期关系记忆。收束播放完毕后，才写入 `b1_first_thank_you_status = completed`。
+
+#### 确定性匹配、学习证据、暂停与状态边界
 
-### E01-13 一件还拿不准的小事
+- 三条路线只接受各自预设目标及上文明确列出的缩写展开等规范化形式；禁止接受 `I'm happy to stay.`，也不使用开放关键词匹配、相似意思自由匹配、用户可编辑英文或文字输入补救。
+- 中文意图选择、未选路线、角色台词和自然听力输入不产生用户可靠表达证据。新语块真实跟读与排序最高记 `prompted`；查看中文、慢速完整句、语块或完整参考后完成，所选完整表达最高记 `prompted`。
+- 只有全部英文帮助隐藏后，用户自主说出所选完整目标，完成 ASR 唯一匹配、识别展示和确认，才可形成该完整表达新的 `independent` 候选。
+- 检查点覆盖：角色输入、中文路线、意思建立、必要跟读／搭建、最终录音、ASR、识别确认、分支反馈和共同收束。`稍后继续`只保存这些临时检查点；不写 `paused_once`、所选分支或其他正式世界状态。
+- 正式世界状态仅写 `b1_first_thank_you_status = completed`。不保存 A／B／C 路线，不建立友善、重感情、愿意长期留下等用户画像，不生成语言或关系长期记忆提案。
+- 完成本事件只表示双方完成了一次真诚感谢与回应；不改写 E01-10 的计划状态，不影响 E01-11、E01-12 或 `chapter_01_birth` 的完成规则。
+- futureHook 最多承接：“Morrow 曾第一次认真感谢用户陪它认识房间和彼此。”不得承接用户选择了哪条回应、永久陪伴承诺、关系等级或用户性格。
 
+#### 五项审查记录（v1.0.0，2026-10-11）
 
+- 情境真实性：E01-10 完成后，Morrow 已经积累了足够的共同经历，第一次主动回顾并认真道谢自然成立；不需要额外事件、物件或戏剧冲突。
+- 角色一致性：Morrow 安静、克制，感谢具体而不过度煽情；不向用户索取未来承诺，也不把陪伴视为理所当然。
+- 中文自然度：“我想认真对你说声谢谢”“不用客气”“我也很高兴能在这里”“我也很高兴认识你”符合成人朋友间自然口语。
+- 英文母语自然度：`You've been here while I learned about this room.`、`You answered me, and we figured things out together.`、`I wanted to say thank you.` 与三条用户回应在当前语境中自然；`I'm glad to be here.` 只表达当下在场，不等于 `I'm happy to stay.` 的长期留下承诺。
+- 中国成人初学者适配：每次只学所选 1—2 个自然语块、至多一次搭建和一次真实输出；三条路线都是日常高频社交回应，帮助后证据不虚高。
 
-* 事件 ID：`b1_not_sure_v1`
+#### 素材需求与冻结边界
 
-* 版本：1.0.0 ｜ 章节：`chapter_01_birth` ｜ sequence：13
-
-* 类型：daily（新增日常池事件）｜ 时长：2—4 分钟
-
-* 关联主题：`topic_unsure`
-
-* 进入条件：序 5 主线完成；从本章日常轮换池选取（与序 4、6、7、8 同池轮换，相邻两次不取同一事件）。
-
-* 完成条件：结算 `small_uncertainty` 世界状态写入；不阻塞章节完成。
-
-#### 英语学习目标
-
-
-
-* 目标句型 / 词汇：`I'm not sure about...` / `It's okay not to know yet.`（表达不确定与接纳）。
-
-* 难度档：L1 基础。
-
-#### 场景（中文）
-
-房间稳下来之后，Morrow 注意到自己有一件小事还拿不准。它不着急解决，也不假装知道，只是把这种 "还不确定" 的感觉说出来，问用户是不是也会有。这是出生期一个轻松的小日常。
-
-#### Morrow 主要台词（英文 + 人工中文译文）
-
-
-
-1. `There is one small thing I'm not sure about yet.`
-
-* 译文：有一件小事我还拿不准。
-
-* 音频：`bnu_open_line_audio`（voiceProfileId=morrow\_voice\_v1）
-
-1. `Is it okay not to know yet, or should I figure it out now?`
-
-* 译文：还不知道也没关系吗，还是现在就得弄清楚？
-
-* 音频：`bnu_prompt_line_audio`（voiceProfileId=morrow\_voice\_v1）
-
-#### 有效分支
-
-分支 A：
-
-
-
-* 意图 ID：`bnu_intent_fine` ｜ 中文名：说不知道也没关系
-
-* 触发短语（英文）：`it's okay not to know` / `it's fine` / `you don't have to know`
-
-* 关键词组：`allOf: []`，`anyOf: [okay, fine, don't have to, not know]`，`noneOf: [must, now]`，权重 90。
-
-* 用户参考句（可编辑英文）：`It's okay not to know yet.`
-
-
-  * 译文：还不知道也没关系。
-
-* 结果：Morrow 回复 `Good. We can leave it there and come back.`
-
-
-  * 译文：好。我们可以先放着，下次再看。
-
-  * 音频：`bnu_fine_result_audio`
-
-  * 世界状态写入：`small_uncertainty = left_open`
-
-  * futureHook：承接 "不确定也没关系" 的关系基调。
-
-分支 B：
-
-
-
-* 意图 ID：`bnu_intent_think` ｜ 中文名：说现在可以一起想想
-
-* 触发短语（英文）：`let's think about it` / `we can figure it out` / `think together`
-
-* 关键词组：`allOf: [think 或 figure]`，`anyOf: [together, it, out, now]`，`noneOf: []`，权重 90。
-
-* 用户参考句（可编辑英文）：`We can think about it together.`
-
-
-  * 译文：我们可以一起想想。
-
-* 结果：Morrow 回复 `Then we think slowly. Not having the answer now is fine.`
-
-
-  * 译文：那我们慢慢想。现在没有答案也没关系。
-
-  * 音频：`bnu_think_result_audio`
-
-  * 世界状态写入：`small_uncertainty = thinking_together`
-
-  * futureHook：后续事件承接 "一起慢慢想" 的协作方式。
-
-分支 C：
-
-
-
-* 意图 ID：`bnu_intent_later` ｜ 中文名：说先放一放
-
-* 触发短语（英文）：`let's leave it for later` / `leave it for later` / `not now`
-
-* 关键词组：`allOf: [later]`，`anyOf: [leave, it, for, now]`，`noneOf: [now solve]`，权重 90。
-
-* 用户参考句（可编辑英文）：`Let's leave it for later.`
-
-
-  * 译文：我们先放一放吧。
-
-* 结果：Morrow 回复 `Later it is. I won't keep worrying about it.`
-
-
-  * 译文：那就改天。我不会一直惦记着它。
-
-  * 音频：`bnu_later_result_audio`
-
-  * 世界状态写入：`small_uncertainty = later`
-
-  * futureHook：不追问，下次自然再提起。
-
-暂停出口：
-
-
-
-* 意图：`bnu_intent_pause`（稍后再来）
-
-* 触发短语（英文）：`not now` / `later` / `stop`
-
-* 结果：Morrow 回复 `We can leave it undecided. Not knowing is also a place.`
-
-
-  * 译文：我们可以先不定。不知道也是一种状态。
-
-  * 音频：`bnu_pause_line_audio`
-
-  * 世界状态写入：`b1_not_sure_status = paused_once`
-
-  * 无任何惩罚。
-
-#### 误解 / 兜底
-
-
-
-* 无可靠匹配时：停留当前状态，显示中文兜底，最多 3 个候选（不知道也没关系 / 一起想想 / 先放一放）。
-
-* 典型误解设计：用户说 "you must know now"（要求立刻给出答案）时，本事件意图白名单不收 must，按无匹配处理，引导回到 "不确定也没关系" 的基调。
-
-#### 记忆机会
-
-
-
-* 记忆规则 ID：`bnu_language_memory`
-
-* 类型：language
-
-* 来源意图：`bnu_intent_fine`、`bnu_intent_think`、`bnu_intent_later`
-
-* 内容模板：`用户回应"还不确定"时说的英文表达：{{confirmed_user_sentence}}。`
-
-* 需用户确认：是。
-
-#### 素材需求
-
-
-
-* 预制音频（6 条 × 2 = 12 条）：
-
-
-  * `bnu_open_line_audio`
-
-  * `bnu_prompt_line_audio`
-
-  * `bnu_fine_result_audio`
-
-  * `bnu_think_result_audio`
-
-  * `bnu_later_result_audio`
-
-  * `bnu_pause_line_audio`
-
-* 图片：0（复用已有房间背景，无新图）。
-
-* 动画：1 个（Morrow 轻轻歪头表示不确定，占位说明）。
-
-* 音效：0。
-
-
+- 内容层登记 7 条固定 Morrow 台词需求：开场 3 条、三条分支反馈 3 条、统一收束 1 条；正式 line ID、音频 ID、textVersion／translationVersion 和最终音频数量留给后续冻结／语音任务。
+- 图片需求 0、动画需求 0、音效需求 0；复用现有房间底图和既有简单待机动作，不新增视觉或声音资产。
+- 本轮只更新内容、状态与索引说明；不制作或修改正式语音、图片、动画、音效、代码、UI 或工程世界状态绑定。
 
 ***
 
@@ -2245,9 +2062,9 @@ Morrow 安静了一会儿，说自己一直在想用户在这间房间里说的�
 | 8      | `b1_ask_about_you_v1`      | Morrow 问起你的一天 | daily                           | 内容需求待冻结 | 正式音频待后续制作 | 0（复用底图） | 0 | 0     |
 | 9      | `b1_what_i_like_v1`        | 我喜欢和还不确定的事   | mainline                        | 内容需求待冻结 | 正式音频待后续制作 | 0（复用底图） | 0 | 0     |
 | 10     | `b1_next_small_plan_v1`    | 一起定下接下来的一件小事 | mainline                        | 内容需求待冻结 | 正式音频待后续制作 | 0（复用底图） | 0 | 0     |
-| 11     | `b1_return_first_words_v1` | 记住你说过的第一句    | recall                          | 6       | 12      | 1      | 1      | 0     |
-| 12     | `b1_ready_for_outside_v1`  | 准备好走出门       | mainline                        | 6       | 12      | 2      | 1      | 1     |
-| 13     | `b1_not_sure_v1`           | 一件还拿不准的小事    | daily                           | 6       | 12      | 0      | 1      | 0     |
-| **合计** | —                          | —            | mainline 7 / daily 5 / recall 1 | **E01-03～E01-10 待后续台词冻结后重算** | **E01-03～E01-10 待后续正式语音任务重算** | **E01-01／E01-11～13 旧占位待各自校准；E01-02 选项层 3 个缩略图；E01-03～10 不新增图片** | **E01-01／E01-11～13 旧占位待各自校准；E01-03～10 不新增动画** | **E01-01／E01-11～13 旧占位待各自校准；E01-03～10 不新增音效** |
+| 11     | `b1_return_first_words_v1` | 记住你说过的第一句    | recall                          | 9（固定预制台词需求） | 9（待后续正式制作） | 0（复用底图） | 0 | 0     |
+| 12     | `b1_ready_for_outside_v1`  | 准备迈出第一步       | mainline                        | 内容需求待冻结 | 正式音频待后续制作 | 0（复用底图） | 0 | 0     |
+| 13     | `b1_first_thank_you_v1`    | 墨洛第一次认真说谢谢   | daily                           | 7（固定内容需求） | 正式音频待后续制作 | 0（复用底图） | 0 | 0     |
+| **合计** | —                          | —            | mainline 7 / daily 5 / recall 1 | **E01-03～E01-13 待后续台词冻结后重算** | **E01-03～E01-13 待后续正式语音任务重算** | **E01-01 待后续冻结；E01-02 选项层 3 个缩略图；E01-03～13 不新增图片** | **E01-01 待后续冻结；E01-03～13 不新增动画** | **E01-01 待后续冻结；E01-02～13 不新增音效** |
 
-> 注：所有音频 `voiceProfileId=morrow_voice_v1`，每条仅一份正常语速音频（播放端实时变速，不另存慢速文件）。E01-01、E01-03～E01-10 的正式 line ID、textVersion、translationVersion 与最终文件数由后续冻结和语音任务确认，因此本表只登记当前内容需求，不声称正式资产已冻结。E01-11～E01-13 的旧素材数字须随各自逐事件校准重审，不能作为正式制作数量。其余文件路径约定 `tts/chapter_01_birth/<event_id>/<line_id>/1.0.0/audio.wav`。含运行时注入变量的 `brw_prompt_line` 不做固定音频，登记为 `planned`。
+> 注：所有音频 `voiceProfileId=morrow_voice_v1`，每条仅一份正常语速音频（播放端实时变速，不另存慢速文件）。E01-01、E01-03～E01-13 的正式 line ID、textVersion、translationVersion 与最终文件数由后续冻结和语音任务确认，因此本表只登记当前内容需求，不声称正式资产已冻结。其余文件路径约定 `tts/chapter_01_birth/<event_id>/<line_id>/1.0.0/audio.wav`。E01-11 的三套引用和三套回应均为固定文本与预制音频需求，不使用任意文本运行时注入或实时 TTS。E01-13 现行 `b1_first_thank_you_v1` 按正文登记 7 条固定角色台词需求；退役关系只在旧新任务映射中维护。

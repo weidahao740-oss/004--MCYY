@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import type { FixedEventCatalogItem, FixedEventInstanceView } from '@english-pet/contracts'
-import { ArrowLeft, Check, Loader2, LockKeyhole, Play, Send } from 'lucide-react'
+import type { FixedEventCatalogItem, FixedEventInstanceView, FixedEventRecommendationView } from '@english-pet/contracts'
+import { ArrowLeft, Check, Loader2, Send } from 'lucide-react'
 import { toast } from 'sonner'
 import { fixedEventApi } from '@/api/fixed-event-api'
 import { useAuth } from '@/auth/auth-context'
@@ -8,6 +8,8 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { LearningLine, setActivePlaybackRate } from './LearningLine'
+import { buildSchedulerPresentation } from './scheduler-presentation'
+import { SchedulerActiveControls, SchedulerOverview } from './SchedulerPresentationView'
 import VoiceComposer from '@/pages/ChatPage/VoiceComposer'
 
 const playbackRates = [1, 0.8, 0.6] as const
@@ -16,14 +18,6 @@ const playbackRateLabels: Record<number, string> = {
   0.8: '0.8×',
   0.6: '0.6×',
 }
-
-const catalogStatusCopy = {
-  available: '可以开始',
-  completed: '已完成',
-  locked: '尚未解锁',
-} as const
-
-const DAILY_TOPIC_CHAPTER = 'chapter_daily_talk'
 
 const instanceStatusCopy = {
   active: '进行中',
@@ -39,6 +33,7 @@ export default function FixedEventPage() {
   const { token } = useAuth()
   const [catalog, setCatalog] = useState<FixedEventCatalogItem[]>([])
   const [instance, setInstance] = useState<FixedEventInstanceView | null>(null)
+  const [recommendation, setRecommendation] = useState<FixedEventRecommendationView | null>(null)
   const [text, setText] = useState('')
   const [busy, setBusy] = useState(false)
   const [playbackRate, setPlaybackRate] = useState<number>(1)
@@ -53,9 +48,14 @@ export default function FixedEventPage() {
 
   async function refresh() {
     if (!token) return
-    const [list, current] = await Promise.all([fixedEventApi.catalog(token), fixedEventApi.current(token)])
-    setCatalog(list.events)
-    setInstance(current.instance)
+    const [list, recommended] = await Promise.all([
+      fixedEventApi.catalog(token),
+      fixedEventApi.recommendation(token),
+    ])
+    const presentation = buildSchedulerPresentation(list.events, recommended)
+    setCatalog(presentation.visibleEvents)
+    setRecommendation(recommended)
+    setInstance(recommended.activeInstance)
   }
 
   // 首屏拉目录+当前事件；失败进入错误卡片，可点重试再次执行。
@@ -64,9 +64,14 @@ export default function FixedEventPage() {
     setLoading(true)
     setLoadError(null)
     try {
-      const [list, current] = await Promise.all([fixedEventApi.catalog(token), fixedEventApi.current(token)])
-      setCatalog(list.events)
-      setInstance(current.instance)
+      const [list, recommended] = await Promise.all([
+        fixedEventApi.catalog(token),
+        fixedEventApi.recommendation(token),
+      ])
+      const presentation = buildSchedulerPresentation(list.events, recommended)
+      setCatalog(presentation.visibleEvents)
+      setRecommendation(recommended)
+      setInstance(recommended.activeInstance)
     } catch {
       setLoadError('暂时连不上事件')
     } finally {
@@ -158,44 +163,58 @@ export default function FixedEventPage() {
     await refresh()
   }
 
+  async function pauseCurrent() {
+    if (!token || !instance) return
+    setBusy(true)
+    try {
+      setInstance(await fixedEventApi.pause(token, instance.instanceId, key()))
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function resumeCurrent() {
+    if (!token || !instance) return
+    setBusy(true)
+    try {
+      setInstance(await fixedEventApi.resume(token, instance.instanceId, key()))
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function requestExtra() {
+    if (!token) return
+    setBusy(true)
+    try {
+      await fixedEventApi.requestExtra(token, key())
+      await refresh()
+    } catch {
+      toast.error('今天不能再增加新的事件了。')
+    } finally {
+      setBusy(false)
+    }
+  }
+
   // ── 目录视图 ─────────────────────────────────────────────────────────────
   if (!instance) {
     return (
       <main className="mx-auto max-w-5xl px-5 py-8 sm:px-8 sm:py-12">
         <div className="max-w-2xl">
-          <p className="font-mono text-xs uppercase tracking-[0.18em] text-primary">固定内容事件 v1.0.0</p>
+          <p className="font-mono text-xs uppercase tracking-[0.18em] text-primary">公共调度测试端</p>
           <h1 className="mt-3 font-serif text-4xl">共同生活事件</h1>
-          <p className="mt-4 leading-7 text-muted-foreground">每次只进行一个事件；主线按顺序解锁，日常话题可以反复聊，会自动换着来，不连着同一个。</p>
+          <p className="mt-4 leading-7 text-muted-foreground">主线由 Morrow 主动邀请，日常由动作或环境变化引出；回访没有目录按钮，只由后台自然提起。预算用完后保持普通陪伴，也允许恢复和旧内容复现。</p>
+          {recommendation && (
+            <SchedulerOverview
+              events={catalog}
+              recommendation={recommendation}
+              busy={busy}
+              onStart={(eventId) => void start(eventId)}
+              onRequestExtra={() => void requestExtra()}
+            />
+          )}
         </div>
-        <div className="mt-8 grid gap-4 md:grid-cols-2">
-          {catalog.map((event) => (
-            <article key={event.eventId} className="border border-card-border bg-card p-6 shadow-lg">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <p className="font-mono text-xs text-muted-foreground">
-                    {event.sequence} · v{event.version}
-                    {event.chapterId === DAILY_TOPIC_CHAPTER ? ' · 日常话题' : ''}
-                  </p>
-                  <h2 className="mt-2 font-serif text-2xl">{event.titleZh}</h2>
-                  {event.recommendedNext && (
-                    <Badge variant="default" className="mt-2">推荐今天聊这个</Badge>
-                  )}
-                </div>
-                <Badge variant={event.status === 'available' ? 'default' : 'outline'}>
-                  {catalogStatusCopy[event.status]}
-                </Badge>
-              </div>
-              <Button
-                className="mt-6 w-full"
-                disabled={busy || event.status === 'locked' || event.status === 'completed'}
-                onClick={() => void start(event.eventId)}
-              >
-                {event.status === 'locked' ? <LockKeyhole /> : <Play />}
-                {event.status === 'completed' ? '已完成' : '进入事件'}
-              </Button>
-            </article>
-          ))}
-        </div>
+        {!recommendation && <div className="mt-8 grid gap-4 md:grid-cols-2" />}
         <p className="mt-6 text-xs text-muted-foreground">事件解锁与真实完成状态相连；每完成一个事件，下一事件会按规则自然解锁。</p>
       </main>
     )
@@ -215,9 +234,17 @@ export default function FixedEventPage() {
           <ArrowLeft />
           事件目录
         </Button>
-        <Badge variant="outline">
-          {state.phase} · {state.id}
-        </Badge>
+        <div className="flex gap-2">
+          <Badge variant="outline">
+            {state.phase} · {state.id}
+          </Badge>
+          <SchedulerActiveControls
+            status={instance.status}
+            busy={busy}
+            onPause={() => void pauseCurrent()}
+            onResume={() => void resumeCurrent()}
+          />
+        </div>
       </div>
 
       <section className="mt-6 border border-card-border bg-card p-6 shadow-xl sm:p-9">

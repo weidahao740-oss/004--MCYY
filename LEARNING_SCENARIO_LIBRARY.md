@@ -1,14 +1,14 @@
-# LEARNING_SCENARIO_LIBRARY — Morrow 成长学习情景库（阶段 3.5.4，2026-10-10 修订）
+# LEARNING_SCENARIO_LIBRARY — Morrow 成长学习情景库（阶段 3.5.4，2026-10-11 修订）
 
-> 版本：1.1.7
+> 版本：1.2.2
 > 项目：成人英语 AI 宠物 Morrow（墨洛）
-> 依据：`MORROW_LIFE_STORY_BIBLE.md` v1.1.5（七章主线、三类事件）、`FIXED_CONTENT_CONTRACT.md` v1.0.2、`CHAPTER_01_BIRTH_CONTENT.md` v1.11.0（13 事件）、`CHAPTER_02_CHILDHOOD_CONTENT.md` v1.0.0（12 事件）、`MORROW_LANGUAGE_CURRICULUM.md` §0.4（12 类成人生活领域 D1–D12）。
+> 依据：`MORROW_LIFE_STORY_BIBLE.md` v1.1.8（七章主线、三类事件）、`FIXED_CONTENT_CONTRACT.md` v1.0.2、`CHAPTER_01_BIRTH_CONTENT.md` v1.14.1（13 事件）、`CHAPTER_02_CHILDHOOD_CONTENT.md` v1.0.0（12 事件）、`MORROW_LANGUAGE_CURRICULUM.md` §0.4（12 类成人生活领域 D1–D12）。
 > 本库只做"学习情景"一层的编排：把已存在/规划中的成长事件映射到成人生活领域、真实沟通任务、英语学习能力、交互结构与掌握证据。它不改写事件 ID、世界状态与分支逻辑；事件正文仍以两章内容文件为准。
 > 2026-10-07 修订：**取消用户难度三档**；原"基础/中等/进阶三档做什么"列改为"理解练习 / 句子搭建 / 最终真实输出"三段式（一段一个证据层）；新增生活领域与真实沟通任务列；同一答案不连续重复考，选图仅算 recognized、提示下跟读仅算 prompted。
 
 ## 0. 口径与术语（全库逐字使用，不得替换同义词）
 
-**事件数量口径（重要）**：计划文档口头称“首两章 24 个事件”，但实际内容文件为 **25 个（第一章 13 / 第二章 12）**，本库已按实际 25 个全量映射，一个不漏。第一章 13 个：`birth_first_voice_v1`、`b1_first_room_object_v1`、`b1_remember_name_v1`、`b1_first_feeling_v1`、`b1_window_light_v1`、`b1_first_letter_v1`、`b1_bell_sound_v1`、`b1_ask_about_you_v1`、`b1_what_i_like_v1`、`b1_next_small_plan_v1`、`b1_return_first_words_v1`、`b1_ready_for_outside_v1`、`b1_not_sure_v1`。第二章 12 个：`b2_room_tour_v1`、`b2_name_objects_v1`、`b2_colors_v1`、`b2_outside_road_v1`、`b2_today_you_v1`、`b2_my_likes_v1`、`b2_mistake_v1`、`b2_small_task_v1`、`b2_feeling_check_v1`、`b2_sound_comes_back_v1`、`b2_recall_room_v1`、`b2_ready_for_school_v1`。旧 `birth_restore_object_v1` 已 `retired`，只作历史映射，不计入现行 25 事件。
+**事件数量口径（重要）**：计划文档口头称“首两章 24 个事件”，但实际内容文件为 **25 个（第一章 13 / 第二章 12）**，本库已按实际 25 个全量映射，一个不漏。第一章 13 个：`birth_first_voice_v1`、`b1_first_room_object_v1`、`b1_remember_name_v1`、`b1_first_feeling_v1`、`b1_window_light_v1`、`b1_first_letter_v1`、`b1_bell_sound_v1`、`b1_ask_about_you_v1`、`b1_what_i_like_v1`、`b1_next_small_plan_v1`、`b1_return_first_words_v1`、`b1_ready_for_outside_v1`、`b1_first_thank_you_v1`。第二章 12 个：`b2_room_tour_v1`、`b2_name_objects_v1`、`b2_colors_v1`、`b2_outside_road_v1`、`b2_today_you_v1`、`b2_my_likes_v1`、`b2_mistake_v1`、`b2_small_task_v1`、`b2_feeling_check_v1`、`b2_sound_comes_back_v1`、`b2_recall_room_v1`、`b2_ready_for_school_v1`。旧 `birth_restore_object_v1` 与 `b1_tomorrow_plan_v1` 均已 `retired`，不计入现行 25 事件；E01-13 的退役关系统一查旧新任务映射。
 
 **掌握六阶（逐字）**：初次接触 encountered / 能识别 recognized / 提示下会用 prompted / 独立会用 independent / 迁移中 transferring / 稳定掌握 mastered。
 
@@ -40,9 +40,9 @@
 | `b1_ask_about_you_v1` | Morrow 问起你的一天 | D1 自我与基本信息 | 第一次被 Morrow 问起今天过得怎样，简短说一句或自然选择不聊 | social / 中文意图选择 + 至多一次语块排序（A／B 路线）+ 一次真实录音确认 | `It's been busy.` / `It's been okay.` / `I'd rather not talk about it.`（三选一，只学所选） | A：`It's been` + `busy`；B：`It's been` + `okay`；C：`I'd rather not talk about it.` 整体语块 | 不假定 E01-06／E01-07 已触发，不承接光、信、轻响等可选日常；E01-09 不读取本事件状态 | 所选完整句完成真实录音、ASR 确定性匹配、识别展示与用户确认，再播放分支反馈和共同收束，结算 `b1_ask_about_you_status = completed`；C 路线为正常隐私边界表达，与 `稍后继续` 严格分开；不使用开放关键词匹配，不保存 busy／okay／privacy 分支，不生成记忆提案 |
 | `b1_what_i_like_v1` | 我喜欢和还不确定的事 | D1 自我与基本信息 | Morrow 自主表达早期倾向，用户表达相同／不同／不确定，并确认朋友不必喜欢相同事物 | expressing / 中文意图选择 + 至多一次语块排序（A／B）+ 两次真实录音确认 | `I like quiet moments too.` / `I like lively places.` / `I'm not sure yet.`（三选一）；`That's okay.` | A：`I like` + `quiet moments too`；B：`I like` + `lively places`；C：`I'm not sure yet.` 整体语块；第二表达整体语块 | C 仅在该用户实际于 E01-04／E01-05 选择并完成相应教学／录音时复用；角色输入最高 `encountered` | 两条表达分别完成真实录音、ASR 唯一匹配、识别展示与确认，再播放分支反馈和共同收束，结算 `b1_what_i_like_status = completed`；不保存用户路线，不新增 Morrow 偏好键，不生成单次选择记忆提案，不推动 E01-10／E01-12 语义 |
 | `b1_next_small_plan_v1` | 一起定下接下来的一件小事 | D1 自我与基本信息 | 双方提出并确认下一件小事，不使用时间／明天语义 | social / 中文意图选择 + 一次语块排序 + 两次真实录音确认 | `Let's look around again.` / `Let's listen for a while.` / `Let's learn one new thing.`（三选一）；`Let's do that.` | 每路 `Let's` + 所选动作语块；第二表达整体语块 | 只按该用户实际 `Let's...` 证据裁剪；Morrow 输入与未选路线最高 `encountered` | 两条表达分别完成真实录音、ASR 唯一匹配、识别展示与确认，再写 `next_small_plan = look_around / listen / learn_one_thing` 与 `b1_next_small_plan_status = completed`；计划可更新、无固定兑现时间、非毕业硬门，不生成重复记忆提案 |
-| `b1_return_first_words_v1` | 记住你说过的第一句 | D1 自我与基本信息 | 确认或更新一句旧话 | social / 记忆回访 | `Did you mean it?`；`Yes, that's what I meant.` | meant / right / differently / ago | E01-01 用户已确认的所选完整表达 | 对旧记忆句做确认或更新（prompted→transferring） |
-| `b1_ready_for_outside_v1` | 准备好走出门 | D1 自我与基本信息 | 表达是否准备好出门 | expressing / 比较方案 | `I'm ready to...`；`Let's go.`；`Not yet.` | ready / go / not yet / curious | 无 | 用 `I'm ready to...` / `Not yet.` 独立表达准备程度（independent） |
-| `b1_not_sure_v1` | 一件还拿不准的小事 | D1 自我与基本信息 | 接纳不确定、不急着给答案 | expressing / 解释原因 | `I'm not sure about...`；`It's okay not to know yet.` | sure / okay / think / later | `I'm not sure...`（序9 喜好） | 用 `I'm not sure about...` 接纳不确定（independent） |
+| `b1_return_first_words_v1` | 记住你说过的第一句 | D1 自我与基本信息 | 自然带回 E01-01 已确认的课程表达，并再次对 Morrow 说出原句 | expressing / 后台自然回访 + 一次真实录音确认 | 依据 `first_response_style` 锁定 `Yes, I’m here.` / `Hi. I can hear you.` / `Who are you?` 中唯一一条 | 沿用 E01-01 当前已确认内容版本的自然语块；忘记时按中文意思→语块→慢速完整句→完整英文参考帮助；正式文本／line ID／音频绑定待 S06／S07 等下游冻结制作 | 仅在 E01-01 完成且其后至少完成 3 个非 `recall` 事件、E01-11 未完成、无更高优先级主线／日常、预设情境标签匹配时触发；只读取 E01-01 课程表达记录，不使用运行时 LLM 判断时机，不依赖长期记忆保存或 E01-02／E01-08 记忆提案；角色引用最高 `encountered` | 真实录音、ASR 唯一匹配、识别展示与确认后播放固定回应／收束，再写 `b1_return_first_words_status = completed`；帮助后最高 `prompted`，无帮助自主复现才可新增 `independent` 候选；不更新原句、不写分支状态、不生成记忆提案、不阻塞 E01-12、不占新增内容额度 |
+| `b1_ready_for_outside_v1` | 准备迈出第一步 | D1 自我与基本信息 | Morrow 自主表达了解门外的意愿，用户选择陪伴方式，双方确认一步一步来；门保持关闭 | confirming / 中文意图选择 + 至多一次语块排序（B／C）+ 两次真实录音确认 | `I'm with you.` / `Let's go slowly.` / `We don't have to rush.`（三选一）；`One step at a time.` | A整体语块；B：`Let's` + `go slowly`；C：`We don't have to` + `rush`；第二表达整体语块 | 只按用户实际证据裁剪；角色输入与未选路线最高 `encountered`；提示下最高 `prompted` | 两条表达、分支反馈、统一说明与收束全部完成后写 `b1_ready_for_outside_status = completed`；第一章7个mainline及必要状态齐备后写 `chapter_01_birth = completed` 并解锁第二章。日常数量、E01-11、记忆保存、掌握等级非硬门；不保存A／B／C，不打开门、不看见道路、不迈出房门；可选关系记忆独立确认 |
+| `b1_first_thank_you_v1` | 墨洛第一次认真说谢谢 | D1 自我与基本信息 | 第一章建立联系范围内的礼貌回应：Morrow 第一次认真道谢，用户用一句自然英文回应，不作长期陪伴承诺；不越出第一章权威边界 | social / 中文意图选择 + 至多一次语块排序（B／C）+ 一次真实录音确认 | `You're welcome.` / `I'm glad to be here.` / `I'm glad we met.`（三选一，只学所选） | A：`You're welcome.` 整体语块；B：`I'm glad` + `to be here`；C：`I'm glad` + `we met` | E01-10 完成后的共同经历只作剧情承接；Morrow 台词最高 `encountered`，未选路线不产证据 | 所选完整句完成真实录音、ASR 唯一匹配、识别展示与确认，再播放分支反馈和共同收束，结算 `b1_first_thank_you_status = completed`；不保存路线、不建画像、不生成长期记忆提案 |
 | `b2_room_tour_v1` | 第一次把房间走一遍 | D3 居家与生活用品 | 决定行走顺序并说目的地 | doing / 排列顺序 | `This is where...`；`Let's go to the...` | window / door / corner；walk to | 无 | 用 `Let's go to the...` 独立决定行走顺序（independent） |
 | `b2_name_objects_v1` | 给房间里的东西命名 | D3 居家与生活用品 | 给物品命名并对上英文 | recognizing / 指向命名 | `This is a...`；`What do you call this?` | shelf / cup / cushion；name | 序2 lamp/plant/bell 命名 | 独立说出 `This is a...` 把形状和英文名对上（recognized→independent） |
 | `b2_colors_v1` | 找出三种颜色 | D3 居家与生活用品 | 把颜色词锚到物品 | recognizing / 指向命名 | `I see...（颜色）` | blue / green / yellow；see | 序2 物品名 | 用 `I see ...（颜色）.` 把颜色词锚到具体物品（independent） |
@@ -56,7 +56,7 @@
 | `b2_recall_room_v1` | 想起刚醒来那天的房间 | D3 居家与生活用品 | 参与对早期记忆的回访 | social / 记忆回访 | `Do you remember...?`；`That was the first day.` | remember / first / long ago | 序1—2 房间/物品 | 用 `Do you remember...?` 参与回访（transferring→mastered 钩子） |
 | `b2_ready_for_school_v1` | 听见学校方向的声音 | D5 时间、天气与日常安排 | 指认人声来源 | describing / 图片声音选择 | `I hear... from that direction.` | children / school / direction | 序7 `It sounds like...` | 用 `I hear... from that direction.` 指认人声来源（independent） |
 
-> 第一章 13 行结构分布：图片/声音选择(1,7)、指向命名(2)、比较方案(3,12)、描述特征(4,8)、排列顺序(5)、协作完成(6,10)、记忆回访(11)、解释原因(13)。第二章 12 行结构分布：排列顺序(14)、指向命名(15,16)、解释原因(17)、描述特征(18)、表达偏好(19,21)、纠正误认(20)、协作完成(22)、图片/声音选择(23,25)、记忆回访(24)。首两章合计覆盖全部 12 种交互结构。每事件按 §0 三段式执行：理解练习最高 recognized，句子搭建最高 prompted，最终真实输出冲 independent。
+> 第一章 13 行结构分布：图片/声音选择(1,7)、指向命名(2)、比较方案(3,12)、描述特征(4,8)、排列顺序(5)、协作完成(6,10)、记忆回访(11)、社会沟通(13)。第二章 12 行结构分布：排列顺序(14)、指向命名(15,16)、解释原因(17)、描述特征(18)、表达偏好(19,21)、纠正误认(20)、协作完成(22)、图片/声音选择(23,25)、记忆回访(24)。首两章合计覆盖全部 12 种交互结构。每事件按 §0 三段式执行：理解练习最高 recognized，句子搭建最高 prompted，最终真实输出冲 independent。
 
 ---
 

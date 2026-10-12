@@ -1,4 +1,10 @@
-import type { FixedContentInputMode, FixedEventCatalogItem, FixedEventInstanceView } from '@english-pet/contracts'
+import type {
+  FixedContentInputMode,
+  FixedEventCatalogItem,
+  FixedEventDailyBudgetView,
+  FixedEventInstanceView,
+  FixedEventRecommendationView,
+} from '@english-pet/contracts'
 
 const API_BASE = (import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8787').replace(/\/$/, '')
 
@@ -25,6 +31,9 @@ export const fixedEventApi = {
   current(token: string): Promise<{ instance: FixedEventInstanceView | null }> {
     return request('/v1/fixed-content/events/current', token)
   },
+  recommendation(token: string): Promise<FixedEventRecommendationView> {
+    return request('/v1/fixed-content/recommendation', token)
+  },
   start(token: string, eventId: string, idempotencyKey: string): Promise<FixedEventInstanceView> {
     return request(`/v1/fixed-content/events/${eventId}/start`, token, {
       method: 'POST',
@@ -35,6 +44,21 @@ export const fixedEventApi = {
     return request(`/v1/fixed-content/events/${instanceId}/advance`, token, {
       method: 'POST',
       body: JSON.stringify(input),
+    })
+  },
+  pause(token: string, instanceId: string, idempotencyKey: string): Promise<FixedEventInstanceView> {
+    return request(`/v1/fixed-content/events/${instanceId}/pause`, token, {
+      method: 'POST', body: JSON.stringify({ idempotencyKey }),
+    })
+  },
+  resume(token: string, instanceId: string, idempotencyKey: string): Promise<FixedEventInstanceView> {
+    return request(`/v1/fixed-content/events/${instanceId}/resume`, token, {
+      method: 'POST', body: JSON.stringify({ idempotencyKey }),
+    })
+  },
+  requestExtra(token: string, idempotencyKey: string): Promise<{ budget: FixedEventDailyBudgetView }> {
+    return request('/v1/fixed-content/events/extra', token, {
+      method: 'POST', body: JSON.stringify({ idempotencyKey }),
     })
   },
 }
