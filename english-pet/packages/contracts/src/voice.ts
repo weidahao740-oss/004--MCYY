@@ -4,6 +4,8 @@ export const transcribeAudioRequestSchema = z.object({
   audioBase64: z.string().min(1).max(8_000_000),
   mimeType: z.string().min(1).max(100),
   languageHint: z.string().min(2).max(16).default('en'),
+  fixedEventInstanceId: z.string().min(1).max(96).optional(),
+  fixedEventStateId: z.string().min(1).max(96).optional(),
 })
 
 export const transcribeAudioResponseSchema = z.object({
@@ -15,6 +17,9 @@ export const transcribeAudioResponseSchema = z.object({
   editable: z.literal(true),
   degraded: z.boolean(),
   userMessage: z.string(),
+  fixedEventAsrProof: z.string().min(32).max(200).optional(),
+  fixedEventNormalizedText: z.string().optional(),
+  fixedEventProofExpiresAt: z.string().datetime().optional(),
 })
 
 export const synthesizeSpeechRequestSchema = z.object({

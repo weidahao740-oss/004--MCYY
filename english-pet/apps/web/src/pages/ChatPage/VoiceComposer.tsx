@@ -12,10 +12,11 @@ interface VoiceComposerProps {
   zh: boolean
   enabled: boolean
   disabled: boolean
-  onUseTranscript: (text: string) => void
+  onUseTranscript: (text: string, asrProof?: string) => void
+  fixedEvent?: { instanceId: string; stateId: string }
 }
 
-export default function VoiceComposer({ token, zh, enabled, disabled, onUseTranscript }: VoiceComposerProps) {
+export default function VoiceComposer({ token, zh, enabled, disabled, onUseTranscript, fixedEvent }: VoiceComposerProps) {
   const [recorder] = useState(() => new WebRecorderAdapter())
   const [recording, setRecording] = useState(false)
   const [transcribing, setTranscribing] = useState(false)
@@ -40,7 +41,7 @@ export default function VoiceComposer({ token, zh, enabled, disabled, onUseTrans
     setTranscribing(true)
     try {
       const recorded = await recorder.stop()
-      const result = await voiceApi.transcribe(token, recorded.blob, recorded.mimeType)
+      const result = await voiceApi.transcribe(token, recorded.blob, recorded.mimeType, fixedEvent)
       setTranscript(result)
       setEditedText(result.text)
     } catch {
@@ -61,9 +62,9 @@ export default function VoiceComposer({ token, zh, enabled, disabled, onUseTrans
     return (
       <div className="mt-3 border border-primary/25 bg-primary/5 p-4">
         <div className="flex items-center justify-between gap-3"><p className="text-sm font-medium">{zh ? '请确认转写内容' : 'Review the transcript'}</p><span className="text-xs text-muted-foreground">{transcript.provider} · {transcript.confidence === null ? (zh ? '请人工确认' : 'Review required') : `${Math.round(transcript.confidence * 100)}%`}</span></div>
-        <Textarea className="mt-3" value={editedText} onChange={(event) => setEditedText(event.target.value)} rows={2} />
-        <p className="mt-2 text-xs text-muted-foreground">{zh ? '只有你确认后的文字会发送；原始录音不会长期保存。' : 'Only confirmed text is sent. Raw audio is not stored long term.'}</p>
-        <div className="mt-3 flex gap-2"><Button type="button" size="sm" onClick={() => { onUseTranscript(editedText); discard() }} disabled={!editedText.trim()}>{zh ? '使用这段文字' : 'Use this text'}</Button><Button type="button" size="sm" variant="ghost" onClick={discard}><X />{zh ? '取消' : 'Cancel'}</Button></div>
+        <Textarea className="mt-3" value={editedText} onChange={(event) => setEditedText(event.target.value)} rows={2} disabled={Boolean(fixedEvent)} />
+        <p className="mt-2 text-xs text-muted-foreground">{fixedEvent ? (zh ? '课程跟读必须使用服务端识别原文；如识别不对，请取消并重录。原始录音不会长期保存。' : 'Course speech uses the server transcript. Cancel and record again if it is wrong.') : (zh ? '只有你确认后的文字会发送；原始录音不会长期保存。' : 'Only confirmed text is sent. Raw audio is not stored long term.')}</p>
+        <div className="mt-3 flex gap-2"><Button type="button" size="sm" onClick={() => { onUseTranscript(editedText, transcript.fixedEventAsrProof); discard() }} disabled={!editedText.trim() || (Boolean(fixedEvent) && !transcript.fixedEventAsrProof)}>{zh ? '确认识别结果' : 'Confirm transcript'}</Button><Button type="button" size="sm" variant="ghost" onClick={discard}><X />{zh ? '取消' : 'Cancel'}</Button></div>
       </div>
     )
   }

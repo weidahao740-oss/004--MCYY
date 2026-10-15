@@ -98,9 +98,9 @@ const resume = await api(`/v1/fixed-content/events/${instance.instanceId}/resume
 assert.equal(resume.status, 200)
 assert.equal((await resume.json() as { status: string }).status, 'active')
 
-const blockedSecondStart = await api('/v1/fixed-content/events/birth_restore_object_v1/start', {
+const blockedSecondStart = await api('/v1/fixed-content/events/b1_first_room_object_v1/start', {
   method: 'POST', headers,
-  body: JSON.stringify({ eventId: 'birth_restore_object_v1', idempotencyKey: 'api-locked-second' }),
+  body: JSON.stringify({ eventId: 'b1_first_room_object_v1', idempotencyKey: 'api-locked-second' }),
 })
 assert.equal(blockedSecondStart.status, 409)
 
@@ -109,7 +109,7 @@ assert.equal(competitionResponse.status, 201)
 const competitionSession = await competitionResponse.json() as { token: string; user: { id: string } }
 const competitionHeaders = { Authorization: `Bearer ${competitionSession.token}`, 'Content-Type': 'application/json' }
 const completedMainline = [
-  'birth_first_voice_v1', 'birth_restore_object_v1', 'b2_room_tour_v1', 'b2_name_objects_v1',
+  'birth_first_voice_v1', 'b1_first_room_object_v1', 'b2_room_tour_v1', 'b2_name_objects_v1',
   'b2_outside_road_v1', 'b2_my_likes_v1', 'b2_small_task_v1', 'b2_sound_comes_back_v1',
 ]
 openDatabase().prepare('INSERT INTO fixed_event_state (user_id, record) VALUES (?, ?)').run(competitionSession.user.id, JSON.stringify({

@@ -520,6 +520,7 @@ app.post('/v1/fixed-content/events/:instanceId/advance', async (context) => {
       inputMode: parsed.data.inputMode,
       text: parsed.data.text,
       choiceId: parsed.data.choiceId,
+      asrProof: parsed.data.asrProof,
       idempotencyKey: parsed.data.idempotencyKey,
     }))
   } catch (error) {
@@ -533,7 +534,8 @@ app.post('/v1/fixed-content/events/:instanceId/advance', async (context) => {
 
 app.post('/v1/audio/transcriptions', async (context) => {
   const token = getBearerToken(context.req.header('Authorization'))
-  if (!token || !accountStore.me(token)) return errorResponse(context, 'unauthorized', 401)
+  const me = token ? accountStore.me(token) : null
+  if (!me) return errorResponse(context, 'unauthorized', 401)
   const body = await context.req.json().catch(() => null)
   const parsed = transcribeAudioRequestSchema.safeParse(body)
   if (!parsed.success) return errorResponse(context, 'bad_request', 400, parsed.error.flatten())
@@ -544,6 +546,17 @@ app.post('/v1/audio/transcriptions', async (context) => {
     mimeType: parsed.data.mimeType,
     languageHint: parsed.data.languageHint,
   })
+  let fixedEventProof: { proof: string; normalizedText: string; expiresAt: string } | null = null
+  if (!outcome.degraded && outcome.result?.text && parsed.data.fixedEventInstanceId && parsed.data.fixedEventStateId) {
+    try {
+      fixedEventProof = fixedEventEngine.issueAsrProof(me.user.id, parsed.data.fixedEventInstanceId, parsed.data.fixedEventStateId, outcome.result.text)
+    } catch (error) {
+      if (error instanceof Error && (error.message === 'fixed_event_not_found' || error.message === 'fixed_asr_state_mismatch' || error.message === 'fixed_asr_empty')) {
+        return errorResponse(context, error.message, 409)
+      }
+      throw error
+    }
+  }
   return context.json({
     provider: outcome.result?.provider ?? asr.provider,
     model: outcome.result?.model ?? asr.model,
@@ -553,6 +566,11 @@ app.post('/v1/audio/transcriptions', async (context) => {
     editable: true as const,
     degraded: outcome.degraded,
     userMessage: outcome.userMessage,
+    ...(fixedEventProof ? {
+      fixedEventAsrProof: fixedEventProof.proof,
+      fixedEventNormalizedText: fixedEventProof.normalizedText,
+      fixedEventProofExpiresAt: fixedEventProof.expiresAt,
+    } : {}),
   })
 })
 

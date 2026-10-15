@@ -35,6 +35,7 @@ export default function FixedEventPage() {
   const [instance, setInstance] = useState<FixedEventInstanceView | null>(null)
   const [recommendation, setRecommendation] = useState<FixedEventRecommendationView | null>(null)
   const [text, setText] = useState('')
+  const [asrProof, setAsrProof] = useState<string | undefined>(undefined)
   const [busy, setBusy] = useState(false)
   const [playbackRate, setPlaybackRate] = useState<number>(1)
   const [loading, setLoading] = useState(true)
@@ -118,6 +119,7 @@ export default function FixedEventPage() {
       const view = await fixedEventApi.start(token, eventId, key())
       setInstance(view)
       setText('')
+      setAsrProof(undefined)
       await refresh()
     } catch {
       toast.error('这个事件现在还不能开始。')
@@ -133,8 +135,11 @@ export default function FixedEventPage() {
       const view = await fixedEventApi.advance(token, instance.instanceId, input)
       setInstance(view)
       setAdvanceError(null)
-      if (input.inputMode === 'text') {
-        if (view.advanced) setText('')
+      if (input.inputMode === 'text' || input.inputMode === 'confirmed_asr_text') {
+        if (view.advanced) {
+          setText('')
+          setAsrProof(undefined)
+        }
       }
     } catch {
       setAdvanceError(
@@ -153,8 +158,9 @@ export default function FixedEventPage() {
 
   function sendText() {
     const value = text.trim()
-    if (!value) return
-    void advance({ inputMode: 'text', text: value, idempotencyKey: key() })
+    if (!value || (instance?.currentState.acceptedInputModes.includes('confirmed_asr_text') && !asrProof)) return
+    const inputMode = instance?.currentState.acceptedInputModes.includes('confirmed_asr_text') ? 'confirmed_asr_text' : 'text'
+    void advance({ inputMode, text: value, asrProof, idempotencyKey: key() })
   }
 
   async function backToCatalog() {
@@ -223,7 +229,7 @@ export default function FixedEventPage() {
   // ── 进行中视图 ────────────────────────────────────────────────────────────
   const completed = instance.status === 'completed'
   const state = instance.currentState
-  const renderLines = instance.resultLines.length > 0 ? instance.resultLines : state.lines
+  const renderLines = state.lines
   const acceptsText = state.acceptedInputModes.includes('text') || state.acceptedInputModes.includes('confirmed_asr_text')
   const candidates = (instance.candidates ?? []).slice(0, 3)
 
@@ -329,7 +335,8 @@ export default function FixedEventPage() {
                 key={reply.id}
                 variant="outline"
                 className="h-auto justify-start whitespace-normal break-words py-3 text-left"
-                onClick={() => setText(reply.learningContent.english)}
+                onClick={() => undefined}
+                disabled={state.acceptedInputModes.includes('confirmed_asr_text')}
               >
                 {reply.learningContent.english}
               </Button>
@@ -355,10 +362,11 @@ export default function FixedEventPage() {
                 setText(event.target.value)
                 setAdvanceError(null)
               }}
-              placeholder="用英语写下你的意思；发送前可以自由修改。"
+              placeholder={state.acceptedInputModes.includes('confirmed_asr_text') ? '请先完成真实录音和服务端识别。' : '用英语写下你的意思；发送前可以自由修改。'}
+              disabled={state.acceptedInputModes.includes('confirmed_asr_text')}
             />
-            <VoiceComposer token={token} zh={true} enabled disabled={busy} onUseTranscript={(value) => setText(value)} />
-            <Button disabled={busy || !text.trim()} onClick={() => sendText()}>
+            <VoiceComposer token={token} zh={true} enabled disabled={busy} fixedEvent={state.acceptedInputModes.includes('confirmed_asr_text') ? { instanceId: instance.instanceId, stateId: state.id } : undefined} onUseTranscript={(value, proof) => { setText(value); setAsrProof(proof) }} />
+            <Button disabled={busy || !text.trim() || (state.acceptedInputModes.includes('confirmed_asr_text') && !asrProof)} onClick={() => sendText()}>
               <Send />
               发送
             </Button>

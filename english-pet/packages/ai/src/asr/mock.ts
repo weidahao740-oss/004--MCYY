@@ -15,13 +15,15 @@ export class MockASR implements ASRAdapter {
   readonly model = 'morrow-mock-asr'
 
   async transcribe(req: ASRRequest): Promise<ASRResult> {
-    // 用音频长度做选择种子，让三次录音得到不同 mock 结果。
+    // 仅开发/测试适配器支持把以 mock: 开头的字节作为可预测转写；生产 qwen 适配器不包含此分支。
+    const declared = new TextDecoder().decode(req.audio)
+    const mockText = declared.startsWith('mock:') ? declared.slice('mock:'.length).trim() : ''
     const seed = req.audio.length % MOCK_TRANSCRIPTS.length
     const picked = MOCK_TRANSCRIPTS[seed]
     return {
       provider: this.provider,
       model: this.model,
-      text: picked.text,
+      text: mockText || picked.text,
       confidence: picked.confidence,
       durationSec: req.audio.length > 0 ? Math.round(req.audio.length / 1600) : 10,
       rawResponse: { note: 'mock transcript, not real speech recognition' },

@@ -1,5 +1,8 @@
 import { randomUUID } from 'node:crypto'
 import {
+  CHAPTER_ONE_ID,
+  chapterOneHardGateSatisfied,
+  chapterOneWorldStateReady,
   fixedContentV1,
   getFixedContentEvent,
   previewFixedContentIntent,
@@ -45,7 +48,7 @@ interface FixedEventInstanceRecord {
   memoryProposed: boolean
   completedAt: string | null
   recallSourceMemoryId: string | null
-  recallSourceType: 'shared_memory' | 'legacy_expression' | null
+  recallSourceType: 'shared_memory' | 'legacy_expression' | 'course_evidence' | null
 }
 
 interface DailyBudgetRecord {
@@ -71,6 +74,15 @@ interface FixedEventUserRecord {
   active: FixedEventInstanceRecord | null
   responseByIdempotencyKey: Record<string, FixedEventInstanceView>
   commandByIdempotencyKey: Record<string, unknown>
+  asrProofs: Record<string, {
+    userId: string
+    instanceId: string
+    stateId: string
+    recognizedText: string
+    normalizedText: string
+    expiresAt: string
+    usedAt: string | null
+  }>
 }
 
 const lineById = new Map<string, FixedContentLine>(
@@ -154,10 +166,25 @@ export class SqliteFixedEventEngine {
       const parsed = fromJson<FixedEventUserRecord>(row.record)!
       parsed.completedEventIds ??= []
       parsed.startedEventIds ??= [...parsed.completedEventIds]
+      parsed.worldState ??= {}
+      // 一次性读取迁移：旧恢复物品只作为历史数据来源，不再注册为现行事件。
+      // 只有旧事件已完成且旧字段有效时，才映射到现行 E01-02；不会把旧 ID 暴露到目录或作为第二章依赖。
+      if (parsed.completedEventIds.includes('birth_restore_object_v1')) {
+        const legacyObject = parsed.worldState.first_restored_object
+        if (legacyObject === 'lamp' || legacyObject === 'plant' || legacyObject === 'small_bell') {
+          if (!parsed.completedEventIds.includes('b1_first_room_object_v1')) parsed.completedEventIds.push('b1_first_room_object_v1')
+          if (!parsed.startedEventIds.includes('b1_first_room_object_v1')) parsed.startedEventIds.push('b1_first_room_object_v1')
+          parsed.worldState.first_shared_object ??= legacyObject
+        }
+      }
+      // E01-01 旧两值只在历史持久化读取时显式迁移为现行三值；运行配置本身不再接受旧值。
+      if (parsed.worldState.first_response_style === 'help') parsed.worldState.first_response_style = 'reassuring_presence'
+      if (parsed.worldState.first_response_style === 'check_in') parsed.worldState.first_response_style = 'identity_check'
       parsed.dailyCompletionByEventId ??= {}
       parsed.dailyTopicCursor ??= null
       parsed.budget ??= null
       parsed.commandByIdempotencyKey ??= {}
+      parsed.asrProofs ??= {}
       if (parsed.active) {
         parsed.active.resolvedIntentIds ??= []
         parsed.active.memoryProposed ??= false
@@ -177,6 +204,7 @@ export class SqliteFixedEventEngine {
       active: null,
       responseByIdempotencyKey: {},
       commandByIdempotencyKey: {},
+      asrProofs: {},
     }
   }
 
@@ -224,6 +252,9 @@ export class SqliteFixedEventEngine {
 
   private prerequisitesDone(record: FixedEventUserRecord, event: FixedEvent): boolean {
     return event.prerequisiteEventIds.every((id) => record.completedEventIds.includes(id))
+      && chapterOneWorldStateReady(event.id, record.worldState)
+      && (event.id !== 'b1_return_first_words_v1'
+        || record.completedEventIds.filter((id) => id !== 'birth_first_voice_v1' && getFixedContentEvent(id)?.eventType !== 'recall').length >= 3)
   }
 
   private cooldownUntil(record: FixedEventUserRecord, event: FixedEvent): string | null {
@@ -301,8 +332,14 @@ export class SqliteFixedEventEngine {
 
   private recallCandidate(
     userId: string,
+    record: FixedEventUserRecord,
     event: FixedEvent,
-  ): { memory: Memory; sourceType: 'shared_memory' | 'legacy_expression' } | null {
+  ): { memory: Memory | null; sourceType: 'shared_memory' | 'legacy_expression' | 'course_evidence' } | null {
+    // E01-11 是课程证据回访：只依赖 E01-01 已结算的 first_response_style，
+    // 与可删除、拒绝或暂停的长期 memoryStore 完全隔离。
+    if (event.id === 'b1_return_first_words_v1' && this.prerequisitesDone(record, event)) {
+      return { memory: null, sourceType: 'course_evidence' }
+    }
     return selectRecallCandidate(event, this.deps.memoryStore?.recallCandidates(userId) ?? [])
   }
 
@@ -365,14 +402,16 @@ export class SqliteFixedEventEngine {
     record: FixedEventUserRecord,
     event: FixedEvent,
     timeZone: string,
-    recall?: { memory: Memory; sourceType: 'shared_memory' | 'legacy_expression' },
+    recall?: { memory: Memory | null; sourceType: 'shared_memory' | 'legacy_expression' | 'course_evidence' },
   ): FixedEventInstanceView {
     this.consumeBudget(record, event, timeZone)
     if (!record.startedEventIds.includes(event.id)) record.startedEventIds.push(event.id)
     const instance: FixedEventInstanceRecord = {
       eventId: event.id,
       instanceId: randomUUID(),
-      currentStateId: event.entryStateId,
+      currentStateId: event.id === 'b1_return_first_words_v1'
+        ? `${event.entryStateId.slice(0, -'presence'.length)}${record.worldState.first_response_style === 'friendly_greeting' ? 'greeting' : record.worldState.first_response_style === 'identity_check' ? 'identity' : 'presence'}`
+        : event.entryStateId,
       status: 'active',
       selectedOutcomeId: null,
       resultLineIds: [],
@@ -380,7 +419,7 @@ export class SqliteFixedEventEngine {
       resolvedIntentIds: [],
       memoryProposed: false,
       completedAt: null,
-      recallSourceMemoryId: recall?.memory.id ?? null,
+      recallSourceMemoryId: recall?.memory?.id ?? null,
       recallSourceType: recall?.sourceType ?? null,
     }
     record.active = instance
@@ -413,20 +452,20 @@ export class SqliteFixedEventEngine {
     userId: string,
     record: FixedEventUserRecord,
     timeZone: string,
-  ): { event: FixedEvent; memory: Memory; sourceType: 'shared_memory' | 'legacy_expression' } | null {
+  ): { event: FixedEvent; memory: Memory | null; sourceType: 'shared_memory' | 'legacy_expression' | 'course_evidence' } | null {
     const recallEvents = fixedContentV1.events
       .filter((event) => event.eventType === 'recall' && this.prerequisitesDone(record, event))
       .sort((left, right) => left.sequence - right.sequence || left.id.localeCompare(right.id))
     for (const event of recallEvents) {
       if (!this.budgetAllows(record, event, timeZone)) continue
-      const recall = this.recallCandidate(userId, event)
+      const recall = this.recallCandidate(userId, record, event)
       if (recall) return { event, ...recall }
     }
     return null
   }
 
   private recallPrompt(
-    recall: { event: FixedEvent; memory: Memory; sourceType: 'shared_memory' | 'legacy_expression' } | null,
+    recall: { event: FixedEvent; memory: Memory | null; sourceType: 'shared_memory' | 'legacy_expression' | 'course_evidence' } | null,
   ): FixedEventRecommendationView['recallPrompt'] {
     return recall ? {
       eventId: recall.event.id,
@@ -528,10 +567,37 @@ export class SqliteFixedEventEngine {
     return record.active ? this.render(record, record.active, { advanced: false }) : null
   }
 
+  issueAsrProof(userId: string, instanceId: string, stateId: string, recognizedText: string): { proof: string; normalizedText: string; expiresAt: string } {
+    const record = this.loadRecord(userId)
+    if (!record.active || record.active.instanceId !== instanceId) throw new Error('fixed_event_not_found')
+    if (record.active.status !== 'active' || record.active.currentStateId !== stateId) throw new Error('fixed_asr_state_mismatch')
+    const event = getFixedContentEvent(record.active.eventId)!
+    const state = event.states.find((entry) => entry.id === stateId)
+    if (!state || state.phase !== 'input' || !state.acceptedInputModes.includes('confirmed_asr_text')) throw new Error('fixed_asr_state_mismatch')
+    const normalizedText = recognizedText.normalize('NFKC').replace(/[’‘]/g, "'").trim().toLowerCase().replace(/[.!?,;:]+$/g, '').replace(/\s+/g, ' ')
+    if (!normalizedText) throw new Error('fixed_asr_empty')
+    const proof = randomUUID()
+    const expiresAt = new Date(this.now().getTime() + 5 * 60 * 1000).toISOString()
+    record.asrProofs[proof] = { userId, instanceId, stateId, recognizedText, normalizedText, expiresAt, usedAt: null }
+    this.saveRecord(record)
+    return { proof, normalizedText, expiresAt }
+  }
+
+  private consumeAsrProof(record: FixedEventUserRecord, userId: string, instanceId: string, stateId: string, text: string | undefined, proof: string | undefined): boolean {
+    if (!proof || !text) return false
+    const issued = record.asrProofs[proof]
+    if (!issued || issued.usedAt || issued.userId !== userId || issued.instanceId !== instanceId || issued.stateId !== stateId) return false
+    if (Date.parse(issued.expiresAt) <= this.now().getTime()) return false
+    const normalized = text.normalize('NFKC').replace(/[’‘]/g, "'").trim().toLowerCase().replace(/[.!?,;:]+$/g, '').replace(/\s+/g, ' ')
+    if (normalized !== issued.normalizedText) return false
+    issued.usedAt = this.now().toISOString()
+    return true
+  }
+
   advance(
     userId: string,
     instanceId: string,
-    input: { inputMode: FixedContentInputMode; text?: string; choiceId?: string; idempotencyKey: string },
+    input: { inputMode: FixedContentInputMode; text?: string; choiceId?: string; asrProof?: string; idempotencyKey: string },
   ): FixedEventInstanceView {
     const cacheKey = `advance:${instanceId}:${input.idempotencyKey}`
     const record = this.loadRecord(userId)
@@ -543,6 +609,19 @@ export class SqliteFixedEventEngine {
 
     const instance = record.active
     const event = getFixedContentEvent(instance.eventId)!
+    const state = event.states.find((entry) => entry.id === instance.currentStateId)!
+    if (event.chapterId === CHAPTER_ONE_ID && state.phase === 'input' && !state.acceptedInputModes.includes(input.inputMode)) {
+      const view = this.render(record, instance, { advanced: false, messageZh: '当前步骤不接受这种输入方式。' })
+      record.responseByIdempotencyKey[cacheKey] = view
+      this.saveRecord(record)
+      return view
+    }
+    if (event.chapterId === CHAPTER_ONE_ID && state.phase === 'input' && input.inputMode === 'confirmed_asr_text' && !this.consumeAsrProof(record, userId, instanceId, state.id, input.text, input.asrProof)) {
+      const view = this.render(record, instance, { advanced: false, messageZh: '这次录音凭证无效、已过期或已使用，请重新录音识别。识别文本不匹配时，原凭证也会立即作废，不能修改文字后重试。' })
+      record.responseByIdempotencyKey[cacheKey] = view
+      this.saveRecord(record)
+      return view
+    }
     const preview = previewFixedContentIntent({
       event,
       stateId: instance.currentStateId,
@@ -553,6 +632,15 @@ export class SqliteFixedEventEngine {
     const transition = preview.resolvedIntentId
       ? event.transitions.find((entry) => entry.fromStateId === instance.currentStateId && entry.onIntentIds.includes(preview.resolvedIntentId!)) ?? null
       : null
+
+    // 第一章所有事件的“稍后继续”都只暂停在最近检查点；不需要结果迁移，也不写正式状态。
+    if (event.chapterId === CHAPTER_ONE_ID && preview.resolvedIntentId?.endsWith('_pause')) {
+      instance.status = 'paused'
+      const view = this.render(record, instance, { advanced: false, messageZh: '已经停在最近确认的位置，下次可以继续。' })
+      record.responseByIdempotencyKey[cacheKey] = view
+      this.saveRecord(record)
+      return view
+    }
 
     if (!transition) {
       const view = this.render(record, instance, {
@@ -565,22 +653,13 @@ export class SqliteFixedEventEngine {
       return view
     }
 
-    // E01-02 的“稍后继续”是平静暂停：保留最近检查点，不写 outcome、世界状态或完成结果。
-    if (event.id === 'birth_restore_object_v1' && preview.resolvedIntentId?.endsWith('_pause')) {
-      instance.status = 'paused'
-      const view = this.render(record, instance, { advanced: false, messageZh: '已经停在最近确认的位置，下次可以继续。' })
-      record.responseByIdempotencyKey[cacheKey] = view
-      this.saveRecord(record)
-      return view
-    }
-
     instance.resolvedIntentIds.push(preview.resolvedIntentId!)
     if ((input.inputMode === 'text' || input.inputMode === 'confirmed_asr_text') && input.text?.trim()) {
       instance.confirmedExpressions.push(input.text)
     }
     if (transition.outcomeId) {
       const outcome = event.outcomes.find((entry) => entry.id === transition.outcomeId)!
-      for (const write of outcome.worldStateWrites) record.worldState[write.key] = write.value
+      // outcome 在流程中先选中，但正式世界状态只在事件真正 completed 时统一提交。
       instance.selectedOutcomeId = outcome.id
       instance.resultLineIds = outcome.resultLineIds
     }
@@ -588,10 +667,17 @@ export class SqliteFixedEventEngine {
     instance.currentStateId = transition.toStateId
     const completed = transition.toStateId === 'completed'
     if (completed) {
+      if (instance.selectedOutcomeId) {
+        const outcome = event.outcomes.find((entry) => entry.id === instance.selectedOutcomeId)!
+        for (const write of outcome.worldStateWrites) record.worldState[write.key] = write.value
+      }
       instance.status = 'completed'
       instance.completedAt = this.now().toISOString()
-      if (event.eventType === 'mainline' && !record.completedEventIds.includes(event.id)) {
+      if ((event.eventType === 'mainline' || event.eventType === 'recall') && !record.completedEventIds.includes(event.id)) {
         record.completedEventIds.push(event.id)
+      }
+      if (event.id === 'b1_ready_for_outside_v1' && chapterOneHardGateSatisfied(record.completedEventIds, record.worldState)) {
+        record.worldState.chapter_01_birth = 'completed'
       }
       if (event.eventType === 'daily') {
         record.dailyTopicCursor = event.id

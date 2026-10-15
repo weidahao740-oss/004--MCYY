@@ -26,11 +26,12 @@ async function blobToBase64(blob: Blob): Promise<string> {
 }
 
 export const voiceApi = {
-  async transcribe(token: string, audio: Blob, mimeType: string) {
+  async transcribe(token: string, audio: Blob, mimeType: string, fixedEvent?: { instanceId: string; stateId: string }) {
     return post<TranscribeAudioResponse>('/v1/audio/transcriptions', token, {
       audioBase64: await blobToBase64(audio),
       mimeType,
       languageHint: 'en',
+      ...(fixedEvent ? { fixedEventInstanceId: fixedEvent.instanceId, fixedEventStateId: fixedEvent.stateId } : {}),
     })
   },
   synthesize(token: string, text: string, speed: number) {

@@ -1,5 +1,15 @@
 export { eventsV1, getEventDefinition } from './events-v1'
 export { fixedContentV1, getFixedContentEvent } from './fixed-content-v1'
+export {
+  CHAPTER_ONE_ID,
+  CHAPTER_ONE_MAINLINE_IDS,
+  RETIRED_BIRTH_EVENT_IDS,
+  chapterOneEvents,
+  chapterOneHardGateSatisfied,
+  chapterOneRuntimeSpecById,
+  chapterOneRuntimeSpecs,
+  chapterOneWorldStateReady,
+} from './chapter-one-runtime'
 export { previewFixedContentIntent } from './intent-matcher'
 export type {
   IntentMatcherCandidate,

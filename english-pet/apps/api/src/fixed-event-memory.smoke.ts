@@ -4,6 +4,12 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { openDatabase } from './sqlite-db.js'
 import { SqliteFixedEventEngine } from './sqlite-fixed-event-engine.js'
+
+function asrAdvance(engine: SqliteFixedEventEngine, userId: string, instanceId: string, text: string, idempotencyKey: string) {
+  const stateId = engine.current(userId)!.currentState.id
+  const proof = engine.issueAsrProof(userId, instanceId, stateId, text)
+  return engine.advance(userId, instanceId, { inputMode: 'confirmed_asr_text', text, asrProof: proof.proof, idempotencyKey })
+}
 import { SqliteJournalStore } from './sqlite-journal-store.js'
 import { SqliteMemoryStore } from './sqlite-memory-store.js'
 
@@ -21,44 +27,52 @@ const memoryStore = new SqliteMemoryStore()
 const journalStore = new SqliteJournalStore(memoryStore)
 const engine = new SqliteFixedEventEngine({ memoryStore, journalStore })
 
-// ── 主用户：文本输入走完 bfv(help) 与 bro(lamp) ─────────────────────────
+// ── 主用户：文本输入走完 bfv(presence) 与 bro(lamp) ─────────────────────────
 const mainUser = 'user-main'
 
 // bfv：start → 继续 → 文本帮助 → 完成
 let view = engine.start(mainUser, { eventId: 'birth_first_voice_v1', idempotencyKey: key('bfv-start') })
 const bfvInstance = view.instanceId
-view = engine.advance(mainUser, bfvInstance, { inputMode: 'choice', choiceId: 'bfv_choice_continue', idempotencyKey: key('bfv-open') })
-view = engine.advance(mainUser, bfvInstance, { inputMode: 'text', text: 'Let me help you.', idempotencyKey: key('bfv-help') })
-assert.equal(view.outcome?.id, 'bfv_outcome_helped')
-view = engine.advance(mainUser, bfvInstance, { inputMode: 'choice', choiceId: 'bfv_choice_finish', idempotencyKey: key('bfv-finish') })
+view = engine.advance(mainUser, bfvInstance, { inputMode: 'choice', choiceId: 'c1e1_choice_open', idempotencyKey: key('bfv-open') })
+view = engine.advance(mainUser, bfvInstance, { inputMode: 'choice', choiceId: 'c1e1_choice_presence', idempotencyKey: key('bfv-route') })
+view = asrAdvance(engine, mainUser, bfvInstance, "Yes, I'm here.", key('bfv-presence'))
+assert.equal(view.outcome?.id, 'c1e1_outcome_presence')
+view = engine.advance(mainUser, bfvInstance, { inputMode: 'choice', choiceId: 'c1e1_choice_feedback_presence', idempotencyKey: key('bfv-feedback') })
+assert.equal(view.currentState.id, 'c1e1_result')
+view = engine.advance(mainUser, bfvInstance, { inputMode: 'choice', choiceId: 'c1e1_choice_finish', idempotencyKey: key('bfv-finish') })
 assert.equal(view.status, 'completed')
 
 // bro：start → 继续 → 文本选灯 → 完成
-view = engine.start(mainUser, { eventId: 'birth_restore_object_v1', idempotencyKey: key('bro-start') })
+view = engine.start(mainUser, { eventId: 'b1_first_room_object_v1', idempotencyKey: key('bro-start') })
 const broInstance = view.instanceId
-view = engine.advance(mainUser, broInstance, { inputMode: 'choice', choiceId: 'bro_choice_continue', idempotencyKey: key('bro-open') })
-view = engine.advance(mainUser, broInstance, { inputMode: 'text', text: "Let's bring back the lamp.", idempotencyKey: key('bro-lamp') })
-assert.equal(view.outcome?.id, 'bro_outcome_lamp')
-assert.equal(view.worldState.first_restored_object, 'lamp')
+view = engine.advance(mainUser, broInstance, { inputMode: 'choice', choiceId: 'c1e2_choice_open', idempotencyKey: key('bro-open') })
+view = engine.advance(mainUser, broInstance, { inputMode: 'choice', choiceId: 'c1e2_choice_lamp', idempotencyKey: key('bro-route') })
+view = asrAdvance(engine, mainUser, broInstance, "I noticed the lamp first.", key('bro-lamp'))
+assert.equal(view.currentState.id, 'c1e2_morrow_lamp')
+view = engine.advance(mainUser, broInstance, { inputMode: 'choice', choiceId: 'c1e2_choice_morrow_lamp', idempotencyKey: key('bro-morrow') })
+view = asrAdvance(engine, mainUser, broInstance, 'What about you?', key('bro-second'))
+assert.equal(view.currentState.id, 'c1e2_attitude')
+view = engine.advance(mainUser, broInstance, { inputMode: 'choice', choiceId: 'c1e2_choice_interesting', idempotencyKey: key('bro-attitude') })
+view = engine.advance(mainUser, broInstance, { inputMode: 'choice', choiceId: 'c1e2_choice_feedback_interesting', idempotencyKey: key('bro-feedback') })
+assert.equal(view.outcome?.id, 'c1e2_outcome_lamp')
+assert.equal(view.worldState.first_shared_object, undefined)
 const broFinishKey = key('bro-finish')
-view = engine.advance(mainUser, broInstance, { inputMode: 'choice', choiceId: 'bro_choice_finish', idempotencyKey: broFinishKey })
+view = engine.advance(mainUser, broInstance, { inputMode: 'choice', choiceId: 'c1e2_choice_finish', idempotencyKey: broFinishKey })
 assert.equal(view.status, 'completed')
+assert.equal(view.worldState.first_shared_object, 'lamp')
 
 // 记忆提案断言
 let listed = memoryStore.list(mainUser, true)
 const proposedTexts = listed.proposed.map((m) => m.content)
 assert.ok(
-  proposedTexts.includes('你和 Morrow 完成了第一次相互理解。'),
+  proposedTexts.includes('你和墨洛完成了第一次相互理解。'),
   `缺少 bfv relationship 提案，实际: ${JSON.stringify(proposedTexts)}`,
 )
 assert.ok(
-  proposedTexts.includes('你和 Morrow 一起让 lamp 回到了房间。'),
-  `缺少 bro relationship 提案，实际: ${JSON.stringify(proposedTexts)}`,
+  proposedTexts.includes('你和墨洛完成了第一次共同观察。'),
+  `缺少 E01-02 relationship 提案，实际: ${JSON.stringify(proposedTexts)}`,
 )
-const broLanguage = listed.proposed.find((m) => m.kind === 'language')
-assert.ok(broLanguage, '缺少 bro language 提案')
-assert.equal(broLanguage!.content, "Let's bring back the lamp.")
-assert.equal(broLanguage!.expression, "Let's bring back the lamp.")
+assert.equal(listed.proposed.some((m) => m.kind === 'language'), false, '现行 E01-02 不生成重复语言长期记忆提案')
 
 // 日记断言：2 条，版本字段为 1.0.0
 let journals = journalStore.list(mainUser)
@@ -70,7 +84,7 @@ for (const entry of journals) {
 
 // ── 幂等重放：同一 idempotencyKey 重放完成步，提案数不变 ──────────────────
 const beforeReplay = memoryStore.list(mainUser, true).proposed.length
-engine.advance(mainUser, broInstance, { inputMode: 'choice', choiceId: 'bro_choice_finish', idempotencyKey: broFinishKey })
+engine.advance(mainUser, broInstance, { inputMode: 'choice', choiceId: 'c1e2_choice_finish', idempotencyKey: broFinishKey })
 const afterReplay = memoryStore.list(mainUser, true).proposed.length
 assert.equal(afterReplay, beforeReplay, '重放完成步不应产生新提案')
 
@@ -78,18 +92,17 @@ assert.equal(afterReplay, beforeReplay, '重放完成步不应产生新提案')
 const engine2 = new SqliteFixedEventEngine({ memoryStore, journalStore })
 assert.equal(engine2.current(mainUser), null)
 listed = memoryStore.list(mainUser, true)
-assert.ok(listed.proposed.map((m) => m.content).includes('你和 Morrow 一起让 lamp 回到了房间。'), '重启后 bro relationship 提案丢失')
+assert.ok(listed.proposed.map((m) => m.content).includes('你和墨洛完成了第一次共同观察。'), '重启后 E01-02 relationship 提案丢失')
 journals = journalStore.list(mainUser)
 assert.equal(journals.length, 2, '重启后日记数量变化')
 
-// ── 暂停路径用户：走 bfv_intent_pause 完成，无 relationship 提案 ──────────
+// ── 暂停路径用户：稍后继续后保持 paused，不完成、不产生 relationship 提案 ──────────
 const pauseUser = 'user-pause'
 view = engine.start(pauseUser, { eventId: 'birth_first_voice_v1', idempotencyKey: key('pz-start') })
 const pauseInstance = view.instanceId
-view = engine.advance(pauseUser, pauseInstance, { inputMode: 'choice', choiceId: 'bfv_choice_later', idempotencyKey: key('pz-pause') })
-assert.equal(view.outcome?.id, 'bfv_outcome_paused')
-view = engine.advance(pauseUser, pauseInstance, { inputMode: 'choice', choiceId: 'bfv_choice_finish', idempotencyKey: key('pz-finish') })
-assert.equal(view.status, 'completed')
+view = engine.pause(pauseUser, pauseInstance, key('pz-pause'))
+assert.equal(view.status, 'paused')
+assert.equal(engine.catalog(pauseUser).find((item) => item.eventId === 'birth_first_voice_v1')?.status, 'available')
 const pauseListed = memoryStore.list(pauseUser, true)
 assert.equal(
   pauseListed.proposed.filter((m) => m.kind === 'relationship').length,
@@ -116,7 +129,7 @@ console.log(JSON.stringify({
   checks: [
     'bfv-relationship-proposal',
     'bro-relationship-proposal-with-lamp',
-    'bro-language-proposal-matches-confirmed-sentence',
+    'bro-no-duplicate-language-long-term-memory',
     'journals-two-entries-with-version-1.0.0',
     'idempotent-replay-no-duplicate-proposal',
     'restart-persistence',

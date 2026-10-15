@@ -21,6 +21,7 @@ export interface FixedEventAdvanceInput {
   inputMode: FixedContentInputMode
   text?: string
   choiceId?: string
+  asrProof?: string
   idempotencyKey: string
 }
 

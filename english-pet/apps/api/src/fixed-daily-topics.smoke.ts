@@ -6,6 +6,12 @@ import { getFixedContentEvent } from '@english-pet/domain'
 import { fromJson, openDatabase } from './sqlite-db.js'
 import { SqliteFixedEventEngine } from './sqlite-fixed-event-engine.js'
 
+function asrAdvance(engine: SqliteFixedEventEngine, userId: string, instanceId: string, text: string, idempotencyKey: string) {
+  const stateId = engine.current(userId)!.currentState.id
+  const proof = engine.issueAsrProof(userId, instanceId, stateId, text)
+  return engine.advance(userId, instanceId, { inputMode: 'confirmed_asr_text', text, asrProof: proof.proof, idempotencyKey })
+}
+
 // 必须在首次 openDatabase() 前指定临时 DB，避免污染真实 .data/english-pet.db。
 const dbPath = join(tmpdir(), `daily-topics-smoke-${Date.now()}.db`)
 process.env.SQLITE_PATH = dbPath
@@ -28,13 +34,15 @@ assert.ok(daily.every((e) => e.status === 'locked'), 'bfv 未完成前日常主�
 // 主线事件仍按原顺序链：bfv available
 assert.equal(catalog.find((e) => e.eventId === 'birth_first_voice_v1')?.status, 'available')
 
-// ── 2. 走完 bfv（help 分支）解锁日常主题 ────────────────────────────────
+// ── 2. 走完 bfv（reassuring_presence 分支）解锁日常主题 ────────────────────────────────
 let view = engine.start(user, { eventId: 'birth_first_voice_v1', idempotencyKey: key('bfv-start') })
 const bfvInstance = view.instanceId
-view = engine.advance(user, bfvInstance, { inputMode: 'choice', choiceId: 'bfv_choice_continue', idempotencyKey: key('bfv-open') })
-view = engine.advance(user, bfvInstance, { inputMode: 'text', text: 'Let me help you.', idempotencyKey: key('bfv-help') })
-assert.equal(view.outcome?.id, 'bfv_outcome_helped')
-view = engine.advance(user, bfvInstance, { inputMode: 'choice', choiceId: 'bfv_choice_finish', idempotencyKey: key('bfv-finish') })
+view = engine.advance(user, bfvInstance, { inputMode: 'choice', choiceId: 'c1e1_choice_open', idempotencyKey: key('bfv-open') })
+view = engine.advance(user, bfvInstance, { inputMode: 'choice', choiceId: 'c1e1_choice_presence', idempotencyKey: key('bfv-route') })
+view = asrAdvance(engine, user, bfvInstance, "Yes, I'm here.", key('bfv-presence'))
+assert.equal(view.outcome?.id, 'c1e1_outcome_presence')
+engine.advance(user, bfvInstance, { inputMode: 'choice', choiceId: 'c1e1_choice_feedback_presence', idempotencyKey: key('bfv-feedback') })
+view = engine.advance(user, bfvInstance, { inputMode: 'choice', choiceId: 'c1e1_choice_finish', idempotencyKey: key('bfv-finish') })
 assert.equal(view.status, 'completed')
 
 catalog = engine.catalog(user)
@@ -62,12 +70,13 @@ view = engine.advance(user, dwoInstance, { inputMode: 'choice', choiceId: 'dwo_c
 assert.equal(view.advanced, true)
 assert.equal(view.currentState.id, 'dwo_result')
 assert.equal(view.outcome?.id, 'dwo_outcome_sunny')
-assert.equal(view.worldState.outside_weather, 'sunny')
+assert.equal(view.worldState.outside_weather, undefined, '共同收束完成前不得提前写正式世界状态')
 
 // 幂等：同一 idempotencyKey 重放完成步，不重复结算
 const idemView = view
 view = engine.advance(user, dwoInstance, { inputMode: 'choice', choiceId: 'dwo_choice_finish', idempotencyKey: key('dwo-finish') })
 assert.equal(view.status, 'completed')
+assert.equal(view.worldState.outside_weather, 'sunny')
 
 // ── 4. 真实冷却 + 当日新内容预算：weather 进入冷却，推荐只能来自不引入新内容的可用日常 ──
 catalog = engine.catalog(user)
@@ -96,9 +105,11 @@ assert.notEqual(catalog.find((e) => e.recommendedNext)?.eventId, secondDailyId, 
 const pauseUser = 'user-daily-pause'
 let pauseSetup = engine.start(pauseUser, { eventId: 'birth_first_voice_v1', idempotencyKey: key('pause-bfv-start') })
 const pauseBfvId = pauseSetup.instanceId
-engine.advance(pauseUser, pauseBfvId, { inputMode: 'choice', choiceId: 'bfv_choice_continue', idempotencyKey: key('pause-bfv-open') })
-engine.advance(pauseUser, pauseBfvId, { inputMode: 'text', text: 'Let me help you.', idempotencyKey: key('pause-bfv-help') })
-engine.advance(pauseUser, pauseBfvId, { inputMode: 'choice', choiceId: 'bfv_choice_finish', idempotencyKey: key('pause-bfv-finish') })
+engine.advance(pauseUser, pauseBfvId, { inputMode: 'choice', choiceId: 'c1e1_choice_open', idempotencyKey: key('pause-bfv-open') })
+engine.advance(pauseUser, pauseBfvId, { inputMode: 'choice', choiceId: 'c1e1_choice_presence', idempotencyKey: key('pause-bfv-route') })
+asrAdvance(engine, pauseUser, pauseBfvId, "Yes, I'm here.", key('pause-bfv-presence'))
+engine.advance(pauseUser, pauseBfvId, { inputMode: 'choice', choiceId: 'c1e1_choice_feedback_presence', idempotencyKey: key('pause-bfv-feedback') })
+engine.advance(pauseUser, pauseBfvId, { inputMode: 'choice', choiceId: 'c1e1_choice_finish', idempotencyKey: key('pause-bfv-finish') })
 view = engine.start(pauseUser, { eventId: 'dt_drink_v1', idempotencyKey: key('ddk-start') })
 const ddkInstance = view.instanceId
 engine.advance(pauseUser, ddkInstance, { inputMode: 'choice', choiceId: 'ddk_choice_continue', idempotencyKey: key('ddk-open') })
@@ -120,9 +131,11 @@ assert.equal(persisted.dailyTopicCursor, secondDailyId, '重启后游标应保�
 const textUser = 'user-daily-text'
 let textSetup = engine2.start(textUser, { eventId: 'birth_first_voice_v1', idempotencyKey: key('text-bfv-start') })
 const textBfvId = textSetup.instanceId
-engine2.advance(textUser, textBfvId, { inputMode: 'choice', choiceId: 'bfv_choice_continue', idempotencyKey: key('text-bfv-open') })
-engine2.advance(textUser, textBfvId, { inputMode: 'text', text: 'Let me help you.', idempotencyKey: key('text-bfv-help') })
-engine2.advance(textUser, textBfvId, { inputMode: 'choice', choiceId: 'bfv_choice_finish', idempotencyKey: key('text-bfv-finish') })
+engine2.advance(textUser, textBfvId, { inputMode: 'choice', choiceId: 'c1e1_choice_open', idempotencyKey: key('text-bfv-open') })
+engine2.advance(textUser, textBfvId, { inputMode: 'choice', choiceId: 'c1e1_choice_presence', idempotencyKey: key('text-bfv-route') })
+asrAdvance(engine2, textUser, textBfvId, "Yes, I'm here.", key('text-bfv-presence'))
+engine2.advance(textUser, textBfvId, { inputMode: 'choice', choiceId: 'c1e1_choice_feedback_presence', idempotencyKey: key('text-bfv-feedback') })
+engine2.advance(textUser, textBfvId, { inputMode: 'choice', choiceId: 'c1e1_choice_finish', idempotencyKey: key('text-bfv-finish') })
 view = engine2.start(textUser, { eventId: 'dt_good_night_v1', idempotencyKey: key('dgn-start') })
 const dgnInstance = view.instanceId
 engine2.advance(textUser, dgnInstance, { inputMode: 'choice', choiceId: 'dgn_choice_continue', idempotencyKey: key('dgn-open') })

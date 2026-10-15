@@ -171,7 +171,7 @@ export const fixedEventTriggerStrengthSchema = z.enum([
 ])
 export type FixedEventTriggerStrength = z.infer<typeof fixedEventTriggerStrengthSchema>
 
-export const fixedRecallSourceTypeSchema = z.enum(['shared_memory', 'legacy_expression'])
+export const fixedRecallSourceTypeSchema = z.enum(['shared_memory', 'legacy_expression', 'course_evidence'])
 export type FixedRecallSourceType = z.infer<typeof fixedRecallSourceTypeSchema>
 
 export const fixedEventNewContentBudgetSchema = z.object({
@@ -507,6 +507,7 @@ export const fixedEventAdvanceRequestSchema = z.object({
   inputMode: fixedContentInputModeSchema,
   text: z.string().min(1).max(1200).optional(),
   choiceId: idSchema.optional(),
+  asrProof: z.string().min(32).max(200).optional(),
   idempotencyKey: z.string().min(1).max(200),
 })
 export type FixedEventAdvanceRequest = z.infer<typeof fixedEventAdvanceRequestSchema>

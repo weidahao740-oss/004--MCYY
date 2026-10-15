@@ -14,6 +14,12 @@ let now = new Date('2026-10-11T01:00:00.000Z')
 let sequence = 0
 const key = (label: string) => `${label}-${++sequence}`
 
+function asrAdvance(engine: SqliteFixedEventEngine, userId: string, instanceId: string, text: string, idempotencyKey: string) {
+  const stateId = engine.current(userId)!.currentState.id
+  const proof = engine.issueAsrProof(userId, instanceId, stateId, text)
+  return engine.advance(userId, instanceId, { inputMode: 'confirmed_asr_text', text, asrProof: proof.proof, idempotencyKey })
+}
+
 function memoryCandidate(
   id: string,
   kind: Memory['kind'],
@@ -51,9 +57,11 @@ function recallVariant(sourceTypes: FixedEvent['recallSourceTypes']): FixedEvent
 function finishBfv(engine: SqliteFixedEventEngine, user: string) {
   let view = engine.start(user, { eventId: 'birth_first_voice_v1', idempotencyKey: key('bfv-start') })
   const id = view.instanceId
-  engine.advance(user, id, { inputMode: 'choice', choiceId: 'bfv_choice_continue', idempotencyKey: key('bfv-open') })
-  engine.advance(user, id, { inputMode: 'text', text: 'Let me help you.', idempotencyKey: key('bfv-help') })
-  view = engine.advance(user, id, { inputMode: 'choice', choiceId: 'bfv_choice_finish', idempotencyKey: key('bfv-finish') })
+  engine.advance(user, id, { inputMode: 'choice', choiceId: 'c1e1_choice_open', idempotencyKey: key('bfv-open') })
+  engine.advance(user, id, { inputMode: 'choice', choiceId: 'c1e1_choice_presence', idempotencyKey: key('bfv-route') })
+  asrAdvance(engine, user, id, "Yes, I'm here.", key('bfv-presence'))
+  engine.advance(user, id, { inputMode: 'choice', choiceId: 'c1e1_choice_feedback_presence', idempotencyKey: key('bfv-feedback') })
+view = engine.advance(user, id, { inputMode: 'choice', choiceId: 'c1e1_choice_finish', idempotencyKey: key('bfv-finish') })
   assert.equal(view.status, 'completed')
 }
 
@@ -128,7 +136,7 @@ function seedCompletedMainlineUser(userId: string, completedEventIds = completed
 const engine = new SqliteFixedEventEngine({ now: () => now })
 const dependencyUser = 'dependency-user'
 const completedMainline = [
-  'birth_first_voice_v1', 'birth_restore_object_v1', 'b2_room_tour_v1', 'b2_name_objects_v1',
+  'birth_first_voice_v1', 'b1_first_room_object_v1', 'b2_room_tour_v1', 'b2_name_objects_v1',
   'b2_outside_road_v1', 'b2_my_likes_v1', 'b2_small_task_v1', 'b2_sound_comes_back_v1',
 ]
 openDatabase().prepare('INSERT INTO fixed_event_state (user_id, record) VALUES (?, ?)').run(dependencyUser, JSON.stringify({
@@ -162,13 +170,13 @@ assert.equal(catalog.find((item) => item.eventId === 'dt_weather_outside_v1')?.s
 
 const pauseUser = 'pause-user'
 finishBfv(restarted, pauseUser)
-let bro = restarted.start(pauseUser, { eventId: 'birth_restore_object_v1', idempotencyKey: key('bro-start') })
+let bro = restarted.start(pauseUser, { eventId: 'b1_first_room_object_v1', idempotencyKey: key('bro-start') })
 const checkpoint = bro.currentState.id
 const paused = restarted.pause(pauseUser, bro.instanceId, key('bro-pause'))
 assert.equal(paused.status, 'paused')
 const afterRestart = new SqliteFixedEventEngine({ now: () => now })
 assert.equal(afterRestart.current(pauseUser)?.currentState.id, checkpoint)
-assert.equal(afterRestart.current(pauseUser)?.worldState.first_restored_object, undefined)
+assert.equal(afterRestart.current(pauseUser)?.worldState.first_shared_object, undefined)
 const resumed = afterRestart.resume(pauseUser, bro.instanceId, key('bro-resume'))
 assert.equal(resumed.status, 'active')
 assert.equal(resumed.currentState.id, checkpoint)
@@ -267,7 +275,7 @@ assert.throws(
   /fixed_extra_event_unavailable/,
 )
 
-const completedBeforeSchool = ['birth_first_voice_v1', 'birth_restore_object_v1', 'b2_room_tour_v1', 'b2_name_objects_v1', 'b2_outside_road_v1', 'b2_my_likes_v1', 'b2_small_task_v1']
+const completedBeforeSchool = ['birth_first_voice_v1', 'b1_first_room_object_v1', 'b2_room_tour_v1', 'b2_name_objects_v1', 'b2_outside_road_v1', 'b2_my_likes_v1', 'b2_small_task_v1']
 const extraUnlockUser = 'extra-unlock-user'
 openDatabase().prepare('INSERT INTO fixed_event_state (user_id, record) VALUES (?, ?)').run(extraUnlockUser, JSON.stringify({
   userId: extraUnlockUser, worldState: {}, completedEventIds: completedBeforeSchool, startedEventIds: completedBeforeSchool,
@@ -333,7 +341,7 @@ openDatabase().prepare('INSERT INTO fixed_event_state (user_id, record) VALUES (
     newLearningObjectsUsed: 10, newCoreExpressionsUsed: 3, recallUsed: 1, extraEventUsed: 1, extraEventGranted: true,
   },
   active: {
-    eventId: 'birth_first_voice_v1', instanceId: '00000000-0000-4000-8000-000000000201', currentStateId: 'bfv_reply',
+    eventId: 'birth_first_voice_v1', instanceId: '00000000-0000-4000-8000-000000000201', currentStateId: 'c1e1_route',
     status: 'paused', selectedOutcomeId: null, resultLineIds: [], confirmedExpressions: [], resolvedIntentIds: [],
     memoryProposed: false, completedAt: null, recallSourceMemoryId: null, recallSourceType: null,
   },
@@ -348,7 +356,7 @@ const budgetResumed = recallEngine.resume(
   'budget-resume-after-cap',
 )
 assert.equal(budgetResumed.status, 'active')
-assert.equal(budgetResumed.currentState.id, 'bfv_reply')
+assert.equal(budgetResumed.currentState.id, 'c1e1_route')
 
 openDatabase().close()
 for (const suffix of ['', '-wal', '-shm']) {

@@ -28,6 +28,8 @@ export type ApiErrorCode =
   | 'fixed_event_paused'
   | 'fixed_extra_event_unavailable'
   | 'fixed_no_active_event'
+  | 'fixed_asr_state_mismatch'
+  | 'fixed_asr_empty'
   | 'internal_error'
 
 const messages: Record<ApiErrorCode, string> = {
@@ -58,6 +60,8 @@ const messages: Record<ApiErrorCode, string> = {
   fixed_event_paused: '事件已经暂停，请先恢复后再继续。',
   fixed_extra_event_unavailable: '今天的额外事件机会已经使用或尚不可用。',
   fixed_no_active_event: '当前没有进行中的固定内容事件。',
+  fixed_asr_state_mismatch: '本次录音与当前课程步骤不匹配，请重新录音。',
+  fixed_asr_empty: '本次录音没有识别出可确认的文字，请重新录音。',
   internal_error: '服务暂时无法完成请求。',
 }
 
