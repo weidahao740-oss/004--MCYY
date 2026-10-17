@@ -1,3 +1,4 @@
+import { completeTeaching } from './fixed-teaching-test-helper.js'
 import assert from 'node:assert/strict'
 import { existsSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
@@ -17,6 +18,7 @@ const journalStore = new SqliteJournalStore(memoryStore)
 const engine = new SqliteFixedEventEngine({ memoryStore, journalStore })
 const chapterEvents = fixedContentV1.events.filter((event) => event.chapterId === 'chapter_01_birth')
 function say(targetEngine: SqliteFixedEventEngine, userId: string, instanceId: string, stateId: string, text: string, label: string) {
+  completeTeaching(targetEngine, userId, instanceId)
   const proof = targetEngine.issueAsrProof(userId, instanceId, stateId, text)
   return targetEngine.advance(userId, instanceId, { inputMode: 'confirmed_asr_text', text, asrProof: proof.proof, idempotencyKey: key(label) })
 }
@@ -56,6 +58,7 @@ for (const route of e1Routes) {
   assert.equal(view.currentState.id, 'c1e1_route')
   view = choice(engine, user, instanceId, `c1e1_choice_${route.suffix}`, 'e1-route')
   assert.equal(view.currentState.id, `c1e1_input_${route.suffix}`)
+  completeTeaching(engine, user, instanceId)
   const wrongProof = engine.issueAsrProof(user, instanceId, view.currentState.id, route.wrong)
   const wrong = engine.advance(user, instanceId, { inputMode: 'confirmed_asr_text', text: route.wrong, asrProof: wrongProof.proof, idempotencyKey: key('e1-wrong') })
   assert.equal(wrong.advanced, false)
@@ -82,6 +85,7 @@ let view = engine.start(e2User, { eventId: 'b1_first_room_object_v1', idempotenc
 const e2 = view.instanceId
 view = choice(engine, e2User, e2, 'c1e2_choice_open', 'e2-open')
 view = choice(engine, e2User, e2, 'c1e2_choice_lamp', 'e2-route')
+completeTeaching(engine, e2User, e2)
 const wrongE2Proof = engine.issueAsrProof(e2User, e2, 'c1e2_input_lamp', 'I noticed the plant first.')
 const wrongE2Route = engine.advance(e2User, e2, { inputMode: 'confirmed_asr_text', text: 'I noticed the plant first.', asrProof: wrongE2Proof.proof, idempotencyKey: key('e2-wrong-route') })
 assert.equal(wrongE2Route.advanced, false)
@@ -98,6 +102,9 @@ assert.equal(view.currentState.id, 'c1e2_morrow_lamp')
 assert.equal(view.worldState.first_shared_object, undefined)
 view = choice(engine, e2User, e2, 'c1e2_choice_morrow_lamp', 'e2-morrow')
 view = say(engine, e2User, e2, 'c1e2_second_lamp', 'What about you?', 'e2-second')
+assert.equal(view.currentState.id, 'c1e2_answer_lamp')
+assert.equal(view.worldState.first_shared_object, undefined)
+view = choice(engine, e2User, e2, 'c1e2_choice_answer_lamp', 'e2-answer')
 assert.equal(view.currentState.id, 'c1e2_attitude')
 assert.equal(view.worldState.first_shared_object, undefined)
 view = choice(engine, e2User, e2, 'c1e2_choice_interesting', 'e2-attitude')

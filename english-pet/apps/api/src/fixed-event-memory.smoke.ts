@@ -1,4 +1,6 @@
+import { completeTeaching } from './fixed-teaching-test-helper.js'
 import assert from 'node:assert/strict'
+import { getFixedContentEvent } from '@english-pet/domain'
 import { existsSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
@@ -7,6 +9,7 @@ import { SqliteFixedEventEngine } from './sqlite-fixed-event-engine.js'
 
 function asrAdvance(engine: SqliteFixedEventEngine, userId: string, instanceId: string, text: string, idempotencyKey: string) {
   const stateId = engine.current(userId)!.currentState.id
+  completeTeaching(engine, userId, instanceId)
   const proof = engine.issueAsrProof(userId, instanceId, stateId, text)
   return engine.advance(userId, instanceId, { inputMode: 'confirmed_asr_text', text, asrProof: proof.proof, idempotencyKey })
 }
@@ -51,6 +54,8 @@ view = asrAdvance(engine, mainUser, broInstance, "I noticed the lamp first.", ke
 assert.equal(view.currentState.id, 'c1e2_morrow_lamp')
 view = engine.advance(mainUser, broInstance, { inputMode: 'choice', choiceId: 'c1e2_choice_morrow_lamp', idempotencyKey: key('bro-morrow') })
 view = asrAdvance(engine, mainUser, broInstance, 'What about you?', key('bro-second'))
+assert.equal(view.currentState.id, 'c1e2_answer_lamp')
+view = engine.advance(mainUser, broInstance, { inputMode: 'choice', choiceId: 'c1e2_choice_answer_lamp', idempotencyKey: key('bro-answer') })
 assert.equal(view.currentState.id, 'c1e2_attitude')
 view = engine.advance(mainUser, broInstance, { inputMode: 'choice', choiceId: 'c1e2_choice_interesting', idempotencyKey: key('bro-attitude') })
 view = engine.advance(mainUser, broInstance, { inputMode: 'choice', choiceId: 'c1e2_choice_feedback_interesting', idempotencyKey: key('bro-feedback') })
@@ -74,12 +79,15 @@ assert.ok(
 )
 assert.equal(listed.proposed.some((m) => m.kind === 'language'), false, '现行 E01-02 不生成重复语言长期记忆提案')
 
-// 日记断言：2 条，版本字段为 1.0.0
+// 日记使用当前事件版本；E01-02 已冻结为 1.1.0。
 let journals = journalStore.list(mainUser)
 assert.equal(journals.length, 2, `日记应为 2 条，实际 ${journals.length}`)
 for (const entry of journals) {
-  assert.equal(entry.textVersion, '1.0.0', `textVersion 应为 1.0.0，实际 ${entry.textVersion}`)
-  assert.equal(entry.translationVersion, '1.0.0', `translationVersion 应为 1.0.0，实际 ${entry.translationVersion}`)
+  const event = getFixedContentEvent(entry.eventKey)!
+  const outcome = event.outcomes.find(outcome => outcome.id === (entry.eventInstanceId === broInstance ? 'c1e2_outcome_lamp' : 'c1e1_outcome_presence'))!
+  const line = event.lines.find(line => line.id === outcome.resultLineIds[0])!
+  assert.equal(entry.textVersion, line.learningContent.textVersion)
+  assert.equal(entry.translationVersion, line.learningContent.translation.version)
 }
 
 // ── 幂等重放：同一 idempotencyKey 重放完成步，提案数不变 ──────────────────
@@ -130,7 +138,7 @@ console.log(JSON.stringify({
     'bfv-relationship-proposal',
     'bro-relationship-proposal-with-lamp',
     'bro-no-duplicate-language-long-term-memory',
-    'journals-two-entries-with-version-1.0.0',
+    'journals-two-entries-with-current-event-versions',
     'idempotent-replay-no-duplicate-proposal',
     'restart-persistence',
     'pause-path-no-relationship-proposal',

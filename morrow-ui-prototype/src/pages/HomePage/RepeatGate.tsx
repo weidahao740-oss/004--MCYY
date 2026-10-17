@@ -20,8 +20,8 @@ function acceptable(transcript: string, target: string) {
   return rows[expected.length][heard.length] >= Math.ceil(expected.length * .8)
 }
 
-export default function RepeatGate({ id, target, onPassed, onPreviewSkip, onPostpone, onBusyChange, onFailed, disabled = false }: {
-  id: string; target: string; onPassed: () => void; onPreviewSkip: () => void; onPostpone: () => void; onBusyChange: (value: boolean) => void; onFailed?: () => void; disabled?: boolean
+export default function RepeatGate({ id, target, onPassed, onPostpone, onBusyChange, onFailed, disabled = false }: {
+  id: string; target: string; onPassed: () => void; onPostpone: () => void; onBusyChange: (value: boolean) => void; onFailed?: () => void; disabled?: boolean
 }) {
   const [status, setStatus] = useState<Status>('idle')
   const [cancelHint, setCancelHint] = useState(false)
@@ -158,7 +158,6 @@ export default function RepeatGate({ id, target, onPassed, onPreviewSkip, onPost
     </button>
     <span className="record-label">{cancelHint ? '松开取消' : holding ? '松开结束' : status === 'processing' ? '请稍等' : '按住说话'}</span>
     <p id={`voice-help-${id}`} className="record-hint" role="status">{message}</p>
-    <button className="prototype-skip-speech" onClick={onPreviewSkip} disabled={holding || status === 'processing' || status === 'passed'}>仅原型测试：跳过跟读</button>
     <button className="text-button postpone-speech" onClick={onPostpone} disabled={holding || status === 'processing'}>稍后继续</button>
   </div>
 }

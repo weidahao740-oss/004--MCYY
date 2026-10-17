@@ -1,7 +1,8 @@
 /**
  * 生产预制音频绑定加载器（Phase 4）。
  *
- * 权威绑定来自离线制作产物：`voice-test/morrow-production/manifest.json`。
+ * 历史绑定保留在 `manifest.json`，同目录的 `manifest-s07-e01-rebuild.json`
+ * 覆盖本批重制台词；planned 也必须覆盖旧 ready，防止误播旧版。
  * 运行时只播审核通过的正常语速文件，不实时调用 TTS。
  * - 每条台词恰好一个正常语速文件（rate=1.0, pitch=1.0），无 variant/slow。
  * - ready 才返回可访问 fileRef；planned/retired 不返回可播地址，客户端降级文字+译文。
@@ -57,8 +58,9 @@ interface ProductionManifestFile {
   rate: number
   pitch: number
   total: number
-  included: ManifestRecord[]
-  excluded: ManifestRecord[]
+  included?: ManifestRecord[]
+  entries?: ManifestRecord[]
+  excluded?: ManifestRecord[]
 }
 
 const VOICE_PROFILE = 'morrow_voice_v1'
@@ -105,10 +107,17 @@ function load(): Map<string, ProductionAudioBinding> {
   if (cache) return cache
   const manifestPath = defaultManifestPath()
   manifestRoot = resolve(dirname(manifestPath))
-  const raw = JSON.parse(readFileSync(manifestPath, 'utf-8')) as ProductionManifestFile
   const map = new Map<string, ProductionAudioBinding>()
-  for (const record of [...raw.included, ...raw.excluded]) {
-    map.set(record.audioId, normalize(record))
+  const rebuildPath = join(manifestRoot, 'manifest-s07-e01-rebuild.json')
+  const manifestPaths = [manifestPath]
+  if (resolve(rebuildPath) !== resolve(manifestPath) && existsSync(rebuildPath)) {
+    manifestPaths.push(rebuildPath)
+  }
+  for (const path of manifestPaths) {
+    const raw = JSON.parse(readFileSync(path, 'utf-8')) as ProductionManifestFile
+    for (const record of [...(raw.included ?? raw.entries ?? []), ...(raw.excluded ?? [])]) {
+      map.set(record.audioId, normalize(record))
+    }
   }
   cache = map
   return map

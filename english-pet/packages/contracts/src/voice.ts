@@ -6,6 +6,7 @@ export const transcribeAudioRequestSchema = z.object({
   languageHint: z.string().min(2).max(16).default('en'),
   fixedEventInstanceId: z.string().min(1).max(96).optional(),
   fixedEventStateId: z.string().min(1).max(96).optional(),
+  fixedEventTeachingStepId: z.string().min(1).max(160).optional(),
 })
 
 export const transcribeAudioResponseSchema = z.object({

@@ -9,12 +9,13 @@ import type {
   UpdateSettingsRequest,
 } from '@english-pet/contracts'
 
-const API_BASE = (import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8787').replace(/\/$/, '')
+import { API_BASE } from './api-base'
 
 export class ApiClientError extends Error {
   constructor(
     public readonly code: string,
     message: string,
+    public readonly status?: number,
   ) {
     super(message)
   }
@@ -25,8 +26,12 @@ async function request<T>(
   init: RequestInit = {},
   token?: string | null,
 ): Promise<T> {
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), 30_000)
+  try {
   const response = await fetch(`${API_BASE}${path}`, {
     ...init,
+    signal: controller.signal,
     headers: {
       'Content-Type': 'application/json',
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
@@ -37,13 +42,21 @@ async function request<T>(
   if (!response.ok) {
     const payload = (await response.json().catch(() => null)) as ApiError | null
     throw new ApiClientError(
-      payload?.error.code ?? 'request_failed',
-      payload?.error.message ?? 'The service could not complete the request.',
+      payload?.error?.code ?? 'request_failed',
+      payload?.error?.message ?? '服务暂时没有处理成功，请稍后重试。',
+      response.status,
     )
   }
 
   if (response.status === 204) return undefined as T
   return (await response.json()) as T
+  } catch (error) {
+    if (error instanceof ApiClientError) throw error
+    throw new ApiClientError(controller.signal.aborted ? 'request_timeout' : 'network_error',
+      controller.signal.aborted ? '等待后台的时间有点长，请重新连接。' : '暂时连不上后台，请检查网络后重试。')
+  } finally {
+    clearTimeout(timeout)
+  }
 }
 
 export const accountApi = {

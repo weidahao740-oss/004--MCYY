@@ -79,9 +79,9 @@ export default function TeachingGate({ course, mode, muted, onUnmute, onFinish, 
     setProgress(next)
     try { localStorage.setItem(progressKey(course.id), JSON.stringify(next)) } catch { notify('浏览器未能保存进度，请暂时不要关闭页面。') }
   }
-  function advance(preview = false) {
+  function advance() {
     stop(); setSpeechText(''); readyRef.current = null; setReady(null); setFailed(false); setHelpUnit(null); setTranslationOverride(null)
-    persist({ ...progress, cursor: Math.min(progress.cursor + 1, progress.steps.length - 1), preview: progress.preview || preview, done: preview ? progress.done : [...new Set([...progress.done, step.id])] })
+    persist({ ...progress, cursor: Math.min(progress.cursor + 1, progress.steps.length - 1), done: [...new Set([...progress.done, step.id])] })
   }
   function replay() {
     if (busy) return
@@ -118,7 +118,7 @@ export default function TeachingGate({ course, mode, muted, onUnmute, onFinish, 
         : recordingStep ? <RepeatGate key={step.id} id={`${course.id}-${step.id}`} target={step.english} disabled={muted || ready !== step.id}
           onBusyChange={value => { if (value) { stop(); setSpeechText(''); setHelpUnit(null) } setBusy(value) }} onFailed={() => setFailed(true)}
           onPassed={() => { if (step.kind === 'output') finish(true); else { if (step.unit) recordEvidence(step.unit.covers, 'prompted'); advance() } }}
-          onPreviewSkip={() => step.kind === 'output' ? finish(false) : advance(true)} onPostpone={() => { stop(); persist(progress); onPostpone() }}/>
+          onPostpone={() => { stop(); persist(progress); onPostpone() }}/>
         : <button className="primary" disabled={step.kind !== 'context' && (muted || ready !== step.id)} onClick={() => advance()}>{step.kind === 'context' ? '一起听听' : '继续听'}</button>}
       {!recordingStep && <button className="text-button" onClick={() => { stop(); persist(progress); onPostpone() }}>稍后继续</button>}
       {failed && !busy && <div className="speech-help"><span>哪一小段想再听听？</span>{(step.unit ? [step.unit] : course.units.filter(unit => course.chunks.includes(unit.english))).map(unit => <button key={unit.id} className="text-button" onClick={() => playHelp(unit)}>{unit.chinese}</button>)}</div>}

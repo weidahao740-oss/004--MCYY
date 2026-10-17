@@ -2,7 +2,7 @@ import type { FirstDayActionRequest, FirstDayView } from '@english-pet/contracts
 import { firstDayViewSchema } from '@english-pet/contracts'
 import { z } from 'zod'
 
-const API_BASE = (import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8787').replace(/\/$/, '')
+import { API_BASE } from './api-base'
 
 async function json<S extends z.ZodTypeAny>(path: string, token: string, schema: S, init: RequestInit = {}): Promise<z.output<S>> {
   const response = await fetch(`${API_BASE}${path}`, {

@@ -3,7 +3,7 @@ import type {
   TranscribeAudioResponse,
 } from '@english-pet/contracts'
 
-const API_BASE = (import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8787').replace(/\/$/, '')
+import { API_BASE } from './api-base'
 
 async function post<T>(path: string, token: string, body: unknown): Promise<T> {
   const response = await fetch(`${API_BASE}${path}`, {

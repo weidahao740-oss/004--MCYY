@@ -5,7 +5,7 @@ import type {
   RegisterRequest,
   UpdateSettingsRequest,
 } from '@english-pet/contracts'
-import { accountApi } from '@/api/account-api'
+import { accountApi, ApiClientError } from '@/api/account-api'
 import { AuthContext } from './auth-context'
 import { sessionStorage } from './session-storage'
 
@@ -17,20 +17,26 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   const [token, setToken] = useState<string | null>(() => sessionStorage.get())
   const [session, setSession] = useState<MeResponse | null>(null)
   const [loading, setLoading] = useState(() => Boolean(sessionStorage.get()))
+  const [restoreError, setRestoreError] = useState(false)
+  const [restoreAttempt, setRestoreAttempt] = useState(0)
 
   useEffect(() => {
     if (!token) return
     let cancelled = false
+    setRestoreError(false)
+    setLoading(true)
     accountApi
       .me(token)
       .then((nextSession) => {
         if (!cancelled) setSession(nextSession)
       })
-      .catch(() => {
+      .catch((error) => {
         if (!cancelled) {
-          sessionStorage.clear()
-          setToken(null)
-          setSession(null)
+          if (error instanceof ApiClientError && error.status === 401) {
+            sessionStorage.clear()
+            setToken(null)
+            setSession(null)
+          } else setRestoreError(true)
         }
       })
       .finally(() => {
@@ -39,7 +45,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     return () => {
       cancelled = true
     }
-  }, [token])
+  }, [token, restoreAttempt])
 
   async function startGuest() {
     setLoading(true)
@@ -104,6 +110,12 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     const next = await accountApi.updateSettings(token, patch)
     setSession(next)
   }
+
+  if (restoreError && token && !session) return (
+    <main className="grid min-h-screen place-items-center px-5 text-center">
+      <div role="alert"><p>暂时连不上后台，登录信息已保留。</p><button disabled={loading} className="mt-4 rounded border px-5 py-3" onClick={() => setRestoreAttempt(value => value + 1)}>重新连接原账号</button></div>
+    </main>
+  )
 
   return (
     <AuthContext.Provider

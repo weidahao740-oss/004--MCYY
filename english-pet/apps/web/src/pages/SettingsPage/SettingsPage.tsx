@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import type { LanguageLevel, SpeechRate } from '@english-pet/contracts'
+import type { SpeechRate } from '@english-pet/contracts'
 import { Trash2 } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { useAuth } from '@/auth/auth-context'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -33,8 +33,8 @@ export default function SettingsPage() {
 
   async function removeAccount() {
     const confirmed = window.confirm(locale === 'en'
-      ? 'Delete this account and all in-memory conversations, memories, journals, event progress, and settings? This cannot be undone.'
-      : '删除此账号及当前内存中的全部对话、记忆、日记、事件进度和设置？此操作无法撤销。')
+      ? 'Delete this account and all conversations, memories, journals, event progress, and settings? This cannot be undone.'
+      : '删除此账号及全部对话、记忆、日记、事件进度和设置？此操作无法撤销。')
     if (!confirmed) return
     setSaving(true)
     try {
@@ -49,6 +49,7 @@ export default function SettingsPage() {
 
   return (
     <main className="mx-auto max-w-3xl px-5 py-10 sm:px-8 sm:py-14">
+      <Link to="/room?view=settings" className="mb-6 inline-flex min-h-11 items-center text-sm text-muted-foreground underline">返回房间设置</Link>
       <p className="font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground">{t.settingsEyebrow}</p>
       <h1 className="mt-2 font-serif text-4xl">{t.settingsTitle}</h1>
       <p className="mt-3 text-muted-foreground">{t.settingsBody}</p>
@@ -65,9 +66,8 @@ export default function SettingsPage() {
         </Card>
 
         <Card>
-          <CardHeader><CardTitle>{t.englishVoice}</CardTitle><CardDescription>{locale === 'en' ? 'Adjust support and listening pace without taking a level test.' : '无需水平测试，即可调整辅助程度和听力语速。'}</CardDescription></CardHeader>
+          <CardHeader><CardTitle>{t.englishVoice}</CardTitle><CardDescription>教学帮助会根据实际完成过的内容调整，这里可以调整播放速度。</CardDescription></CardHeader>
           <CardContent className="grid gap-6 sm:grid-cols-2">
-            <div className="space-y-2"><Label>{t.englishSupport}</Label><Select value={session.settings.languageLevel} disabled={saving} onValueChange={(value) => void save({ languageLevel: value as LanguageLevel })}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent><SelectItem value="L1">{t.moreSupport}</SelectItem><SelectItem value="L2">{t.everyday}</SelectItem><SelectItem value="L3">{t.independent}</SelectItem><SelectItem value="L4">{t.nuance}</SelectItem></SelectContent></Select></div>
             <div className="space-y-2"><Label>{t.speechRate}</Label><Select value={session.settings.speechRate} disabled={saving} onValueChange={(value) => void save({ speechRate: value as SpeechRate })}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent><SelectItem value="1.0">1.0×</SelectItem><SelectItem value="0.8">0.8×</SelectItem><SelectItem value="0.6">0.6×</SelectItem></SelectContent></Select></div>
           </CardContent>
         </Card>
@@ -87,7 +87,7 @@ export default function SettingsPage() {
           <CardContent><Button variant="destructive" disabled={saving} onClick={() => void removeAccount()}><Trash2 />{locale === 'en' ? 'Delete account and data' : '删除账号及全部数据'}</Button></CardContent>
         </Card>
 
-        <div className="border border-warning/30 bg-warning/5 p-4 text-sm text-muted-foreground">{t.devStorage}</div>
+        <div className="border border-warning/30 bg-warning/5 p-4 text-sm text-muted-foreground">{session.persistence === 'sqlite' ? '当前使用本地 SQLite 保存账号和进度。请保留服务端数据库文件；跨设备同步需要后续部署。' : session.persistence === 'memory' ? t.devStorage : '账号和进度由服务端数据库保存。'}</div>
       </div>
     </main>
   )

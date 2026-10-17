@@ -512,6 +512,45 @@ export const fixedEventAdvanceRequestSchema = z.object({
 })
 export type FixedEventAdvanceRequest = z.infer<typeof fixedEventAdvanceRequestSchema>
 
+export const fixedEventAsrDiscardRequestSchema = z.object({
+  stateId: idSchema,
+  asrProof: z.string().min(32).max(200),
+})
+
+// S09 原型显式启用教学检查点；正式 Web 在 S10 消费同一接口。
+export const fixedEventTeachingRequestSchema = z.object({
+  action: z.enum(['begin', 'confirm']),
+  stateId: idSchema,
+  stepId: z.string().min(1).max(160).optional(),
+  text: z.string().min(1).max(1200).optional(),
+  asrProof: z.string().min(32).max(200).optional(),
+  answerIds: z.array(z.string().min(1).max(160)).max(8).optional(),
+  idempotencyKey: z.string().min(1).max(200),
+})
+export type FixedEventTeachingRequest = z.infer<typeof fixedEventTeachingRequestSchema>
+
+export interface FixedEventTeachingStep {
+  id: string
+  kind: 'intro' | 'repeat' | 'order' | 'meaning' | 'gap' | 'output'
+  english: string
+  chinese: string
+  options: { id: string; label: string }[]
+  answerIds: string[]
+  storyLine?: FixedContentLine
+}
+
+export interface FixedEventTeachingView {
+  instanceId: string
+  stateId: string
+  planVersion: string
+  stepIndex: number
+  stepCount: number
+  step: FixedEventTeachingStep
+  target: FixedContentLine
+  helpChunks: string[]
+  messageZh?: string
+}
+
 /** 目录项：事件1 完成后事件2 才 available；已完成标 completed；其余 locked。
  * 日常对话主题（chapterId === 'chapter_daily_talk'）可重复，永不标 completed；
  * recommendedNext 标出本轮轮换后推荐的下一个日常主题（至多一个）。 */

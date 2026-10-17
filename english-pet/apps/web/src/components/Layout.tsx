@@ -1,4 +1,4 @@
-import { NavLink, Outlet, useNavigate } from 'react-router-dom'
+import { NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom'
 import { BookHeart, BookOpen, Brain, CalendarHeart, LogOut, MessageCircle, Moon, Settings } from 'lucide-react'
 import { Toaster } from '@/components/ui/sonner'
 import { Button } from '@/components/ui/button'
@@ -9,6 +9,8 @@ import { currentLocale, getCopy } from '@/i18n/copy'
 function AppChrome() {
   const { session, logout } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
+  const chapterPage = ['/room', '/events', '/first-day'].includes(location.pathname.replace(/\/$/, ''))
   const t = getCopy(currentLocale(session?.settings.interfaceLocale))
 
   async function handleLogout() {
@@ -18,7 +20,7 @@ function AppChrome() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {session && (
+      {session && !chapterPage && (
         <header className="border-b border-border/70 bg-card/80 backdrop-blur">
           <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-4 sm:px-5">
             <NavLink to="/room" className="flex min-w-0 items-center gap-3">

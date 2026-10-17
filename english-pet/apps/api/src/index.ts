@@ -9,9 +9,11 @@ import {
   firstDayActionRequestSchema,
   fixedContentIntentPreviewRequestSchema,
   fixedEventAdvanceRequestSchema,
+  fixedEventAsrDiscardRequestSchema,
   fixedEventCommandRequestSchema,
   fixedEventExtraRequestSchema,
   fixedEventStartRequestSchema,
+  fixedEventTeachingRequestSchema,
   journalActionRequestSchema,
   loginRequestSchema,
   memoryActionRequestSchema,
@@ -532,6 +534,31 @@ app.post('/v1/fixed-content/events/:instanceId/advance', async (context) => {
   }
 })
 
+app.post('/v1/fixed-content/events/:instanceId/teaching', async (context) => {
+  const token = getBearerToken(context.req.header('Authorization'))
+  const me = token ? accountStore.me(token) : null
+  if (!me) return errorResponse(context, 'unauthorized', 401)
+  const parsed = fixedEventTeachingRequestSchema.safeParse(await context.req.json().catch(() => null))
+  if (!parsed.success) return errorResponse(context, 'bad_request', 400, parsed.error.flatten())
+  try {
+    return context.json(fixedEventEngine.teaching(me.user.id, context.req.param('instanceId'), parsed.data))
+  } catch (error) {
+    if (error instanceof Error && error.message === 'fixed_event_not_found') return errorResponse(context, 'fixed_event_not_found', 409)
+    if (error instanceof Error && error.message === 'fixed_asr_state_mismatch') return errorResponse(context, 'fixed_asr_state_mismatch', 409)
+    throw error
+  }
+})
+
+app.post('/v1/fixed-content/events/:instanceId/asr-proof/discard', async (context) => {
+  const token = getBearerToken(context.req.header('Authorization'))
+  const me = token ? accountStore.me(token) : null
+  if (!me) return errorResponse(context, 'unauthorized', 401)
+  const parsed = fixedEventAsrDiscardRequestSchema.safeParse(await context.req.json().catch(() => null))
+  if (!parsed.success) return errorResponse(context, 'bad_request', 400, parsed.error.flatten())
+  fixedEventEngine.discardAsrProof(me.user.id, context.req.param('instanceId'), parsed.data.stateId, parsed.data.asrProof)
+  return context.json({ discarded: true })
+})
+
 app.post('/v1/audio/transcriptions', async (context) => {
   const token = getBearerToken(context.req.header('Authorization'))
   const me = token ? accountStore.me(token) : null
@@ -547,9 +574,9 @@ app.post('/v1/audio/transcriptions', async (context) => {
     languageHint: parsed.data.languageHint,
   })
   let fixedEventProof: { proof: string; normalizedText: string; expiresAt: string } | null = null
-  if (!outcome.degraded && outcome.result?.text && parsed.data.fixedEventInstanceId && parsed.data.fixedEventStateId) {
+  if (!outcome.degraded && outcome.result?.provider !== 'mock' && outcome.result?.text && parsed.data.fixedEventInstanceId && parsed.data.fixedEventStateId) {
     try {
-      fixedEventProof = fixedEventEngine.issueAsrProof(me.user.id, parsed.data.fixedEventInstanceId, parsed.data.fixedEventStateId, outcome.result.text)
+      fixedEventProof = fixedEventEngine.issueAsrProof(me.user.id, parsed.data.fixedEventInstanceId, parsed.data.fixedEventStateId, outcome.result.text, parsed.data.fixedEventTeachingStepId)
     } catch (error) {
       if (error instanceof Error && (error.message === 'fixed_event_not_found' || error.message === 'fixed_asr_state_mismatch' || error.message === 'fixed_asr_empty')) {
         return errorResponse(context, error.message, 409)

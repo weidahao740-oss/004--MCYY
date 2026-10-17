@@ -1,0 +1,51 @@
+{
+  "version": "s07-e01-rebuild-0.1.0",
+  "status": "planned",
+  "createdAt": "2026-10-15",
+  "voiceProfileId": "morrow_voice_v1",
+  "sourceModel": "qwen-audio-3.0-tts-flash",
+  "audioStandard": {
+    "format": "WAV/PCM",
+    "sampleRateHz": 16000,
+    "channels": 1,
+    "bitsPerSample": 16,
+    "activeRmsDbfsTarget": "-20 +/- 1",
+    "peakDbfsMax": -3
+  },
+  "entries": [
+    {"chapterId":"chapter_01_birth","eventId":"birth_first_voice_v1","lineId":"bfv_wake_line","audioId":"bfv_wake_line_audio","contentId":"bfv_wake_line_content","textVersion":"1.0.0","translationVersion":"1.0.1","voiceProfileId":"morrow_voice_v1","fileRef":"tts/chapter_01_birth/birth_first_voice_v1/bfv_wake_line/1.0.1/audio.wav","status":"planned","runtimeLineId":"bfv_wake_line"},
+    {"chapterId":"chapter_01_birth","eventId":"birth_first_voice_v1","lineId":"bfv_presence_feedback","audioId":"bfv_presence_feedback_audio","contentId":"bfv_presence_feedback_content","textVersion":"1.0.0","translationVersion":"1.0.1","voiceProfileId":"morrow_voice_v1","fileRef":"tts/chapter_01_birth/birth_first_voice_v1/bfv_presence_feedback/1.0.1/audio.wav","status":"planned","runtimeLineId":"bfv_presence_feedback"},
+    {"chapterId":"chapter_01_birth","eventId":"birth_first_voice_v1","lineId":"bfv_greeting_feedback","audioId":"bfv_greeting_feedback_audio","contentId":"bfv_greeting_feedback_content","textVersion":"1.0.0","translationVersion":"1.0.1","voiceProfileId":"morrow_voice_v1","fileRef":"tts/chapter_01_birth/birth_first_voice_v1/bfv_greeting_feedback/1.0.1/audio.wav","status":"planned","runtimeLineId":"bfv_greeting_feedback"},
+    {"chapterId":"chapter_01_birth","eventId":"birth_first_voice_v1","lineId":"bfv_identity_feedback","audioId":"bfv_identity_feedback_audio","contentId":"bfv_identity_feedback_content","textVersion":"1.0.0","translationVersion":"1.0.1","voiceProfileId":"morrow_voice_v1","fileRef":"tts/chapter_01_birth/birth_first_voice_v1/bfv_identity_feedback/1.0.1/audio.wav","status":"planned","runtimeLineId":"bfv_identity_feedback"},
+    {"chapterId":"chapter_01_birth","eventId":"birth_first_voice_v1","lineId":"bfv_close_line","audioId":"bfv_close_line_audio","contentId":"bfv_close_line_content","textVersion":"1.0.0","translationVersion":"1.0.1","voiceProfileId":"morrow_voice_v1","fileRef":"tts/chapter_01_birth/birth_first_voice_v1/bfv_close_line/1.0.1/audio.wav","status":"planned","runtimeLineId":"bfv_close_line"},
+
+    {"chapterId":"chapter_01_birth","eventId":"b1_first_room_object_v1","lineId":"bfo_object_line","audioId":"bfo_object_line_audio","contentId":"bfo_object_line_content","textVersion":"1.1.0","translationVersion":"1.1.0","voiceProfileId":"morrow_voice_v1","fileRef":"tts/chapter_01_birth/b1_first_room_object_v1/bfo_object_line/1.1.0/audio.wav","status":"planned","runtimeLineId":"bfo_object_line"},
+    {"chapterId":"chapter_01_birth","eventId":"b1_first_room_object_v1","lineId":"bfo_prompt_line","audioId":"bfo_prompt_line_audio","contentId":"bfo_prompt_line_content","textVersion":"1.1.0","translationVersion":"1.1.0","voiceProfileId":"morrow_voice_v1","fileRef":"tts/chapter_01_birth/b1_first_room_object_v1/bfo_prompt_line/1.1.0/audio.wav","status":"planned","runtimeLineId":"bfo_prompt_line"},
+    {"chapterId":"chapter_01_birth","eventId":"b1_first_room_object_v1","lineId":"bfo_lamp_feedback","audioId":"bfo_lamp_feedback_audio","contentId":"bfo_lamp_feedback_content","textVersion":"1.1.0","translationVersion":"1.1.0","voiceProfileId":"morrow_voice_v1","fileRef":"tts/chapter_01_birth/b1_first_room_object_v1/bfo_lamp_feedback/1.1.0/audio.wav","status":"planned","runtimeLineId":"bfo_lamp_feedback"},
+    {"chapterId":"chapter_01_birth","eventId":"b1_first_room_object_v1","lineId":"bfo_plant_feedback","audioId":"bfo_plant_feedback_audio","contentId":"bfo_plant_feedback_content","textVersion":"1.1.0","translationVersion":"1.1.0","voiceProfileId":"morrow_voice_v1","fileRef":"tts/chapter_01_birth/b1_first_room_object_v1/bfo_plant_feedback/1.1.0/audio.wav","status":"planned","runtimeLineId":"bfo_plant_feedback"},
+    {"chapterId":"chapter_01_birth","eventId":"b1_first_room_object_v1","lineId":"bfo_bell_feedback","audioId":"bfo_bell_feedback_audio","contentId":"bfo_bell_feedback_content","textVersion":"1.1.0","translationVersion":"1.1.0","voiceProfileId":"morrow_voice_v1","fileRef":"tts/chapter_01_birth/b1_first_room_object_v1/bfo_bell_feedback/1.1.0/audio.wav","status":"planned","runtimeLineId":"bfo_bell_feedback"},
+    {"chapterId":"chapter_01_birth","eventId":"b1_first_room_object_v1","lineId":"bfo_after_first","audioId":"bfo_after_first_audio","contentId":"bfo_after_first_content","textVersion":"1.1.0","translationVersion":"1.1.0","voiceProfileId":"morrow_voice_v1","fileRef":"tts/chapter_01_birth/b1_first_room_object_v1/bfo_after_first/1.1.0/audio.wav","status":"planned","runtimeLineId":"bfo_after_first"},
+    {"chapterId":"chapter_01_birth","eventId":"b1_first_room_object_v1","lineId":"bfo_lamp_morrow","audioId":"bfo_lamp_morrow_audio","contentId":"bfo_lamp_morrow_content","textVersion":"1.1.0","translationVersion":"1.1.0","voiceProfileId":"morrow_voice_v1","fileRef":"tts/chapter_01_birth/b1_first_room_object_v1/bfo_lamp_morrow/1.1.0/audio.wav","status":"planned","runtimeLineId":"bfo_lamp_morrow"},
+    {"chapterId":"chapter_01_birth","eventId":"b1_first_room_object_v1","lineId":"bfo_plant_morrow","audioId":"bfo_plant_morrow_audio","contentId":"bfo_plant_morrow_content","textVersion":"1.1.0","translationVersion":"1.1.0","voiceProfileId":"morrow_voice_v1","fileRef":"tts/chapter_01_birth/b1_first_room_object_v1/bfo_plant_morrow/1.1.0/audio.wav","status":"planned","runtimeLineId":"bfo_plant_morrow"},
+    {"chapterId":"chapter_01_birth","eventId":"b1_first_room_object_v1","lineId":"bfo_bell_morrow","audioId":"bfo_bell_morrow_audio","contentId":"bfo_bell_morrow_content","textVersion":"1.1.0","translationVersion":"1.1.0","voiceProfileId":"morrow_voice_v1","fileRef":"tts/chapter_01_birth/b1_first_room_object_v1/bfo_bell_morrow/1.1.0/audio.wav","status":"planned","runtimeLineId":"bfo_bell_morrow"},
+    {"chapterId":"chapter_01_birth","eventId":"b1_first_room_object_v1","lineId":"bfo_attitude_interesting","audioId":"bfo_attitude_interesting_audio","contentId":"bfo_attitude_interesting_content","textVersion":"1.1.0","translationVersion":"1.1.0","voiceProfileId":"morrow_voice_v1","fileRef":"tts/chapter_01_birth/b1_first_room_object_v1/bfo_attitude_interesting/1.1.0/audio.wav","status":"planned","runtimeLineId":"bfo_attitude_interesting"},
+    {"chapterId":"chapter_01_birth","eventId":"b1_first_room_object_v1","lineId":"bfo_attitude_noticed_more","audioId":"bfo_attitude_noticed_more_audio","contentId":"bfo_attitude_noticed_more_content","textVersion":"1.1.0","translationVersion":"1.1.0","voiceProfileId":"morrow_voice_v1","fileRef":"tts/chapter_01_birth/b1_first_room_object_v1/bfo_attitude_noticed_more/1.1.0/audio.wav","status":"planned","runtimeLineId":"bfo_attitude_noticed_more"},
+    {"chapterId":"chapter_01_birth","eventId":"b1_first_room_object_v1","lineId":"bfo_attitude_keep_looking","audioId":"bfo_attitude_keep_looking_audio","contentId":"bfo_attitude_keep_looking_content","textVersion":"1.1.0","translationVersion":"1.1.0","voiceProfileId":"morrow_voice_v1","fileRef":"tts/chapter_01_birth/b1_first_room_object_v1/bfo_attitude_keep_looking/1.1.0/audio.wav","status":"planned","runtimeLineId":"bfo_attitude_keep_looking"},
+    {"chapterId":"chapter_01_birth","eventId":"b1_first_room_object_v1","lineId":"bfo_close_shared","audioId":"bfo_close_shared_audio","contentId":"bfo_close_shared_content","textVersion":"1.1.0","translationVersion":"1.1.0","voiceProfileId":"morrow_voice_v1","fileRef":"tts/chapter_01_birth/b1_first_room_object_v1/bfo_close_shared/1.1.0/audio.wav","status":"planned","runtimeLineId":"bfo_close_shared"},
+    {"chapterId":"chapter_01_birth","eventId":"b1_first_room_object_v1","lineId":"bfo_close_next","audioId":"bfo_close_next_audio","contentId":"bfo_close_next_content","textVersion":"1.1.0","translationVersion":"1.1.0","voiceProfileId":"morrow_voice_v1","fileRef":"tts/chapter_01_birth/b1_first_room_object_v1/bfo_close_next/1.1.0/audio.wav","status":"planned","runtimeLineId":"bfo_close_next"}
+  ],
+  "excluded": [
+    {"lineId":"bfv_presence_target","audioId":"bfv_presence_target_audio","status":"excluded","reason":"用户真实输出目标句，不是 Morrow 固定台词。"},
+    {"lineId":"bfv_greeting_target","audioId":"bfv_greeting_target_audio","status":"excluded","reason":"用户真实输出目标句，不是 Morrow 固定台词。"},
+    {"lineId":"bfv_identity_target","audioId":"bfv_identity_target_audio","status":"excluded","reason":"用户真实输出目标句，不是 Morrow 固定台词。"},
+    {"lineId":"bfo_lamp_target","audioId":"bfo_lamp_target_audio","status":"excluded","reason":"用户真实输出目标句，不是 Morrow 固定台词。"},
+    {"lineId":"bfo_plant_target","audioId":"bfo_plant_target_audio","status":"excluded","reason":"用户真实输出目标句，不是 Morrow 固定台词。"},
+    {"lineId":"bfo_bell_target","audioId":"bfo_bell_target_audio","status":"excluded","reason":"用户真实输出目标句，不是 Morrow 固定台词。"},
+    {"lineId":"bfo_second_target","audioId":"bfo_second_target_audio","status":"excluded","reason":"用户真实输出目标句 What about you?，不是 Morrow 固定台词。"},
+    {"lineId":"bro_open_line","audioId":"bro_open_line_audio","status":"retired","reason":"旧 birth_restore_object_v1 事件已退役，不得用于 b1_first_room_object_v1。"},
+    {"lineId":"bro_prompt_line","audioId":"bro_prompt_line_audio","status":"retired","reason":"旧 birth_restore_object_v1 事件已退役，不得用于 b1_first_room_object_v1。"},
+    {"lineId":"bro_lamp_result","audioId":"bro_lamp_result_audio","status":"retired","reason":"旧 birth_restore_object_v1 事件已退役，不得用于 b1_first_room_object_v1。"},
+    {"lineId":"bro_plant_result","audioId":"bro_plant_result_audio","status":"retired","reason":"旧 birth_restore_object_v1 事件已退役，不得用于 b1_first_room_object_v1。"},
+    {"lineId":"bro_bell_result","audioId":"bro_bell_result_audio","status":"retired","reason":"旧 birth_restore_object_v1 事件已退役，不得用于 b1_first_room_object_v1。"}
+  ]
+}

@@ -1,3 +1,4 @@
+import { completeTeaching } from './fixed-teaching-test-helper.js'
 import assert from 'node:assert/strict'
 import { existsSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
@@ -8,6 +9,7 @@ import { SqliteFixedEventEngine } from './sqlite-fixed-event-engine.js'
 
 function asrAdvance(engine: SqliteFixedEventEngine, userId: string, instanceId: string, text: string, idempotencyKey: string) {
   const stateId = engine.current(userId)!.currentState.id
+  completeTeaching(engine, userId, instanceId)
   const proof = engine.issueAsrProof(userId, instanceId, stateId, text)
   return engine.advance(userId, instanceId, { inputMode: 'confirmed_asr_text', text, asrProof: proof.proof, idempotencyKey })
 }

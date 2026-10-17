@@ -115,4 +115,10 @@ export default defineConfig(({ command }) => ({
   build: {
     outDir: 'dist/client',
   },
+  server: {
+    proxy: {
+      '/v1': 'http://localhost:8787',
+      '/tts': 'http://localhost:8787',
+    },
+  },
 }));

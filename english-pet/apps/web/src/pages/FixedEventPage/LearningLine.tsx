@@ -41,10 +41,19 @@ export function LearningLine({
       setBinding(null)
       return
     }
+    setBinding(undefined)
     let cancelled = false
     getAudioBinding(token, line.audioIds[0])
       .then((result) => {
-        if (!cancelled) setBinding(result)
+        if (cancelled) return
+        const content = line.learningContent
+        const matchesVersion = result != null
+          && result.lineId === line.id
+          && result.contentId === content.contentId
+          && result.textVersion === content.textVersion
+          && result.translationVersion === content.translation.version
+          && result.status === 'ready'
+        setBinding(matchesVersion ? result : null)
       })
       .catch(() => {
         if (!cancelled) setBinding(null)
@@ -90,6 +99,9 @@ export function LearningLine({
   return (
     <div className="min-w-0 border-l-2 border-primary pl-4">
       <p className="break-words text-lg leading-8">{line.learningContent.english}</p>
+      {line.audioIds.length > 0 && binding === null && (
+        <p className="mt-2 text-xs text-muted-foreground">语音暂未准备好，可先阅读内容。</p>
+      )}
       {expanded && (
         <p className="mt-2 text-sm leading-6 text-muted-foreground">{line.learningContent.translation.textZh}</p>
       )}

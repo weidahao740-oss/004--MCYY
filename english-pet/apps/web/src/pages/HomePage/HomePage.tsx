@@ -16,7 +16,7 @@ export default function HomePage() {
   const [busy, setBusy] = useState(false)
   const t = getCopy('zh-CN')
 
-  if (!loading && session) return <Navigate to={session.pet.firstDayStatus === 'completed' ? '/room' : '/first-day'} replace />
+  if (!loading && session) return <Navigate to="/room" replace />
 
   async function run(action: () => Promise<void>, destination: '/first-day' | '/room') {
     setBusy(true)

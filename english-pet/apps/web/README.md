@@ -11,7 +11,15 @@
 
 重复双击不会重复启动已占用的端口。停止项目时，在 `Morrow API` 和 `Morrow Web` 窗口分别按 `Ctrl+C`，或直接关闭两个窗口。
 
-## 技术栈
+## S10 正式界面入口
+
+- 登录后进入 `/room`，使用已迁入的房间、教学、成长、共同经历和设置界面。
+- `/first-day`、`/events` 转入房间；`/settings` 转到 `/room?view=settings`。账号隐私页保留在 `/account/settings`。
+- 成长、共同经历和设置使用 `view` 参数保存当前页签，刷新后可恢复。
+- 开发默认连接 `http://localhost:8787`；生产构建默认请求同源 `/v1` 和 `/tts`，部署服务器需转发至 API。独立 API 域名须在构建环境配置 `VITE_API_BASE_URL`，并配置对应 API `WEB_ORIGIN`。这里只准备配置支持，未进行线上部署。
+- 正式 WAV 仍后置；缺音频显示文字，录音步骤仍要求真实 ASR 和用户确认。
+
+## 技术栈说明
 
 - 前端: React 19 + TypeScript
 - 样式: Tailwind CSS v4

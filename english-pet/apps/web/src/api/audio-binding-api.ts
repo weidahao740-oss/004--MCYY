@@ -1,4 +1,4 @@
-const API_BASE = (import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8787').replace(/\/$/, '')
+import { API_BASE } from './api-base'
 
 // fileRef 形如 tts/chapter_01_birth/.../audio.wav，已以 tts/ 开头，直接拼一个斜杠即可。
 export function audioFileUrl(fileRef: string): string {

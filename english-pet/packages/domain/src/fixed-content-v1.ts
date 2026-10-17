@@ -1965,7 +1965,7 @@ const audioBindings: AudioBinding[] = events.flatMap((event) =>
           textVersion: line.learningContent.textVersion,
           translationVersion: line.learningContent.translation.version,
           voiceProfileId: 'morrow_voice_v1',
-          fileRef: `tts/${event.chapterId}/${event.id}/${line.id}/1.0.0/audio.wav`,
+          fileRef: `tts/${event.chapterId}/${event.id}/${line.id}/${line.learningContent.translation.version}/audio.wav`,
           checksumSha256: null,
           status: 'planned' as const,
         }]

@@ -69,47 +69,27 @@ const noProof = await post(headers, `/v1/fixed-content/events/${instance.instanc
 assert.equal((await noProof.json() as { advanced: boolean }).advanced, false)
 const fakeProof = await post(headers, `/v1/fixed-content/events/${instance.instanceId}/advance`, { inputMode: 'confirmed_asr_text', text: "Yes, I'm here.", asrProof: '00000000-0000-0000-0000-000000000000', idempotencyKey: 'chapter-one-api-fake-proof' })
 assert.equal((await fakeProof.json() as { advanced: boolean }).advanced, false)
-const wrongStateTranscription = await post(headers, '/v1/audio/transcriptions', { audioBase64: audioBase64("Yes, I'm here."), mimeType: 'audio/wav', languageHint: 'en', fixedEventInstanceId: instance.instanceId, fixedEventStateId: 'c1e1_route' })
-assert.equal(wrongStateTranscription.status, 409)
-
-const wrongRouteProof = await transcribe(headers, instance.instanceId, 'c1e1_input_presence', 'Who are you?')
-assert.equal(wrongRouteProof.response.status, 200)
-assert.ok(wrongRouteProof.body.fixedEventAsrProof)
-const wrongRoute = await post(headers, `/v1/fixed-content/events/${instance.instanceId}/advance`, { inputMode: 'confirmed_asr_text', text: wrongRouteProof.body.text, asrProof: wrongRouteProof.body.fixedEventAsrProof, idempotencyKey: 'chapter-one-api-wrong-route' })
-const wrongRouteBody = await wrongRoute.json() as { advanced: boolean; currentState: { id: string } }
-assert.equal(wrongRouteBody.advanced, false)
-assert.equal(wrongRouteBody.currentState.id, 'c1e1_input_presence')
-
-const correct = await transcribe(headers, instance.instanceId, 'c1e1_input_presence', "Yes, I'm here.")
-assert.equal(correct.response.status, 200)
-assert.equal(correct.body.fixedEventNormalizedText, "yes, i'm here")
-assert.ok(correct.body.fixedEventAsrProof)
+// Mock ASR 仍返回识别展示，但绝不能签发正式课程凭证。
+const mock = await transcribe(headers, instance.instanceId, 'c1e1_input_presence', "Yes, I'm here.")
+assert.equal(mock.response.status, 200)
+assert.equal(mock.body.fixedEventAsrProof, undefined)
+const mockAdvance = await post(headers, `/v1/fixed-content/events/${instance.instanceId}/advance`, { inputMode: 'confirmed_asr_text', text: mock.body.text, idempotencyKey: 'mock-cannot-advance' })
+assert.equal((await mockAdvance.json() as { advanced: boolean }).advanced, false)
+const begin = await post(headers, `/v1/fixed-content/events/${instance.instanceId}/teaching`, { action: 'begin', stateId: 'c1e1_input_presence', idempotencyKey: 'api-teaching-begin' })
+assert.equal(begin.status, 200)
+assert.equal((await begin.json() as { step: { kind: string } }).step.kind, 'repeat')
+const invalidState = await post(headers, `/v1/fixed-content/events/${instance.instanceId}/teaching`, { action: 'begin', stateId: 'c1e1_route', idempotencyKey: 'api-wrong-teaching-state' })
+assert.equal(invalidState.status, 409)
 const paused = await post(headers, `/v1/fixed-content/events/${instance.instanceId}/pause`, { idempotencyKey: 'chapter-one-api-pause' })
 assert.equal((await paused.json() as { status: string }).status, 'paused')
 const resumed = await post(headers, `/v1/fixed-content/events/${instance.instanceId}/resume`, { idempotencyKey: 'chapter-one-api-resume' })
-const resumedBody = await resumed.json() as { status: string; currentState: { id: string } }
-assert.equal(resumedBody.currentState.id, 'c1e1_input_presence')
-const valid = await post(headers, `/v1/fixed-content/events/${instance.instanceId}/advance`, { inputMode: 'confirmed_asr_text', text: correct.body.text, asrProof: correct.body.fixedEventAsrProof, idempotencyKey: 'chapter-one-api-valid-proof' })
-const validBody = await valid.json() as { advanced: boolean; currentState: { id: string } }
-assert.equal(validBody.advanced, true)
-assert.equal(validBody.currentState.id, 'c1e1_feedback_presence')
-const replay = await post(headers, `/v1/fixed-content/events/${instance.instanceId}/advance`, { inputMode: 'confirmed_asr_text', text: correct.body.text, asrProof: correct.body.fixedEventAsrProof, idempotencyKey: 'chapter-one-api-replay-proof' })
-assert.equal((await replay.json() as { advanced: boolean }).advanced, false)
-
-// 第二位用户处于相同状态，也不能使用第一位用户签发的 proof。
-const second = await createGuest()
-const startSecond = await post(second.headers, '/v1/fixed-content/events/birth_first_voice_v1/start', { eventId: 'birth_first_voice_v1', idempotencyKey: 'chapter-one-api-second-start' })
-const secondInstance = await startSecond.json() as { instanceId: string }
-await post(second.headers, `/v1/fixed-content/events/${secondInstance.instanceId}/advance`, { inputMode: 'choice', choiceId: 'c1e1_choice_open', idempotencyKey: 'chapter-one-api-second-open' })
-await post(second.headers, `/v1/fixed-content/events/${secondInstance.instanceId}/advance`, { inputMode: 'choice', choiceId: 'c1e1_choice_presence', idempotencyKey: 'chapter-one-api-second-route' })
-const wrongUser = await post(second.headers, `/v1/fixed-content/events/${secondInstance.instanceId}/advance`, { inputMode: 'confirmed_asr_text', text: correct.body.text, asrProof: correct.body.fixedEventAsrProof, idempotencyKey: 'chapter-one-api-wrong-user-proof' })
-const wrongUserBody = await wrongUser.json() as { advanced: boolean; currentState: { id: string } }
-assert.equal(wrongUserBody.advanced, false)
-assert.equal(wrongUserBody.currentState.id, 'c1e1_input_presence')
-
+assert.equal((await resumed.json() as { currentState: { id: string } }).currentState.id, 'c1e1_input_presence')
+const discard = await post(headers, `/v1/fixed-content/events/${instance.instanceId}/asr-proof/discard`, { stateId: 'c1e1_input_presence', asrProof: '00000000-0000-0000-0000-000000000000' })
+assert.equal(discard.status, 200)
 openDatabase().close()
 for (const suffix of ['', '-wal', '-shm']) { const path = dbPath + suffix; if (existsSync(path)) rmSync(path, { force: true }) }
 console.log(JSON.stringify({ ok: true, checks: [
-  'api-ruleset-and-hidden-recall', 'api-route-selection-and-choice-bypass', 'api-wrong-route-asr-does-not-advance',
-  'api-valid-proof-advances-after-pause-resume', 'api-proof-missing-fake-wrong-user-wrong-state-replay-rejected',
+  'api-ruleset-hidden-recall-and-route-selection', 'api-choice-bypass-rejected',
+  'api-mock-asr-never-issues-course-proof', 'api-teaching-begin-and-state-conflict',
+  'api-pause-resume-and-idempotent-discard',
 ] }, null, 2))

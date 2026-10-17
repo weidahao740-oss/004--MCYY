@@ -6,7 +6,7 @@ import type {
 } from '@english-pet/contracts'
 import { chatStreamEventSchema, completeConversationResponseSchema } from '@english-pet/contracts'
 
-const API_BASE = (import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8787').replace(/\/$/, '')
+import { API_BASE } from './api-base'
 
 async function jsonRequest<T>(path: string, token: string, init: RequestInit = {}): Promise<T> {
   const response = await fetch(`${API_BASE}${path}`, {

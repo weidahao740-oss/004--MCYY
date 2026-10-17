@@ -75,7 +75,7 @@
 - 进入条件：新用户首次进入，自动触发（章节序 1，无前序主线）。
 - 完成条件：用户完成所选完整表达的真实录音、ASR 确定性匹配、识别结果展示与用户确认；系统先播放对应分支反馈与共同收束，全部完成后才写入 `first_response_style` 并结算事件。随后出现进入 E01-02 的按钮。计入章节完成。
 - 暂停条件：用户选择 `稍后继续`，只保存临时中文意图和教学进度；不结算事件、不播放正式分支反馈、不写 `first_response_style`。
-- 内容状态：S01 内容、语言与具体教学校准 `completed`（2026-10-10 用户确认）；最终生产台词版本、结果句 ID 和工程世界状态绑定仍由 S06／P4-T06-09 完成。
+- 内容状态：S01 内容、语言与具体教学校准 `completed`（2026-10-10 用户确认）；S06 已完成 E01-01 正式 line ID 与 `first_response_style` 状态键对齐；本次中文润色将人工译文版本更新为 v1.0.1，正式音频仍由 S07 完成。
 
 #### 剧情与角色动机
 
@@ -97,8 +97,10 @@ Morrow 说完首句后，先在底部上浮选项层显示三条中文意图。�
 - 意图 ID：`bfv_intent_reassuring_presence`
 - 中文意图：`告诉墨洛：我在这里`
 - 用户完整表达：`Yes, I’m here.`
-- 人工中文理解：`对，我在这里。`
+- 人工中文理解：`对，我在这儿。`
+- 正式目标句 ID：`bfv_presence_target`
 - Morrow 分支反馈：`Oh, good. I’m Morrow. I wasn’t sure anyone was there.`
+- 正式反馈句 ID：`bfv_presence_feedback`
 - 人工中文译文：`太好了。我叫墨洛。刚才我还不确定这里有没有人。`
 - `first_response_style = reassuring_presence`
 
@@ -107,8 +109,10 @@ Morrow 说完首句后，先在底部上浮选项层显示三条中文意图。�
 - 意图 ID：`bfv_intent_friendly_greeting`
 - 中文意图：`友好地回应墨洛`
 - 用户完整表达：`Hi. I can hear you.`
-- 人工中文理解：`你好，我能听见你。`
+- 人工中文理解：`你好，我听见你了。`
+- 正式目标句 ID：`bfv_greeting_target`
 - Morrow 分支反馈：`Hi. I’m Morrow. I’m glad you answered.`
+- 正式反馈句 ID：`bfv_greeting_feedback`
 - 人工中文译文：`你好，我叫墨洛。很高兴你回应了我。`
 - `first_response_style = friendly_greeting`
 
@@ -118,8 +122,10 @@ Morrow 说完首句后，先在底部上浮选项层显示三条中文意图。�
 - 中文意图：`先问问对方是谁`
 - 用户完整表达：`Who are you?`
 - 人工中文理解：`你是谁？`
+- 正式目标句 ID：`bfv_identity_target`
 - Morrow 分支反馈：`I’m Morrow. I just woke up. That’s about all I know for now.`
-- 人工中文译文：`我叫墨洛。我刚醒来。现在我知道的差不多就这些。`
+- 正式反馈句 ID：`bfv_identity_feedback`
+- 人工中文译文：`我叫墨洛。我刚醒来。目前我知道的差不多就这些。`
 - `first_response_style = identity_check`
 
 `first_response_style` 只记录这次经过确认的回应方式，不解释为用户性格；禁止使用 `cautious` 或其他标签给用户定性。
@@ -129,6 +135,7 @@ Morrow 说完首句后，先在底部上浮选项层显示三条中文意图。�
 三条分支反馈后统一播放：
 
 - Morrow：`Everything here feels new. Will you look around with me?`
+- 正式收束句 ID：`bfv_close_line`
 - 人工中文译文：`这里的一切对我来说都很陌生。你愿意陪我看看周围吗？`
 - 中文行动按钮：`陪墨洛看看房间`
 
@@ -140,7 +147,7 @@ Morrow 说完首句后，先在底部上浮选项层显示三条中文意图。�
 
 ##### 分支 A `Yes, I’m here.` 的实际交互
 
-1. 先播放完整表达 `Yes, I’m here.`，同时用自然中文建立“对，我在这里”的意思。
+1. 先播放完整表达 `Yes, I’m here.`，同时用自然中文建立“对，我在这儿”的意思。
 2. 分别教学自然语块 `Yes`、`I’m here`；两个语块都要完成真实录音跟读并识别通过，才能进入句子搭建。
 3. 使用点击式语块排序。底部候选只包含两个已经学过的语块，不放无关干扰项；初始顺序固定反向为 `I’m here` / `Yes,`。
 4. 用户按点击顺序把语块送入上方搭建区，先点的排在前面；上方语块可点击撤回后重新排列。逗号和句号由语块／系统处理，不单独作为学习项。
@@ -148,7 +155,7 @@ Morrow 说完首句后，先在底部上浮选项层显示三条中文意图。�
 
 ##### 分支 B `Hi. I can hear you.` 的实际交互
 
-1. 先播放完整表达 `Hi. I can hear you.`，同时用自然中文建立“你好，我能听见你”的意思。
+1. 先播放完整表达 `Hi. I can hear you.`，同时用自然中文建立“你好，我听见你了”的意思。
 2. 分别教学自然语块 `Hi`、`I can hear you`；两个语块都要完成真实录音跟读并识别通过。`I can hear you` 保持完整自然语块，不拆成 `I` / `can` / `hear` / `you`。
 3. 使用点击式语块排序。底部候选只包含两个已经学过的语块，初始顺序固定反向为 `I can hear you` / `Hi.`，不放无关干扰项。
 4. 点击、上方撤回重排和标点处理规则与分支 A 相同；排成 `Hi.` / `I can hear you.` 后播放完整句，再进入完整句真实录音。
@@ -241,12 +248,12 @@ Morrow 说完首句后，先在底部上浮选项层显示三条中文意图。�
 
 1. `I can see three things: a lamp, a plant, and a small bell.`
    - 人工中文译文：我看见三样东西：一盏灯、一株植物，还有一只小铃铛。
-   - 台词 ID：`bfo_object_line`
-   - 音频需求：`bfo_object_line_audio`（仅登记需求，本任务不制作正式语音）
+   - 正式台词 ID：`bfo_object_line`
+   - 音频 ID：`bfo_object_line_audio`
 2. `I think that's what they're called. What did you notice first?`
    - 人工中文译文：我想，它们应该就是这么叫的。你第一眼注意到的是哪一个？
-   - 台词 ID：`bfo_prompt_line`
-   - 音频需求：`bfo_prompt_line_audio`
+   - 正式台词 ID：`bfo_prompt_line`
+   - 音频 ID：`bfo_prompt_line_audio`
 
 #### 用户物品选择与第一核心表达
 
@@ -254,9 +261,9 @@ Morrow 说完首句后，先在底部上浮选项层显示三条中文意图。�
 2. 选择后锁定对应路线，不要求再次寻找或点击场景物品。中文图片／剧情选择不产生英语学习证据，未选物品不产生证据。
 3. 系统短暂播放所选完整句并显示自然中文意思；再按可靠证据分别处理 `I noticed`、所选物品语块和 `first`。没有可靠证据的成分必须先建立意思并完成必要真实跟读。
 4. 教学后先回到剧情气泡，Morrow 按所选物品播放一句等义短反馈，并留出短暂停顿：
-   - 灯：`So the lamp was the first thing that caught your eye.`（原来你第一眼留意到的是那盏灯。）
-   - 植物：`So the plant was the first thing that caught your eye.`（原来你第一眼留意到的是那株植物。）
-   - 小铃铛：`So the small bell was the first thing that caught your eye.`（原来你第一眼留意到的是那只小铃铛。）
+   - 灯：`So the lamp was the first thing that caught your eye.`（原来你第一眼留意到的是那盏灯。）正式台词 ID：`bfo_lamp_feedback`；音频 ID：`bfo_lamp_feedback_audio`。
+   - 植物：`So the plant was the first thing that caught your eye.`（原来你第一眼留意到的是那株植物。）正式台词 ID：`bfo_plant_feedback`；音频 ID：`bfo_plant_feedback_audio`。
+   - 小铃铛：`So the small bell was the first thing that caught your eye.`（原来你第一眼留意到的是那只小铃铛。）正式台词 ID：`bfo_bell_feedback`；音频 ID：`bfo_bell_feedback_audio`。
    - 三句只承担剧情衔接，不新增学习对象、不要求跟读，也不让完整目标句持续留屏。
 5. 只做一次有意义的预设候选填空：
    - `I noticed the lamp ___.` / `I noticed the plant ___.` / `I noticed the small bell ___.`
@@ -269,7 +276,7 @@ Morrow 说完首句后，先在底部上浮选项层显示三条中文意图。�
 
 ##### 分支 A：窗边的灯
 
-- 意图 ID：`bfo_intent_lamp` ｜ 用户目标句：`I noticed the lamp first.`
+- 意图 ID：`bfo_intent_lamp` ｜ 正式目标句 ID：`bfo_lamp_target` ｜ 用户目标句：`I noticed the lamp first.`
 - 人工中文译文：我第一眼注意到的是那盏灯。
 - 可接受确定性短语：`i noticed the lamp first`
 - 排除条件：含 `not the lamp`、同时明确说出两个以上候选物，或未达到唯一匹配条件。
@@ -279,7 +286,7 @@ Morrow 说完首句后，先在底部上浮选项层显示三条中文意图。�
 
 ##### 分支 B：门边的植物
 
-- 意图 ID：`bfo_intent_plant` ｜ 用户目标句：`I noticed the plant first.`
+- 意图 ID：`bfo_intent_plant` ｜ 正式目标句 ID：`bfo_plant_target` ｜ 用户目标句：`I noticed the plant first.`
 - 人工中文译文：我第一眼注意到的是那株植物。
 - 可接受确定性短语：`i noticed the plant first`
 - 排除条件：含 `not the plant`、同时明确说出两个以上候选物，或未达到唯一匹配条件。
@@ -289,7 +296,7 @@ Morrow 说完首句后，先在底部上浮选项层显示三条中文意图。�
 
 ##### 分支 C：矮柜上的小铃铛
 
-- 意图 ID：`bfo_intent_bell` ｜ 用户目标句：`I noticed the small bell first.`
+- 意图 ID：`bfo_intent_bell` ｜ 正式目标句 ID：`bfo_bell_target` ｜ 用户目标句：`I noticed the small bell first.`
 - 人工中文译文：我第一眼注意到的是那只小铃铛。
 - 可接受确定性短语：`i noticed the small bell first` / `i noticed the bell first`
 - 排除条件：含 `not the bell`、同时明确说出两个以上候选物，或未达到唯一匹配条件。
@@ -310,6 +317,8 @@ Morrow 说完首句后，先在底部上浮选项层显示三条中文意图。�
 
 #### 第二核心／短交流表达：`What about you?`
 
+- 正式目标句 ID：`bfo_second_target`
+
 - 自然中文理解：`那你呢？`
 - 真实目的：询问 Morrow 第一眼注意到了什么；不是为了多教一句而添加的练习。
 - 保持整句为一个自然语块，不机械逐词拆分。
@@ -323,12 +332,15 @@ Morrow 说完首句后，先在底部上浮选项层显示三条中文意图。�
 
 - 用户选灯：`I noticed the plant first. Its leaves caught my eye.`
   - 人工中文译文：我先注意到的是那株植物。它的叶子吸引了我的注意。
+  - 正式台词 ID：`bfo_lamp_morrow`；音频 ID：`bfo_lamp_morrow_audio`。
   - 只把视线从灯转向植物，轻微歪头。
 - 用户选植物：`I noticed the small bell first. I wondered what it might sound like.`
   - 人工中文译文：我先注意到的是那只小铃铛。我刚才在想，它会发出什么样的声音。
+  - 正式台词 ID：`bfo_plant_morrow`；音频 ID：`bfo_plant_morrow_audio`。
   - 只把视线转向小铃铛，短暂停下来听。
 - 用户选小铃铛：`I noticed the lamp first. Its light made the room feel a little warmer.`
   - 人工中文译文：我先注意到的是那盏灯。它的光让房间感觉暖了一点。
+  - 正式台词 ID：`bfo_bell_morrow`；音频 ID：`bfo_bell_morrow_audio`。
   - 只把视线转向灯光，保持或切换为简单坐姿。
 
 三条回答刻意选择与用户不同的注意点，用视角差异推进关系；它们不新增必修跟读或完整句学习目标。
@@ -340,19 +352,24 @@ Morrow 回答后，底部上浮选项层出现中文态度／关系选择。选�
 1. `这样挺有意思`
    - `It is. The same room can look a little different to each of us.`
    - 人工中文译文：是啊。同一个房间，在我们各自眼里也会有一点不一样。
+   - 正式台词 ID：`bfo_attitude_interesting`；音频 ID：`bfo_attitude_interesting_audio`。
 2. `你注意到的，我刚才没留意`
    - `Then we helped each other notice a little more.`
    - 人工中文译文：那我们刚好让彼此多注意到了一点。
+   - 正式台词 ID：`bfo_attitude_noticed_more`；音频 ID：`bfo_attitude_noticed_more_audio`。
 3. `我们可以继续一起看看`
    - `I'd like that. We don't have to notice the same things to look together.`
    - 人工中文译文：我愿意。一起看，并不需要我们注意到完全一样的东西。
+   - 正式台词 ID：`bfo_attitude_keep_looking`；音频 ID：`bfo_attitude_keep_looking_audio`。
 
 统一收束：
 
 - `We looked at the same room and noticed different things. Maybe friends help each other see a little more.`
 - 人工中文译文：我们看的是同一个房间，却先注意到了不同的东西。也许朋友就是会让彼此多看见一点。
+- 正式台词 ID：`bfo_close_shared`；音频 ID：`bfo_close_shared_audio`。
 - `There's something else I want to ask you.`
 - 人工中文译文：我还有一件事想问问你。
+- 正式台词 ID：`bfo_close_next`；音频 ID：`bfo_close_next_audio`。
 
 最终关系收束播放完毕后，才按用户最初确认的物品写入 `first_shared_object = lamp | plant | small_bell` 并标记 E01-02 完成。此后先回到陪伴首页并执行当天新增内容预算判断：默认首日 E01-01 与 E01-02 已占用两个新主线额度，不自动连续开放 E01-03；只有用户明确选择“今天再经历一件事”且当天新核心表达总数仍不超过 3 时，才可额外开放 E01-03，否则延后到下一本地日。Morrow 的注意点由固定映射确定，只用于回答、收束与可选记忆，不替换 `first_shared_object` 的既有语义。
 
@@ -1685,8 +1702,8 @@ Morrow 先说：
 
 | `first_response_style` | E01-01 唯一目标句 | Morrow 固定引用台词 | 人工中文译文 | 台词需求 ID | 音频需求 ID |
 | --- | --- | --- | --- | --- | --- |
-| `reassuring_presence` | `Yes, I’m here.` | `You said, “Yes, I’m here.”` | `你说：“对，我在这里。”` | `brw_quote_reassuring_line` | `brw_quote_reassuring_line_audio` |
-| `friendly_greeting` | `Hi. I can hear you.` | `You said, “Hi. I can hear you.”` | `你说：“你好，我能听见你。”` | `brw_quote_greeting_line` | `brw_quote_greeting_line_audio` |
+| `reassuring_presence` | `Yes, I’m here.` | `You said, “Yes, I’m here.”` | `你说：“对，我在这儿。”` | `brw_quote_reassuring_line` | `brw_quote_reassuring_line_audio` |
+| `friendly_greeting` | `Hi. I can hear you.` | `You said, “Hi. I can hear you.”` | `你说：“你好，我听见你了。”` | `brw_quote_greeting_line` | `brw_quote_greeting_line_audio` |
 | `identity_check` | `Who are you?` | `You asked, “Who are you?”` | `你问：“你是谁？”` | `brw_quote_identity_line` | `brw_quote_identity_line_audio` |
 
 然后统一说：

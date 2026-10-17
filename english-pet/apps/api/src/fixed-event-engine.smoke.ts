@@ -1,3 +1,4 @@
+import { completeTeaching } from './fixed-teaching-test-helper.js'
 import assert from 'node:assert/strict'
 import { existsSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
@@ -7,6 +8,7 @@ import { SqliteFixedEventEngine } from './sqlite-fixed-event-engine.js'
 
 function asrAdvance(engine: SqliteFixedEventEngine, userId: string, instanceId: string, text: string, idempotencyKey: string) {
   const stateId = engine.current(userId)!.currentState.id
+  completeTeaching(engine, userId, instanceId)
   const proof = engine.issueAsrProof(userId, instanceId, stateId, text)
   return engine.advance(userId, instanceId, { inputMode: 'confirmed_asr_text', text, asrProof: proof.proof, idempotencyKey })
 }
@@ -76,6 +78,8 @@ assert.equal(view.currentState.id, 'c1e2_morrow_lamp')
 view = engine.advance(mainUser, broInstance, { inputMode: 'choice', choiceId: 'c1e2_choice_morrow_lamp', idempotencyKey: key('bro-morrow') })
 assert.equal(view.currentState.id, 'c1e2_second_lamp')
 view = asrAdvance(engine, mainUser, broInstance, 'What about you?', key('bro-second'))
+assert.equal(view.currentState.id, 'c1e2_answer_lamp')
+view = engine.advance(mainUser, broInstance, { inputMode: 'choice', choiceId: 'c1e2_choice_answer_lamp', idempotencyKey: key('bro-answer') })
 assert.equal(view.currentState.id, 'c1e2_attitude')
 view = engine.advance(mainUser, broInstance, { inputMode: 'choice', choiceId: 'c1e2_choice_interesting', idempotencyKey: key('bro-attitude') })
 view = engine.advance(mainUser, broInstance, { inputMode: 'choice', choiceId: 'c1e2_choice_feedback_interesting', idempotencyKey: key('bro-feedback') })
@@ -93,6 +97,7 @@ view = engine.start(nomatchUser, { eventId: 'birth_first_voice_v1', idempotencyK
 const nmInstance = view.instanceId
 engine.advance(nomatchUser, nmInstance, { inputMode: 'choice', choiceId: 'c1e1_choice_open', idempotencyKey: key('nm-open') })
 engine.advance(nomatchUser, nmInstance, { inputMode: 'choice', choiceId: 'c1e1_choice_presence', idempotencyKey: key('nm-route') })
+completeTeaching(engine, nomatchUser, nmInstance)
 const wrongMode = engine.advance(nomatchUser, nmInstance, { inputMode: 'text', text: 'asdf qwer', idempotencyKey: key('nm-wrong-mode') })
 assert.equal(wrongMode.advanced, false)
 assert.equal(wrongMode.currentState.id, 'c1e1_input_presence')
@@ -100,7 +105,7 @@ assert.match(wrongMode.messageZh ?? '', /不接受这种输入方式/)
 const nomatch = asrAdvance(engine, nomatchUser, nmInstance, 'asdf qwer', key('nm-garbage'))
 assert.equal(nomatch.advanced, false)
 assert.equal(nomatch.currentState.id, 'c1e1_input_presence')
-assert.ok(nomatch.candidates && nomatch.candidates.length > 0 && nomatch.candidates.length <= 3)
+assert.deepEqual(nomatch.candidates, [])
 assert.equal(typeof nomatch.messageZh, 'string')
 // 状态仍在 c1e1_first（未被乱码推进）。
 const still = engine.current(nomatchUser)

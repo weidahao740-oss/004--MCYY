@@ -16,9 +16,13 @@ import type {
   FixedEventDailyBudgetView,
   FixedEventInstanceView,
   FixedEventRecommendationView,
+  FixedEventTeachingRequest,
+  FixedEventTeachingStep,
+  FixedEventTeachingView,
   Memory,
 } from '@english-pet/contracts'
 import { fromJson, openDatabase, toJson } from './sqlite-db.js'
+import { buildTeachingSteps, normalizeSpeech, teachingEvidenceKey, teachingUnits, TEACHING_PLAN_VERSION } from './fixed-event-teaching.js'
 import type { MemoryProposalInput, SqliteMemoryStore } from './sqlite-memory-store.js'
 import type { MemoryMemoryStore } from './memory-memory-store.js'
 import type { SqliteJournalStore } from './sqlite-journal-store.js'
@@ -37,6 +41,13 @@ interface FixedEventEngineDeps {
 }
 
 interface FixedEventInstanceRecord {
+  teachingEnabled?: boolean
+  teachingByState?: Record<string, {
+    planVersion: string
+    target: FixedContentLine
+    steps: FixedEventTeachingStep[]
+    index: number
+  }>
   eventId: string
   instanceId: string
   currentStateId: string
@@ -64,6 +75,7 @@ interface DailyBudgetRecord {
 }
 
 interface FixedEventUserRecord {
+  teachingEvidence?: Record<string, { level: 'prompted'; source: 'confirmed_real_asr'; instanceId: string; stateId: string; confirmedAt: string }>
   userId: string
   worldState: WorldState
   completedEventIds: string[]
@@ -82,6 +94,7 @@ interface FixedEventUserRecord {
     normalizedText: string
     expiresAt: string
     usedAt: string | null
+    teachingStepId?: string
   }>
 }
 
@@ -354,6 +367,8 @@ export class SqliteFixedEventEngine {
     const outcome = instance.selectedOutcomeId
       ? event.outcomes.find((entry) => entry.id === instance.selectedOutcomeId)
       : null
+    const alreadyShown = new Set(Object.values(instance.teachingByState ?? {}).flatMap(checkpoint =>
+      checkpoint.steps.slice(0, checkpoint.index).flatMap(step => step.storyLine ? [step.storyLine.id] : [])))
     return {
       eventId: event.id,
       eventVersion: event.version,
@@ -367,7 +382,8 @@ export class SqliteFixedEventEngine {
         phase: state.phase,
         uiTitleZh: state.uiTitleZh,
         userTaskZh: state.userTaskZh,
-        lines: resolveLines(state.lineIds),
+        // 态度选择接在墨洛的回答后，不再把最初的物品提问当成新台词重播。
+        lines: state.id === 'c1e2_attitude' ? [] : resolveLines(state.lineIds).filter(line => !alreadyShown.has(line.id)),
         choices: state.choices,
         acceptedInputModes: state.acceptedInputModes,
         referenceReplyLines: resolveLines(state.referenceReplyLineIds),
@@ -567,30 +583,121 @@ export class SqliteFixedEventEngine {
     return record.active ? this.render(record, record.active, { advanced: false }) : null
   }
 
-  issueAsrProof(userId: string, instanceId: string, stateId: string, recognizedText: string): { proof: string; normalizedText: string; expiresAt: string } {
+  teaching(userId: string, instanceId: string, input: FixedEventTeachingRequest): FixedEventTeachingView {
+    const record = this.loadRecord(userId)
+    const cacheKey = `teaching:${instanceId}:${input.idempotencyKey}`
+    const cached = record.commandByIdempotencyKey[cacheKey] as FixedEventTeachingView | undefined
+    if (cached && input.action !== 'begin') return cached
+    const instance = record.active
+    if (!instance || instance.instanceId !== instanceId) throw new Error('fixed_event_not_found')
+    if (instance.status !== 'active' || instance.currentStateId !== input.stateId) throw new Error('fixed_asr_state_mismatch')
+    const event = getFixedContentEvent(instance.eventId)!
+    const state = event.states.find((entry) => entry.id === input.stateId)
+    if (event.chapterId !== CHAPTER_ONE_ID || !state || state.phase !== 'input') throw new Error('fixed_asr_state_mismatch')
+    const stateLines = resolveLines(state.lineIds)
+    const target = resolveLines(state.referenceReplyLineIds)[0]
+      ?? stateLines.find((line) => line.purpose === 'reference_reply')
+      ?? [...stateLines].reverse().find((line) => line.purpose === 'prompt')
+      ?? stateLines[stateLines.length - 1]!
+    instance.teachingEnabled = true
+    instance.teachingByState ??= {}
+    let checkpoint = instance.teachingByState[state.id]
+    if (!checkpoint || checkpoint.planVersion !== TEACHING_PLAN_VERSION || checkpoint.target.learningContent.textVersion !== target.learningContent.textVersion || checkpoint.target.learningContent.english !== target.learningContent.english || checkpoint.target.learningContent.translation.version !== target.learningContent.translation.version || checkpoint.target.learningContent.translation.textZh !== target.learningContent.translation.textZh) {
+      const reliable = new Set(Object.entries(record.teachingEvidence ?? {}).filter(([, value]) => value.source === 'confirmed_real_asr').map(([key]) => key))
+      const steps = buildTeachingSteps(event.id, target, reliable)
+      if (event.id === 'b1_first_room_object_v1' && /^bfo_(lamp|plant|bell)_target$/.test(target.id)) {
+        const feedback = event.lines.find(line => line.id === target.id.replace('_target', '_feedback'))!
+        const gap = steps.findIndex(step => step.kind === 'gap')
+        steps.splice(gap >= 0 ? gap : steps.length - 1, 0, { id: 'observation_feedback', kind: 'intro', english: '', chinese: '墨洛听懂了你的注意点。', options: [], answerIds: [], storyLine: feedback })
+      }
+      checkpoint = { planVersion: TEACHING_PLAN_VERSION, target, steps, index: 0 }
+      instance.teachingByState[state.id] = checkpoint
+    }
+    const step = checkpoint.steps[checkpoint.index]!
+    let messageZh: string | undefined
+    if (input.action === 'confirm') {
+      if (input.stepId !== step.id || step.kind === 'output') throw new Error('fixed_asr_state_mismatch')
+      let accepted = false
+      if (step.kind === 'repeat') {
+        const proved = this.consumeAsrProof(record, userId, instanceId, state.id, input.text, input.asrProof, step.id)
+        accepted = proved && normalizeSpeech(input.text ?? '') === normalizeSpeech(step.english)
+        if (accepted) {
+          record.teachingEvidence ??= {}
+          record.teachingEvidence[teachingEvidenceKey(step.english)] = { level: 'prompted', source: 'confirmed_real_asr', instanceId, stateId: state.id, confirmedAt: this.now().toISOString() }
+        }
+        if (!accepted) messageZh = '这次还没有识别到当前这段话。可以重录，或者稍后继续。'
+      } else {
+        accepted = JSON.stringify(input.answerIds ?? []) === JSON.stringify(step.answerIds)
+        if (!accepted) messageZh = step.kind === 'order' ? '再想想哪一段先说。可以点已选语块撤回。' : '再看看这一步想表达的意思。'
+        // 排序、中文情境图和缺音频理解只保存检查点，不生成口语或听力证据。
+      }
+      if (accepted) checkpoint.index += 1
+    }
+    const view: FixedEventTeachingView = {
+      instanceId, stateId: state.id, planVersion: checkpoint.planVersion,
+      stepIndex: checkpoint.index, stepCount: checkpoint.steps.length,
+      step: checkpoint.steps[checkpoint.index]!, target: checkpoint.target,
+      helpChunks: event.id === 'b1_return_first_words_v1' && checkpoint.target.learningContent.english === 'Who are you?'
+        ? ['Who', 'are you'] : teachingUnits(checkpoint.target).map(([english]) => english), ...(messageZh ? { messageZh } : {}),
+    }
+    if (input.action !== 'begin') record.commandByIdempotencyKey[cacheKey] = view
+    this.saveRecord(record)
+    return view
+  }
+
+  discardAsrProof(userId: string, instanceId: string, stateId: string, proof: string): void {
+    const record = this.loadRecord(userId)
+    const issued = record.asrProofs[proof]
+    // 取消可重复调用，也允许在事件刚结束后清理，不改变剧情或学习证据。
+    if (!issued || issued.usedAt || issued.userId !== userId || issued.instanceId !== instanceId || issued.stateId !== stateId) return
+    issued.usedAt = this.now().toISOString()
+    this.saveRecord(record)
+  }
+
+  private invalidateAsrProofs(record: FixedEventUserRecord, instanceId: string): void {
+    const usedAt = this.now().toISOString()
+    for (const issued of Object.values(record.asrProofs)) {
+      if (issued.instanceId === instanceId && !issued.usedAt) issued.usedAt = usedAt
+    }
+  }
+
+  issueAsrProof(userId: string, instanceId: string, stateId: string, recognizedText: string, teachingStepId?: string): { proof: string; normalizedText: string; expiresAt: string } {
     const record = this.loadRecord(userId)
     if (!record.active || record.active.instanceId !== instanceId) throw new Error('fixed_event_not_found')
     if (record.active.status !== 'active' || record.active.currentStateId !== stateId) throw new Error('fixed_asr_state_mismatch')
     const event = getFixedContentEvent(record.active.eventId)!
     const state = event.states.find((entry) => entry.id === stateId)
     if (!state || state.phase !== 'input' || !state.acceptedInputModes.includes('confirmed_asr_text')) throw new Error('fixed_asr_state_mismatch')
+    if (teachingStepId) {
+      const checkpoint = record.active.teachingByState?.[stateId]
+      const step = checkpoint?.steps[checkpoint.index]
+      if (!step || step.id !== teachingStepId || step.kind !== 'repeat') throw new Error('fixed_asr_state_mismatch')
+    } else if (event.chapterId === CHAPTER_ONE_ID) {
+      const checkpoint = record.active.teachingByState?.[stateId]
+      if (!checkpoint || checkpoint.planVersion !== TEACHING_PLAN_VERSION || checkpoint.steps[checkpoint.index]?.kind !== 'output') throw new Error('fixed_asr_state_mismatch')
+    }
     const normalizedText = recognizedText.normalize('NFKC').replace(/[’‘]/g, "'").trim().toLowerCase().replace(/[.!?,;:]+$/g, '').replace(/\s+/g, ' ')
     if (!normalizedText) throw new Error('fixed_asr_empty')
     const proof = randomUUID()
     const expiresAt = new Date(this.now().getTime() + 5 * 60 * 1000).toISOString()
-    record.asrProofs[proof] = { userId, instanceId, stateId, recognizedText, normalizedText, expiresAt, usedAt: null }
+    // 每次重录使同一步的旧凭证失效，否认后的旧转写不能再次提交。
+    for (const [key, issued] of Object.entries(record.asrProofs)) {
+      if (Date.parse(issued.expiresAt) <= this.now().getTime()) { delete record.asrProofs[key]; continue }
+      if (issued.instanceId === instanceId && issued.stateId === stateId && issued.teachingStepId === teachingStepId) issued.usedAt = this.now().toISOString()
+    }
+    record.asrProofs[proof] = { userId, instanceId, stateId, recognizedText, normalizedText, expiresAt, usedAt: null, ...(teachingStepId ? { teachingStepId } : {}) }
     this.saveRecord(record)
     return { proof, normalizedText, expiresAt }
   }
 
-  private consumeAsrProof(record: FixedEventUserRecord, userId: string, instanceId: string, stateId: string, text: string | undefined, proof: string | undefined): boolean {
+  private consumeAsrProof(record: FixedEventUserRecord, userId: string, instanceId: string, stateId: string, text: string | undefined, proof: string | undefined, teachingStepId?: string): boolean {
     if (!proof || !text) return false
     const issued = record.asrProofs[proof]
-    if (!issued || issued.usedAt || issued.userId !== userId || issued.instanceId !== instanceId || issued.stateId !== stateId) return false
+    if (!issued || issued.usedAt || issued.userId !== userId || issued.instanceId !== instanceId || issued.stateId !== stateId || issued.teachingStepId !== teachingStepId) return false
     if (Date.parse(issued.expiresAt) <= this.now().getTime()) return false
     const normalized = text.normalize('NFKC').replace(/[’‘]/g, "'").trim().toLowerCase().replace(/[.!?,;:]+$/g, '').replace(/\s+/g, ' ')
-    if (normalized !== issued.normalizedText) return false
     issued.usedAt = this.now().toISOString()
+    if (normalized !== issued.normalizedText) return false
     return true
   }
 
@@ -610,6 +717,12 @@ export class SqliteFixedEventEngine {
     const instance = record.active
     const event = getFixedContentEvent(instance.eventId)!
     const state = event.states.find((entry) => entry.id === instance.currentStateId)!
+    if (event.chapterId === CHAPTER_ONE_ID && state.phase === 'input') {
+      const checkpoint = instance.teachingByState?.[state.id]
+      if (!checkpoint || checkpoint.planVersion !== TEACHING_PLAN_VERSION || checkpoint.steps[checkpoint.index]?.kind !== 'output') {
+        return this.render(record, instance, { advanced: false, messageZh: '先完成当前保留的教学，再说出完整表达。' })
+      }
+    }
     if (event.chapterId === CHAPTER_ONE_ID && state.phase === 'input' && !state.acceptedInputModes.includes(input.inputMode)) {
       const view = this.render(record, instance, { advanced: false, messageZh: '当前步骤不接受这种输入方式。' })
       record.responseByIdempotencyKey[cacheKey] = view
@@ -622,13 +735,20 @@ export class SqliteFixedEventEngine {
       this.saveRecord(record)
       return view
     }
-    const preview = previewFixedContentIntent({
+    let preview = previewFixedContentIntent({
       event,
       stateId: instance.currentStateId,
       input: { inputMode: input.inputMode, text: input.text, choiceId: input.choiceId },
       policy: fixedContentV1.matchingPolicy,
       fallbacks: fixedContentV1.fallbacks,
     })
+    if (event.chapterId === CHAPTER_ONE_ID && input.inputMode === 'confirmed_asr_text' && state.phase === 'input') {
+      // 录音只接受当前路线冻结目标及标准缩写等价形式；保留否定，不作语义猜测。
+      const exact = event.intents.filter(intent => intent.eligibleStateIds.includes(state.id)
+        && intent.exactPhrases.some(phrase => normalizeSpeech(phrase) === normalizeSpeech(input.text ?? '')))
+      preview = exact.length === 1 ? { resolvedIntentId: exact[0]!.id, candidates: [], messageZh: '已经确认本次表达。' }
+        : { candidates: [], fallbackKind: 'no_match', messageZh: '这次还没有可靠地识别到当前表达，可以重录或稍后继续。' }
+    }
     const transition = preview.resolvedIntentId
       ? event.transitions.find((entry) => entry.fromStateId === instance.currentStateId && entry.onIntentIds.includes(preview.resolvedIntentId!)) ?? null
       : null
@@ -636,6 +756,7 @@ export class SqliteFixedEventEngine {
     // 第一章所有事件的“稍后继续”都只暂停在最近检查点；不需要结果迁移，也不写正式状态。
     if (event.chapterId === CHAPTER_ONE_ID && preview.resolvedIntentId?.endsWith('_pause')) {
       instance.status = 'paused'
+      this.invalidateAsrProofs(record, instanceId)
       const view = this.render(record, instance, { advanced: false, messageZh: '已经停在最近确认的位置，下次可以继续。' })
       record.responseByIdempotencyKey[cacheKey] = view
       this.saveRecord(record)
@@ -656,6 +777,14 @@ export class SqliteFixedEventEngine {
     instance.resolvedIntentIds.push(preview.resolvedIntentId!)
     if ((input.inputMode === 'text' || input.inputMode === 'confirmed_asr_text') && input.text?.trim()) {
       instance.confirmedExpressions.push(input.text)
+      if (instance.teachingEnabled && input.inputMode === 'confirmed_asr_text') {
+        const target = instance.teachingByState?.[state.id]?.target
+        if (target) {
+          record.teachingEvidence ??= {}
+          // 原型保留中文情境及提示，保守只记 prompted，不自动升级为独立或掌握。
+          record.teachingEvidence[teachingEvidenceKey(target.learningContent.english)] = { level: 'prompted', source: 'confirmed_real_asr', instanceId, stateId: state.id, confirmedAt: this.now().toISOString() }
+        }
+      }
     }
     if (transition.outcomeId) {
       const outcome = event.outcomes.find((entry) => entry.id === transition.outcomeId)!
@@ -703,6 +832,7 @@ export class SqliteFixedEventEngine {
     if (cached) return cached
     if (!record.active || record.active.instanceId !== instanceId) throw new Error('fixed_event_not_found')
     record.active.status = 'paused'
+    this.invalidateAsrProofs(record, instanceId)
     const view = this.render(record, record.active, { advanced: false })
     record.responseByIdempotencyKey[cacheKey] = view
     this.saveRecord(record)
