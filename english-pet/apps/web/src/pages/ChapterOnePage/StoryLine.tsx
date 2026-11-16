@@ -1,18 +1,17 @@
-import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
-import { Play } from 'lucide-react'
+import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react'
 import type { FixedContentLine } from '@english-pet/contracts'
 import { API_BASE, request } from './backend'
 import { isCapturing, subscribeCapture } from './mediaSession'
+import Dialogue from './Dialogue'
 
 interface Binding {
   audioId: string; lineId: string; contentId: string; textVersion: string; translationVersion: string
   status: string; fileRef: string
 }
 
-export default function StoryLine({ line, token, muted, rate, stopSignal }: {
-  line: FixedContentLine; token: string; muted: boolean; rate: number; stopSignal: number
+export default function StoryLine({ line, token, muted, rate, onRate, stopSignal, children }: {
+  line: FixedContentLine; token: string; muted: boolean; rate: number; onRate: (rate: number) => void; stopSignal: number; children?: ReactNode
 }) {
-  const [chinese, setChinese] = useState(false)
   const [binding, setBinding] = useState<Binding | null>(null)
   const [notice, setNotice] = useState('')
   const [playing, setPlaying] = useState(false)
@@ -22,7 +21,7 @@ export default function StoryLine({ line, token, muted, rate, stopSignal }: {
   useEffect(() => {
     let cancelled = false
     const controller = new AbortController()
-    setBinding(null); setChinese(false); setNotice(''); stop()
+    setBinding(null); setNotice(''); stop()
     const id = line.audioIds[0]
     if (id) request<Binding>(`/v1/audio/bindings/${encodeURIComponent(id)}`, token, undefined, controller.signal).then(value => {
       const content = line.learningContent
@@ -50,13 +49,9 @@ export default function StoryLine({ line, token, muted, rate, stopSignal }: {
     document.addEventListener('visibilitychange', hide)
     return () => { window.removeEventListener('morrow:s09:stop-playback', handle); document.removeEventListener('visibilitychange', hide) }
   }, [])
-  return <div className="morrow-dialogue s09-dialogue">
-    <p className="english" lang="en">{line.learningContent.english}</p>
-    {chinese && <p className="translation">{line.learningContent.translation.textZh}</p>}
-    <div className="dialogue-tools">
-      <button className="replay-button" disabled={!binding || muted || capturing} onClick={play}><Play size={16}/>{playing ? '停止' : '重听'}</button>
-      <button className="translation-button" aria-expanded={chinese} onClick={() => setChinese(value => !value)}>{chinese ? '收起中文' : '查看中文'}</button>
-    </div>
-    <p className="s09-audio-note">{capturing && binding ? '录音结束后可以重听。' : notice || (!binding ? '语音暂未准备好，可先阅读内容。' : muted ? '已静音' : '')}</p>
-  </div>
+  return <Dialogue english={line.learningContent.english} chinese={line.learningContent.translation.textZh}
+    rate={rate} onRate={onRate} onReplay={play} playbackDisabled={!binding || muted || capturing} playing={playing}
+    note={capturing && binding ? '录音结束后可以重听。' : notice || (!binding ? '语音暂未准备好，可先阅读内容。' : muted ? '已静音' : '')}>
+    {children}
+  </Dialogue>
 }

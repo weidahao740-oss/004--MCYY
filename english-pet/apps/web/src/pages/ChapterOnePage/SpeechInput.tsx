@@ -181,10 +181,11 @@ export default function SpeechInput({ token, instanceId, stateId, teachingStepId
     </div> : <>
       <p className="s09-caption">{phase === 'recording' ? '正在听，最多录 30 秒。说完点结束。' : phase === 'permission' ? '正在等麦克风权限…' : phase === 'transcribing' ? '正在识别，请稍等…' : '点一下开始录音，说完再点结束。'}</p>
       <div className="s09-button-row">
-        {phase === 'recording' ? <button className="primary recording" onClick={() => recorder.current?.stop()}><Square size={16}/>结束录音</button>
-          : <button className="primary" disabled={disabled || phase !== 'idle'} onClick={start}><Mic size={18}/>开始录音</button>}
+        {phase === 'recording' ? <button className="voice-orb is-recording" aria-label="结束录音" onClick={() => recorder.current?.stop()}><Square/></button>
+          : <button className="voice-orb" aria-label="开始录音" disabled={disabled || phase !== 'idle'} onClick={start}><Mic/></button>}
         {phase !== 'idle' && <button className="text-button" onClick={cancel}><X size={16}/>取消这次录音</button>}
       </div>
+      <span className="record-label">{phase === 'recording' ? '结束录音' : phase === 'transcribing' ? '正在识别…' : '开始录音'}</span>
     </>}
   </div>
 }
